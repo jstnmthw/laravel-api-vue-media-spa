@@ -49,7 +49,7 @@ class setVideoCategories extends Command
             
             $progressBar = $this->output->createProgressBar($total[0]->count);
             $progressBar->start();
-            // $progressBar->setRedrawFrequency(100);
+            $progressBar->setRedrawFrequency(100);
 
             VideoData::orderBy('id')->chunk(1000, function ($data) use ($progressBar, $categories) {
 
@@ -75,7 +75,7 @@ class setVideoCategories extends Command
                     $progressBar->advance();
 
                 }
-                return false;
+                // return false;
 
             });
 
