@@ -63,11 +63,11 @@ class setVideoCategories extends Command
 
                         if ($cat !== false) {
 
-                            VideoCategories::insert(['video_categories_id' => $cat + 1, 'video_data_id' => $value['id']]);
+                            VideoCategories::insert(['categories_id' => $cat + 1, 'video_data_id' => $value['id']]);
 
                         }else {
                             
-                            VideoCategories::insert(['video_categories_id' => 107, 'video_data_id' => $value['id']]);
+                            VideoCategories::insert(['categories_id' => 107, 'video_data_id' => $value['id']]);
                         }
 
                     }

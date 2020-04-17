@@ -8,9 +8,9 @@ class VideoCategories extends Model
 {
     
     /**
-     * Video's have many categories
+     * Each category entry has one datafield
      */
-    public function category()
+    public function data()
     {
         return $this->hasOne('App\Categories', 'id');
     }
