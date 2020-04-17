@@ -1,0 +1,117 @@
+/**
+ * Stylesheet
+ */
+ 
+body {
+  color: $lilac;
+}
+a, .btn-link {
+  color: $lilac;
+  &:hover {
+    color: $white;
+  }
+}
+.video {
+  position: relative;
+  .video-data {
+    display: block;
+  }
+  &.loading {
+    .video-data {
+      display: none;
+    }
+  }
+  .video-poster {
+    background: $lavendar;
+    min-height: 154px;
+  }
+  .video-info {
+    font-size: 12px;
+    min-height: 58px;
+  }
+}
+.skeleton-row {
+  display: none;
+  &.loading {
+    display: flex;
+  }
+}
+.skeleton-card {
+  width: 100%;
+  .skeleton-card-image {
+    min-height: 155px;
+    background: $lavendar;
+  }
+  .skeleton-card-line {
+    margin: 9px 0 7px;
+    width: 75%;
+    height: 11px;
+    background: $lavendar;
+  }
+  .skeleton-card-line2 {
+    width: 75%;
+    height: 11px;
+    background: $lavendar;
+  }
+  .skeleton-card-views {
+    margin: 12px 0 6px 0;
+    width: 35%;
+    height: 9px;
+    background: $lavendar;
+    float: left;
+  }
+  .skeleton-card-likes {
+    margin: 12px 0 6px 10px;
+    width: 20%;
+    height: 9px;
+    background: $lavendar;
+    float: left;
+  }
+}
+.form-control, .form-control:focus {
+  background: $indigo;
+  color: $lilac;
+  border: 1px solid $purple;
+  &::placeholder {
+    color: $lilac;
+    opacity: 0.5;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
+  }
+}
+.pagination {
+  .page-item {
+    .page-link {
+      font-weight: bold;
+      color: $lilac;
+      background-color: lighten($purple, 10%);
+      border: 1px solid $purple;
+      &:hover {
+        background-color: lighten($purple, 15%);
+      }
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      &.page-hellip {
+        padding: 0.75rem 0.5rem;
+        cursor: text;
+        &:hover {
+          background-color: lighten($purple, 10%);
+        }
+      }
+    }
+    &.active {
+      .page-link {
+        color: $pink;
+        background-color: $indigo;
+        border-color: $indigo;
+      }
+    }
+  }
+  ion-icon {
+    position: relative;
+    top: 3px;
+  }
+}

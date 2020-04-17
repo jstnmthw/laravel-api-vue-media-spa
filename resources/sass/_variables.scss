@@ -1,0 +1,50 @@
+// Body
+$body-bg: #2c2c54;
+
+// Typography
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #2c2c54;
+$purple: #40407a;
+$lavendar: #5d5daf;
+$lilac: #cacaee;
+$pink: #d980fa;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffc107;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+// Custom colors
+$theme-colors: (
+  "purple": #40407a,
+  "indigo": #2c2c54
+);
+
+// Grid breakpoints
+$grid-breakpoints: (
+  xxxs: 0,
+  xxs: 320px,
+  xs: 568px,
+  sm: 667px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1346px
+);
+
+$container-max-widths: (
+  xxxs: 0,
+  xxs: 320px,
+  xs: 568px,
+  sm: 667px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1346px
+);
