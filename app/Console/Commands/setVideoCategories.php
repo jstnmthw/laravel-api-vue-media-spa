@@ -45,12 +45,10 @@ class setVideoCategories extends Command
         if ($this->confirm('Are you sure you want to continue?')) {
 
             $categories = Categories::all()->toArray();
-
             $total = DB::select('SELECT count(views) as count FROM video_data');
-
+            
             $progressBar = $this->output->createProgressBar($total[0]->count);
             $progressBar->start();
-            // update every 100 iterations
             $progressBar->setRedrawFrequency(100);
 
             VideoData::orderBy('id')->chunk(500, function ($data) use ($progressBar, $categories) {
