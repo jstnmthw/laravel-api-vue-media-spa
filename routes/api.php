@@ -38,10 +38,8 @@ Route::post('/login', function (Request $request) {
     return Response::make('', 204);
 });
 
-// API Resources
+/**
+ * API Resources
+ */
 Route::apiResource('videos', 'VideoController');
-Route::get('db', 'VideoController@update_db');
-// Route::get('videos/categories/{cat}', 'VideoController@categories')->where('cat', '[A-Za-z\-]+');
-
 Route::apiResource('categories', 'CategoryController');
-

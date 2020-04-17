@@ -9,6 +9,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use App\VideoData;
 use App\VideoCategories;
+use App\Categories;
+
 
 class VideoController extends Controller
 {
@@ -19,41 +21,65 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
-        $cat = false;
-        $page = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
-        $limit = 40;
-        $offset = ($page - 1) * 40 + 1;
+        /**
+         * When using offsets with large datasets the query becomes sluggish and unresponsive. 
+         * Reducing the select to indexed only columns in the first query offset included and 
+         * a subsequent query to collect all required columns via selecting only the ID reduces
+         * the query time significantly.
+         * 
+         * This is called the seek method.
+         * Information: https://use-the-index-luke.com/sql/partial-results/fetch-next-page
+         */
+        $cat    = $this->getCategory($request->input('category'));
+        $page   = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
+        $limit  = 40;
+        $offset = $page > 1 ? ($page - 1) * 40 + 1 : 0;
 
-        if(!NULL == $request->input('category')) {
-            $cat = $this->escape_like(str_replace('-', ' ', $request->input('category')));
+        $seek = VideoData::select('video_data.id', 'views')
+            ->when($cat, function ($query, $cat) {
+                return $query->join('video_categories', 'video_data.id', '=' ,'video_categories.video_data_id')
+                    ->where('video_categories.category_id', $cat);
+            })
+            ->offset($offset)
+            ->orderBy('views', 'DESC')
+            ->limit($limit)
+            ->get();
+
+        if(empty($seek->toArray())) {
+            return ['error' => 'No videos found.'];
         }
-
-        // dd($cat);
-
-        $seek = VideoData::select('id', 'views')
-                    ->when($cat, function ($query, $cat) {
-                        return $query->where('categories', 'like', '%'.$cat.'%');
-                    })
-                    ->offset($offset)
-                    ->orderBy('views', 'DESC')
-                    ->limit($limit)
-                    ->get();
-
-        if(empty($seek)) {
-            return ['error' => 'No rows found.'];
-        }
-
-        // dd($seek);
 
         foreach($seek as $row) {
             $ids[] = $row['id'];
         }
 
-        $total = Cache::remember('videos_total', 1500, function () {
-            return DB::select('SELECT COUNT(views) as count FROM video_data');
-        });
+        /**
+         * Normally, large dataset pagination only include next/prev.
+         * In order to show previous, next and last pages, we must query
+         * the database to count the amount of records. The data should
+         * already be indexed but we will cache the first results to
+         * make this queryless.
+         */
+        if(!$cat) {
+            $total = Cache::remember('videos_total', 1500, function () {
+                return DB::select('SELECT COUNT(views) as count FROM video_data');
+            });
+        } else {
+            $total = Cache::remember('cat'.$cat.'_total', 1500, function () use ($cat) {
+                return DB::select('SELECT count(video_data.id) 
+                    AS count 
+                    FROM video_data 
+                    LEFT JOIN video_categories 
+                    ON video_data.id = video_categories.video_data_id 
+                    WHERE video_categories.category_id = '.$cat
+                );
+            });
+        }
 
+        // Now, collect all the information from ids selected (fast).
         $data['data'] = VideoData::find($ids);
+
+        // Manually setting json paginate for front end.
         $data['current_page'] = $page;
         $data['total'] = $total[0]->count;
         $data['last_page'] = ceil($total[0]->count / $limit);
@@ -61,40 +87,6 @@ class VideoController extends Controller
 
         return $data;
     }
-
-    /**
-     * Show videos associated with their categories.
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function categories($cat)
-    {
-        $page = isset($_GET['page']) ? $_GET['page'] : 0;
-        $limit = 40;
-        $offset = ($page - 1) * 40 + 1;
-        $cat = $this->escape_like($cat);
-
-        $total = Cache::remember($cat.'_total', 500, function () use ($cat) {
-            return DB::select('SELECT count(views) as count FROM video_data WHERE categories LIKE "%'.$cat.'%"');
-        });
-
-        // if($total) {
-        //    return json_encode(['error' => 'No results.']);
-        // }
-
-        $data = new DataCollection(
-            VideoData::where('categories', 'like', '%'.$cat.'%')
-                ->orderby('views', 'desc')
-                ->offset($offset)
-                ->limit($limit)
-                ->get()
-        );
-    
-        $paginate = new LengthAwarePaginator($data, $total[0]->count, $limit, $page);
-    
-        return $paginate;
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -179,53 +171,27 @@ class VideoController extends Controller
         );
     }
 
-
-    
-
-
-
     /**
-     * This is not recommended.
+     * Match Category param with database and return category ID.
+     * 
+     * @param string $cat
+     * 
+     * @return integer
      */
-    public function update_db() {
+    private function getCategory($cat = null) {
 
-        $count = 0;
-        VideoData::orderBy('id')->chunk(1000, function ($data) use ($count) {
-            foreach ($data as $key => $value) {
-                $cats = explode(';', $value['categories']);
-                foreach ($cats as $cat_key => $cat_value) {
-                    VideoCategories::insert(['cat_id' => $cat_key + 1, 'video_data_id' => $value['id']]);
-                    // echo 'Saved "' . $cat_value . '" to ID #' . $value['id'] . '<br>';
-                }
-            }
-            $count++;
-            echo 'Chunk #' . $count;
-        });
+        if(null !== $cat) {
 
-
-        // $data = VideoData::limit(5)->get()->toArray();
-
-        // dd($data);
-
-        // foreach ($data as $key => $value) {
-
-        //     $cats = explode(';', $value['categories']);
-
-        //     foreach ($cats as $cat_key => $cat_value) {
-
-
-        //         // dd($key);
-        //         VideoCategories::insert(['cat_id' => $cat_key + 1, 'video_data_id' => $value['id']]);
-        //         // $key->categories()->save($value);
-        //         echo 'Saved.';
-
-        //     }
+            $cat = strtolower(str_replace('-', ' ', $cat));
+            $db_cats = Categories::select('id', 'name')->get()->toArray();
+            $match = array_search($cat, array_map('strtolower', array_column($db_cats, 'name')));
             
-        // }
+            return $match ? $db_cats[$match]['id'] : false;
+
+        }
+
+        return false;
 
     }
-
-
-
 
 }
