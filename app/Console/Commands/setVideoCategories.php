@@ -49,9 +49,9 @@ class setVideoCategories extends Command
             
             $progressBar = $this->output->createProgressBar($total[0]->count);
             $progressBar->start();
-            $progressBar->setRedrawFrequency(100);
+            // $progressBar->setRedrawFrequency(100);
 
-            VideoData::orderBy('id')->chunk(500, function ($data) use ($progressBar, $categories) {
+            VideoData::orderBy('id')->chunk(1000, function ($data) use ($progressBar, $categories) {
 
                 foreach ($data as $key => $value) {
             
@@ -59,10 +59,15 @@ class setVideoCategories extends Command
 
                     foreach ($cats as $cat_key => $cat_value) {
 
-                        if ($cat = array_search($cat_value, array_column($categories, 'name'))){
+                        $cat = array_search($cat_value, array_column($categories, 'name'), true);
 
-                            VideoCategories::insert(['cat_id' => $cat + 1, 'video_data_id' => $value['id']]);
+                        if ($cat !== false) {
 
+                            VideoCategories::insert(['video_categories_id' => $cat + 1, 'video_data_id' => $value['id']]);
+
+                        }else {
+                            
+                            VideoCategories::insert(['video_categories_id' => 107, 'video_data_id' => $value['id']]);
                         }
 
                     }
@@ -70,6 +75,7 @@ class setVideoCategories extends Command
                     $progressBar->advance();
 
                 }
+                return false;
 
             });
 

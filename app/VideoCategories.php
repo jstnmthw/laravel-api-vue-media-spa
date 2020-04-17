@@ -12,6 +12,6 @@ class VideoCategories extends Model
      */
     public function category()
     {
-        return $this->hasMany('App\Categories');
+        return $this->hasOne('App\Categories', 'id');
     }
 }
