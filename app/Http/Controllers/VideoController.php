@@ -161,6 +161,7 @@ class VideoController extends Controller
      * @param string $cat
      * 
      * @return integer
+     * @return false
      */
     private function getCategory($cat = null) {
 
