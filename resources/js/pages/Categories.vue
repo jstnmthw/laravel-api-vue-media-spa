@@ -17,24 +17,7 @@ export default {
       title: '',
     }
   },
-  computed: {
-
-  },
-  mounted() {
-    // Get videos on page load
-    this.getVideos(); 
-
-    // Get videos and paginate emit
-    this.$on('paginate', function () {
-      this.getVideos();
-    });
-  },
-  watch: {
-    // When route changes, call API
-    $route(to, from) {
-      this.getVideos();
-    }
-  },
+  computed: {},
   methods: {
     getVideos() {
       // Start loading on frontend
@@ -76,6 +59,21 @@ export default {
           // Failed frontend progress bar
           this.$Progress.fail();
       });
+    }
+  },
+  mounted() {
+    // Get videos on page load
+    this.getVideos(); 
+
+    // Get videos and paginate emit
+    // this.$on('paginate', function () {
+    //   this.getVideos();
+    // });
+  },
+  watch: {
+    // When route changes, call API
+    $route(to, from) {
+      this.getVideos();
     }
   }
 }

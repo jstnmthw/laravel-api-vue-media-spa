@@ -2427,20 +2427,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {},
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos(); // Get videos and paginate emit
-
-    this.$on('paginate', function () {
-      this.getVideos();
-    });
-  },
-  watch: {
-    // When route changes, call API
-    $route: function $route(to, from) {
-      this.getVideos();
-    }
-  },
   methods: {
     getVideos: function getVideos() {
       var _this = this;
@@ -2479,6 +2465,19 @@ __webpack_require__.r(__webpack_exports__);
         _this.$Progress.fail();
       });
     }
+  },
+  mounted: function mounted() {
+    // Get videos on page load
+    this.getVideos(); // Get videos and paginate emit
+    // this.$on('paginate', function () {
+    //   this.getVideos();
+    // });
+  },
+  watch: {
+    // When route changes, call API
+    $route: function $route(to, from) {
+      this.getVideos();
+    }
   }
 });
 
@@ -2508,16 +2507,6 @@ __webpack_require__.r(__webpack_exports__);
       pagination: [],
       loading: false
     };
-  },
-  watch: {
-    // When route changes, call API
-    $route: function $route(to, from) {
-      this.getVideos();
-    }
-  },
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos();
   },
   methods: {
     getVideos: function getVideos() {
@@ -2553,6 +2542,21 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$Progress.fail();
       });
+    }
+  },
+  mounted: function mounted() {
+    // Get videos on page load
+    this.getVideos();
+  },
+  watch: {
+    // When route changes, call API
+    $route: function $route(to, from) {
+      this.$router.push({
+        query: {
+          page: 1
+        }
+      });
+      this.getVideos();
     }
   }
 });

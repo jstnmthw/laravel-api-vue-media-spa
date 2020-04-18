@@ -15,16 +15,6 @@ export default {
       loading: false,
     }
   },
-  watch: {
-    // When route changes, call API
-    $route(to, from) {
-      this.getVideos();
-    }
-  },
-  mounted() {
-    // Get videos on page load
-    this.getVideos(); 
-  },
   methods: {
     getVideos() {
       // Start loading on frontend
@@ -66,6 +56,17 @@ export default {
         this.$Progress.fail();
       });
     }
-  }
+  },
+  mounted() {
+    // Get videos on page load
+    this.getVideos(); 
+  },
+  watch: {
+    // When route changes, call API
+    $route(to, from) {
+      this.$router.push({ query: { page: 1 } });
+      this.getVideos();
+    }
+  },
 }
 </script>
