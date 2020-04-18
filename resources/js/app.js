@@ -55,7 +55,7 @@ const router = new VueRouter({
       name: 'home'
     },
     {
-      path: '/categories/:cat',
+      path: '/categories/:category',
       component: Categories,
       name: 'categories'
     },
@@ -83,7 +83,7 @@ const app = new Vue({
   },
   created() {
     var vm = this
-    axios.get('/api/categories/').then(function(response) {
+    axios.get('/api/categories').then(function(response) {
       vm.categories = response.data
     })
   }

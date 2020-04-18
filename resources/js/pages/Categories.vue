@@ -1,7 +1,7 @@
 <template>
   <main class="col-md-10">
     <top-ad-banner></top-ad-banner>
-    <page-header :title="this.$route.params.cat +' Videos'" icon="" v-show="!loading"></page-header>
+    <page-header :title="this.$route.params.category +' Videos'" icon="" v-show="!loading"></page-header>
     <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
     <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
   </main>
@@ -33,14 +33,15 @@ export default {
       var pageNumber = 1;
 
       // Set if paginated or direct link used
-      if(this.videos.current_page) {
-        pageNumber = this.videos.current_page;
-      }else if(this.$route.query.page) {
-        pageNumber = this.$route.query.page;
-      }
+      // if(this.videos.current_page) {
+      //   pageNumber = this.videos.current_page;
+      // }else if(this.$route.query.page) {
+      //   pageNumber = this.$route.query.page;
+      // }
 
       // Make the call
-      axios.get('/api/videos' + '?category=' + this.$route.params.cat + "&page=" + pageNumber ).then((response) => {
+      // axios.get('/api/videos' + '?category=' + this.$route.params.category + "&page=" + pageNumber ).then((response) => {
+      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
           // Finish frontend progress bar
           this.$Progress.finish();
 
@@ -63,16 +64,13 @@ export default {
   },
   mounted() {
     // Get videos on page load
-    this.getVideos(); 
-
-    // Get videos and paginate emit
-    // this.$on('paginate', function () {
-    //   this.getVideos();
-    // });
+    this.getVideos();
   },
   watch: {
     // When route changes, call API
     $route(to, from) {
+      console.log('Route Changed');
+      this.videos = [];
       this.getVideos();
     }
   }

@@ -2408,6 +2408,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2439,15 +2445,17 @@ __webpack_require__.r(__webpack_exports__);
       $('.video-poster img').attr('src', ''); // Default page number
 
       var pageNumber = 1; // Set if paginated or direct link used
+      // if(this.videos.current_page) {
+      //   pageNumber = this.videos.current_page;
+      // }else if(this.$route.query.page) {
+      //   pageNumber = this.$route.query.page;
+      // }
+      // Make the call
+      // axios.get('/api/videos' + '?category=' + this.$route.params.category + "&page=" + pageNumber ).then((response) => {
 
-      if (this.videos.current_page) {
-        pageNumber = this.videos.current_page;
-      } else if (this.$route.query.page) {
-        pageNumber = this.$route.query.page;
-      } // Make the call
-
-
-      axios.get('/api/videos' + '?category=' + this.$route.params.cat + "&page=" + pageNumber).then(function (response) {
+      axios.get('/api/videos', {
+        params: _objectSpread({}, this.$route.params, {}, this.$route.query)
+      }).then(function (response) {
         // Finish frontend progress bar
         _this.$Progress.finish(); // Set Vue Data
 
@@ -2468,14 +2476,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     // Get videos on page load
-    this.getVideos(); // Get videos and paginate emit
-    // this.$on('paginate', function () {
-    //   this.getVideos();
-    // });
+    this.getVideos();
   },
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
+      console.log('Route Changed');
+      this.videos = [];
       this.getVideos();
     }
   }
@@ -2492,6 +2499,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2520,15 +2533,16 @@ __webpack_require__.r(__webpack_exports__);
       $('.video-poster img').attr('src', ''); // Default page number
 
       var pageNumber = 1; // Set if paginated or direct link used
+      // if(this.videos.current_page) {
+      //   pageNumber = this.videos.current_page;
+      // }else if(this.$route.query.page) {
+      //   pageNumber = this.$route.query.page;
+      // }
+      // Make the call
 
-      if (this.videos.current_page) {
-        pageNumber = this.videos.current_page;
-      } else if (this.$route.query.page) {
-        pageNumber = this.$route.query.page;
-      } // Make the call
-
-
-      axios.get('/api/videos' + "?page=" + pageNumber).then(function (response) {
+      axios.get('/api/videos', {
+        params: _objectSpread({}, this.$route.params, {}, this.$route.query)
+      }).then(function (response) {
         // Finish loading on frontend
         _this.$Progress.finish(); // Set video object
 
@@ -2551,11 +2565,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
-      this.$router.push({
-        query: {
-          page: 1
-        }
-      });
+      this.videos = '';
       this.getVideos();
     }
   }
@@ -40264,7 +40274,7 @@ var render = function() {
             expression: "!loading"
           }
         ],
-        attrs: { title: this.$route.params.cat + " Videos", icon: "" }
+        attrs: { title: this.$route.params.category + " Videos", icon: "" }
       }),
       _vm._v(" "),
       _c("video-list", {
@@ -55505,7 +55515,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _pages_Homepage__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'home'
   }, {
-    path: '/categories/:cat',
+    path: '/categories/:category',
     component: _pages_Categories__WEBPACK_IMPORTED_MODULE_4__["default"],
     name: 'categories'
   }, {
@@ -55533,7 +55543,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   created: function created() {
     var vm = this;
-    axios.get('/api/categories/').then(function (response) {
+    axios.get('/api/categories').then(function (response) {
       vm.categories = response.data;
     });
   }

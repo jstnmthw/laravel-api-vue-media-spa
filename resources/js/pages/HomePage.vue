@@ -30,14 +30,14 @@ export default {
       var pageNumber = 1;
 
       // Set if paginated or direct link used
-      if(this.videos.current_page) {
-        pageNumber = this.videos.current_page;
-      }else if(this.$route.query.page) {
-        pageNumber = this.$route.query.page;
-      }
+      // if(this.videos.current_page) {
+      //   pageNumber = this.videos.current_page;
+      // }else if(this.$route.query.page) {
+      //   pageNumber = this.$route.query.page;
+      // }
 
       // Make the call
-      axios.get('/api/videos' + "?page=" + pageNumber).then((response) => {
+      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
 
         // Finish loading on frontend
         this.$Progress.finish();
@@ -64,7 +64,7 @@ export default {
   watch: {
     // When route changes, call API
     $route(to, from) {
-      this.$router.push({ query: { page: 1 } });
+      this.videos = '';
       this.getVideos();
     }
   },
