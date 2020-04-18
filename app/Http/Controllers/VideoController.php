@@ -23,12 +23,11 @@ class VideoController extends Controller
     {
         /**
          * When using offsets with large datasets the query becomes sluggish and unresponsive. 
-         * Reducing the select to indexed only columns in the first query offset included and 
-         * a subsequent query to collect all required columns via selecting only the ID reduces
-         * the query time significantly.
+         * Reduce the first select to indexed only columns. A subsequent query to collect 
+         * all the columns by ID's collected. This reduces the query time significantly.
          * 
          * This is called the seek method.
-         * Information: https://use-the-index-luke.com/sql/partial-results/fetch-next-page
+         * For more info: https://use-the-index-luke.com/sql/partial-results/fetch-next-page
          */
         $cat    = $this->getCategory($request->input('category'));
         $page   = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
@@ -54,11 +53,10 @@ class VideoController extends Controller
         }
 
         /**
-         * Normally, large dataset pagination only include next/prev.
-         * In order to show previous, next and last pages, we must query
-         * the database to count the amount of records. The data should
-         * already be indexed but we will cache the first results to
-         * make this queryless.
+         * Normally, large dataset pagination only include next/prev. In order to show 
+         * previous, next and last pages, we must query the database to count the amount 
+         * of records. The data should already be indexed but we will cache the first 
+         * results to make this virtually queryless.
          */
         if(!$cat) {
             $total = Cache::remember('videos_total', 1500, function () {
@@ -79,7 +77,7 @@ class VideoController extends Controller
         // Now, collect all the information from ids selected (fast).
         $data['data'] = VideoData::find($ids);
 
-        // Manually setting json paginate for front end.
+        // Manually set json paginate for front end.
         $data['current_page'] = $page;
         $data['total'] = $total[0]->count;
         $data['last_page'] = ceil($total[0]->count / $limit);
