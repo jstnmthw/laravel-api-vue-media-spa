@@ -48,15 +48,8 @@
 </template>
 
 <script>
-// import imagesLoaded from 'vue-images-loaded'
-
 export default {
   mounted() {
-    this.$parent.$on('paginate', function () {
-      console.log('Emite recieved.');
-      // $('.video-list img').attr('src', '')
-      // document.getElementsByClassName('.video-list img').src='';
-    });
   },
   props: [
     'videos', 
@@ -64,16 +57,8 @@ export default {
     'cards'
   ],
   directives: {
-    // imagesLoaded
   },
   methods: {
-    // imageProgress(instance, image) {
-    //   const result = image.isLoaded ? 'loaded' : 'broken';
-    //   console.log( 'image is ' + result + ' for ' + image.img.src );
-    // },
-    // loaded(instance) {
-    //   console.log('All images loaded.');
-    // }
   }
 }
 </script>

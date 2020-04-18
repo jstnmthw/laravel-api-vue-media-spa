@@ -14,6 +14,7 @@ export default {
       videos: [],
       pagination: [],
       loading: false,
+      error: [],
       title: '',
     }
   },
@@ -28,37 +29,32 @@ export default {
 
       // Stop unfinished images loading
       $('.video-poster img').attr('src', '');
-    
-      // Default page number
-      var pageNumber = 1;
-
-      // Set if paginated or direct link used
-      // if(this.videos.current_page) {
-      //   pageNumber = this.videos.current_page;
-      // }else if(this.$route.query.page) {
-      //   pageNumber = this.$route.query.page;
-      // }
 
       // Make the call
-      // axios.get('/api/videos' + '?category=' + this.$route.params.category + "&page=" + pageNumber ).then((response) => {
       axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
+
+
           // Finish frontend progress bar
           this.$Progress.finish();
 
           // Set Vue Data
           if(!response['error']) {
             this.videos = response.data;
+          }else {
+            this.error = response.error
           }
 
           // Disable loading
           this.loading = false;
 
         }).catch(error => {
+
           // Console log API error.
           console.log('Error calling API.');
           
           // Failed frontend progress bar
           this.$Progress.fail();
+
       });
     }
   },
@@ -69,8 +65,11 @@ export default {
   watch: {
     // When route changes, call API
     $route(to, from) {
-      console.log('Route Changed');
+      
+      // Clear data
       this.videos = [];
+
+      // Get new videos
       this.getVideos();
     }
   }

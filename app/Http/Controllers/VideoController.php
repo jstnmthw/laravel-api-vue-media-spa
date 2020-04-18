@@ -46,7 +46,7 @@ class VideoController extends Controller
             ->get();
 
         if(empty($seek->toArray())) {
-            return abort(404);
+            return ['error'=> 'No videos found in this category.'];
         }
 
         foreach($seek as $row) {

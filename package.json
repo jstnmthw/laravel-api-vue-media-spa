@@ -25,7 +25,6 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
-    "vue-images-loaded": "^1.1.2",
     "vue-progressbar": "^0.7.5"
   }
 }

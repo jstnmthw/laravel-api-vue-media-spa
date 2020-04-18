@@ -2376,25 +2376,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// import imagesLoaded from 'vue-images-loaded'
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.$parent.$on('paginate', function () {
-      console.log('Emite recieved.'); // $('.video-list img').attr('src', '')
-      // document.getElementsByClassName('.video-list img').src='';
-    });
-  },
+  mounted: function mounted() {},
   props: ['videos', 'loading', 'cards'],
-  directives: {// imagesLoaded
-  },
-  methods: {// imageProgress(instance, image) {
-    //   const result = image.isLoaded ? 'loaded' : 'broken';
-    //   console.log( 'image is ' + result + ' for ' + image.img.src );
-    // },
-    // loaded(instance) {
-    //   console.log('All images loaded.');
-    // }
-  }
+  directives: {},
+  methods: {}
 });
 
 /***/ }),
@@ -2429,6 +2415,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       videos: [],
       pagination: [],
       loading: false,
+      error: [],
       title: ''
     };
   },
@@ -2442,16 +2429,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true; // Stop unfinished images loading
 
-      $('.video-poster img').attr('src', ''); // Default page number
-
-      var pageNumber = 1; // Set if paginated or direct link used
-      // if(this.videos.current_page) {
-      //   pageNumber = this.videos.current_page;
-      // }else if(this.$route.query.page) {
-      //   pageNumber = this.$route.query.page;
-      // }
-      // Make the call
-      // axios.get('/api/videos' + '?category=' + this.$route.params.category + "&page=" + pageNumber ).then((response) => {
+      $('.video-poster img').attr('src', ''); // Make the call
 
       axios.get('/api/videos', {
         params: _objectSpread({}, this.$route.params, {}, this.$route.query)
@@ -2462,6 +2440,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (!response['error']) {
           _this.videos = response.data;
+        } else {
+          _this.error = response.error;
         } // Disable loading
 
 
@@ -2481,8 +2461,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
-      console.log('Route Changed');
-      this.videos = [];
+      // Clear data
+      this.videos = []; // Get new videos
+
       this.getVideos();
     }
   }
@@ -2530,15 +2511,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true; // Stop unfinished images loading
 
-      $('.video-poster img').attr('src', ''); // Default page number
-
-      var pageNumber = 1; // Set if paginated or direct link used
-      // if(this.videos.current_page) {
-      //   pageNumber = this.videos.current_page;
-      // }else if(this.$route.query.page) {
-      //   pageNumber = this.$route.query.page;
-      // }
-      // Make the call
+      $('.video-poster img').attr('src', ''); // Make the call
 
       axios.get('/api/videos', {
         params: _objectSpread({}, this.$route.params, {}, this.$route.query)
@@ -2565,7 +2538,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
-      this.videos = '';
+      // Clear data
+      this.videos = ''; // Get new data
+
       this.getVideos();
     }
   }
