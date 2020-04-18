@@ -2355,11 +2355,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     views: function views() {
@@ -2446,13 +2441,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       videos: [],
       pagination: [],
       loading: false,
-      error: false
+      error: false,
+      sort: 'most_views'
     };
   },
   computed: {
@@ -2463,7 +2472,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var key = categories.indexOf(this.$route.params.category);
 
       if (key >= 0) {
-        return this.categories[key]['name'] + ' Video Categories';
+        return this.categories[key]['name'] + ' Video Category';
       }
     }
   },
@@ -2471,7 +2480,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getVideos: function getVideos() {
       var _this = this;
 
-      // Start loading on frontend
+      // Clear data
+      this.videos = [];
+      this.error = false; // Start loading on frontend
+
       this.$Progress.start(); // Set loading
 
       this.loading = true; // Stop unfinished images loading
@@ -2499,6 +2511,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$Progress.fail();
       });
+    },
+    sortBy: function sortBy() {
+      console.log(this.sort); // this.$router.push({ query: { sort: this.sort } });
     }
   },
   mounted: function mounted() {
@@ -2509,10 +2524,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
-      // Clear data
-      this.videos = [];
-      this.error = false; // Get new videos
-
+      // Get new videos
       this.getVideos();
     }
   }
@@ -40073,73 +40085,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row mb-2" }, [
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.loading,
-              expression: "!loading"
-            }
-          ],
-          staticClass: "col-6"
-        },
-        [
-          _vm._v(
-            "Showing: " +
-              _vm._s(_vm.videos.current_page) +
-              " of " +
-              _vm._s(_vm.videos.last_page)
-          )
-        ]
-      )
-    ]),
+  return _c("div", { staticClass: "row video-listing mb-5" }, [
+    _c(
+      "div",
+      {
+        staticClass: "row row-cols-5 skeleton-row no-gutters",
+        class: { loading: _vm.loading }
+      },
+      _vm._l(_vm.cards, function(card) {
+        return _c(
+          "div",
+          {
+            key: card.index,
+            staticClass: "col px-2 mb-md-3 position-relative"
+          },
+          [_vm._m(0, true)]
+        )
+      }),
+      0
+    ),
     _vm._v(" "),
-    _c("div", { staticClass: "video-listing mb-5" }, [
-      _c(
-        "div",
-        {
-          staticClass: "row row-cols-5 skeleton-row no-gutters",
-          class: { loading: _vm.loading }
-        },
-        _vm._l(_vm.cards, function(card) {
-          return _c(
-            "div",
-            {
-              key: card.index,
-              staticClass: "col px-2 mb-md-3 position-relative"
-            },
-            [_vm._m(0, true)]
-          )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row row-cols-5 video-list no-gutters" },
-        _vm._l(_vm.videos.data, function(video) {
-          return _c(
-            "div",
-            {
-              key: video.index,
-              staticClass: "col px-2 mb-md-3 position-relative"
-            },
-            [
-              _c("video-list-item", {
-                attrs: { data: video, loading: _vm.loading }
-              })
-            ],
-            1
-          )
-        }),
-        0
-      )
-    ])
+    _c(
+      "div",
+      { staticClass: "row row-cols-5 video-list no-gutters" },
+      _vm._l(_vm.videos.data, function(video) {
+        return _c(
+          "div",
+          {
+            key: video.index,
+            staticClass: "col px-2 mb-md-3 position-relative"
+          },
+          [
+            _c("video-list-item", {
+              attrs: { data: video, loading: _vm.loading }
+            })
+          ],
+          1
+        )
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = [
@@ -40264,6 +40249,106 @@ var render = function() {
                 ],
                 attrs: { title: _vm.category_title, icon: "" }
               }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-between align-items-center mb-3"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.loading,
+                          expression: "!loading"
+                        }
+                      ]
+                    },
+                    [
+                      _vm._v(
+                        "\n        Showing: " +
+                          _vm._s(_vm.videos.current_page) +
+                          " of " +
+                          _vm._s(_vm.videos.last_page) +
+                          "\n      "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.loading,
+                          expression: "!loading"
+                        }
+                      ]
+                    },
+                    [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sort,
+                              expression: "sort"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { name: "sortby" },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.sort = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                return _vm.sortBy()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "most_views" } }, [
+                            _vm._v("Most Views")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "hottest" } }, [
+                            _vm._v("Hottest")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "top_rated" } }, [
+                            _vm._v("Top Rated")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "most_recent" } }, [
+                            _vm._v("Most Recent")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("video-list", {
                 attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }

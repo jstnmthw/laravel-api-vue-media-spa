@@ -53,9 +53,9 @@ class VideoController extends Controller
         }
 
         /**
-         * Normally, large dataset pagination only include next/prev. In order to show 
-         * previous, next and last pages, we must query the database to count the amount 
-         * of records. The data should already be indexed but we will cache the first 
+         * Normally, large dataset pagination only include next/prev (Laravel's SimplePaginate). 
+         * In order to show previous, next and last pages, we must query the database to count 
+         * the amount of records. The data should already be indexed but we will cache the first 
          * results to make this virtually queryless.
          */
         if(!$cat) {
