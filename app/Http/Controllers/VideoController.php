@@ -171,7 +171,7 @@ class VideoController extends Controller
             $db_cats = Categories::select('id', 'name')->get()->toArray();
             $match = array_search($cat, array_map('strtolower', array_column($db_cats, 'name')));
             
-            return $match ? $db_cats[$match]['id'] : abort(404);
+            return $match !== false ? $db_cats[$match]['id'] : abort(404);
 
         }
 
