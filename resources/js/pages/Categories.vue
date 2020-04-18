@@ -14,7 +14,11 @@ export default {
       videos: [],
       pagination: [],
       loading: false,
+      title: '',
     }
+  },
+  computed: {
+
   },
   mounted() {
     // Get videos on page load
@@ -40,7 +44,7 @@ export default {
       this.loading = true;
 
       // Stop unfinished images loading
-      document.getElementsByClassName('.video-list img').src='';
+      $('.video-poster img').attr('src', '');
     
       // Default page number
       var pageNumber = 1;

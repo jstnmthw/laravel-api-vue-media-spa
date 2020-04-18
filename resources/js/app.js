@@ -12,6 +12,7 @@ import Categories     from './pages/Categories'
 
 // Components
 import Navbar         from './components/Navbar'
+import NotFound       from './components/NotFound'
 import MainSidebar    from './components/MainSidebar'
 import VideoList      from './components/VideoList'
 import TopAdBanner    from './components/TopAdBanner'
@@ -26,6 +27,7 @@ Vue.config.ignoredElements = ['ion-icon'];
 
 // Register Components
 Vue.component('Navbar', Navbar);
+Vue.component('NotFound', NotFound);
 Vue.component('MainSidebar', MainSidebar);
 Vue.component('VideoList', VideoList);
 Vue.component('TopAdBanner', TopAdBanner);
@@ -56,6 +58,11 @@ const router = new VueRouter({
       path: '/categories/:cat',
       component: Categories,
       name: 'categories'
+    },
+    { 
+      path: '*', 
+      component: NotFound,
+      name: '404'
     }
   ],
   scrollBehavior (to, from, savedPosition) {
