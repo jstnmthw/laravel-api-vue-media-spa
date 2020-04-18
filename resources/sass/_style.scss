@@ -11,23 +11,34 @@ a, .btn-link {
     color: $white;
   }
 }
-.video {
-  position: relative;
-  .video-data {
-    display: block;
+.video-listing {
+  margin-left: -8px;
+  margin-right: -8px;
+  h5 {
+    font-size: 14px;
+    font-weight: 700;
   }
-  &.loading {
+  .video {
+    position: relative;
     .video-data {
-      display: none;
+      display: block;
     }
-  }
-  .video-poster {
-    background: $lavendar;
-    min-height: 154px;
-  }
-  .video-info {
-    font-size: 12px;
-    min-height: 58px;
+    &.loading {
+      .video-data {
+        display: none;
+      }
+    }
+    .video-poster {
+      background: $lavendar;
+      min-height: 154px;
+      img {
+        opacity: 0.05; // Temporary
+      }
+    }
+    .video-info {
+      font-size: 12px;
+      min-height: 58px;
+    }
   }
 }
 .skeleton-row {

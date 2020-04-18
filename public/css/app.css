@@ -14285,24 +14285,38 @@ a:hover,
   color: #fff;
 }
 
-.video {
+.video-listing {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.video-listing h5 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.video-listing .video {
   position: relative;
 }
 
-.video .video-data {
+.video-listing .video .video-data {
   display: block;
 }
 
-.video.loading .video-data {
+.video-listing .video.loading .video-data {
   display: none;
 }
 
-.video .video-poster {
+.video-listing .video .video-poster {
   background: #5d5daf;
   min-height: 154px;
 }
 
-.video .video-info {
+.video-listing .video .video-poster img {
+  opacity: 0.05;
+}
+
+.video-listing .video .video-info {
   font-size: 12px;
   min-height: 58px;
 }
