@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="row">
-      {{ loading }}
       <ul class="pagination pagination-lg mx-auto">
         <li class="page-item" v-if="pagination.current_page > 1">
           <a 

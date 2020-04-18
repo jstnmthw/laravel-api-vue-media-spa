@@ -2146,7 +2146,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title', 'icon']
+  props: ['title', 'icon'],
+  computed: {
+    deslug: function deslug() {
+      return this.title.replace('-', ' ');
+    }
+  }
 });
 
 /***/ }),
@@ -2160,7 +2165,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2413,13 +2417,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       videos: [],
       pagination: [],
       loading: false,
-      error: [],
+      error: false,
       title: ''
     };
   },
@@ -2439,13 +2448,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         params: _objectSpread({}, this.$route.params, {}, this.$route.query)
       }).then(function (response) {
         // Finish frontend progress bar
-        _this.$Progress.finish(); // Set Vue Data
+        _this.$Progress.finish(); // Set Vue data if present
 
 
-        if (!response['error']) {
-          _this.videos = response.data;
+        if (response.data.error) {
+          _this.error = response.data.error;
         } else {
-          _this.error = response.error;
+          _this.videos = response.data;
         } // Disable loading
 
 
@@ -2466,7 +2475,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // When route changes, call API
     $route: function $route(to, from) {
       // Clear data
-      this.videos = []; // Get new videos
+      this.videos = [];
+      this.error = false; // Get new videos
 
       this.getVideos();
     }
@@ -7114,7 +7124,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "h3[data-v-7fb418a7] {\n  text-transform: capitalize;\n}\nion-icon[data-v-7fb418a7] {\n  top: 3px;\n  position: relative;\n}", ""]);
+exports.push([module.i, "h4[data-v-7fb418a7] {\n  text-transform: capitalize;\n}\nion-icon[data-v-7fb418a7] {\n  top: 3px;\n  position: relative;\n}", ""]);
 
 // exports
 
@@ -39736,7 +39746,7 @@ var render = function() {
       { staticClass: "col mb-3 font-weight-bold" },
       [
         _vm.icon ? _c("ion-icon", { attrs: { name: _vm.icon } }) : _vm._e(),
-        _vm._v("\n    " + _vm._s(_vm.title) + "\n  ")
+        _vm._v("\n    " + _vm._s(_vm.deslug) + "\n  ")
       ],
       1
     )
@@ -39766,7 +39776,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _vm._v("\n    " + _vm._s(_vm.loading) + "\n    "),
       _c(
         "ul",
         { staticClass: "pagination pagination-lg mx-auto" },
@@ -40200,30 +40209,43 @@ var render = function() {
     [
       _c("top-ad-banner"),
       _vm._v(" "),
-      _c("page-header", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.loading,
-            expression: "!loading"
-          }
-        ],
-        attrs: { title: this.$route.params.category + " Videos", icon: "" }
-      }),
-      _vm._v(" "),
-      _c("video-list", {
-        attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
-      }),
-      _vm._v(" "),
-      _c("paginate", {
-        attrs: { pagination: _vm.videos, loading: _vm.loading },
-        on: {
-          paginate: function($event) {
-            return _vm.getVideos()
-          }
-        }
-      })
+      !_vm.error
+        ? _c(
+            "div",
+            [
+              _c("page-header", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.loading,
+                    expression: "!loading"
+                  }
+                ],
+                attrs: {
+                  title: this.$route.params.category + " Video Category",
+                  icon: ""
+                }
+              }),
+              _vm._v(" "),
+              _c("video-list", {
+                attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
+              }),
+              _vm._v(" "),
+              _c("paginate", {
+                attrs: { pagination: _vm.videos, loading: _vm.loading },
+                on: {
+                  paginate: function($event) {
+                    return _vm.getVideos()
+                  }
+                }
+              })
+            ],
+            1
+          )
+        : _c("div", { staticClass: "text-center m-4" }, [
+            _vm._v("\n    " + _vm._s(_vm.error) + "\n  ")
+          ])
     ],
     1
   )

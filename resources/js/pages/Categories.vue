@@ -1,9 +1,14 @@
 <template>
   <main class="col-md-10">
     <top-ad-banner></top-ad-banner>
-    <page-header :title="this.$route.params.category +' Videos'" icon="" v-show="!loading"></page-header>
-    <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
-    <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
+    <div v-if="!error">
+      <page-header :title="this.$route.params.category +' Video Category'" icon="" v-show="!loading"></page-header>
+      <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
+      <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
+    </div>
+    <div v-else class="text-center m-4">
+      {{ error }}
+    </div>
   </main>
 </template>
 
@@ -14,7 +19,7 @@ export default {
       videos: [],
       pagination: [],
       loading: false,
-      error: [],
+      error: false,
       title: '',
     }
   },
@@ -37,11 +42,11 @@ export default {
           // Finish frontend progress bar
           this.$Progress.finish();
 
-          // Set Vue Data
-          if(!response['error']) {
-            this.videos = response.data;
+          // Set Vue data if present
+          if(response.data.error) {
+            this.error = response.data.error;
           }else {
-            this.error = response.error
+            this.videos = response.data;
           }
 
           // Disable loading
@@ -68,6 +73,7 @@ export default {
       
       // Clear data
       this.videos = [];
+      this.error = false;
 
       // Get new videos
       this.getVideos();
