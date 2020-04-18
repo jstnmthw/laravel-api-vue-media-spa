@@ -2404,7 +2404,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data', 'loading']
+  props: ['data', 'loading'],
+  computed: {
+    views: function views() {
+      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
+    rating: function rating() {
+      return Math.trunc((this.data.likes - this.data.dislikes) / this.data.likes * 100);
+    }
+  }
 });
 
 /***/ }),
@@ -40192,7 +40200,7 @@ var render = function() {
           { staticClass: "pr-2", staticStyle: { opacity: ".5" } },
           [
             _c("ion-icon", { attrs: { name: "eye" } }),
-            _vm._v(" " + _vm._s(_vm.data.views) + "\n      ")
+            _vm._v(" " + _vm._s(_vm.views) + "\n      ")
           ],
           1
         ),
@@ -40205,16 +40213,7 @@ var render = function() {
               staticStyle: { top: "1px" },
               attrs: { name: "thumbs-up" }
             }),
-            _vm._v(
-              " \n        " +
-                _vm._s(
-                  Math.trunc(
-                    ((_vm.data.likes - _vm.data.dislikes) / _vm.data.likes) *
-                      100
-                  )
-                ) +
-                "%\n      "
-            )
+            _vm._v(" \n        " + _vm._s(_vm.rating) + "%\n      ")
           ],
           1
         )
