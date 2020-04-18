@@ -2283,7 +2283,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changePage: function changePage(page) {
-      if (!this.loading) {
+      if (!this.loading && this.pagination.current_page != page) {
         this.pagination.current_page = page; // Push URL
 
         this.$router.push({
@@ -2291,8 +2291,7 @@ __webpack_require__.r(__webpack_exports__);
             page: page
           }
         }); // Emite pagechange
-
-        this.$parent.$emit('paginate');
+        // this.$parent.$emit('paginate');
       }
     }
   }
@@ -2328,10 +2327,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -39941,7 +39936,8 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _vm.pagination.current_page < _vm.pagination.last_page
+          _vm.pagination.current_page < _vm.pagination.last_page &&
+          _vm.pagination.last_page < 3
             ? _c("li", { staticClass: "page-item" }, [
                 _c(
                   "a",
@@ -39963,7 +39959,8 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.pagination.current_page < _vm.pagination.last_page
+          _vm.pagination.current_page < _vm.pagination.last_page &&
+          _vm.pagination.last_page < 3
             ? _c("li", { staticClass: "page-item" }, [
                 _c(
                   "a",
@@ -40089,109 +40086,124 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "video-listing mb-5" }, [
-    _vm.videos.data
-      ? _c("div", [
-          _c(
-            "div",
-            {
-              staticClass: "row row-cols-5 skeleton-row no-gutters",
-              class: { loading: _vm.loading }
-            },
-            _vm._l(_vm.cards, function(card) {
-              return _c(
-                "div",
-                {
-                  key: card.index,
-                  staticClass: "col px-2 mb-md-3 position-relative"
-                },
-                [_vm._m(0, true)]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row row-cols-5 video-list no-gutters" },
-            _vm._l(_vm.videos.data, function(video) {
-              return _c(
-                "div",
-                {
-                  key: video.index,
-                  staticClass: "col px-2 mb-md-3 position-relative"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "video", class: { loading: _vm.loading } },
-                    [
-                      _c("div", { staticClass: "video-data" }, [
-                        _c("div", { staticClass: "video-poster" }, [
-                          _c("img", {
-                            staticClass: "card-img-top",
-                            attrs: { src: video.thumbnail, alt: video.title }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "video-info px-0" }, [
-                          _c("h5", { staticClass: "mt-2 mb-1" }, [
-                            _vm._v(_vm._s(video.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass: "pr-2",
-                              staticStyle: { opacity: ".5" }
-                            },
-                            [
-                              _c("ion-icon", { attrs: { name: "eye" } }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    video.views
-                                      .toString()
-                                      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-                                  ) +
-                                  "\n              "
+    _c(
+      "p",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.loading,
+            expression: "!loading"
+          }
+        ],
+        staticClass: "mb-2"
+      },
+      [
+        _vm._v(
+          "Showing: " +
+            _vm._s(_vm.videos.current_page) +
+            " of " +
+            _vm._s(_vm.videos.total_pages)
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "row row-cols-5 skeleton-row no-gutters",
+        class: { loading: _vm.loading }
+      },
+      _vm._l(_vm.cards, function(card) {
+        return _c(
+          "div",
+          {
+            key: card.index,
+            staticClass: "col px-2 mb-md-3 position-relative"
+          },
+          [_vm._m(0, true)]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row row-cols-5 video-list no-gutters" },
+      _vm._l(_vm.videos.data, function(video) {
+        return _c(
+          "div",
+          {
+            key: video.index,
+            staticClass: "col px-2 mb-md-3 position-relative"
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "video", class: { loading: _vm.loading } },
+              [
+                _c("div", { staticClass: "video-data" }, [
+                  _c("div", { staticClass: "video-poster" }, [
+                    _c("img", {
+                      staticClass: "card-img-top",
+                      attrs: { src: video.thumbnail, alt: video.title }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "video-info px-0" }, [
+                    _c("h5", { staticClass: "mt-2 mb-1" }, [
+                      _vm._v(_vm._s(video.title))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "pr-2", staticStyle: { opacity: ".5" } },
+                      [
+                        _c("ion-icon", { attrs: { name: "eye" } }),
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              video.views
+                                .toString()
+                                .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+                            ) +
+                            "\n            "
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "likes" },
+                      [
+                        _c("ion-icon", {
+                          staticStyle: { top: "1px" },
+                          attrs: { name: "thumbs-up" }
+                        }),
+                        _vm._v(
+                          " \n              " +
+                            _vm._s(
+                              Math.trunc(
+                                ((video.likes - video.dislikes) / video.likes) *
+                                  100
                               )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            { staticClass: "likes" },
-                            [
-                              _c("ion-icon", {
-                                staticStyle: { top: "1px" },
-                                attrs: { name: "thumbs-up" }
-                              }),
-                              _vm._v(
-                                " \n                " +
-                                  _vm._s(
-                                    Math.trunc(
-                                      ((video.likes - video.dislikes) /
-                                        video.likes) *
-                                        100
-                                    )
-                                  ) +
-                                  "%\n              "
-                              )
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ]
-              )
-            }),
-            0
-          )
-        ])
-      : _c("div", [_vm._v("\n    Sorry, no videos are in this category.\n  ")])
+                            ) +
+                            "%\n            "
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = [
@@ -40240,6 +40252,14 @@ var render = function() {
       _c("top-ad-banner"),
       _vm._v(" "),
       _c("page-header", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.loading,
+            expression: "!loading"
+          }
+        ],
         attrs: { title: this.$route.params.cat + " Videos", icon: "" }
       }),
       _vm._v(" "),
@@ -40285,7 +40305,8 @@ var render = function() {
     "main",
     { staticClass: "col-md-10" },
     [
-      _vm._v("\n  " + _vm._s(this.$route.query) + "\n  "),
+      _c("top-ad-banner"),
+      _vm._v(" "),
       _c("video-list", {
         attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
       }),

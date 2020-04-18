@@ -1,7 +1,7 @@
 <template>
   <main class="col-md-10">
     <top-ad-banner></top-ad-banner>
-    <page-header :title="this.$route.params.cat +' Videos'" icon=""></page-header>
+    <page-header :title="this.$route.params.cat +' Videos'" icon="" v-show="!loading"></page-header>
     <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
     <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
   </main>

@@ -49,13 +49,13 @@
             :disabled="{ disabled: loading }"
             :class="{ disabled: loading }"
             class="page-link"
-            href="javascript:void(0)" 
+            href="javascript:void(0)"
             v-on:click.prevent="changePage(page)"
             >
             {{ page }}
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page < 3">
           <a
             :class="{ disabled: loading }"
             class="page-link page-hellip" 
@@ -66,7 +66,7 @@
             &hellip;
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page < 3">
           <a
             class="page-link" 
             :class="{ 'active': pagination.current_page <= pagination.last_page, disabled: loading }"
@@ -123,14 +123,14 @@ export default{
   },
   methods: {
     changePage(page) {
-      if(!this.loading) {
+      if(!this.loading && this.pagination.current_page != page) {
         this.pagination.current_page = page;
 
         // Push URL
         this.$router.push({ query: { page: page } });
 
         // Emite pagechange
-        this.$parent.$emit('paginate');
+        // this.$parent.$emit('paginate');
       }
     }
   }

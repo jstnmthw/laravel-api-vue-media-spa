@@ -1,6 +1,6 @@
 <template>
   <main class="col-md-10">
-    {{ this.$route.query }}
+    <top-ad-banner></top-ad-banner>
     <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
     <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
   </main>
