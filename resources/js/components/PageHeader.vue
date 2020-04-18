@@ -2,19 +2,14 @@
   <div class="row">
     <h4 class="col mb-3 font-weight-bold">
       <ion-icon :name="icon" v-if="icon"></ion-icon>
-      {{ deslug }}
+      {{ title }}
     </h4>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title', 'icon'],
-  computed: {
-    deslug: function() {
-      return this.title.replace('-', ' ');
-    }
-  }
+  props: ['title', 'icon']
 }
 </script>
 

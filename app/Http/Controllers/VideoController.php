@@ -82,7 +82,6 @@ class VideoController extends Controller
         // Manually setting json paginate for front end.
         $data['current_page'] = $page;
         $data['total'] = $total[0]->count;
-        $data['total_pages'] = ceil($total[0]->count / $limit);
         $data['last_page'] = ceil($total[0]->count / $limit);
         $data['per_page'] = $limit;
 

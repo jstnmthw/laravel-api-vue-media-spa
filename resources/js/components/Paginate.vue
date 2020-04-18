@@ -54,7 +54,7 @@
             {{ page }}
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page < 3">
+        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page >= 5">
           <a
             :class="{ disabled: loading }"
             class="page-link page-hellip" 
@@ -65,7 +65,7 @@
             &hellip;
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page < 3">
+        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page >= 5">
           <a
             class="page-link" 
             :class="{ 'active': pagination.current_page <= pagination.last_page, disabled: loading }"

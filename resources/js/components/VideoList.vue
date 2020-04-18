@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row mb-2">
-        <div class="col-6" v-show="!loading">Showing: {{ videos.current_page }} of {{ videos.total_pages }}</div>
+        <div class="col-6" v-show="!loading">Showing: {{ videos.current_page }} of {{ videos.last_page }}</div>
       </div>
     <div class="video-listing mb-5">
       <div class="row row-cols-5 skeleton-row no-gutters" v-bind:class="{ loading: loading }">
@@ -25,26 +25,7 @@
           v-for="video in videos.data" 
           :key="video.index"
           >
-          <div 
-            class="video"
-            v-bind:class="{ loading: loading }"
-            >
-            <div class="video-data">
-              <div class="video-poster">
-                <img :src="video.thumbnail" class="card-img-top" :alt="video.title">
-              </div>
-              <div class="video-info px-0">
-                <h5 class="mt-2 mb-1">{{ video.title }}</h5>
-                <span style="opacity: .5;" class="pr-2">
-                  <ion-icon name="eye" ></ion-icon> {{ video.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') }}
-                </span>
-                <span class="likes">
-                  <ion-icon name="thumbs-up" style="top: 1px;"></ion-icon> 
-                  {{ Math.trunc(((video.likes - video.dislikes) / video.likes) * 100) }}%
-                </span>
-              </div>
-            </div>
-          </div>
+          <video-list-item :data="video" :loading="loading"></video-list-item>
         </div>
       </div>
     </div>
@@ -53,16 +34,15 @@
 
 <script>
 export default {
-  mounted() {
+  computed: {
+    views: function() {
+      return this.videos.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
   },
   props: [
     'videos', 
     'loading',
     'cards'
-  ],
-  directives: {
-  },
-  methods: {
-  }
+  ]
 }
 </script>

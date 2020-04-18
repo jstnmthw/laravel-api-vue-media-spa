@@ -2,7 +2,7 @@
   <main class="col-md-10">
     <top-ad-banner></top-ad-banner>
     <div v-if="!error">
-      <page-header :title="this.$route.params.category +' Video Category'" icon="" v-show="!loading"></page-header>
+      <page-header :title="category_title" icon="" v-show="!loading"></page-header>
       <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
       <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
     </div>
@@ -19,11 +19,18 @@ export default {
       videos: [],
       pagination: [],
       loading: false,
-      error: false,
-      title: '',
+      error: false
     }
   },
-  computed: {},
+  computed: {
+    category_title: function() {
+      const categories = this.categories.map(el => el.slug);
+      const key = categories.indexOf(this.$route.params.category)
+      if(key >= 0) {
+        return this.categories[key]['name'] + ' Video Categories';
+      }
+    }
+  },
   methods: {
     getVideos() {
       // Start loading on frontend
@@ -67,6 +74,7 @@ export default {
     // Get videos on page load
     this.getVideos();
   },
+  props: ['categories'],
   watch: {
     // When route changes, call API
     $route(to, from) {

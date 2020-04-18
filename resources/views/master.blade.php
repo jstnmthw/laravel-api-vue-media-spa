@@ -24,7 +24,7 @@
         <div class="container bg-purple">
             <div class="row">
                 <main-sidebar :categories="categories"></main-sidebar>
-                <router-view></router-view>
+                <router-view :categories="categories"></router-view>
             </div>
           </div>
     </div>

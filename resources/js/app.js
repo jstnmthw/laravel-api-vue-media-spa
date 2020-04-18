@@ -15,6 +15,7 @@ import Navbar         from './components/Navbar'
 import NotFound       from './components/NotFound'
 import MainSidebar    from './components/MainSidebar'
 import VideoList      from './components/VideoList'
+import VideoListItem  from './components/VideoListItem'
 import TopAdBanner    from './components/TopAdBanner'
 import Paginate       from './components/Paginate'
 import PageHeader     from './components/PageHeader'
@@ -30,6 +31,7 @@ Vue.component('Navbar', Navbar);
 Vue.component('NotFound', NotFound);
 Vue.component('MainSidebar', MainSidebar);
 Vue.component('VideoList', VideoList);
+Vue.component('VideoListItem', VideoListItem);
 Vue.component('TopAdBanner', TopAdBanner);
 Vue.component('PageHeader', PageHeader);
 Vue.component('Paginate', Paginate);
