@@ -2273,8 +2273,7 @@ __webpack_require__.r(__webpack_exports__);
             page: page
           }
         }); // Emite pagechange
-
-        this.$parent.$emit('paginate');
+        // this.$parent.$emit('paginate');
       }
     }
   }
@@ -2404,7 +2403,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2435,9 +2433,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start(); // Set loading
 
       this.loading = true; // Stop unfinished images loading
-      // document.getElementsByClassName('.video-list img').src='';
 
-      $('.video-list img').attr('src', '').attr('alt', ''); // Default page number
+      document.getElementsByClassName('.video-list img').src = ''; // Default page number
 
       var pageNumber = 1; // Set if paginated or direct link used
 
@@ -2505,10 +2502,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     // Get videos on page load
-    this.getVideos(); // Get videos and paginate emit
-    // this.$on('paginate', function () {
-    //   this.getVideos();
-    // });
+    this.getVideos();
   },
   methods: {
     getVideos: function getVideos() {
@@ -2518,9 +2512,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start(); // Set loading
 
       this.loading = true; // Stop unfinished images loading
-      // document.getElementsByClassName('.video-list img').src='';
 
-      $('.video-list img').attr('src', '').attr('alt', ''); // Default page number
+      document.getElementsByClassName('.video-list img').src = ''; // Default page number
 
       var pageNumber = 1; // Set if paginated or direct link used
 
@@ -2528,10 +2521,8 @@ __webpack_require__.r(__webpack_exports__);
         pageNumber = this.videos.current_page;
       } else if (this.$route.query.page) {
         pageNumber = this.$route.query.page;
-      }
+      } // Make the call
 
-      console.log(pageNumber); // let pageNumber = this.videos.current_page ? this.videos.current_page : 1;
-      // Make the call
 
       axios.get('/api/videos' + "?page=" + pageNumber).then(function (response) {
         // Finish loading on frontend
@@ -2542,8 +2533,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.loading = false;
       })["catch"](function (error) {
-        // Log error
-        console.log('Error calling API.'); // Fail loading on frontend
+        // Console log API error.
+        console.log('Error calling API.'); // Failed frontend progress bar
 
         _this.$Progress.fail();
       });
@@ -39758,10 +39749,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c(
-      "h3",
+      "h4",
       { staticClass: "col mb-3 font-weight-bold" },
       [
-        _c("ion-icon", { attrs: { name: _vm.icon } }),
+        _vm.icon ? _c("ion-icon", { attrs: { name: _vm.icon } }) : _vm._e(),
         _vm._v("\n    " + _vm._s(_vm.title) + "\n  ")
       ],
       1
@@ -40202,11 +40193,10 @@ var render = function() {
     "main",
     { staticClass: "col-md-10" },
     [
-      _vm._v("\n  Cateogry: " + _vm._s(this.$route.params.cat) + "\n  "),
       _c("top-ad-banner"),
       _vm._v(" "),
       _c("page-header", {
-        attrs: { title: this.$route.params.cat + " Videos", icon: "flame" }
+        attrs: { title: this.$route.params.cat + " Videos", icon: "" }
       }),
       _vm._v(" "),
       _c("video-list", {

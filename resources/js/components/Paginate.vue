@@ -131,7 +131,7 @@ export default{
         this.$router.push({ query: { page: page } });
 
         // Emite pagechange
-        this.$parent.$emit('paginate');
+        // this.$parent.$emit('paginate');
       }
     }
   }

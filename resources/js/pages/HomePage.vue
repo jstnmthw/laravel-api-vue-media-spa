@@ -25,11 +25,6 @@ export default {
   mounted() {
     // Get videos on page load
     this.getVideos(); 
-
-    // Get videos and paginate emit
-    // this.$on('paginate', function () {
-    //   this.getVideos();
-    // });
   },
   methods: {
     getVideos() {
@@ -40,10 +35,8 @@ export default {
       this.loading = true;
 
       // Stop unfinished images loading
-      // document.getElementsByClassName('.video-list img').src='';
-      $('.video-list img').attr('src', '').attr('alt', '')
+      document.getElementsByClassName('.video-list img').src='';
     
-
       // Default page number
       var pageNumber = 1;
 
@@ -53,9 +46,6 @@ export default {
       }else if(this.$route.query.page) {
         pageNumber = this.$route.query.page;
       }
-
-      console.log(pageNumber);
-      // let pageNumber = this.videos.current_page ? this.videos.current_page : 1;
 
       // Make the call
       axios.get('/api/videos' + "?page=" + pageNumber).then((response) => {
@@ -70,10 +60,10 @@ export default {
         this.loading = false;
 
       }).catch(error => {
-        // Log error
+        // Console log API error.
         console.log('Error calling API.');
 
-        // Fail loading on frontend
+        // Failed frontend progress bar
         this.$Progress.fail();
       });
     }

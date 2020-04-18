@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <h3 class="col mb-3 font-weight-bold">
-      <ion-icon :name="icon"></ion-icon>
+    <h4 class="col mb-3 font-weight-bold">
+      <ion-icon :name="icon" v-if="icon"></ion-icon>
       {{ title }}
-    </h3>
+    </h4>
   </div>
 </template>
 

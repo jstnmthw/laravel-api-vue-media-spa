@@ -1,8 +1,7 @@
 <template>
   <main class="col-md-10">
-    Cateogry: {{ this.$route.params.cat }}
     <top-ad-banner></top-ad-banner>
-    <page-header :title="this.$route.params.cat +' Videos'" icon="flame"></page-header>
+    <page-header :title="this.$route.params.cat +' Videos'" icon=""></page-header>
     <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
     <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
   </main>
@@ -41,8 +40,7 @@ export default {
       this.loading = true;
 
       // Stop unfinished images loading
-      // document.getElementsByClassName('.video-list img').src='';
-      $('.video-list img').attr('src', '').attr('alt', '')
+      document.getElementsByClassName('.video-list img').src='';
     
       // Default page number
       var pageNumber = 1;
@@ -66,6 +64,7 @@ export default {
 
           // Disable loading
           this.loading = false;
+          
         }).catch(error => {
           // Console log API error.
           console.log('Error calling API.');
