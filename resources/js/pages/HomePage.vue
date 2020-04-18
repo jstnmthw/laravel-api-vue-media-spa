@@ -12,14 +12,13 @@ export default {
     return {
       videos: [],
       pagination: [],
-      categories: [],
       loading: false,
     }
   },
   watch: {
+    // When route changes, call API
     $route(to, from) {
       this.getVideos();
-      console.log('Route changed.')
     }
   },
   mounted() {

@@ -2265,7 +2265,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changePage: function changePage(page) {
       if (!this.loading) {
-        window.scrollTo(0, 0);
         this.pagination.current_page = page; // Push URL
 
         this.$router.push({
@@ -2420,9 +2419,9 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   watch: {
+    // When route changes, call API
     $route: function $route(to, from) {
       this.getVideos();
-      console.log('Route changed.');
     }
   },
   methods: {
@@ -2490,14 +2489,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       videos: [],
       pagination: [],
-      categories: [],
       loading: false
     };
   },
   watch: {
+    // When route changes, call API
     $route: function $route(to, from) {
       this.getVideos();
-      console.log('Route changed.');
     }
   },
   mounted: function mounted() {
@@ -55436,7 +55434,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/categories/:cat',
     component: _pages_Categories__WEBPACK_IMPORTED_MODULE_4__["default"],
     name: 'categories'
-  }]
+  }],
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      };
+    }
+  }
 }); // Initiate instance
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({

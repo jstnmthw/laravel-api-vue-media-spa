@@ -124,7 +124,6 @@ export default{
   methods: {
     changePage(page) {
       if(!this.loading) {
-        window.scrollTo(0,0);
         this.pagination.current_page = page;
 
         // Push URL

@@ -26,9 +26,9 @@ export default {
     });
   },
   watch: {
+    // When route changes, call API
     $route(to, from) {
       this.getVideos();
-      console.log('Route changed.')
     }
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
 
           // Disable loading
           this.loading = false;
-          
+
         }).catch(error => {
           // Console log API error.
           console.log('Error calling API.');
