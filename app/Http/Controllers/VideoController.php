@@ -22,7 +22,7 @@ class VideoController extends Controller
     public function index(Request $request)
     {
         /**
-         * When using offsets with large datasets the query becomes sluggish and unresponsive. 
+         * Queries become slow and unresponsive when using offsets on large datasets. 
          * Reduce the first select to indexed only columns. A subsequent query to collect 
          * all the columns by ID's collected. This reduces the query time significantly.
          * 
