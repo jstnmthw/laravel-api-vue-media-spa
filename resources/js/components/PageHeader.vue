@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <h4 class="col mb-3 font-weight-bold">
+    <h4 class="col mb-0 font-weight-bold">
       <ion-icon :name="icon" v-if="icon"></ion-icon>
       {{ title }}
     </h4>

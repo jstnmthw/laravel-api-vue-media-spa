@@ -126,10 +126,8 @@ export default{
         this.pagination.current_page = page;
 
         // Push URL
-        this.$router.push({ query: { page: page } });
-
-        // Emite pagechange
-        // this.$parent.$emit('paginate');
+        this.$router.push({ query: Object.assign({}, this.$route.query, { page: page }) });
+        // this.$router.push({ query: { page: page } });
       }
     }
   }

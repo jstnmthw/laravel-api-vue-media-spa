@@ -2286,11 +2286,10 @@ __webpack_require__.r(__webpack_exports__);
         this.pagination.current_page = page; // Push URL
 
         this.$router.push({
-          query: {
+          query: Object.assign({}, this.$route.query, {
             page: page
-          }
-        }); // Emite pagechange
-        // this.$parent.$emit('paginate');
+          })
+        }); // this.$router.push({ query: { page: page } });
       }
     }
   }
@@ -2398,6 +2397,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'loading'],
   computed: {
@@ -2461,7 +2461,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pagination: [],
       loading: false,
       error: false,
-      sort: 'most_views'
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
   computed: {
@@ -2513,7 +2513,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     sortBy: function sortBy() {
-      console.log(this.sort); // this.$router.push({ query: { sort: this.sort } });
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
+      }); // this.$router.push({ query: { sortby: this.sort } });
     }
   },
   mounted: function mounted() {
@@ -39790,7 +39794,7 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c(
       "h4",
-      { staticClass: "col mb-3 font-weight-bold" },
+      { staticClass: "col mb-0 font-weight-bold" },
       [
         _vm.icon ? _c("ion-icon", { attrs: { name: _vm.icon } }) : _vm._e(),
         _vm._v("\n    " + _vm._s(_vm.title) + "\n  ")
@@ -40201,7 +40205,8 @@ var render = function() {
             _vm._v(" \n        " + _vm._s(_vm.rating) + "%\n      ")
           ],
           1
-        )
+        ),
+        _vm._v("\n      Duration: " + _vm._s(_vm.data.duration) + "\n    ")
       ])
     ])
   ])
@@ -40332,12 +40337,12 @@ var render = function() {
                             _vm._v("Most Views")
                           ]),
                           _vm._v(" "),
-                          _c("option", { attrs: { value: "hottest" } }, [
-                            _vm._v("Hottest")
-                          ]),
-                          _vm._v(" "),
                           _c("option", { attrs: { value: "top_rated" } }, [
                             _vm._v("Top Rated")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "duration" } }, [
+                            _vm._v("Duration")
                           ]),
                           _vm._v(" "),
                           _c("option", { attrs: { value: "most_recent" } }, [

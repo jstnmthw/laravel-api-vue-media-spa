@@ -10,8 +10,8 @@
         <div v-show="!loading">
           <select v-model="sort" name="sortby" class="custom-select" @change="sortBy()">
             <option value="most_views">Most Views</option>
-            <option value="hottest">Hottest</option>
             <option value="top_rated">Top Rated</option>
+            <option value="duration">Duration</option>
             <option value="most_recent">Most Recent</option>
           </select>
         </div>
@@ -33,7 +33,7 @@ export default {
       pagination: [],
       loading: false,
       error: false,
-      sort: 'most_views'
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
   computed: {
@@ -87,8 +87,8 @@ export default {
       });
     },
     sortBy() {
-      console.log(this.sort);
-      // this.$router.push({ query: { sort: this.sort } });
+      this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
+      // this.$router.push({ query: { sortby: this.sort } });
     }
   },
   mounted() {

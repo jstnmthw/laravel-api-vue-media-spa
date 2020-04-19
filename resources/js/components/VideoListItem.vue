@@ -16,6 +16,7 @@
           <ion-icon name="thumbs-up" style="top: 1px;"></ion-icon> 
           {{ rating }}%
         </span>
+        Duration: {{ data.duration }}
       </div>
     </div>
   </div>

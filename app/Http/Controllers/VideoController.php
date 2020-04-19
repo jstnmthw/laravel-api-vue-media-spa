@@ -29,18 +29,54 @@ class VideoController extends Controller
          * This is called the seek method.
          * For more info: https://use-the-index-luke.com/sql/partial-results/fetch-next-page
          */
-        $cat    = $this->getCategory($request->input('category'));
-        $page   = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
-        $limit  = 40;
-        $offset = $page > 1 ? ($page - 1) * 40 + 1 : 0;
+        $cat        = $this->getCategory($request->input('category'));
+        $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
+        $limit      = 40;
+        $offset     = $page > 1 ? ($page - 1) * 40 + 1 : 0;
 
-        $seek = VideoData::select('video_data.id', 'views')
+        // Default set to false
+        $views      = false;
+        $toprated   = false;
+        $duration   = false;
+        $recent     = false;
+
+        // Check for sort request
+        if($request->has('sortby')) {
+            switch ($request->input('sortby')) {
+                case 'most_views':
+                    $views = true;
+                    break;
+                case 'top_rated':
+                    $toprated = true;
+                    break;
+                case 'duration':
+                    $duration = true;
+                    break;
+                case 'most_recent':
+                    $recent = true;
+                    break;
+            }
+        }
+
+        // Run seek query by ids (and sort if present).
+        $seek = VideoData::select('video_data.id')
+            ->when($views, function ($query) {
+                return $query->addSelect('views');
+            })
+            ->when($duration, function ($query) {
+                return $query->addSelect('duration');
+            })
             ->when($cat, function ($query, $cat) {
                 return $query->join('video_categories', 'video_data.id', '=' ,'video_categories.video_data_id')
                     ->where('video_categories.category_id', $cat);
             })
             ->offset($offset)
-            ->orderBy('views', 'DESC')
+            ->when($views, function ($query) {
+                return $query->orderBy('views', 'DESC');
+            })
+            ->when($duration, function ($query) {
+                return $query->orderBy('duration', 'DESC');
+            })
             ->limit($limit)
             ->get();
 
@@ -75,7 +111,14 @@ class VideoController extends Controller
         }
 
         // Now, collect all the information from ids selected (fast).
-        $data['data'] = VideoData::find($ids);
+        $data['data'] = VideoData::whereIn('id', $ids)
+            ->when($views, function ($query) {
+                return $query->orderBy('views', 'DESC');
+            })
+            ->when($duration, function ($query) {
+                return $query->orderBy('duration', 'DESC');
+            })
+            ->get();
 
         // Manually set json paginate for front end.
         $data['current_page'] = $page;
