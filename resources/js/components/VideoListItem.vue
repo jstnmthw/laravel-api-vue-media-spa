@@ -6,6 +6,9 @@
     <div class="video-data">
       <div class="video-poster">
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
+        <div class="duration">
+          {{ duration }}
+        </div>
       </div>
       <div class="data-info px-0">
         <h5 class="mt-2 mb-1">{{ data.title }}</h5>
@@ -16,7 +19,6 @@
           <ion-icon name="thumbs-up" style="top: 1px;"></ion-icon> 
           {{ rating }}%
         </span>
-        Duration: {{ duration }}
       </div>
     </div>
   </div>

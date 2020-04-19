@@ -2398,6 +2398,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'loading'],
   computed: {
@@ -40185,7 +40187,11 @@ var render = function() {
         _c("img", {
           staticClass: "card-img-top",
           attrs: { src: _vm.data.thumbnail, alt: _vm.data.title }
-        })
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "duration" }, [
+          _vm._v("\n        " + _vm._s(_vm.duration) + "\n      ")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "data-info px-0" }, [
@@ -40214,8 +40220,7 @@ var render = function() {
             _vm._v(" \n        " + _vm._s(_vm.rating) + "%\n      ")
           ],
           1
-        ),
-        _vm._v("\n      Duration: " + _vm._s(_vm.duration) + "\n    ")
+        )
       ])
     ])
   ])

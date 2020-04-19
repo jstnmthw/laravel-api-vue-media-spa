@@ -1,7 +1,6 @@
 /**
  * Stylesheet
  */
- 
 body {
   color: $lilac;
 }
@@ -29,10 +28,18 @@ a, .btn-link {
       }
     }
     .video-poster {
+      position: relative;
       background: $lavendar;
       min-height: 154px;
-      img {
-        opacity: 0.05; // Temporary
+      .duration {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        border-radius: 3px;
+        padding: 0 3px;
+        background: rgba(0,0,0,0.65);
+        color: $white;
+        font-size: 12px;
       }
     }
     .video-info {
