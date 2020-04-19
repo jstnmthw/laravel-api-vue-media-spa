@@ -38,14 +38,18 @@
     </div>
     <div class="all-categories">
       <div class="sidebar-filter-container">
-        <i class="xh-icon search"></i>
-        <input 
-          v-model="search" 
-          @keyup="search_category()" 
-          class="form-control mb-3" 
-          type="text" 
-          placeholder="Filter by category…"
-        >
+        <div class="search-wrap">
+          <input 
+            v-model="search" 
+            @keyup="search_category()" 
+            class="form-control mb-3" 
+            type="text" 
+            placeholder="Filter by category…"
+          >
+          <button type="button" class="btn-clear-search" v-show="search" @click.prevent="clear_search()">
+            <ion-icon name="close-circle"></ion-icon>
+          </button>
+        </div>
       </div>
       <ul id="search-list" class="list-unstyled pl-4">
         <li v-for="category in categories" :key="category.id">
@@ -78,6 +82,10 @@ export default {
           $(this).hide();
         }
       }, search);
+    },
+    clear_search() {
+      this.search = null;
+      $('#search-list li').show();
     }
   }
 }

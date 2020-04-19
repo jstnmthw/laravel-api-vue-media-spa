@@ -1980,6 +1980,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2000,6 +2004,10 @@ __webpack_require__.r(__webpack_exports__);
           $(this).hide();
         }
       }, search);
+    },
+    clear_search: function clear_search() {
+      this.search = null;
+      $('#search-list li').show();
     }
   }
 });
@@ -39580,32 +39588,56 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "all-categories" }, [
       _c("div", { staticClass: "sidebar-filter-container" }, [
-        _c("i", { staticClass: "xh-icon search" }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control mb-3",
-          attrs: { type: "text", placeholder: "Filter by category…" },
-          domProps: { value: _vm.search },
-          on: {
-            keyup: function($event) {
-              return _vm.search_category()
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "search-wrap" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
               }
-              _vm.search = $event.target.value
+            ],
+            staticClass: "form-control mb-3",
+            attrs: { type: "text", placeholder: "Filter by category…" },
+            domProps: { value: _vm.search },
+            on: {
+              keyup: function($event) {
+                return _vm.search_category()
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              }
             }
-          }
-        })
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.search,
+                  expression: "search"
+                }
+              ],
+              staticClass: "btn-clear-search",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.clear_search()
+                }
+              }
+            },
+            [_c("ion-icon", { attrs: { name: "close-circle" } })],
+            1
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(

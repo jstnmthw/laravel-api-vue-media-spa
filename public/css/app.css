@@ -14459,3 +14459,20 @@ a:hover,
   color: #b7b7e8;
 }
 
+.search-wrap {
+  position: relative;
+}
+
+.btn-clear-search {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  background: none;
+  border: none;
+  color: #49498b;
+}
+
+.btn-clear-search:hover {
+  color: #52529b;
+}
+

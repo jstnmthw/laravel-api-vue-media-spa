@@ -141,3 +141,17 @@ a, .btn-link {
     color: darken($lilac, 5%);
   }
 }
+.search-wrap {
+  position: relative;
+}
+.btn-clear-search {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  background: none;
+  border: none;
+  color: lighten($purple, 5%);
+  &:hover {
+    color: lighten($purple, 10%);
+  }
+}
