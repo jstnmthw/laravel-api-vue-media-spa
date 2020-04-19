@@ -36,7 +36,7 @@ class VideoController extends Controller
 
         // Default set to false
         $views      = false;
-        $toprated   = false;
+        $likes      = false;
         $duration   = false;
         $recent     = false;
 
@@ -47,7 +47,7 @@ class VideoController extends Controller
                     $views = true;
                     break;
                 case 'top_rated':
-                    $toprated = true;
+                    $likes = true;
                     break;
                 case 'duration':
                     $duration = true;
@@ -66,6 +66,9 @@ class VideoController extends Controller
             ->when($duration, function ($query) {
                 return $query->addSelect('duration');
             })
+            ->when($likes, function ($query) {
+                return $query->addSelect('likes');
+            })
             ->when($cat, function ($query, $cat) {
                 return $query->join('video_categories', 'video_data.id', '=' ,'video_categories.video_data_id')
                     ->where('video_categories.category_id', $cat);
@@ -76,6 +79,9 @@ class VideoController extends Controller
             })
             ->when($duration, function ($query) {
                 return $query->orderBy('duration', 'DESC');
+            })
+            ->when($likes, function ($query) {
+                return $query->orderBy('likes', 'DESC');
             })
             ->limit($limit)
             ->get();

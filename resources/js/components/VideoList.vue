@@ -1,5 +1,5 @@
 <template>
-  <div class="row video-listing mb-5">
+  <div class="video-listing mb-5">
     <div class="row row-cols-5 skeleton-row no-gutters" v-bind:class="{ loading: loading }">
       <div
         class="col px-2 mb-md-3 position-relative" 

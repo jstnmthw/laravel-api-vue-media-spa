@@ -16,7 +16,7 @@
           <ion-icon name="thumbs-up" style="top: 1px;"></ion-icon> 
           {{ rating }}%
         </span>
-        Duration: {{ data.duration }}
+        Duration: {{ duration }}
       </div>
     </div>
   </div>
@@ -30,7 +30,10 @@ export default {
       return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function() {
-      return Math.trunc(((this.data.likes - this.data.dislikes) / this.data.likes) * 100);
+      return Math.trunc((this.data.likes / (this.data.likes + this.data.dislikes)) * 100);
+    },
+    duration: function() {
+      return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
     }
   }
 }

@@ -60,6 +60,9 @@ export default {
       // Stop unfinished images loading
       $('.video-poster img').attr('src', '');
 
+      // Push default sort
+      this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
+
       // Make the call
       axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
 

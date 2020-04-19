@@ -2405,7 +2405,10 @@ __webpack_require__.r(__webpack_exports__);
       return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function rating() {
-      return Math.trunc((this.data.likes - this.data.dislikes) / this.data.likes * 100);
+      return Math.trunc(this.data.likes / (this.data.likes + this.data.dislikes) * 100);
+    },
+    duration: function duration() {
+      return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
     }
   }
 });
@@ -2488,7 +2491,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true; // Stop unfinished images loading
 
-      $('.video-poster img').attr('src', ''); // Make the call
+      $('.video-poster img').attr('src', ''); // Push default sort
+
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
+      }); // Make the call
 
       axios.get('/api/videos', {
         params: _objectSpread({}, this.$route.params, {}, this.$route.query)
@@ -40089,7 +40098,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row video-listing mb-5" }, [
+  return _c("div", { staticClass: "video-listing mb-5" }, [
     _c(
       "div",
       {
@@ -40206,7 +40215,7 @@ var render = function() {
           ],
           1
         ),
-        _vm._v("\n      Duration: " + _vm._s(_vm.data.duration) + "\n    ")
+        _vm._v("\n      Duration: " + _vm._s(_vm.duration) + "\n    ")
       ])
     ])
   ])
