@@ -9,6 +9,7 @@ import VueProgressBar from 'vue-progressbar';
 // Pages
 import Homepage       from './pages/Homepage'
 import Categories     from './pages/Categories'
+import Video          from './pages/Video'
 
 // Components
 import Navbar         from './components/Navbar'
@@ -60,6 +61,11 @@ const router = new VueRouter({
       path: '/categories/:category',
       component: Categories,
       name: 'categories'
+    },
+    {
+      path: '/videos/:id',
+      component: Video,
+      name: 'video'
     },
     { 
       path: '*', 

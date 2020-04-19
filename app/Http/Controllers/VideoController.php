@@ -164,7 +164,14 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        return Data::where('id', $id)->firstOrFail();
+        $data = VideoData::where('id', $id)->firstOrFail();
+        $categories = $data->categories()->get();
+
+        foreach ($categories as $key => $category) {
+            echo $category->data()->get();
+        }
+
+        // return $data->categories->data();
     }
 
     /**
