@@ -14476,3 +14476,16 @@ a:hover,
   color: #52529b;
 }
 
+.video-frame {
+  position: relative;
+  background: #000;
+  width: 100%;
+}
+
+.video-frame iframe {
+  margin: 0 auto;
+  display: block;
+  height: 481px;
+  width: 608px;
+}
+

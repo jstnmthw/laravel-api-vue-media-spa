@@ -155,3 +155,14 @@ a, .btn-link {
     color: lighten($purple, 10%);
   }
 }
+.video-frame {
+  position: relative;
+  background: $black;
+  width: 100%;
+  iframe{
+    margin: 0 auto;
+    display: block;
+    height: 481px;
+    width: 608px;
+    }
+}

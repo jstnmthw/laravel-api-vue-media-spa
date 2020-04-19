@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class VideoCategories extends Model
 {
+    /**
+     * Get the video that owns the video category.
+     */
+    public function video()
+    {
+        return $this->belongsTo('App\VideoData');
+    }
     
     /**
      * Each category entry has one datafield
@@ -14,4 +21,5 @@ class VideoCategories extends Model
     {
         return $this->hasOne('App\Categories', 'id');
     }
+
 }

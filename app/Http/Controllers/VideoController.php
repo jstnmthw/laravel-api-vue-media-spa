@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use App\VideoData;
 use App\VideoCategories;
 use App\Categories;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 
 class VideoController extends Controller
@@ -164,14 +165,11 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $data = VideoData::where('id', $id)->firstOrFail();
-        $categories = $data->categories()->get();
-
-        foreach ($categories as $key => $category) {
-            echo $category->data()->get();
-        }
-
-        // return $data->categories->data();
+        $data = VideoData::where('id', $id)->with('categories', 'categories.data:id,name')->get();
+        $embed = preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data[0]->embed, $url);
+        $data[0]->embed = $url[0];
+        
+        return $data[0];
     }
 
     /**

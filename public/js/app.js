@@ -2671,12 +2671,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: []
     };
   },
+  props: ['categories'],
   mounted: function mounted() {
     this.getVideo();
   },
@@ -2692,7 +2694,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.$Progress.finish(); // Set video object
 
 
-        _this.data = response.data;
+        _this.data = response.data; // Set iframe src
+
+        $('#video').attr('src', _this.data.embed);
       })["catch"](function (error) {
         // Console log API error.
         console.log('Error calling API.'); // Failed frontend progress bar
@@ -40305,9 +40309,16 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "data-info px-0" }, [
-        _c("h5", { staticClass: "mt-2 mb-1" }, [
-          _vm._v(_vm._s(_vm.data.title))
-        ]),
+        _c(
+          "h5",
+          { staticClass: "mt-2 mb-1" },
+          [
+            _c("router-link", { attrs: { to: "/videos/" + _vm.data.id } }, [
+              _vm._v(_vm._s(_vm.data.title))
+            ])
+          ],
+          1
+        ),
         _vm._v(" "),
         _c(
           "span",
@@ -40567,15 +40578,37 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "video" }, [
-      _vm._v("\n    " + _vm._s(_vm.data.embed) + "\n  ")
-    ]),
-    _vm._v(" "),
-    _c("h3", [_vm._v(_vm._s(_vm.data.title))])
-  ])
+  return _c(
+    "main",
+    { staticClass: "col-sm-12 col-md-10" },
+    [
+      _c("top-ad-banner"),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("h3", [_vm._v(_vm._s(_vm.data.title))])
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "video-frame mb-3" }, [
+      _c("iframe", {
+        attrs: {
+          id: "video",
+          frameborder: "0",
+          height: "auto",
+          width: "100%",
+          scrolling: "no"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 

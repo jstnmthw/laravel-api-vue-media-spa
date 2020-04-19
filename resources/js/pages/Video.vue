@@ -1,10 +1,11 @@
 <template>
-  <div class="container-fluid">
-    <div class="video">
-      {{ data.embed }}
+  <main class="col-sm-12 col-md-10">
+    <top-ad-banner></top-ad-banner>
+    <div class="video-frame mb-3">
+      <iframe id="video" frameborder="0" height="auto" width="100%" scrolling="no"></iframe>
     </div>
     <h3>{{ data.title }}</h3>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -14,6 +15,7 @@ export default {
       data: []
     }
   },
+  props: ['categories'],
   mounted() {
     this.getVideo();
   },
@@ -30,6 +32,9 @@ export default {
 
         // Set video object
         this.data = response.data;
+
+        // Set iframe src
+        $('#video').attr('src', this.data.embed);
 
       }).catch(error => {
         // Console log API error.
