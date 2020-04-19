@@ -39,14 +39,15 @@
     <div class="all-categories">
       <div class="sidebar-filter-container">
         <i class="xh-icon search"></i>
-        <input class="form-control mb-3" type="text" placeholder="Filter by category…">
-        <div class="sidebar-filter__loader dots-loader">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
+        <input 
+          v-model="search" 
+          @keyup="search_category()" 
+          class="form-control mb-3" 
+          type="text" 
+          placeholder="Filter by category…"
+        >
       </div>
-      <ul class="list-unstyled pl-4">
+      <ul id="search-list" class="list-unstyled pl-4">
         <li v-for="category in categories" :key="category.id">
           <router-link :to="'/categories/' + category.slug">
             {{ category.name }}
@@ -59,7 +60,26 @@
 
 <script>
 export default {
-  props: ['categories']
+  data() {
+    return {
+      search: null
+    }
+  },
+  props: ['categories'],
+  methods: {
+    search_category() {
+      const search = [this.search];
+      $('#search-list li').each(function(i) {
+        const haystack = search[0].toUpperCase();
+        const needle = this.innerText.toUpperCase();
+        if(needle.indexOf(haystack) > -1) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      }, search);
+    }
+  }
 }
 </script>
 

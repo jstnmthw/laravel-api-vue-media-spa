@@ -58,7 +58,7 @@ export default {
       this.loading = true;
 
       // Stop unfinished images loading
-      $('.video-poster img').attr('src', '');
+      // $('.video-poster img').attr('src', '');
 
       // Push default sort
       this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
