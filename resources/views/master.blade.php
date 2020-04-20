@@ -21,12 +21,7 @@
     <div id="app">
         <vue-progress-bar></vue-progress-bar>
         <navbar></navbar>
-        <div class="container bg-purple">
-            <div class="row">
-                <main-sidebar :categories="categories"></main-sidebar>
-                <router-view :categories="categories"></router-view>
-            </div>
-          </div>
+        <router-view :categories="categories"></router-view>
     </div>
 
     <!-- Scripts -->

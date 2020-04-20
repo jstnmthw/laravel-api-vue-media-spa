@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12 col-md-3 col-lg-2">
+  <aside class="col-sm-12 col-md-3 col-lg-2">
     <div class="main-categories">
       <ul class="list-unstyled pl-4">
         <li>
@@ -59,7 +59,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script>

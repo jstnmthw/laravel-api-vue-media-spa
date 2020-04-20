@@ -45,6 +45,9 @@ a, .btn-link {
     .video-info {
       font-size: 12px;
       min-height: 58px;
+      .likes {
+        color: $green;
+      }
     }
   }
 }

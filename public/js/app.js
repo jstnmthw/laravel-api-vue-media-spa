@@ -2599,6 +2599,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2607,6 +2612,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       loading: false
     };
   },
+  props: ['categories'],
   methods: {
     getVideos: function getVideos() {
       var _this = this;
@@ -39562,7 +39568,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm-12 col-md-3 col-lg-2" }, [
+  return _c("aside", { staticClass: "col-sm-12 col-md-3 col-lg-2" }, [
     _c("div", { staticClass: "main-categories" }, [
       _c("ul", { staticClass: "list-unstyled pl-4" }, [
         _c("li", [
@@ -40308,7 +40314,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "data-info px-0" }, [
+      _c("div", { staticClass: "video-info px-0" }, [
         _c(
           "h5",
           { staticClass: "mt-2 mb-1" },
@@ -40534,27 +40540,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "main",
-    { staticClass: "col-md-10" },
-    [
-      _c("top-ad-banner"),
-      _vm._v(" "),
-      _c("video-list", {
-        attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
-      }),
-      _vm._v(" "),
-      _c("paginate", {
-        attrs: { pagination: _vm.videos, loading: _vm.loading },
-        on: {
-          paginate: function($event) {
-            return _vm.getVideos()
-          }
-        }
-      })
-    ],
-    1
-  )
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "row bg-purple" },
+      [
+        _c("main-sidebar", { attrs: { categories: _vm.categories } }),
+        _vm._v(" "),
+        _c(
+          "main",
+          { staticClass: "col-md-10" },
+          [
+            _c("top-ad-banner"),
+            _vm._v(" "),
+            _c("video-list", {
+              attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
+            }),
+            _vm._v(" "),
+            _c("paginate", {
+              attrs: { pagination: _vm.videos, loading: _vm.loading },
+              on: {
+                paginate: function($event) {
+                  return _vm.getVideos()
+                }
+              }
+            })
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55881,15 +55898,14 @@ window.axios.defaults.withCredentials = true;
 /*!*************************************************!*\
   !*** ./resources/js/components/MainSidebar.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MainSidebar_vue_vue_type_template_id_2f11fcc8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainSidebar.vue?vue&type=template&id=2f11fcc8&scoped=true& */ "./resources/js/components/MainSidebar.vue?vue&type=template&id=2f11fcc8&scoped=true&");
 /* harmony import */ var _MainSidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MainSidebar.vue?vue&type=script&lang=js& */ "./resources/js/components/MainSidebar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _MainSidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _MainSidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _MainSidebar_vue_vue_type_style_index_0_id_2f11fcc8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainSidebar.vue?vue&type=style&index=0&id=2f11fcc8&lang=scss&scoped=true& */ "./resources/js/components/MainSidebar.vue?vue&type=style&index=0&id=2f11fcc8&lang=scss&scoped=true&");
+/* empty/unused harmony star reexport *//* harmony import */ var _MainSidebar_vue_vue_type_style_index_0_id_2f11fcc8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainSidebar.vue?vue&type=style&index=0&id=2f11fcc8&lang=scss&scoped=true& */ "./resources/js/components/MainSidebar.vue?vue&type=style&index=0&id=2f11fcc8&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -55921,7 +55937,7 @@ component.options.__file = "resources/js/components/MainSidebar.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/components/MainSidebar.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

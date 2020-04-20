@@ -14329,6 +14329,10 @@ a:hover,
   min-height: 58px;
 }
 
+.video-listing .video .video-info .likes {
+  color: #38c172;
+}
+
 .skeleton-row {
   display: none;
 }

@@ -1,9 +1,14 @@
 <template>
-  <main class="col-md-10">
-    <top-ad-banner></top-ad-banner>
-    <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
-    <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
-  </main>
+  <div class="container">
+    <div class="row bg-purple">
+    <main-sidebar :categories="categories"></main-sidebar>
+    <main class="col-md-10">
+      <top-ad-banner></top-ad-banner>
+      <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
+      <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
+    </main>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,6 +20,7 @@ export default {
       loading: false,
     }
   },
+  props: ['categories'],
   methods: {
     getVideos() {
       // Start loading on frontend
