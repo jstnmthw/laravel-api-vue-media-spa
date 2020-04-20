@@ -2556,8 +2556,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$Progress.start(); // Set loading
 
       this.loading = true; // Stop unfinished images loading
-      // $('.video-poster img').attr('src', '');
-      // Push default sort
+
+      $('.video-poster img').attr('src', ''); // Push default sort
 
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
@@ -2592,7 +2592,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         query: Object.assign({}, this.$route.query, {
           sortby: this.sort
         })
-      }); // this.$router.push({ query: { sortby: this.sort } });
+      });
     }
   },
   mounted: function mounted() {
@@ -2639,12 +2639,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       videos: [],
       pagination: [],
-      loading: false
+      loading: false,
+      error: false,
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
   props: ['categories'],
@@ -2652,7 +2667,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getVideos: function getVideos() {
       var _this = this;
 
-      // Start loading on frontend
+      // Clear data
+      this.videos = [];
+      this.error = false; // Start loading on frontend
+
       this.$Progress.start(); // Set loading
 
       this.loading = true; // Stop unfinished images loading
@@ -2674,6 +2692,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log('Error calling API.'); // Failed frontend progress bar
 
         _this.$Progress.fail();
+      });
+    },
+    sortBy: function sortBy() {
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
       });
     }
   },
@@ -40651,6 +40676,106 @@ var render = function() {
           { staticClass: "col-md-10" },
           [
             _c("top-ad-banner"),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex justify-content-between align-items-center mb-3"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.loading,
+                        expression: "!loading"
+                      }
+                    ]
+                  },
+                  [
+                    _vm._v(
+                      "\n        Showing: " +
+                        _vm._s(_vm.videos.current_page) +
+                        " of " +
+                        _vm._s(_vm.videos.last_page) +
+                        "\n      "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.loading,
+                        expression: "!loading"
+                      }
+                    ]
+                  },
+                  [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sort,
+                            expression: "sort"
+                          }
+                        ],
+                        staticClass: "custom-select",
+                        attrs: { name: "sortby" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.sort = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.sortBy()
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "most_views" } }, [
+                          _vm._v("Most Views")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "top_rated" } }, [
+                          _vm._v("Top Rated")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "duration" } }, [
+                          _vm._v("Duration")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "most_recent" } }, [
+                          _vm._v("Most Recent")
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
             _vm._v(" "),
             _c("video-list", {
               attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }

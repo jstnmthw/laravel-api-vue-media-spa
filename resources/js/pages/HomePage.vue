@@ -4,6 +4,19 @@
     <main-sidebar :categories="categories"></main-sidebar>
     <main class="col-md-10">
       <top-ad-banner></top-ad-banner>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div v-show="!loading">
+          Showing: {{ videos.current_page }} of {{ videos.last_page }}
+        </div>
+        <div v-show="!loading">
+          <select v-model="sort" name="sortby" class="custom-select" @change="sortBy()">
+            <option value="most_views">Most Views</option>
+            <option value="top_rated">Top Rated</option>
+            <option value="duration">Duration</option>
+            <option value="most_recent">Most Recent</option>
+          </select>
+        </div>
+      </div>
       <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
       <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
     </main>
@@ -18,11 +31,17 @@ export default {
       videos: [],
       pagination: [],
       loading: false,
+      error: false,
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
   props: ['categories'],
   methods: {
     getVideos() {
+      // Clear data
+      this.videos = [];
+      this.error = false;
+
       // Start loading on frontend
       this.$Progress.start();
 
@@ -51,6 +70,9 @@ export default {
         // Failed frontend progress bar
         this.$Progress.fail();
       });
+    },
+    sortBy() {
+      this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
     }
   },
   mounted() {
