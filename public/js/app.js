@@ -2364,6 +2364,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['categories']
 });
@@ -2678,7 +2680,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $('.video-poster img').attr('src', ''); // Make the call
 
       axios.get('/api/videos', {
-        params: _objectSpread({}, this.$route.params, {}, this.$route.query)
+        params: _objectSpread({}, this.$route.params, {}, this.$route.query, {}, {
+          'sortby': 'most_views'
+        })
       }).then(function (response) {
         // Finish loading on frontend
         _this.$Progress.finish(); // Set video object
@@ -2745,11 +2749,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: []
     };
+  },
+  computed: {
+    rating: function rating() {
+      if (this.data.likes >= 1) {
+        return Math.trunc(this.data.likes / (this.data.likes + this.data.dislikes) * 100);
+      } else {
+        return 0;
+      }
+    }
   },
   props: ['categories'],
   mounted: function mounted() {
@@ -40290,10 +40320,23 @@ var render = function() {
   return _c("div", { staticClass: "label-wrap" }, [
     _c(
       "ul",
+      { staticClass: "list-inline" },
       _vm._l(_vm.categories, function(label) {
-        return _c("li", { key: label.index }, [
-          _vm._v("\n      " + _vm._s(label) + "\n    ")
-        ])
+        return _c(
+          "li",
+          { key: label.index, staticClass: "list-inline-item" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-sm btn-category",
+                attrs: { to: "/categories/" + label.slug }
+              },
+              [_vm._v("\n        " + _vm._s(label.name) + "\n      ")]
+            )
+          ],
+          1
+        )
       }),
       0
     )
@@ -40418,7 +40461,7 @@ var render = function() {
       _c("div", { staticClass: "video-info px-0" }, [
         _c(
           "h5",
-          { staticClass: "mt-2 mb-1" },
+          { staticClass: "video-title mt-2 mb-1" },
           [
             _c("router-link", { attrs: { to: "/videos/" + _vm.data.id } }, [
               _vm._v(_vm._s(_vm.data.title))
@@ -40831,7 +40874,56 @@ var render = function() {
             attrs: { categories: _vm.data.categories }
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "video-actions d-flex justify-content-between align-items-top mb-3"
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary  mr-3",
+                  attrs: { type: "button" }
+                },
+                [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "mr-3 video-rating" }, [
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.data.likes) +
+                    " Likes / " +
+                    _vm._s(_vm.data.dislikes) +
+                    " Dislikes\n          "
+                ),
+                _c("div", { staticClass: "video-rating-bar mt-1" }, [
+                  _c("div", {
+                    staticClass: "video-rating-likes",
+                    style: { width: _vm.rating + "%" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary ml-auto" },
+                [_c("ion-icon", { attrs: { name: "flag" } })],
+                1
+              )
+            ]
+          )
         ],
         1
       ),
@@ -40850,7 +40942,7 @@ var staticRenderFns = [
         attrs: {
           id: "video",
           frameborder: "0",
-          height: "auto",
+          height: "100%",
           width: "100%",
           scrolling: "no"
         }

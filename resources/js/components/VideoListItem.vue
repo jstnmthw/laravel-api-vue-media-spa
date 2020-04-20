@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="video-info px-0">
-        <h5 class="mt-2 mb-1"><router-link :to="'/videos/' + data.id">{{ data.title }}</router-link></h5>
+        <h5 class="video-title mt-2 mb-1"><router-link :to="'/videos/' + data.id">{{ data.title }}</router-link></h5>
         <span style="opacity: .5;" class="pr-2">
           <ion-icon name="eye" ></ion-icon> {{ views }}
         </span>

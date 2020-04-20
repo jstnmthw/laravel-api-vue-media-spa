@@ -10,56 +10,7 @@ a, .btn-link {
     color: $white;
   }
 }
-.video-listing {
-  margin-left: -8px;
-  margin-right: -8px;
-  h5 {
-    font-size: 14px;
-    font-weight: 700;
-  }
-  .video {
-    position: relative;
-    .video-data {
-      display: block;
-    }
-    &.loading {
-      .video-data {
-        display: none;
-      }
-    }
-    .video-poster {
-      position: relative;
-      background: $lavendar;
-      min-height: 154px;
-      .duration {
-        position: absolute;
-        bottom: 8px;
-        right: 8px;
-        border-radius: 3px;
-        padding: 0 3px;
-        background: rgba(0,0,0,0.65);
-        color: $white;
-        font-size: 12px;
-      }
-    }
-    .video-info {
-      font-size: 12px;
-      min-height: 58px;
-      .liked {
-        color: $green;
-        [name="thumbs-down"] {
-          display: none;
-        }
-      }
-      .disliked {
-        color: $red;
-        [name="thumbs-up"] {
-          display: none;
-        }
-      }
-    }
-  }
-}
+// TODO: Replace class with v-show on vue
 .skeleton-row {
   display: none;
   &.loading {
@@ -98,7 +49,8 @@ a, .btn-link {
     float: left;
   }
 }
-.form-control, .form-control:focus {
+.form-control, 
+.form-control:focus {
   background: $indigo;
   color: $lilac;
   border: 1px solid $purple;
@@ -167,19 +119,114 @@ a, .btn-link {
     color: lighten($purple, 10%);
   }
 }
+.sidead-placeholder {
+  background: $lavendar;
+  height: 500px;
+}
+.btn {
+  &.btn-primary {
+    background: $indigo;
+    color: lighten($lavendar, 5%);
+    border: none;
+    &:hover {
+      background: darken($indigo, 4%);
+      color: $pink;
+    }
+  }
+  &.btn-category {
+    background: $indigo;
+    color: lighten($lavendar, 5%);
+    &:hover {
+      background: darken($indigo, 4%);
+      color: $pink;
+    }
+  }
+}
+
+// VideoList component
+.video-listing {
+  margin-left: -8px;
+  margin-right: -8px;
+  h5 {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .video {
+    position: relative;
+    .video-data {
+      display: block;
+    }
+    // TODO: Replace class with v-show on vue
+    &.loading {
+      .video-data {
+        display: none;
+      }
+    }
+    .video-poster {
+      position: relative;
+      background: $lavendar;
+      min-height: 154px;
+      .duration {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        border-radius: 3px;
+        padding: 0 3px;
+        background: rgba(0,0,0,0.65);
+        color: $white;
+        font-size: 12px;
+      }
+    }
+    .video-info {
+      font-size: 12px;
+      min-height: 58px;
+      .video-title {
+        word-break: break-word;
+      }
+      .liked {
+        color: $green;
+        [name="thumbs-down"] {
+          display: none;
+        }
+      }
+      .disliked {
+        color: $red;
+        [name="thumbs-up"] {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+// Video component 
 .video-frame {
   position: relative;
   background: $black;
   width: 100%;
+  padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */ 
   iframe{
-    margin: 0 auto;
-    display: block;
-    height: 481px;
-    width: 608px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     }
 }
-.sidead-placeholder {
-  margin: 15px;
-  background: $lavendar;
-  height: 500px;
+.video-rating {
+  font-size: 12px;
+  .video-rating-bar {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: $red;
+    max-width: 200px;
+    .video-rating-likes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: $green;
+    }
+  }
 }

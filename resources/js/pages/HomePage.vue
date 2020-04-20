@@ -52,7 +52,7 @@ export default {
       $('.video-poster img').attr('src', '');
 
       // Make the call
-      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
+      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query, ...{ 'sortby' : 'most_views' } } }).then((response) => {
 
         // Finish loading on frontend
         this.$Progress.finish();

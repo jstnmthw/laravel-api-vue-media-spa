@@ -22,8 +22,9 @@ $cyan: #6cb2eb;
 
 // Custom colors
 $theme-colors: (
-  "purple": #40407a,
-  "indigo": #2c2c54
+  "indigo": $indigo,
+  "pink": $pink,
+  "purple": $purple
 );
 
 // Grid breakpoints
