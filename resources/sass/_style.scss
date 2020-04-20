@@ -45,8 +45,17 @@ a, .btn-link {
     .video-info {
       font-size: 12px;
       min-height: 58px;
-      .likes {
+      .liked {
         color: $green;
+        [name="thumbs-down"] {
+          display: none;
+        }
+      }
+      .disliked {
+        color: $red;
+        [name="thumbs-up"] {
+          display: none;
+        }
       }
     }
   }
@@ -168,4 +177,9 @@ a, .btn-link {
     height: 481px;
     width: 608px;
     }
+}
+.sidead-placeholder {
+  margin: 15px;
+  background: $lavendar;
+  height: 500px;
 }

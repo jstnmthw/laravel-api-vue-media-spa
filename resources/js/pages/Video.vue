@@ -1,11 +1,18 @@
 <template>
-  <main class="col-sm-12 col-md-10">
-    <top-ad-banner></top-ad-banner>
-    <div class="video-frame mb-3">
-      <iframe id="video" frameborder="0" height="auto" width="100%" scrolling="no"></iframe>
+  <div class="container bg-purple">
+    <div class="row">
+      <main class="col-sm-12 col-md-9">
+        <h3>{{ data.title }}</h3>
+        <video-category-labels :categories="data.categories"></video-category-labels>
+        <div class="video-frame mb-3">
+          <iframe id="video" frameborder="0" height="auto" width="100%" scrolling="no"></iframe>
+        </div>
+      </main>
+      <aside class="col-sm-12 col-md-3">
+        <div class="sidead-placeholder"></div>
+      </aside>
     </div>
-    <h3>{{ data.title }}</h3>
-  </main>
+  </div>
 </template>
 
 <script>

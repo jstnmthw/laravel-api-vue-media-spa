@@ -14329,8 +14329,20 @@ a:hover,
   min-height: 58px;
 }
 
-.video-listing .video .video-info .likes {
+.video-listing .video .video-info .liked {
   color: #38c172;
+}
+
+.video-listing .video .video-info .liked [name=thumbs-down] {
+  display: none;
+}
+
+.video-listing .video .video-info .disliked {
+  color: #e3342f;
+}
+
+.video-listing .video .video-info .disliked [name=thumbs-up] {
+  display: none;
 }
 
 .skeleton-row {
@@ -14491,5 +14503,11 @@ a:hover,
   display: block;
   height: 481px;
   width: 608px;
+}
+
+.sidead-placeholder {
+  margin: 15px;
+  background: #5d5daf;
+  height: 500px;
 }
 

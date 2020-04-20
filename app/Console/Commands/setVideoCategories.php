@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use DB;
 use Illuminate\Console\Command;
-use App\Categories;
-use App\VideoData;
-use App\VideoCategories;
+use App\Categorizable;
+use App\Category;
+use App\Video;
 
 class setVideoCategories extends Command
 {
@@ -44,14 +44,14 @@ class setVideoCategories extends Command
 
         if ($this->confirm('Are you sure you want to continue?')) {
 
-            $categories = Categories::all()->toArray();
-            $total = DB::select('SELECT count(views) as count FROM video_data');
+            $categories = Category::all()->toArray();
+            $total = DB::select('SELECT count(views) as count FROM videos');
             
             $progressBar = $this->output->createProgressBar($total[0]->count);
             $progressBar->start();
             $progressBar->setRedrawFrequency(100);
 
-            VideoData::orderBy('id')->chunk(1000, function ($data) use ($progressBar, $categories) {
+            Video::orderBy('id')->chunk(500, function ($data) use ($progressBar, $categories) {
 
                 foreach ($data as $key => $value) {
             
@@ -63,11 +63,12 @@ class setVideoCategories extends Command
 
                         if ($cat !== false) {
 
-                            VideoCategories::insert(['categories_id' => $cat + 1, 'video_data_id' => $value['id']]);
+                            $categorizable = new Categorizable;
+                            $categorizable->category_id = $cat + 1;
+                            $categorizable->categorizable_id = $value['id'];
+                            $categorizable->categorizable_type = 'App\\Video';
+                            $categorizable->save();
 
-                        }else {
-                            
-                            VideoCategories::insert(['categories_id' => 107, 'video_data_id' => $value['id']]);
                         }
 
                     }

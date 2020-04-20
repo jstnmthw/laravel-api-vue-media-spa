@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
-use App\Http\Resources\DataCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use App\VideoData;
-use App\VideoCategories;
-use App\Categories;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Str;
+
+use App\Video;
+use App\Categorizable;
+use App\Category;
 
 
 class VideoController extends Controller
 {
+
     /**
      * Display & paginate a listing of the resource.
      *
@@ -22,6 +24,7 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
+
         /**
          * Queries become slow and unresponsive when using offsets on large datasets. 
          * Reduce the first select to indexed only columns. A subsequent query to collect 
@@ -60,7 +63,7 @@ class VideoController extends Controller
         }
 
         // Run seek query by ids (and sort if present).
-        $seek = VideoData::select('video_data.id')
+        $seek = Video::select('videos.id')
             ->when($views, function ($query) {
                 return $query->addSelect('views');
             })
@@ -71,8 +74,8 @@ class VideoController extends Controller
                 return $query->addSelect('likes');
             })
             ->when($cat, function ($query, $cat) {
-                return $query->join('video_categories', 'video_data.id', '=' ,'video_categories.video_data_id')
-                    ->where('video_categories.category_id', $cat);
+                return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
+                    ->where('categorizables.category_id', $cat);
             })
             ->offset($offset)
             ->when($views, function ($query) {
@@ -87,10 +90,12 @@ class VideoController extends Controller
             ->limit($limit)
             ->get();
 
+        // Return error is no results.
         if(empty($seek->toArray())) {
             return ['error'=> 'No videos found in this category.'];
         }
 
+        // Push collect of IDs to array.
         foreach($seek as $row) {
             $ids[] = $row['id'];
         }
@@ -101,24 +106,21 @@ class VideoController extends Controller
          * the amount of records. The data should already be indexed but we will cache the first 
          * results to make this virtually queryless.
          */
+        
         if(!$cat) {
-            $total = Cache::remember('videos_total', 1500, function () {
-                return DB::select('SELECT COUNT(views) as count FROM video_data');
+            $total = Cache::remember('videos_total', 3100, function () {
+                return Video::count();
             });
         } else {
-            $total = Cache::remember('cat'.$cat.'_total', 1500, function () use ($cat) {
-                return DB::select('SELECT count(video_data.id) 
-                    AS count 
-                    FROM video_data 
-                    LEFT JOIN video_categories 
-                    ON video_data.id = video_categories.video_data_id 
-                    WHERE video_categories.category_id = '.$cat
-                );
+            $total = Cache::remember('cat'.$cat.'_total', 300, function () use ($cat) {
+                return Category::find($cat)->videos()->count();
             });
         }
 
+        // dd(Category::find(1)->videos()->count());
+
         // Now, collect all the information from ids selected (fast).
-        $data['data'] = VideoData::whereIn('id', $ids)
+        $data['data'] = Video::whereIn('id', $ids)
             ->when($views, function ($query) {
                 return $query->orderBy('views', 'DESC');
             })
@@ -128,10 +130,10 @@ class VideoController extends Controller
             ->get();
 
         // Manually set json paginate for front end.
-        $data['current_page'] = $page;
-        $data['total'] = $total[0]->count;
-        $data['last_page'] = ceil($total[0]->count / $limit);
+        $data['total'] = $total;
         $data['per_page'] = $limit;
+        $data['last_page'] = ceil($total / $limit);
+        $data['current_page'] = $page;
 
         return $data;
     }
@@ -165,11 +167,25 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $data = VideoData::where('id', $id)->with('categories', 'categories.data:id,name')->get();
-        $embed = preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data[0]->embed, $url);
-        $data[0]->embed = $url[0];
+
+        $data = Video::find($id);
+
+        foreach($data->categories()->get() as $key => $category) {
+            $categories[$key]['name'] = $category['name'];
+            $categories[$key]['slug'] = Str::slug($category['name'], '-');
+        }
+
+        preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data->embed, $url);
+        $data->embed = $url[0];
+        $data->categories = $categories;
+
+        return $data;
+
+
+        // $embed = preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data[0]->embed, $url);
+        // $data[0]->embed = $url[0];
         
-        return $data[0];
+        // return $data[0];
     }
 
     /**
@@ -219,7 +235,7 @@ class VideoController extends Controller
         if(null !== $cat) {
 
             $cat = strtolower(str_replace('-', ' ', $cat));
-            $db_cats = Categories::select('id', 'name')->get()->toArray();
+            $db_cats = Category::select('id', 'name')->get()->toArray();
             $match = array_search($cat, array_map('strtolower', array_column($db_cats, 'name')));
             
             return $match !== false ? $db_cats[$match]['id'] : abort(404);

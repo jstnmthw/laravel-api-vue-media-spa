@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Categories;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Categories::select('id', 'name')->get();
+        $data = Category::select('id', 'name')->get();
         foreach($data as $key => $value) {
             $json[$key]['name'] = $value['name'];
             $json[$key]['slug'] = Str::slug($value['name'], '-');

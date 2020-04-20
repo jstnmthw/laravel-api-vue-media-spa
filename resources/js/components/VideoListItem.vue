@@ -15,8 +15,9 @@
         <span style="opacity: .5;" class="pr-2">
           <ion-icon name="eye" ></ion-icon> {{ views }}
         </span>
-        <span class="likes">
-          <ion-icon name="thumbs-up" style="top: 1px;"></ion-icon> 
+        <span :class="rating > 50 ? 'liked' : 'disliked'">
+          <ion-icon name="thumbs-up"></ion-icon> 
+          <ion-icon name="thumbs-down"></ion-icon> 
           {{ rating }}%
         </span>
       </div>
@@ -32,7 +33,11 @@ export default {
       return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function() {
-      return Math.trunc((this.data.likes / (this.data.likes + this.data.dislikes)) * 100);
+      if(this.data.likes >= 1) {
+        return Math.trunc((this.data.likes / (this.data.likes + this.data.dislikes)) * 100);
+      }else {
+        return 0;
+      }
     },
     duration: function() {
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
