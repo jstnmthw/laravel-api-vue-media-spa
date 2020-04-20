@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Config;
 use DB;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
@@ -175,17 +176,12 @@ class VideoController extends Controller
             $categories[$key]['slug'] = Str::slug($category['name'], '-');
         }
 
-        preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data->embed, $url);
+        // TODO: Replace in actual database insert
+        preg_match(config('regex.domain'), $data->embed, $url);
         $data->embed = $url[0];
         $data->categories = $categories;
 
         return $data;
-
-
-        // $embed = preg_match('/https:\/\/www\.pornhub\.com\/embed\/[\w\d]*/', $data[0]->embed, $url);
-        // $data[0]->embed = $url[0];
-        
-        // return $data[0];
     }
 
     /**
