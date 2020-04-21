@@ -3,7 +3,13 @@
     <div class="row">
       <main class="col-sm-12 col-md-9">
         <h3>{{ data.title }}</h3>
-        <video-category-labels :categories="data.categories"></video-category-labels>
+        <div class="label-wrap">
+          <ul class="list-inline">
+            <li class="list-inline-item" v-for="label in data.categories" :key="label.index">
+              <video-category-labels :label="label"></video-category-labels>
+            </li>
+          </ul>
+        </div>
         <div class="video-frame mb-3">
           <iframe id="video" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         </div>
@@ -42,6 +48,9 @@ export default {
       loading: false,
     }
   },
+  mounted() {
+    this.getVideo();
+  },
   computed: {
     rating: function() {
       if(this.data.likes >= 1) {
@@ -49,11 +58,7 @@ export default {
       }else {
         return 0;
       }
-    },
-  },
-  props: ['categories'],
-  mounted() {
-    this.getVideo();
+    }
   },
   methods: {
     getVideo() {
@@ -93,6 +98,9 @@ export default {
       });
     }
   },
+  props: [
+    'categories'
+  ],
   watch: {
     // When route changes, call API
     $route(to, from) {

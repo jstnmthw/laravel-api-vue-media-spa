@@ -35,7 +35,10 @@ export default {
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
-  props: ['categories'],
+  mounted() {
+    // Get videos on page load
+    this.getVideos(); 
+  },
   methods: {
     getVideos() {
       // Clear data
@@ -75,10 +78,9 @@ export default {
       this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
     }
   },
-  mounted() {
-    // Get videos on page load
-    this.getVideos(); 
-  },
+  props: [
+    'categories'
+  ],
   watch: {
     // When route changes, call API
     $route(to, from) {

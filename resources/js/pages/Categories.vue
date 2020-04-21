@@ -41,6 +41,10 @@ export default {
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
+  mounted() {
+    // Get videos on page load
+    this.getVideos();
+  },
   computed: {
     category_title: function() {
       const categories = this.categories.map(el => el.slug);
@@ -53,7 +57,6 @@ export default {
   methods: {
     getVideos() {
       // Clear data
-      this.videos = [];
       this.error = false;
 
       // Start loading on frontend
@@ -66,10 +69,10 @@ export default {
       $('.video-poster img').attr('src', '');
 
       // Push default sort
-      this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
+      // this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
 
       // Make the call
-      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
+      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query, ...{ 'sortby' : 'most_views' } } }).then((response) => {
 
           // Finish frontend progress bar
           this.$Progress.finish();
@@ -98,16 +101,15 @@ export default {
       this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
     }
   },
-  mounted() {
-    // Get videos on page load
-    this.getVideos();
-  },
-  props: ['categories'],
+  props: [
+    'categories'
+  ],
   watch: {
     // When route changes, call API
     $route(to, from) {
 
       // Get new videos
+      this.videos = [];
       this.getVideos();
     }
   }

@@ -2360,14 +2360,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['categories']
+  props: ['label'],
+  computed: {
+    slug: function slug() {
+      return this.label.name.replace(' ', '-').toLocaleLowerCase();
+    }
+  }
 });
 
 /***/ }),
@@ -2532,6 +2531,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
+  mounted: function mounted() {
+    // Get videos on page load
+    this.getVideos();
+  },
   computed: {
     category_title: function category_title() {
       var categories = this.categories.map(function (el) {
@@ -2549,7 +2552,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       // Clear data
-      this.videos = [];
       this.error = false; // Start loading on frontend
 
       this.$Progress.start(); // Set loading
@@ -2557,15 +2559,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.loading = true; // Stop unfinished images loading
 
       $('.video-poster img').attr('src', ''); // Push default sort
-
-      this.$router.push({
-        query: Object.assign({}, this.$route.query, {
-          sortby: this.sort
-        })
-      }); // Make the call
+      // this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
+      // Make the call
 
       axios.get('/api/videos', {
-        params: _objectSpread({}, this.$route.params, {}, this.$route.query)
+        params: _objectSpread({}, this.$route.params, {}, this.$route.query, {}, {
+          'sortby': 'most_views'
+        })
       }).then(function (response) {
         // Finish frontend progress bar
         _this.$Progress.finish(); // Set Vue data if present
@@ -2594,15 +2594,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos();
-  },
   props: ['categories'],
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
       // Get new videos
+      this.videos = [];
       this.getVideos();
     }
   }
@@ -2661,7 +2658,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
-  props: ['categories'],
+  mounted: function mounted() {
+    // Get videos on page load
+    this.getVideos();
+  },
   methods: {
     getVideos: function getVideos() {
       var _this = this;
@@ -2703,10 +2703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos();
-  },
+  props: ['categories'],
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
@@ -2765,12 +2762,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: [],
       loading: false
     };
+  },
+  mounted: function mounted() {
+    this.getVideo();
   },
   computed: {
     rating: function rating() {
@@ -2780,10 +2786,6 @@ __webpack_require__.r(__webpack_exports__);
         return 0;
       }
     }
-  },
-  props: ['categories'],
-  mounted: function mounted() {
-    this.getVideo();
   },
   methods: {
     getVideo: function getVideo() {
@@ -2816,6 +2818,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
+  props: ['categories'],
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
@@ -40334,30 +40337,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "label-wrap" }, [
-    _c(
-      "ul",
-      { staticClass: "list-inline" },
-      _vm._l(_vm.categories, function(label) {
-        return _c(
-          "li",
-          { key: label.index, staticClass: "list-inline-item" },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-sm btn-category",
-                attrs: { to: "/categories/" + label.slug }
-              },
-              [_vm._v("\n        " + _vm._s(label.name) + "\n      ")]
-            )
-          ],
-          1
-        )
-      }),
-      0
-    )
-  ])
+  return _c(
+    "router-link",
+    {
+      staticClass: "btn btn-sm btn-category",
+      attrs: { to: "/categories/" + _vm.slug }
+    },
+    [_vm._v("\n  " + _vm._s(_vm.label.name) + "\n")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40891,9 +40878,21 @@ var render = function() {
         [
           _c("h3", [_vm._v(_vm._s(_vm.data.title))]),
           _vm._v(" "),
-          _c("video-category-labels", {
-            attrs: { categories: _vm.data.categories }
-          }),
+          _c("div", { staticClass: "label-wrap" }, [
+            _c(
+              "ul",
+              { staticClass: "list-inline" },
+              _vm._l(_vm.data.categories, function(label) {
+                return _c(
+                  "li",
+                  { key: label.index, staticClass: "list-inline-item" },
+                  [_c("video-category-labels", { attrs: { label: label } })],
+                  1
+                )
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
