@@ -2454,9 +2454,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'loading'],
   computed: {
@@ -2766,10 +2763,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: []
+      data: [],
+      loading: false
     };
   },
   computed: {
@@ -2790,22 +2790,39 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       // Start loading on frontend
-      this.$Progress.start(); // Make the call
+      this.$Progress.start(); // Loading
+
+      this.loading = true; // Clear iframe src
+
+      $('#video').attr('src', ''); // Make the call
 
       axios.get('/api/videos/' + this.$route.params.id).then(function (response) {
         // Finish loading on frontend
         _this.$Progress.finish(); // Set video object
 
 
-        _this.data = response.data; // Set iframe src
+        _this.data = response.data; // Loading
 
-        $('#video').attr('src', _this.data.embed);
+        _this.loading = false; // Use replace to not effect the browser history
+
+        $('#video')[0].contentWindow.location.replace(_this.data.embed);
       })["catch"](function (error) {
         // Console log API error.
-        console.log('Error calling API.'); // Failed frontend progress bar
+        console.log('Error calling API.'); // Loading
+
+        _this.loading = false; // Failed frontend progress bar
 
         _this.$Progress.fail();
       });
+    }
+  },
+  watch: {
+    // When route changes, call API
+    $route: function $route(to, from) {
+      // Clear data
+      this.data = []; // Get new data
+
+      this.getVideo();
     }
   }
 });
@@ -40387,7 +40404,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row row-cols-5 video-list no-gutters" },
-      _vm._l(_vm.videos.data, function(video) {
+      _vm._l(_vm.videos, function(video) {
         return _c(
           "div",
           {
@@ -40657,7 +40674,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("video-list", {
                       attrs: {
-                        videos: _vm.videos,
+                        videos: _vm.videos.data,
                         loading: _vm.loading,
                         cards: 40
                       }
@@ -40821,7 +40838,11 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("video-list", {
-              attrs: { videos: _vm.videos, loading: _vm.loading, cards: 40 }
+              attrs: {
+                videos: _vm.videos.data,
+                loading: _vm.loading,
+                cards: 40
+              }
             }),
             _vm._v(" "),
             _c("paginate", {
@@ -40880,7 +40901,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "video-actions d-flex justify-content-between align-items-top mb-3"
+                "video-actions d-flex justify-content-between align-items-top mb-5"
             },
             [
               _c(
@@ -40923,7 +40944,13 @@ var render = function() {
                 1
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _c("h5", [_vm._v("Related Videos")]),
+          _vm._v(" "),
+          _c("video-list", {
+            attrs: { videos: _vm.data.related, loading: _vm.loading, cards: 10 }
+          })
         ],
         1
       ),

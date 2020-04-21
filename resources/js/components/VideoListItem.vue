@@ -1,8 +1,5 @@
 <template>
-  <div 
-    class="video"
-    v-bind:class="{ loading: loading }"
-    >
+  <div class="video" v-bind:class="{ loading: loading }">
     <div class="video-data">
       <div class="video-poster">
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title">

@@ -7,7 +7,7 @@
         <div class="video-frame mb-3">
           <iframe id="video" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         </div>
-        <div class="video-actions d-flex justify-content-between align-items-top mb-3">
+        <div class="video-actions d-flex justify-content-between align-items-top mb-5">
           <button type="button" class="btn btn-primary  mr-3">
             <ion-icon name="thumbs-up"></ion-icon> 
           </button>
@@ -24,6 +24,8 @@
             <ion-icon name="flag"></ion-icon>
           </button>
         </div>
+        <h5>Related Videos</h5>
+        <video-list :videos="data.related" :loading="loading" :cards="10"></video-list>
       </main>
       <aside class="col-sm-12 col-md-3">
         <div class="sidead-placeholder"></div>
@@ -36,7 +38,8 @@
 export default {
   data() {
     return {
-      data: []
+      data: [],
+      loading: false,
     }
   },
   computed: {
@@ -57,6 +60,12 @@ export default {
       // Start loading on frontend
       this.$Progress.start();
 
+      // Loading
+      this.loading = true;
+
+      // Clear iframe src
+      $('#video').attr('src', '');
+
       // Make the call
       axios.get('/api/videos/' + this.$route.params.id).then((response) => {
 
@@ -66,16 +75,33 @@ export default {
         // Set video object
         this.data = response.data;
 
-        // Set iframe src
-        $('#video').attr('src', this.data.embed);
+        // Loading
+        this.loading = false;
+
+        // Use replace to not effect the browser history
+        $('#video')[0].contentWindow.location.replace(this.data.embed);
 
       }).catch(error => {
         // Console log API error.
         console.log('Error calling API.');
 
+        // Loading
+        this.loading = false;
+
         // Failed frontend progress bar
         this.$Progress.fail();
       });
+    }
+  },
+  watch: {
+    // When route changes, call API
+    $route(to, from) {
+
+      // Clear data
+      this.data = [];
+
+      // Get new data
+      this.getVideo();
     }
   }
 }

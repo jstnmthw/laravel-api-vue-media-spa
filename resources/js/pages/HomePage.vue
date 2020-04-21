@@ -17,7 +17,7 @@
           </select>
         </div>
       </div>
-      <video-list :videos="videos" :loading="loading" :cards="40"></video-list>
+      <video-list :videos="videos.data" :loading="loading" :cards="40"></video-list>
       <paginate :pagination="videos" @paginate="getVideos()" :loading="loading"></paginate>
     </main>
     </div>

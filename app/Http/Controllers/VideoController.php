@@ -169,17 +169,22 @@ class VideoController extends Controller
     public function show($id)
     {
 
-        $data = Video::find($id);
+        // $data = Video::with('categories')->find($id);
+        $data = Video::where('id', $id)->with('categories:id,name')->first();
+        
+        // Grab the next 10 relevant videos in this category
+        $related = Category::where('id', 1)
+            ->with(['videos' => function($query){ 
+                return $query->take(10); 
+            }])
+            ->first();
 
-        foreach($data->categories()->get() as $key => $category) {
-            $categories[$key]['name'] = $category['name'];
-            $categories[$key]['slug'] = Str::slug($category['name'], '-');
-        }
+        // Add relevant videos to collection
+        $data->related = $related->videos;
 
-        // TODO: Replace in actual database insert
+        // TODO: Replace at database insert
         preg_match(config('regex.domain'), $data->embed, $url);
         $data->embed = $url[0];
-        $data->categories = $categories;
 
         return $data;
     }
