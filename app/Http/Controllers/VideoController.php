@@ -38,58 +38,45 @@ class VideoController extends Controller
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
         $limit      = 40;
         $offset     = $page > 1 ? ($page - 1) * 40 + 1 : 0;
-
+                
         // Default set to false
         $views      = false;
         $likes      = false;
         $duration   = false;
         $recent     = false;
 
-        // Check for sort request
-        if($request->has('sortby')) {
-            switch ($request->input('sortby')) {
-                case 'most_views':
-                    $views = true;
-                    break;
-                case 'top_rated':
-                    $likes = true;
-                    break;
-                case 'duration':
-                    $duration = true;
-                    break;
-                case 'most_recent':
-                    $recent = true;
-                    break;
-            }
+        // Check for sortby request
+        switch ($request->input('sortby')) {
+            case 'most_views':
+                $sortby = 'views';
+                break;
+            case 'top_rated':
+                $sortby = 'likes';
+                break;
+            case 'duration':
+                $sortby = 'duration';
+                break;
+            case 'most_recent':
+                $sortby = 'created_at';
+                break;
+            default:
+                $sortby = 'views';
+            break;
         }
 
         // Run seek query by ids (and sort if present).
-        $seek = Video::select('videos.id')
-            ->when($views, function ($query) {
-                return $query->addSelect('views');
-            })
-            ->when($duration, function ($query) {
-                return $query->addSelect('duration');
-            })
-            ->when($likes, function ($query) {
-                return $query->addSelect('likes');
-            })
-            ->when($cat, function ($query, $cat) {
-                return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
-                    ->where('categorizables.category_id', $cat);
-            })
-            ->offset($offset)
-            ->when($views, function ($query) {
-                return $query->orderBy('views', 'DESC');
-            })
-            ->when($duration, function ($query) {
-                return $query->orderBy('duration', 'DESC');
-            })
-            ->when($likes, function ($query) {
-                return $query->orderBy('likes', 'DESC');
-            })
-            ->limit($limit)
-            ->get();
+        $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 30, 
+                    function () use ($cat, $sortby, $limit, $offset) {
+                        return Video::select('videos.id')
+                            ->when($cat, function ($query, $cat) {
+                                return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
+                                    ->where('categorizables.category_id', $cat);
+                            })
+                            ->offset($offset)
+                            ->orderBy($sortby, 'DESC')
+                            ->limit($limit)
+                            ->get();
+                    });
 
         // Return error is no results.
         if(empty($seek->toArray())) {
@@ -109,26 +96,17 @@ class VideoController extends Controller
          */
         
         if(!$cat) {
-            $total = Cache::remember('videos_total', 3100, function () {
+            $total = Cache::remember('videos_total', 33100, function () {
                 return Video::count();
             });
         } else {
-            $total = Cache::remember('cat'.$cat.'_total', 300, function () use ($cat) {
+            $total = Cache::remember('cat'.$cat.'_total', 33300, function () use ($cat) {
                 return Category::find($cat)->videos()->count();
             });
         }
 
-        // dd(Category::find(1)->videos()->count());
-
         // Now, collect all the information from ids selected (fast).
-        $data['data'] = Video::whereIn('id', $ids)
-            ->when($views, function ($query) {
-                return $query->orderBy('views', 'DESC');
-            })
-            ->when($duration, function ($query) {
-                return $query->orderBy('duration', 'DESC');
-            })
-            ->get();
+        $data['data'] = Video::whereIn('id', $ids)->orderBy($sortby, 'DESC')->get();
 
         // Manually set json paginate for front end.
         $data['total'] = $total;
@@ -170,7 +148,7 @@ class VideoController extends Controller
     {
 
         // $data = Video::with('categories')->find($id);
-        $data = Video::where('id', $id)->with('categories:id,name')->first();
+        $data = Video::where('videos.id', $id)->with('categories:categories.id,name')->first();
         
         // Grab the next 10 relevant videos in this category
         $related = Category::where('id', 1)

@@ -41,8 +41,7 @@ export default {
   },
   methods: {
     getVideos() {
-      // Clear data
-      this.videos = [];
+      // Set error
       this.error = false;
 
       // Start loading on frontend
@@ -55,7 +54,7 @@ export default {
       $('.video-poster img').attr('src', '');
 
       // Make the call
-      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query, ...{ 'sortby' : 'most_views' } } }).then((response) => {
+      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
 
         // Finish loading on frontend
         this.$Progress.finish();
@@ -86,7 +85,7 @@ export default {
     $route(to, from) {
 
       // Clear data
-      this.videos = '';
+      this.videos = [];
 
       // Get new data
       this.getVideos();

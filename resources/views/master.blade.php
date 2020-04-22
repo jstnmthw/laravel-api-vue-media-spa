@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta name="RATING" content="RTA-5042-1996-1400-1577-RTA" /> --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,9 +20,12 @@
 </head>
 <body>
     <div id="app">
-        <vue-progress-bar></vue-progress-bar>
-        <navbar></navbar>
-        <router-view :categories="categories"></router-view>
+        <div class="content">
+            <vue-progress-bar></vue-progress-bar>
+            <navbar></navbar>
+            <router-view :categories="categories"></router-view>
+        </div>
+        <main-footer></main-footer>
     </div>
 
     <!-- Scripts -->

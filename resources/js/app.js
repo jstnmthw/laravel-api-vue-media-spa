@@ -10,12 +10,13 @@ import VueProgressBar from 'vue-progressbar';
 import Homepage       from './pages/Homepage'
 import Categories     from './pages/Categories'
 import Video          from './pages/Video'
+import NotFound       from './pages/NotFound'
 
 // Components
 import Navbar         from './components/Navbar'
-import NotFound       from './components/NotFound'
+import MainFooter     from './components/MainFooter'
 import MainSidebar    from './components/MainSidebar'
-import CategoryLabels from './components/VideoCategoryLabels'
+import VideoLabels    from './components/VideoLabels'
 import VideoList      from './components/VideoList'
 import VideoListItem  from './components/VideoListItem'
 import TopAdBanner    from './components/TopAdBanner'
@@ -31,8 +32,9 @@ Vue.config.ignoredElements = ['ion-icon'];
 // Register Components
 Vue.component('Navbar', Navbar);
 Vue.component('NotFound', NotFound);
+Vue.component('MainFooter', MainFooter);
 Vue.component('MainSidebar', MainSidebar);
-Vue.component('VideoCategoryLabels', CategoryLabels);
+Vue.component('VideoCategoryLabels', VideoLabels);
 Vue.component('VideoList', VideoList);
 Vue.component('VideoListItem', VideoListItem);
 Vue.component('TopAdBanner', TopAdBanner);

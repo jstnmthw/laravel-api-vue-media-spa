@@ -78,7 +78,7 @@ body {
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: #2c2c54;
+  background-color: #2c2c55;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -518,7 +518,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #2c2c54;
+  background-color: #2c2c55;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -5384,15 +5384,15 @@ input[type=button].btn-block {
 }
 
 .custom-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #2c2c54, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #2c2c55, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #2c2c54, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #2c2c55, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #2c2c54, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #2c2c55, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range::-moz-focus-outer {
@@ -5598,8 +5598,8 @@ input[type=button].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
-  background-color: #2c2c54;
-  border-color: #dee2e6 #dee2e6 #2c2c54;
+  background-color: #2c2c55;
+  border-color: #dee2e6 #dee2e6 #2c2c55;
 }
 
 .nav-tabs .dropdown-menu {
@@ -14457,6 +14457,37 @@ a:hover,
   color: #fff;
 }
 
+#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+
+.btn.btn-primary {
+  background: #2c2c54;
+  color: #6e6eb7;
+  border: none;
+}
+
+.btn.btn-primary:hover {
+  background: #252547;
+  color: #d980fa;
+}
+
+.btn.btn-category {
+  background: #2c2c54;
+  color: #6e6eb7;
+}
+
+.btn.btn-category:hover {
+  background: #252547;
+  color: #d980fa;
+}
+
 .skeleton-row {
   display: none;
 }
@@ -14609,27 +14640,6 @@ a:hover,
   height: 500px;
 }
 
-.btn.btn-primary {
-  background: #2c2c54;
-  color: #6e6eb7;
-  border: none;
-}
-
-.btn.btn-primary:hover {
-  background: #252547;
-  color: #d980fa;
-}
-
-.btn.btn-category {
-  background: #2c2c54;
-  color: #6e6eb7;
-}
-
-.btn.btn-category:hover {
-  background: #252547;
-  color: #d980fa;
-}
-
 .video-listing {
   margin-left: -8px;
   margin-right: -8px;
@@ -14728,5 +14738,27 @@ a:hover,
   left: 0;
   bottom: 0;
   background: #38c172;
+}
+
+.main-categories {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.main-categories li {
+  margin-bottom: 5px;
+}
+
+.main-categories li ion-icon {
+  position: relative;
+  font-size: 20px;
+  top: 5px;
+  margin-right: 7px;
+}
+
+.main-footer {
+  background: #40407a;
+  border-top: 1px solid #52529b;
+  padding: 3rem 0;
 }
 

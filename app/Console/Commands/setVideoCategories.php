@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use DB;
 use Illuminate\Console\Command;
-use App\Categorizable;
 use App\Category;
 use App\Video;
 
@@ -49,9 +48,9 @@ class setVideoCategories extends Command
             
             $progressBar = $this->output->createProgressBar($total[0]->count);
             $progressBar->start();
-            $progressBar->setRedrawFrequency(100);
+            $progressBar->setRedrawFrequency(150);
 
-            Video::orderBy('id')->chunk(500, function ($data) use ($progressBar, $categories) {
+            Video::orderBy('id')->chunk(1000, function ($data) use ($progressBar, $categories) {
 
                 foreach ($data as $key => $value) {
             
@@ -63,11 +62,11 @@ class setVideoCategories extends Command
 
                         if ($cat !== false) {
 
-                            $categorizable = new Categorizable;
-                            $categorizable->category_id = $cat + 1;
-                            $categorizable->categorizable_id = $value['id'];
-                            $categorizable->categorizable_type = 'App\\Video';
-                            $categorizable->save();
+                            DB::table('categorizables')->insert([
+                                'category_id' => $cat + 1,
+                                'categorizable_id' => $value['id'],
+                                'categorizable_type' => 'App\\Video'
+                            ]);
 
                         }
 

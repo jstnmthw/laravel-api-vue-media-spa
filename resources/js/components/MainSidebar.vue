@@ -1,5 +1,5 @@
 <template>
-  <aside class="col-sm-12 col-md-3 col-lg-2">
+  <aside class="main-sidebar col-sm-12 col-md-3 col-lg-2">
     <div class="main-categories">
       <ul class="list-unstyled pl-4">
         <li>
@@ -90,19 +90,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .main-categories {
-    margin-top: .5rem;
-    margin-bottom: 2rem;
-    li {
-      margin-bottom: 5px;
-      ion-icon {
-        position: relative;
-        font-size: 20px;
-        top: 5px;
-        margin-right: 7px;
-      }
-    }
-  }
-</style>
