@@ -38,12 +38,6 @@ class VideoController extends Controller
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
         $limit      = 40;
         $offset     = $page > 1 ? ($page - 1) * 40 + 1 : 0;
-                
-        // Default set to false
-        $views      = false;
-        $likes      = false;
-        $duration   = false;
-        $recent     = false;
 
         // Check for sortby request
         switch ($request->input('sortby')) {
