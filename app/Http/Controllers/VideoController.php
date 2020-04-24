@@ -150,7 +150,8 @@ class VideoController extends Controller
              */
             $cat_id = $_COOKIE['category'] ? $this->getCategory($_COOKIE['category']) : $this->getCategory($request->input('category'));
             $related = Video::whereHas('categories', function (Builder $query) use ($cat_id) {
-                $query->where('categories.id', $cat_id);
+                $query->where('categories.id', $cat_id)
+                    ->where('categories.id', '!=', 43); // TODO Need to add check for excemptions
             })
             ->where('id', '!=', $id)
             ->where('views', '>', 10000)

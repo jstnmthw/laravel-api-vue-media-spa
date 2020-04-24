@@ -14,18 +14,23 @@
           <iframe id="video" allowfullscreen="true" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         </div>
         <div class="video-actions d-flex justify-content-between align-items-top mb-5">
-          <button type="button" class="btn btn-primary  mr-3">
-            <ion-icon name="thumbs-up"></ion-icon> 
-          </button>
-          <div class="mr-3 video-rating">
-            {{ data.likes }} Likes / {{ data.dislikes }} Dislikes
-            <div class="video-rating-bar mt-1">
-              <div class="video-rating-likes" :style="{ width: rating + '%' }"></div>
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-primary  mr-3">
+              <ion-icon name="thumbs-up"></ion-icon> 
+            </button>
+            <div class="mr-3 video-rating" v-if="data.likes">
+              {{ likes }} Likes / {{ dislikes }} Dislikes
+              <div class="video-rating-bar mt-1">
+                <div class="video-rating-likes" :style="{ width: rating + '%' }"></div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary">
+              <ion-icon name="thumbs-down"></ion-icon>
+            </button>
+            <div class="video-views ml-4" v-if="data.views">
+              <ion-icon name="eye"></ion-icon> {{ views }}
             </div>
           </div>
-          <button type="button" class="btn btn-primary">
-            <ion-icon name="thumbs-down"></ion-icon>
-          </button>
           <button class="btn btn-primary ml-auto">
             <ion-icon name="flag"></ion-icon>
           </button>
@@ -38,7 +43,7 @@
     <div class="row">
       <div class="col-12">
         <h4 class="mb-3">Related Videos</h4>
-        <video-list :videos="related" :loading="related_loading" :cards="12" :cols="6"></video-list>
+        <video-list :videos="related" :loading="related_loading" :cards="12" :cols="6" class="mb-5"></video-list>
       </div>
     </div>
   </div>
@@ -64,9 +69,21 @@ export default {
       }else {
         return 0;
       }
+    },
+    views: function() {
+      return this.formatNumber(this.data.views);
+    },
+    likes: function() {
+      return this.formatNumber(this.data.likes);
+    },
+    dislikes: function() {
+      return this.formatNumber(this.data.dislikes);
     }
   },
   methods: {
+    formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    },
     getVideo() {
       // Start loading on frontend
       this.$Progress.start();
@@ -133,6 +150,7 @@ export default {
     $route(to, from) {
       // Clear data hen route changes.
       this.data = [];
+      this.related = [];
       this.getVideo();
     }
   }
