@@ -37,8 +37,8 @@ class VideoController extends Controller
          */
         $cat        = $this->getCategory($request->input('category'));
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
-        $limit      = 40;
-        $offset     = $page > 1 ? ($page - 1) * 40 + 1 : 0;
+        $limit      = 50;
+        $offset     = $page > 1 ? ($page - 1) * 50 + 1 : 0;
 
         // Check for sortby request
         switch ($request->input('sortby')) {
@@ -60,7 +60,7 @@ class VideoController extends Controller
         }
 
         // Run seek query by ids (and sort if present).
-        $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 30, 
+        $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
                     function () use ($cat, $sortby, $limit, $offset) {
                         return Video::select('videos.id')
                             ->when($cat, function ($query, $cat) {
@@ -89,7 +89,6 @@ class VideoController extends Controller
          * the amount of records. The data should already be indexed but we will cache the first 
          * results to make this virtually queryless.
          */
-        
         if(!$cat) {
             $total = Cache::remember('videos_total', 33100, function () {
                 return Video::count();
@@ -214,7 +213,8 @@ class VideoController extends Controller
      * @return integer
      * @return false
      */
-    private function getCategory($cat = null) {
+    private function getCategory($cat = null) 
+    {
 
         if(null !== $cat) {
 

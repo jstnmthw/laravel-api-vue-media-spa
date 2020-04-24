@@ -40542,9 +40542,15 @@ var render = function() {
         _vm._v(" "),
         _c(
           "span",
-          { staticClass: "pr-2", staticStyle: { opacity: ".5" } },
+          {
+            staticClass: "pr-2 position-relative",
+            staticStyle: { opacity: ".5" }
+          },
           [
-            _c("ion-icon", { attrs: { name: "eye" } }),
+            _c("ion-icon", {
+              staticStyle: { top: "3px" },
+              attrs: { name: "eye" }
+            }),
             _vm._v(" " + _vm._s(_vm.views) + "\n      ")
           ],
           1
@@ -40933,15 +40939,17 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("video-list", {
+              staticClass: "mb-5",
               attrs: {
                 videos: _vm.videos.data,
                 loading: _vm.loading,
-                cards: 40,
+                cards: 50,
                 cols: 5
               }
             }),
             _vm._v(" "),
             _c("paginate", {
+              staticClass: "mb-5",
               attrs: { pagination: _vm.videos, loading: _vm.loading },
               on: {
                 paginate: function($event) {

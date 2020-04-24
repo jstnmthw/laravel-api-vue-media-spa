@@ -14572,8 +14572,8 @@ a:hover,
   color: #b7b7e8;
 }
 
-.search-wrap {
-  position: relative;
+.custom-select:focus {
+  box-shadow: 0 0 0 0.2rem #7575d3;
 }
 
 .btn-clear-search {

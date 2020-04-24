@@ -9,8 +9,8 @@
       </div>
       <div class="video-info px-0">
         <h5 class="video-title mt-2 mb-1"><router-link :to="'/videos/' + data.id">{{ data.title }}</router-link></h5>
-        <span style="opacity: .5;" class="pr-2">
-          <ion-icon name="eye" ></ion-icon> {{ views }}
+        <span style="opacity: .5;" class="pr-2 position-relative">
+          <ion-icon name="eye" style="top: 3px;"></ion-icon> {{ views }}
         </span>
         <span :class="rating > 50 ? 'liked' : 'disliked'">
           <ion-icon name="thumbs-up"></ion-icon> 

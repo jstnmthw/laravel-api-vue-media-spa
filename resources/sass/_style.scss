@@ -95,9 +95,9 @@ a,
   &:hover {
     color: darken($lilac, 5%);
   }
-}
-.search-wrap {
-  position: relative;
+  &:focus {
+    box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
+  }
 }
 .btn-clear-search {
   position: absolute;
