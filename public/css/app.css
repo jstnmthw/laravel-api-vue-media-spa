@@ -14668,6 +14668,10 @@ a:hover,
   min-height: 154px;
 }
 
+.video-listing .video .video-poster img {
+  border-radius: 0;
+}
+
 .video-listing .video .video-poster .duration {
   position: absolute;
   bottom: 8px;
@@ -14706,7 +14710,7 @@ a:hover,
 
 .video-frame {
   position: relative;
-  background: #000;
+  background: #5d5daf;
   width: 100%;
   padding-bottom: 56.25%;
   /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */

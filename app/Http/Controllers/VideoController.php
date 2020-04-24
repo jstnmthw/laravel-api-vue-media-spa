@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Video;
 use App\Categorizable;
@@ -94,7 +95,7 @@ class VideoController extends Controller
                 return Video::count();
             });
         } else {
-            $total = Cache::remember('cat'.$cat.'_total', 33300, function () use ($cat) {
+            $total = Cache::remember('cat'.$cat.'_total', 33100, function () use ($cat) {
                 return Category::find($cat)->videos()->count();
             });
         }
@@ -138,21 +139,30 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
 
-        // $data = Video::with('categories')->find($id);
-        $data = Video::where('videos.id', $id)->with('categories:categories.id,name')->first();
-        
-        // Grab the next 10 relevant videos in this category
-        $related = Category::where('id', 1)
-            ->with(['videos' => function($query){ 
-                return $query->take(10); 
-            }])
-            ->first();
+        // Grab related videos
+        if($request->has('category')) {
+            /**
+             * TODO: We need a better way of showing related videos. Possibily a full text search
+             * on titles instead of picking one category out of the bunch the video may have.
+             */
+            $cat_id = $_COOKIE['category'] ? $this->getCategory($_COOKIE['category']) : $this->getCategory($request->input('category'));
+            $related = Video::whereHas('categories', function (Builder $query) use ($cat_id) {
+                $query->where('categories.id', $cat_id);
+            })
+            ->where('id', '!=', $id)
+            ->where('views', '>', 10000)
+            ->inRandomOrder()
+            ->limit(12)
+            ->get();
 
-        // Add relevant videos to collection
-        $data->related = $related->videos;
+            return $related;
+        }
+
+        // Get video with categories
+        $data = Video::where('videos.id', $id)->with('categories:categories.id,name')->first();
 
         // TODO: Replace at database insert
         preg_match(config('regex.domain'), $data->embed, $url);

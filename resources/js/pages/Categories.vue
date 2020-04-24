@@ -44,6 +44,9 @@ export default {
   mounted() {
     // Get videos on page load
     this.getVideos();
+
+    // cookie for cats
+    document.cookie = "category="+ this.$route.params.category +"; expires=Sun, 25 April 2020 00:00:00 UTC; path=/"; 
   },
   computed: {
     category_title: function() {
@@ -84,6 +87,8 @@ export default {
           // Disable loading
           this.loading = false;
 
+          // console.log(document.cookie);
+
         }).catch(error => {
 
           // Console log API error.
@@ -95,6 +100,7 @@ export default {
       });
     },
     sortBy() {
+      // Push sorting
       this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
     }
   },
@@ -102,12 +108,14 @@ export default {
     'categories'
   ],
   watch: {
-    // When route changes, call API
     $route(to, from) {
-
-      // Get new videos
+      console.log('rotyue ca');
+      // Get new videos on route change
       this.videos = [];
       this.getVideos();
+
+      // cookie for cats
+      document.cookie = "category="+ this.$route.params.category +"; expires=Sun, 25 April 2020 00:00:00 UTC; path=/"; 
     }
   }
 }

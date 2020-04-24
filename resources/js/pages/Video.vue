@@ -11,7 +11,7 @@
           </ul>
         </div>
         <div class="video-frame mb-3">
-          <iframe id="video" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
+          <iframe id="video" allowfullscreen="true" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         </div>
         <div class="video-actions d-flex justify-content-between align-items-top mb-5">
           <button type="button" class="btn btn-primary  mr-3">
@@ -30,12 +30,16 @@
             <ion-icon name="flag"></ion-icon>
           </button>
         </div>
-        <h5>Related Videos</h5>
-        <video-list :videos="data.related" :loading="loading" :cards="10"></video-list>
       </main>
       <aside class="col-sm-12 col-md-3">
         <div class="sidead-placeholder"></div>
       </aside>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h5>Related Videos</h5>
+        <video-list :videos="related" :loading="loading" :cards="12" :cols="6"></video-list>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +49,7 @@ export default {
   data() {
     return {
       data: [],
+      related: [],
       loading: false,
     }
   },
@@ -68,6 +73,9 @@ export default {
       // Loading
       this.loading = true;
 
+      // Stop unfinished images loading
+      $('.video-poster img').attr('src', '');
+
       // Clear iframe src
       $('#video').attr('src', '');
 
@@ -81,10 +89,12 @@ export default {
         this.data = response.data;
 
         // Loading
-        this.loading = false;
+        // this.loading = false;
 
         // Use replace to not effect the browser history
         $('#video')[0].contentWindow.location.replace(this.data.embed);
+
+        this.getRelated();
 
       }).catch(error => {
         // Console log API error.
@@ -96,19 +106,22 @@ export default {
         // Failed frontend progress bar
         this.$Progress.fail();
       });
+    },
+    getRelated() {
+      axios.get('/api/videos/' + this.$route.params.id + '?category=' + this.data.categories[0].name.toLowerCase()).then((response) => {
+          this.related = response.data;
+        }).catch((error) => {
+          console.log('There was an error retrieving data.')
+      });
     }
   },
   props: [
     'categories'
   ],
   watch: {
-    // When route changes, call API
     $route(to, from) {
-
-      // Clear data
+      // Clear data hen route changes.
       this.data = [];
-
-      // Get new data
       this.getVideo();
     }
   }

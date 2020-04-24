@@ -2422,11 +2422,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
-    views: function views() {
-      return this.videos.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    }
-  },
   props: ['videos', 'loading', 'cards']
 });
 
@@ -2545,7 +2540,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     // Get videos on page load
-    this.getVideos();
+    this.getVideos(); // cookie for cats
+
+    document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 April 2020 00:00:00 UTC; path=/";
   },
   computed: {
     category_title: function category_title() {
@@ -2586,7 +2583,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } // Disable loading
 
 
-        _this.loading = false;
+        _this.loading = false; // console.log(document.cookie);
       })["catch"](function (error) {
         // Console log API error.
         console.log('Error calling API.'); // Failed frontend progress bar
@@ -2595,6 +2592,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     sortBy: function sortBy() {
+      // Push sorting
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
           sortby: this.sort
@@ -2604,11 +2602,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   props: ['categories'],
   watch: {
-    // When route changes, call API
     $route: function $route(to, from) {
-      // Get new videos
+      console.log('rotyue ca'); // Get new videos on route change
+
       this.videos = [];
-      this.getVideos();
+      this.getVideos(); // cookie for cats
+
+      document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 April 2020 00:00:00 UTC; path=/";
     }
   }
 });
@@ -2792,10 +2792,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: [],
+      related: [],
       loading: false
     };
   },
@@ -2818,7 +2823,9 @@ __webpack_require__.r(__webpack_exports__);
       // Start loading on frontend
       this.$Progress.start(); // Loading
 
-      this.loading = true; // Clear iframe src
+      this.loading = true; // Stop unfinished images loading
+
+      $('.video-poster img').attr('src', ''); // Clear iframe src
 
       $('#video').attr('src', ''); // Make the call
 
@@ -2828,10 +2835,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
         _this.data = response.data; // Loading
-
-        _this.loading = false; // Use replace to not effect the browser history
+        // this.loading = false;
+        // Use replace to not effect the browser history
 
         $('#video')[0].contentWindow.location.replace(_this.data.embed);
+
+        _this.getRelated();
       })["catch"](function (error) {
         // Console log API error.
         console.log('Error calling API.'); // Loading
@@ -2840,15 +2849,22 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$Progress.fail();
       });
+    },
+    getRelated: function getRelated() {
+      var _this2 = this;
+
+      axios.get('/api/videos/' + this.$route.params.id + '?category=' + this.data.categories[0].name.toLowerCase()).then(function (response) {
+        _this2.related = response.data;
+      })["catch"](function (error) {
+        console.log('There was an error retrieving data.');
+      });
     }
   },
   props: ['categories'],
   watch: {
-    // When route changes, call API
     $route: function $route(to, from) {
-      // Clear data
-      this.data = []; // Get new data
-
+      // Clear data hen route changes.
+      this.data = [];
       this.getVideo();
     }
   }
@@ -39668,7 +39684,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("footer", { staticClass: "main-footer container" }, [
-      _c("div", { staticClass: "d-flex" }, [
+      _c("div", { staticClass: "col-10 mx-auto d-flex" }, [
         _c("ul", { staticClass: "list-unstyled mr-5" }, [
           _c("li", [_c("h5", [_vm._v("Information")])]),
           _vm._v(" "),
@@ -40380,11 +40396,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "video-listing mb-5" }, [
+  return _c("div", { staticClass: "video-listing" }, [
     _c(
       "div",
       {
-        staticClass: "row row-cols-5 skeleton-row no-gutters",
+        staticClass: "row row-cols-6 skeleton-row no-gutters",
         class: { loading: _vm.loading }
       },
       _vm._l(_vm.cards, function(card) {
@@ -40908,89 +40924,98 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container bg-purple" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "main",
-        { staticClass: "col-sm-12 col-md-9" },
-        [
-          _c("h3", [_vm._v(_vm._s(_vm.data.title))]),
-          _vm._v(" "),
-          _c("div", { staticClass: "label-wrap" }, [
-            _c(
-              "ul",
-              { staticClass: "list-inline" },
-              _vm._l(_vm.data.categories, function(label) {
-                return _c(
-                  "li",
-                  { key: label.index, staticClass: "list-inline-item" },
-                  [_c("video-category-labels", { attrs: { label: label } })],
-                  1
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
+      _c("main", { staticClass: "col-sm-12 col-md-9" }, [
+        _c("h3", [_vm._v(_vm._s(_vm.data.title))]),
+        _vm._v(" "),
+        _c("div", { staticClass: "label-wrap" }, [
           _c(
-            "div",
-            {
-              staticClass:
-                "video-actions d-flex justify-content-between align-items-top mb-5"
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary  mr-3",
-                  attrs: { type: "button" }
-                },
-                [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "mr-3 video-rating" }, [
-                _vm._v(
-                  "\n          " +
-                    _vm._s(_vm.data.likes) +
-                    " Likes / " +
-                    _vm._s(_vm.data.dislikes) +
-                    " Dislikes\n          "
-                ),
-                _c("div", { staticClass: "video-rating-bar mt-1" }, [
-                  _c("div", {
-                    staticClass: "video-rating-likes",
-                    style: { width: _vm.rating + "%" }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary ml-auto" },
-                [_c("ion-icon", { attrs: { name: "flag" } })],
+            "ul",
+            { staticClass: "list-inline" },
+            _vm._l(_vm.data.categories, function(label) {
+              return _c(
+                "li",
+                { key: label.index, staticClass: "list-inline-item" },
+                [_c("video-category-labels", { attrs: { label: label } })],
                 1
               )
-            ]
-          ),
-          _vm._v(" "),
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "video-actions d-flex justify-content-between align-items-top mb-5"
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary  mr-3",
+                attrs: { type: "button" }
+              },
+              [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3 video-rating" }, [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.data.likes) +
+                  " Likes / " +
+                  _vm._s(_vm.data.dislikes) +
+                  " Dislikes\n          "
+              ),
+              _c("div", { staticClass: "video-rating-bar mt-1" }, [
+                _c("div", {
+                  staticClass: "video-rating-likes",
+                  style: { width: _vm.rating + "%" }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary ml-auto" },
+              [_c("ion-icon", { attrs: { name: "flag" } })],
+              1
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1)
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-12" },
+        [
           _c("h5", [_vm._v("Related Videos")]),
           _vm._v(" "),
           _c("video-list", {
-            attrs: { videos: _vm.data.related, loading: _vm.loading, cards: 10 }
+            attrs: {
+              videos: _vm.related,
+              loading: _vm.loading,
+              cards: 12,
+              cols: 6
+            }
           })
         ],
         1
-      ),
-      _vm._v(" "),
-      _vm._m(1)
+      )
     ])
   ])
 }
@@ -41003,6 +41028,7 @@ var staticRenderFns = [
       _c("iframe", {
         attrs: {
           id: "video",
+          allowfullscreen: "true",
           frameborder: "0",
           height: "100%",
           width: "100%",

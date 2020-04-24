@@ -184,6 +184,9 @@ a,
       position: relative;
       background: $lavendar;
       min-height: 154px;
+      img {
+        border-radius: 0;
+      }
       .duration {
         position: absolute;
         bottom: 8px;
@@ -220,7 +223,7 @@ a,
 // Video component 
 .video-frame {
   position: relative;
-  background: $black;
+  background: $lavendar;
   width: 100%;
   padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */ 
   iframe{
@@ -261,8 +264,6 @@ a,
       margin-right: 7px;
     }
   }
-}
-.main-sidebar {
 }
 .main-footer {
   background: $purple;

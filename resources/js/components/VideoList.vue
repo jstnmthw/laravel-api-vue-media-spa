@@ -1,6 +1,6 @@
 <template>
-  <div class="video-listing mb-5">
-    <div class="row row-cols-5 skeleton-row no-gutters" v-bind:class="{ loading: loading }">
+  <div class="video-listing">
+    <div class="row row-cols-6 skeleton-row no-gutters" :class="{ loading: loading }">
       <div
         class="col px-2 mb-md-3 position-relative" 
         v-for="card in cards" 
@@ -29,11 +29,6 @@
 
 <script>
 export default {
-  computed: {
-    views: function() {
-      return this.videos.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    }
-  },
   props: [
     'videos', 
     'loading',
