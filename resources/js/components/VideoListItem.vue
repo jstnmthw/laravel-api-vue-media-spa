@@ -1,5 +1,5 @@
 <template>
-  <div class="video" v-bind:class="{ loading: loading }">
+  <div class="video">
     <div class="video-data">
       <div class="video-poster">
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  props: ['data', 'loading'],
+  props: ['data'],
   computed: {
     views: function() {
       return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

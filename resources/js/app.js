@@ -23,6 +23,9 @@ import TopAdBanner    from './components/TopAdBanner'
 import Paginate       from './components/Paginate'
 import PageHeader     from './components/PageHeader'
 
+// Skeleton Cards
+import SkeletonCardVideo from './components/skeleton/Videos'
+
 // Register Router
 Vue.use(VueRouter)
 
@@ -37,9 +40,10 @@ Vue.component('MainSidebar', MainSidebar);
 Vue.component('VideoCategoryLabels', VideoLabels);
 Vue.component('VideoList', VideoList);
 Vue.component('VideoListItem', VideoListItem);
-Vue.component('TopAdBanner', TopAdBanner);
 Vue.component('PageHeader', PageHeader);
 Vue.component('Paginate', Paginate);
+Vue.component('SkeletonCardVideo', SkeletonCardVideo);
+Vue.component('TopAdBanner', TopAdBanner);
 
 /**
  * Vue Plugins

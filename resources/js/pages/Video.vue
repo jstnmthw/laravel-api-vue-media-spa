@@ -37,8 +37,8 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <h5>Related Videos</h5>
-        <video-list :videos="related" :loading="loading" :cards="12" :cols="6"></video-list>
+        <h4 class="mb-3">Related Videos</h4>
+        <video-list :videos="related" :loading="related_loading" :cards="12" :cols="6"></video-list>
       </div>
     </div>
   </div>
@@ -51,6 +51,7 @@ export default {
       data: [],
       related: [],
       loading: false,
+      related_loading: false,
     }
   },
   mounted() {
@@ -89,7 +90,7 @@ export default {
         this.data = response.data;
 
         // Loading
-        // this.loading = false;
+        this.loading = false;
 
         // Use replace to not effect the browser history
         $('#video')[0].contentWindow.location.replace(this.data.embed);
@@ -108,11 +109,21 @@ export default {
       });
     },
     getRelated() {
+
+      this.related_loading = true;
+
       axios.get('/api/videos/' + this.$route.params.id + '?category=' + this.data.categories[0].name.toLowerCase()).then((response) => {
+          
           this.related = response.data;
+          this.related_loading = false;
+          
         }).catch((error) => {
-          console.log('There was an error retrieving data.')
+          
+          this.related_loading = false;
+          console.log('There was an error retrieving data.');
+
       });
+
     }
   },
   props: [
