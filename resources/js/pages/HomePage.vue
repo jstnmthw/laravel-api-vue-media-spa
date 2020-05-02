@@ -4,6 +4,7 @@
     <main-sidebar :categories="categories"></main-sidebar>
     <main class="col-md-10">
       <top-ad-banner></top-ad-banner>
+      <page-header :title="'Most Viewed Videos'" icon="eye" v-show="!loading"></page-header>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <div v-show="!loading">
           Showing: {{ videos.current_page }} of {{ videos.last_page }}

@@ -1,8 +1,14 @@
 <template>
   <div class="container bg-purple">
+    <div class="d-flex align-items-center mb-1">
+      <h3 class="mr-3 mb-1">{{ data.title }}</h3>
+      <div v-if="data.views">
+        <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon> {{ views }} 
+        <ion-icon name="thumbs-up" style="position: relative; top: 2px;" class="ml-2"></ion-icon> {{ rating }}%
+      </div>
+    </div>
     <div class="row">
-      <main class="col-sm-12 col-md-9">
-        <h3>{{ data.title }}</h3>
+      <div class="col">
         <div class="label-wrap">
           <ul class="list-inline">
             <li class="list-inline-item" v-for="label in data.categories" :key="label.index">
@@ -10,30 +16,35 @@
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <main class="col-sm-12 col-md-9">
         <div class="video-frame mb-3">
           <iframe id="video" allowfullscreen="true" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
         </div>
         <div class="video-actions d-flex justify-content-between align-items-top mb-5">
-          <div class="d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-primary  mr-3">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-primary">
               <ion-icon name="thumbs-up"></ion-icon> 
             </button>
-            <div class="mr-3 video-rating" v-if="data.likes">
+            <div class="video-rating ml-3" v-if="data.likes">
               {{ likes }} Likes / {{ dislikes }} Dislikes
               <div class="video-rating-bar mt-1">
                 <div class="video-rating-likes" :style="{ width: rating + '%' }"></div>
               </div>
             </div>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary ml-3">
               <ion-icon name="thumbs-down"></ion-icon>
             </button>
-            <div class="video-views ml-4" v-if="data.views">
-              <ion-icon name="eye"></ion-icon> {{ views }}
-            </div>
+            <button class="btn btn-primary ml-2">
+              <ion-icon name="heart" style="position: relative; top: 3px;"></ion-icon>
+              Favorite
+            </button>
+            <button class="btn btn-primary ml-2">
+              <ion-icon name="flag"></ion-icon>
+            </button>
           </div>
-          <button class="btn btn-primary ml-auto">
-            <ion-icon name="flag"></ion-icon>
-          </button>
         </div>
       </main>
       <aside class="col-sm-12 col-md-3">

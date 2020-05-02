@@ -5,6 +5,7 @@ require('./bootstrap');
 import Vue            from 'vue'
 import VueRouter      from 'vue-router'
 import VueProgressBar from 'vue-progressbar';
+import VueCarousel    from '@chenfengyuan/vue-carousel';
 
 // Pages
 import Homepage       from './pages/Homepage'
@@ -55,6 +56,7 @@ Vue.use(VueProgressBar, {
   failedColor: 'red',
   height: '2px'
 });
+Vue.use(VueCarousel);
 
 // Register Routes
 const router = new VueRouter({

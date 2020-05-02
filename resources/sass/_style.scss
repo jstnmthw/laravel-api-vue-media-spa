@@ -39,6 +39,9 @@ a,
       color: $pink;
     }
   }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
+  }
 }
 .form-control, 
 .form-control:focus {
@@ -170,6 +173,16 @@ a,
       min-height: 154px;
       img {
         border-radius: 0;
+      }
+      .carousel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        img {
+          width: 100%;
+        }
       }
       .duration {
         position: absolute;

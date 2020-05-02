@@ -3,6 +3,7 @@
     <div class="video-data">
       <div class="video-poster">
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
+        <carousel v-if="album" :data="album" :indicators="false" :controls="false" :autoplay="false" :interval="500"></carousel>
         <div class="duration">
           {{ duration }}
         </div>
@@ -24,6 +25,14 @@
 
 <script>
 export default {
+  data() {
+    return {
+      album: []
+    }
+  },
+  mounted() {
+    this.setAlbum();
+  },
   props: ['data'],
   computed: {
     views: function() {
@@ -39,6 +48,21 @@ export default {
     duration: function() {
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
     }
+  },
+  methods: {
+    setAlbum() {
+      let imgs = [];
+      this.data.album.forEach(function(value, index) {
+        imgs.push(['<img src="'+value+'">']);
+      });
+      this.album = imgs;
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .carousel__item, .carousel__item--active {
+    transition: none;
+  }
+</style>

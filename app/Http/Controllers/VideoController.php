@@ -102,6 +102,10 @@ class VideoController extends Controller
         // Now, collect all the information from ids selected (fast).
         $data['data'] = Video::whereIn('id', $ids)->orderBy($sortby, 'DESC')->get();
 
+        foreach ($data['data'] as $row => $value) {
+            $value['album'] = explode(';',$value['album']);
+        }
+
         // Manually set json paginate for front end.
         $data['total'] = $total;
         $data['per_page'] = $limit;
