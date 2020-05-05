@@ -25,7 +25,6 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
-    "@chenfengyuan/vue-carousel": "^1.0.3",
     "vue-progressbar": "^0.7.5"
   }
 }

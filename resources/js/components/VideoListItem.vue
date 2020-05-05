@@ -2,8 +2,8 @@
   <div class="video">
     <div class="video-data">
       <div class="video-poster">
-        <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
-        <carousel v-if="album" :data="album" :indicators="false" :controls="false" :autoplay="false" :interval="500"></carousel>
+        <img :src="data.thumbnail" class="video-poster card-img-top" :alt="data.title">
+        <img v-for="image in album" :key="image.index" :data-src="image" alt="">
         <div class="duration">
           {{ duration }}
         </div>
@@ -32,6 +32,10 @@ export default {
   },
   mounted() {
     this.setAlbum();
+
+    $('.video-poster').each(function(){
+
+    });
   },
   props: ['data'],
   computed: {
@@ -53,7 +57,7 @@ export default {
     setAlbum() {
       let imgs = [];
       this.data.album.forEach(function(value, index) {
-        imgs.push(['<img src="'+value+'">']);
+        imgs.push([value]);
       });
       this.album = imgs;
     }

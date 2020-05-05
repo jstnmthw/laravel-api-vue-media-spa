@@ -5,7 +5,6 @@ require('./bootstrap');
 import Vue            from 'vue'
 import VueRouter      from 'vue-router'
 import VueProgressBar from 'vue-progressbar';
-import VueCarousel    from '@chenfengyuan/vue-carousel';
 
 // Pages
 import Homepage       from './pages/Homepage'
@@ -46,17 +45,12 @@ Vue.component('Paginate', Paginate);
 Vue.component('SkeletonCardVideo', SkeletonCardVideo);
 Vue.component('TopAdBanner', TopAdBanner);
 
-/**
- * Vue Plugins
- */
-
-// Progress bar config
+// Vue Plugins
 Vue.use(VueProgressBar, {
   color: 'rgba(217, 128, 250,1.0)',
   failedColor: 'red',
   height: '2px'
 });
-Vue.use(VueCarousel);
 
 // Register Routes
 const router = new VueRouter({

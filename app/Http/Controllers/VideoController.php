@@ -149,7 +149,7 @@ class VideoController extends Controller
         if($request->has('category')) {
             /**
              * TODO: We need a better way of showing related videos. Possibily a full text search
-             * on titles instead of picking one category out of the bunch the video may have.
+             * on titles instead of picking one category out of the bunch.
              */
             $cat_id = $_COOKIE['category'] ? $this->getCategory($_COOKIE['category']) : $this->getCategory($request->input('category'));
             $related = Video::whereHas('categories', function (Builder $query) use ($cat_id) {
