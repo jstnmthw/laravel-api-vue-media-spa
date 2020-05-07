@@ -170,7 +170,6 @@ a,
     .video-poster {
       position: relative;
       background: $lavendar;
-      min-height: 154px;
       img {
         border-radius: 0;
       }
@@ -182,6 +181,10 @@ a,
         left: 0;
         img {
           width: 100%;
+          display: none;
+          &.active {
+            display: block;
+          }
         }
       }
       .duration {

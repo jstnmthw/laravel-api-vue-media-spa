@@ -14657,7 +14657,6 @@ a:hover,
 .video-listing .video .video-poster {
   position: relative;
   background: #5d5daf;
-  min-height: 154px;
 }
 
 .video-listing .video .video-poster img {
@@ -14674,6 +14673,11 @@ a:hover,
 
 .video-listing .video .video-poster .carousel img {
   width: 100%;
+  display: none;
+}
+
+.video-listing .video .video-poster .carousel img.active {
+  display: block;
 }
 
 .video-listing .video .video-poster .duration {
