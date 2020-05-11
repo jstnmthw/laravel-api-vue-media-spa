@@ -4,12 +4,13 @@
     <main-sidebar :categories="categories"></main-sidebar>
     <main class="col-md-10">
       <top-ad-banner></top-ad-banner>
-      <page-header :title="'Most Viewed Videos'" icon="eye" v-show="!loading"></page-header>
+      <page-header :title="'Most Viewed Videos'" icon="eye" v-show="loaded"></page-header>
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <div v-show="!loading">
+        <h3 class="text-center" v-show="!loaded">Loading API</h3>
+        <div v-show="loaded">
           Showing: {{ videos.current_page }} of {{ videos.last_page }}
         </div>
-        <div v-show="!loading">
+        <div v-show="loaded">
           <select v-model="sort" name="sortby" class="custom-select" @change="sortBy()">
             <option value="most_views">Most Views</option>
             <option value="top_rated">Top Rated</option>
@@ -18,8 +19,20 @@
           </select>
         </div>
       </div>
-      <video-list :videos="videos.data" :loading="loading" :cards="50" :cols="5" class="mb-5" v-if="videos.data"></video-list>
-      <paginate :pagination="videos" @paginate="getVideos()" :loading="loading" class="mb-5"></paginate>
+      <video-list 
+        class="mb-5"
+        v-if="loaded"
+        :videos="videos.data"
+        :cards="50"
+        :cols="5"
+      >
+      </video-list>
+      <paginate
+        class="mb-5"
+        :pagination="videos"
+        :loading="!loaded"
+        @paginate="getVideos()"
+        ></paginate>
     </main>
     </div>
   </div>
@@ -31,8 +44,8 @@ export default {
     return {
       videos: [],
       pagination: [],
-      loading: false,
       error: false,
+      loaded: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
@@ -41,7 +54,8 @@ export default {
     this.getVideos(); 
   },
   methods: {
-    getVideos() {
+    // Axios Call
+    async getVideos() {
       // Set error
       this.error = false;
 
@@ -55,7 +69,7 @@ export default {
       $('.video-poster img').attr('src', '');
 
       // Make the call
-      axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
+      await axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
 
         // Finish loading on frontend
         this.$Progress.finish();
@@ -65,6 +79,8 @@ export default {
       
         // Disable loading
         this.loading = false;
+        this.loaded = true;
+
 
       }).catch(error => {
         // Console log API error.
@@ -74,9 +90,11 @@ export default {
         this.$Progress.fail();
       });
     },
+
+    // Set default or user sortby
     sortBy() {
       this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
-    }
+    },
   },
   props: [
     'categories'

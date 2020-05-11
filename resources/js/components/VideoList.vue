@@ -1,21 +1,21 @@
 <template>
   <div class="video-listing">
-    <div class="row skeleton-row no-gutters" :class="'row-cols-'+cols" v-show="loading">
+    <!-- TODO: Put skeleton cards in parent -->
+    <div class="row skeleton-row no-gutters d-none" :class="'row-cols-' + cols">
       <div
-        class="col px-2 mb-md-3 position-relative" 
-        v-for="card in cards" 
+        class="col px-2 mb-md-3 position-relative"
+        v-for="card in cards"
         :key="card.index"
-        >
-        <!-- TODO: Put skeleton cards in parent -->
+      >
         <skeleton-card-video></skeleton-card-video>
       </div>
     </div>
-    <div class="row video-list no-gutters" :class="'row-cols-'+cols" v-show="!loading">
+    <div class="row video-list no-gutters" :class="'row-cols-' + cols">
       <div
         class="col px-2 mb-md-3 position-relative"
-        v-for="video in videos" 
+        v-for="video in videos"
         :key="video.index"
-        >
+      >
         <video-list-item :data="video"></video-list-item>
       </div>
     </div>
@@ -24,103 +24,107 @@
 
 <script>
 export default {
-  props: [
-    'videos', 
-    'loading',
-    'cards',
-    'cols'
-  ],
+  data() {
+    return {}
+  },
+  props: ['videos', 'cards', 'cols'],
   mounted() {
-    
-    // TODO: Need to only run when images are loaded
-    function preloadImages(srcs) {
-      function loadImage(src) {
-          return new Promise(function(resolve, reject) {
-              var img = new Image();
-              img.onload = function() {
-                  resolve(img);
-              };
-              img.onerror = img.onabort = function() {
-                  reject(src);
-              };
-              img.src = src;
-          });
+    this.slideShow()
+  },
+  methods: {
+    // Create slideshow
+    slideShow() {
+      let carousel = document.getElementsByClassName('carousel')
+      let interval = 3000
+      let current = 0
+      let next = 1
+      let sliderTimer
+
+      // For each carousel attach hover event
+      for (let i = 0; i < carousel.length; i++) {
+        // Mouse over event
+        carousel[i].addEventListener('mouseenter', e => {
+          startSlider(e)
+        })
+
+        // Mouse leave event
+        carousel[i].addEventListener('mouseleave', e => {
+          console.log(sliderTimer)
+          clearInterval(sliderTimer)
+          sliderTimer = 0
+          current = 0
+          next = 1
+        })
       }
-      var promises = [];
-      for (var i = 0; i < srcs.length; i++) {
-          promises.push(loadImage(srcs[i]));
-      }
-      return Promise.all(promises);
-    }
-
-    // preloadImages(["src1", "src2", "src3", "src4"]).then(function(imgs) {
-    //   // all images are loaded now and in the array imgs
-    // }, function(errImg) {
-    //   // at least one image failed to load
-    // });
-
-    let posters = document.getElementsByClassName('carousel');
-    let interval = 1000;
-
-    for (let i = 0; i < posters.length; i++) {
-      
-      let poster = posters[i];
-      let next = 1;		
-      let current = 0;
-      let slideTimer = '';
 
       // Next slide
-      function nextSlide() {
-      
-        let slides = poster.children.length;
-        let children = poster.children;
-        
-        for (i = 0; i < slides; i++) {
-          children[i].src = children[i].getAttribute('data-src');
-        }
-        
-        children[current].classList.remove('active');
-        children[next].classList.add('active');
-        
-        next = (next + 1) % slides;
-        current = (current + 1) % slides; 
-      }
-      
-      // Stop interval
-      function stopSlides() {
-        clearInterval(slideTimer);
-      }
+      // function nextSlide(element) {
+      //   let children = element.originalTarget.children
+
+      //   children[current].classList.remove('active')
+      //   children[next].classList.add('active')
+
+      //   next = next + 1 < children.length ? next + 1 : 0
+      //   current = current + 1 < children.length ? current + 1 : 1
+      // }
 
       // Start the interval
-      function startSlides() {
-        slideTimer = setInterval(function() {
-          nextSlide();
-        }, interval);
+      function startSlider(element) {
+        let imgs = element.originalTarget.children
+        let srcs = []
+
+        // console.log(imgs)
+
+        // Set array of img srcs
+        for (let i = 0; i < imgs.length; i++) {
+          srcs.push(imgs[i].getAttribute('data-src'))
+        }
+
+        preloadImages(srcs).then(
+          loadedImgs => {
+            // Set images after loaded
+            for (let i = 0; i < imgs.length; i++) {
+              element.originalTarget.children[i].src = loadedImgs[i].src
+            }
+
+            // Start the slider
+            sliderTimer = setInterval(function() {
+              let children = element.originalTarget.children
+
+              children[current].classList.remove('active')
+              children[next].classList.add('active')
+
+              next = next + 1 < children.length ? next + 1 : 0
+              current = current + 1 < children.length ? current + 1 : 1
+            }, interval)
+          },
+          function(errImg) {
+            alert('Failed')
+          }
+        )
       }
 
-      // Child images of parent
-      let slides = posters[i].children;
-      let imgs = [];
-
-      console.log(slides.length);
-
-      // Set src to load each img
-      for (let j = 0; j < slides.length; j++) {
-        // slides.push([slides[j].getAttribute('data-src')]);
-      };
-
-
-      // Mouse over event
-      poster.addEventListener('mouseenter', e => {
-        startSlides();
-      });
-
-      // Mouse leave event
-      poster.addEventListener('mouseleave', e => {
-        stopSlides();
-      });
-
-    }
-  }
+      // Preloading slideshow images
+      function preloadImages(srcs) {
+        function loadImage(src) {
+          return new Promise(function(resolve, reject) {
+            let img = new Image()
+            img.onload = function() {
+              resolve(img)
+            }
+            img.onerror = img.onabort = function() {
+              reject(src)
+            }
+            img.src = src
+          })
+        }
+        let promises = []
+        for (let i = 0; i < srcs.length; i++) {
+          promises.push(loadImage(srcs[i]))
+        }
+        return Promise.all(promises)
+      }
+    },
+  },
 }
 </script>

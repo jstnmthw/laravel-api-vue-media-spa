@@ -2415,97 +2415,100 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['videos', 'loading', 'cards', 'cols'],
+  data: function data() {
+    return {};
+  },
+  props: ['videos', 'cards', 'cols'],
   mounted: function mounted() {
-    // TODO: Need to only run when images are loaded
-    function preloadImages(srcs) {
-      function loadImage(src) {
-        return new Promise(function (resolve, reject) {
-          var img = new Image();
-
-          img.onload = function () {
-            resolve(img);
-          };
-
-          img.onerror = img.onabort = function () {
-            reject(src);
-          };
-
-          img.src = src;
-        });
-      }
-
-      var promises = [];
-
-      for (var i = 0; i < srcs.length; i++) {
-        promises.push(loadImage(srcs[i]));
-      }
-
-      return Promise.all(promises);
-    } // preloadImages(["src1", "src2", "src3", "src4"]).then(function(imgs) {
-    //   // all images are loaded now and in the array imgs
-    // }, function(errImg) {
-    //   // at least one image failed to load
-    // });
-
-
-    var posters = document.getElementsByClassName('carousel');
-    var interval = 1000;
-
-    var _loop = function _loop(_i) {
-      var poster = posters[_i];
-      var next = 1;
+    this.slideShow();
+  },
+  methods: {
+    // Create slideshow
+    slideShow: function slideShow() {
+      var carousel = document.getElementsByClassName('carousel');
+      var interval = 3000;
       var current = 0;
-      var slideTimer = ''; // Next slide
+      var next = 1;
+      var sliderTimer; // For each carousel attach hover event
 
-      function nextSlide() {
-        var slides = poster.children.length;
-        var children = poster.children;
+      for (var i = 0; i < carousel.length; i++) {
+        // Mouse over event
+        carousel[i].addEventListener('mouseenter', function (e) {
+          startSlider(e);
+        }); // Mouse leave event
 
-        for (_i = 0; _i < slides; _i++) {
-          children[_i].src = children[_i].getAttribute('data-src');
+        carousel[i].addEventListener('mouseleave', function (e) {
+          console.log(sliderTimer);
+          clearInterval(sliderTimer);
+          sliderTimer = 0;
+          current = 0;
+          next = 1;
+        });
+      } // Next slide
+      // function nextSlide(element) {
+      //   let children = element.originalTarget.children
+      //   children[current].classList.remove('active')
+      //   children[next].classList.add('active')
+      //   next = next + 1 < children.length ? next + 1 : 0
+      //   current = current + 1 < children.length ? current + 1 : 1
+      // }
+      // Start the interval
+
+
+      function startSlider(element) {
+        var imgs = element.originalTarget.children;
+        var srcs = []; // console.log(imgs)
+        // Set array of img srcs
+
+        for (var _i = 0; _i < imgs.length; _i++) {
+          srcs.push(imgs[_i].getAttribute('data-src'));
         }
 
-        children[current].classList.remove('active');
-        children[next].classList.add('active');
-        next = (next + 1) % slides;
-        current = (current + 1) % slides;
-      } // Stop interval
+        preloadImages(srcs).then(function (loadedImgs) {
+          // Set images after loaded
+          for (var _i2 = 0; _i2 < imgs.length; _i2++) {
+            element.originalTarget.children[_i2].src = loadedImgs[_i2].src;
+          } // Start the slider
 
 
-      function stopSlides() {
-        clearInterval(slideTimer);
-      } // Start the interval
+          sliderTimer = setInterval(function () {
+            var children = element.originalTarget.children;
+            children[current].classList.remove('active');
+            children[next].classList.add('active');
+            next = next + 1 < children.length ? next + 1 : 0;
+            current = current + 1 < children.length ? current + 1 : 1;
+          }, interval);
+        }, function (errImg) {
+          alert('Failed');
+        });
+      } // Preloading slideshow images
 
 
-      function startSlides() {
-        slideTimer = setInterval(function () {
-          nextSlide();
-        }, interval);
-      } // Child images of parent
+      function preloadImages(srcs) {
+        function loadImage(src) {
+          return new Promise(function (resolve, reject) {
+            var img = new Image();
 
+            img.onload = function () {
+              resolve(img);
+            };
 
-      var slides = posters[_i].children;
-      var imgs = [];
-      console.log(slides.length); // Set src to load each img
+            img.onerror = img.onabort = function () {
+              reject(src);
+            };
 
-      for (var j = 0; j < slides.length; j++) {// slides.push([slides[j].getAttribute('data-src')]);
+            img.src = src;
+          });
+        }
+
+        var promises = [];
+
+        for (var _i3 = 0; _i3 < srcs.length; _i3++) {
+          promises.push(loadImage(srcs[_i3]));
+        }
+
+        return Promise.all(promises);
       }
-
-      ; // Mouse over event
-
-      poster.addEventListener('mouseenter', function (e) {
-        startSlides();
-      }); // Mouse leave event
-
-      poster.addEventListener('mouseleave', function (e) {
-        stopSlides();
-      });
-      i = _i;
-    };
-
-    for (var i = 0; i < posters.length; i++) {
-      _loop(i);
     }
   }
 });
@@ -2548,15 +2551,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      album: []
-    };
-  },
-  mounted: function mounted() {
-    this.setAlbumData();
-  },
   props: ['data'],
   computed: {
     views: function views() {
@@ -2571,15 +2569,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     duration: function duration() {
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
-    }
-  },
-  methods: {
-    setAlbumData: function setAlbumData() {
-      var imgs = [];
-      this.data.album.forEach(function (value, index) {
-        imgs.push([value]);
-      });
-      this.album = imgs;
     }
   }
 });
@@ -2752,12 +2741,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2790,8 +2800,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       videos: [],
       pagination: [],
-      loading: false,
       error: false,
+      loaded: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
@@ -2800,35 +2810,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getVideos();
   },
   methods: {
+    // Axios Call
     getVideos: function getVideos() {
       var _this = this;
 
-      // Set error
-      this.error = false; // Start loading on frontend
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // Set error
+                _this.error = false; // Start loading on frontend
 
-      this.$Progress.start(); // Set loading
-
-      this.loading = true; // Stop unfinished images loading
-
-      $('.video-poster img').attr('src', ''); // Make the call
-
-      axios.get('/api/videos', {
-        params: _objectSpread({}, this.$route.params, {}, this.$route.query)
-      }).then(function (response) {
-        // Finish loading on frontend
-        _this.$Progress.finish(); // Set video object
+                _this.$Progress.start(); // Set loading
 
 
-        _this.videos = response.data; // Disable loading
+                _this.loading = true; // Stop unfinished images loading
 
-        _this.loading = false;
-      })["catch"](function (error) {
-        // Console log API error.
-        console.log('Error calling API.'); // Failed frontend progress bar
+                $('.video-poster img').attr('src', ''); // Make the call
 
-        _this.$Progress.fail();
-      });
+                _context.next = 6;
+                return axios.get('/api/videos', {
+                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query)
+                }).then(function (response) {
+                  // Finish loading on frontend
+                  _this.$Progress.finish(); // Set video object
+
+
+                  _this.videos = response.data; // Disable loading
+
+                  _this.loading = false;
+                  _this.loaded = true;
+                })["catch"](function (error) {
+                  // Console log API error.
+                  console.log('Error calling API.'); // Failed frontend progress bar
+
+                  _this.$Progress.fail();
+                });
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
+    // Set default or user sortby
     sortBy: function sortBy() {
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
@@ -40827,15 +40855,7 @@ var render = function() {
     _c(
       "div",
       {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ],
-        staticClass: "row skeleton-row no-gutters",
+        staticClass: "row skeleton-row no-gutters d-none",
         class: "row-cols-" + _vm.cols
       },
       _vm._l(_vm.cards, function(card) {
@@ -40855,14 +40875,6 @@ var render = function() {
     _c(
       "div",
       {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.loading,
-            expression: "!loading"
-          }
-        ],
         staticClass: "row video-list no-gutters",
         class: "row-cols-" + _vm.cols
       },
@@ -40888,10 +40900,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true&":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true& ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de& ***!
+  \****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40914,7 +40926,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "carousel" },
-          _vm._l(_vm.album, function(image) {
+          _vm._l(_vm.data.album, function(image) {
             return _c("img", {
               key: image.index,
               attrs: { "data-src": image, alt: "" }
@@ -40951,7 +40963,7 @@ var render = function() {
               staticStyle: { top: "3px" },
               attrs: { name: "eye" }
             }),
-            _vm._v(" " + _vm._s(_vm.views) + "\n      ")
+            _vm._v(" \n        " + _vm._s(_vm.views) + "\n      ")
           ],
           1
         ),
@@ -41245,8 +41257,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: !_vm.loading,
-                  expression: "!loading"
+                  value: _vm.loaded,
+                  expression: "loaded"
                 }
               ],
               attrs: { title: "Most Viewed Videos", icon: "eye" }
@@ -41260,14 +41272,30 @@ var render = function() {
               },
               [
                 _c(
+                  "h3",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.loaded,
+                        expression: "!loaded"
+                      }
+                    ],
+                    staticClass: "text-center"
+                  },
+                  [_vm._v("Loading API")]
+                ),
+                _vm._v(" "),
+                _c(
                   "div",
                   {
                     directives: [
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: !_vm.loading,
-                        expression: "!loading"
+                        value: _vm.loaded,
+                        expression: "loaded"
                       }
                     ]
                   },
@@ -41289,8 +41317,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: !_vm.loading,
-                        expression: "!loading"
+                        value: _vm.loaded,
+                        expression: "loaded"
                       }
                     ]
                   },
@@ -41352,21 +41380,16 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _vm.videos.data
+            _vm.loaded
               ? _c("video-list", {
                   staticClass: "mb-5",
-                  attrs: {
-                    videos: _vm.videos.data,
-                    loading: _vm.loading,
-                    cards: 50,
-                    cols: 5
-                  }
+                  attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
                 })
               : _vm._e(),
             _vm._v(" "),
             _c("paginate", {
               staticClass: "mb-5",
-              attrs: { pagination: _vm.videos, loading: _vm.loading },
+              attrs: { pagination: _vm.videos, loading: !_vm.loaded },
               on: {
                 paginate: function($event) {
                   return _vm.getVideos()
@@ -57466,7 +57489,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VideoListItem.vue?vue&type=template&id=553617de&scoped=true& */ "./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true&");
+/* harmony import */ var _VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VideoListItem.vue?vue&type=template&id=553617de& */ "./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&");
 /* harmony import */ var _VideoListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VideoListItem.vue?vue&type=script&lang=js& */ "./resources/js/components/VideoListItem.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -57478,11 +57501,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _VideoListItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "553617de",
+  null,
   null
   
 )
@@ -57508,19 +57531,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true&":
-/*!**********************************************************************************************!*\
-  !*** ./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true& ***!
-  \**********************************************************************************************/
+/***/ "./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de& ***!
+  \**********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./VideoListItem.vue?vue&type=template&id=553617de&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./VideoListItem.vue?vue&type=template&id=553617de& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoListItem.vue?vue&type=template&id=553617de&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoListItem_vue_vue_type_template_id_553617de___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

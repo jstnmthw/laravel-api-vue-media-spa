@@ -4,16 +4,19 @@
       <div class="video-poster">
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
         <div class="carousel">
-          <img v-for="image in album" :key="image.index" :data-src="image" alt="">
+          <img v-for="image in data.album" :key="image.index" :data-src="image" alt="">
         </div>
         <div class="duration">
           {{ duration }}
         </div>
       </div>
       <div class="video-info px-0">
-        <h5 class="video-title mt-2 mb-1"><router-link :to="'/videos/' + data.id">{{ data.title }}</router-link></h5>
+        <h5 class="video-title mt-2 mb-1">
+          <router-link :to="'/videos/' + data.id">{{ data.title }}</router-link>
+        </h5>
         <span style="opacity: .5;" class="pr-2 position-relative">
-          <ion-icon name="eye" style="top: 3px;"></ion-icon> {{ views }}
+          <ion-icon name="eye" style="top: 3px;"></ion-icon> 
+          {{ views }}
         </span>
         <span :class="rating > 50 ? 'liked' : 'disliked'">
           <ion-icon name="thumbs-up"></ion-icon> 
@@ -27,15 +30,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      album: []
-    }
-  },
-  mounted() {
-    this.setAlbumData();
-  },
-  props: ['data'],
+  props: [
+    'data'
+  ],
   computed: {
     views: function() {
       return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -50,18 +47,6 @@ export default {
     duration: function() {
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
     }
-  },
-  methods: {
-    setAlbumData() {
-      let imgs = [];
-      this.data.album.forEach(function(value, index) {
-        imgs.push([value]);
-      });
-      this.album = imgs;
-    }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
