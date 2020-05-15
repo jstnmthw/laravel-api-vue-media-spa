@@ -3099,6 +3099,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3131,7 +3162,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatNumber: function formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     },
     getVideo: function getVideo() {
       var _this = this;
@@ -3141,11 +3172,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true; // Stop unfinished images loading
 
-      $('.video-poster img').attr('src', ''); // Clear iframe src
+      $(".video-poster img").attr("src", ""); // Clear iframe src
 
-      $('#video').attr('src', ''); // Make the call
+      $("#video").attr("src", ""); // Make the call
 
-      axios.get('/api/videos/' + this.$route.params.id).then(function (response) {
+      axios.get("/api/videos/" + this.$route.params.id).then(function (response) {
         // Finish loading on frontend
         _this.$Progress.finish(); // Set video object
 
@@ -3154,12 +3185,12 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.loading = false; // Use replace to not effect the browser history
 
-        $('#video')[0].contentWindow.location.replace(_this.data.embed);
+        $("#video")[0].contentWindow.location.replace(_this.data.embed);
 
         _this.getRelated();
       })["catch"](function (error) {
         // Console log API error.
-        console.log('Error calling API.'); // Loading
+        console.log("Error calling API."); // Loading
 
         _this.loading = false; // Failed frontend progress bar
 
@@ -3170,16 +3201,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.related_loading = true;
-      axios.get('/api/videos/' + this.$route.params.id + '?category=' + this.data.categories[0].name.toLowerCase()).then(function (response) {
+      axios.get("/api/videos/" + this.$route.params.id + "?category=" + this.data.categories[0].name.toLowerCase()).then(function (response) {
         _this2.related = response.data;
         _this2.related_loading = false;
       })["catch"](function (error) {
         _this2.related_loading = false;
-        console.log('There was an error retrieving data.');
+        console.log("There was an error retrieving data.");
       });
     }
   },
-  props: ['categories'],
+  props: ["categories"],
   watch: {
     $route: function $route(to, from) {
       // Clear data hen route changes.
@@ -41600,13 +41631,13 @@ var render = function() {
                 staticStyle: { position: "relative", top: "3px" },
                 attrs: { name: "eye" }
               }),
-              _vm._v(" " + _vm._s(_vm.views) + " \n      "),
+              _vm._v("\n      " + _vm._s(_vm.views) + "\n      "),
               _c("ion-icon", {
                 staticClass: "ml-2",
                 staticStyle: { position: "relative", top: "2px" },
                 attrs: { name: "thumbs-up" }
               }),
-              _vm._v(" " + _vm._s(_vm.rating) + "%\n    ")
+              _vm._v("\n      " + _vm._s(_vm.rating) + "%\n    ")
             ],
             1
           )
@@ -56917,44 +56948,44 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Import
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // Vue Config
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.ignoredElements = ['ion-icon']; // Register Components
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.ignoredElements = ["ion-icon"]; // Register Components
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Navbar', _components_Navbar__WEBPACK_IMPORTED_MODULE_7__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('NotFound', _pages_NotFound__WEBPACK_IMPORTED_MODULE_6__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('MainFooter', _components_MainFooter__WEBPACK_IMPORTED_MODULE_8__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('MainSidebar', _components_MainSidebar__WEBPACK_IMPORTED_MODULE_9__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('VideoCategoryLabels', _components_VideoLabels__WEBPACK_IMPORTED_MODULE_10__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('VideoList', _components_VideoList__WEBPACK_IMPORTED_MODULE_11__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('VideoListItem', _components_VideoListItem__WEBPACK_IMPORTED_MODULE_12__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('PageHeader', _components_PageHeader__WEBPACK_IMPORTED_MODULE_15__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Paginate', _components_Paginate__WEBPACK_IMPORTED_MODULE_14__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('SkeletonCardVideo', _components_skeleton_Videos__WEBPACK_IMPORTED_MODULE_16__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('TopAdBanner', _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_13__["default"]); // Vue Plugins
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("Navbar", _components_Navbar__WEBPACK_IMPORTED_MODULE_7__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("NotFound", _pages_NotFound__WEBPACK_IMPORTED_MODULE_6__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("MainFooter", _components_MainFooter__WEBPACK_IMPORTED_MODULE_8__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("MainSidebar", _components_MainSidebar__WEBPACK_IMPORTED_MODULE_9__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("VideoCategoryLabels", _components_VideoLabels__WEBPACK_IMPORTED_MODULE_10__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("VideoList", _components_VideoList__WEBPACK_IMPORTED_MODULE_11__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("VideoListItem", _components_VideoListItem__WEBPACK_IMPORTED_MODULE_12__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("PageHeader", _components_PageHeader__WEBPACK_IMPORTED_MODULE_15__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("Paginate", _components_Paginate__WEBPACK_IMPORTED_MODULE_14__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("SkeletonCardVideo", _components_skeleton_Videos__WEBPACK_IMPORTED_MODULE_16__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("TopAdBanner", _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_13__["default"]); // Vue Plugins
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default.a, {
-  color: 'rgba(217, 128, 250,1.0)',
-  failedColor: 'red',
-  height: '2px'
+  color: "rgba(217, 128, 250,1.0)",
+  failedColor: "red",
+  height: "2px"
 }); // Register Routes
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
+  mode: "history",
   routes: [{
-    path: '/',
+    path: "/",
     component: _pages_Homepage__WEBPACK_IMPORTED_MODULE_3__["default"],
-    name: 'home'
+    name: "home"
   }, {
-    path: '/categories/:category',
+    path: "/categories/:category",
     component: _pages_Categories__WEBPACK_IMPORTED_MODULE_4__["default"],
-    name: 'categories'
+    name: "categories"
   }, {
-    path: '/videos/:id',
+    path: "/videos/:id",
     component: _pages_Video__WEBPACK_IMPORTED_MODULE_5__["default"],
-    name: 'video'
+    name: "video"
   }, {
-    path: '*',
+    path: "*",
     component: _pages_NotFound__WEBPACK_IMPORTED_MODULE_6__["default"],
-    name: '404'
+    name: "404"
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -56969,14 +57000,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 }); // Initiate instance
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#app',
+  el: "#app",
   router: router,
   data: {
     categories: []
   },
   created: function created() {
     var vm = this;
-    axios.get('/api/categories').then(function (response) {
+    axios.get("/api/categories").then(function (response) {
       vm.categories = response.data;
     });
   }

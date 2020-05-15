@@ -3,15 +3,25 @@
     <div class="d-flex align-items-center mb-1">
       <h3 class="mr-3 mb-1">{{ data.title }}</h3>
       <div v-if="data.views">
-        <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon> {{ views }} 
-        <ion-icon name="thumbs-up" style="position: relative; top: 2px;" class="ml-2"></ion-icon> {{ rating }}%
+        <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon>
+        {{ views }}
+        <ion-icon
+          name="thumbs-up"
+          style="position: relative; top: 2px;"
+          class="ml-2"
+        ></ion-icon>
+        {{ rating }}%
       </div>
     </div>
     <div class="row">
       <div class="col">
         <div class="label-wrap">
           <ul class="list-inline">
-            <li class="list-inline-item" v-for="label in data.categories" :key="label.index">
+            <li
+              class="list-inline-item"
+              v-for="label in data.categories"
+              :key="label.index"
+            >
               <video-category-labels :label="label"></video-category-labels>
             </li>
           </ul>
@@ -21,24 +31,39 @@
     <div class="row">
       <main class="col-sm-12 col-md-9">
         <div class="video-frame mb-3">
-          <iframe id="video" allowfullscreen="true" frameborder="0" height="100%" width="100%" scrolling="no"></iframe>
+          <iframe
+            id="video"
+            allowfullscreen="true"
+            frameborder="0"
+            height="100%"
+            width="100%"
+            scrolling="no"
+          ></iframe>
         </div>
-        <div class="video-actions d-flex justify-content-between align-items-top mb-5">
+        <div
+          class="video-actions d-flex justify-content-between align-items-top mb-5"
+        >
           <div class="d-flex align-items-center">
             <button type="button" class="btn btn-primary">
-              <ion-icon name="thumbs-up"></ion-icon> 
+              <ion-icon name="thumbs-up"></ion-icon>
             </button>
             <div class="video-rating ml-3" v-if="data.likes">
               {{ likes }} Likes / {{ dislikes }} Dislikes
               <div class="video-rating-bar mt-1">
-                <div class="video-rating-likes" :style="{ width: rating + '%' }"></div>
+                <div
+                  class="video-rating-likes"
+                  :style="{ width: rating + '%' }"
+                ></div>
               </div>
             </div>
             <button type="button" class="btn btn-primary ml-3">
               <ion-icon name="thumbs-down"></ion-icon>
             </button>
             <button class="btn btn-primary ml-2">
-              <ion-icon name="heart" style="position: relative; top: 3px;"></ion-icon>
+              <ion-icon
+                name="heart"
+                style="position: relative; top: 3px;"
+              ></ion-icon>
               Favorite
             </button>
             <button class="btn btn-primary ml-2">
@@ -54,7 +79,13 @@
     <div class="row">
       <div class="col-12">
         <h4 class="mb-3">Related Videos</h4>
-        <video-list :videos="related" :loading="related_loading" :cards="12" :cols="6" class="mb-5"></video-list>
+        <video-list
+          :videos="related"
+          :loading="related_loading"
+          :cards="12"
+          :cols="6"
+          class="mb-5"
+        ></video-list>
       </div>
     </div>
   </div>
@@ -67,17 +98,19 @@ export default {
       data: [],
       related: [],
       loading: false,
-      related_loading: false,
-    }
+      related_loading: false
+    };
   },
   mounted() {
     this.getVideo();
   },
   computed: {
     rating: function() {
-      if(this.data.likes >= 1) {
-        return Math.trunc((this.data.likes / (this.data.likes + this.data.dislikes)) * 100);
-      }else {
+      if (this.data.likes >= 1) {
+        return Math.trunc(
+          (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
+        );
+      } else {
         return 0;
       }
     },
@@ -93,7 +126,7 @@ export default {
   },
   methods: {
     formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     },
     getVideo() {
       // Start loading on frontend
@@ -103,60 +136,61 @@ export default {
       this.loading = true;
 
       // Stop unfinished images loading
-      $('.video-poster img').attr('src', '');
+      $(".video-poster img").attr("src", "");
 
       // Clear iframe src
-      $('#video').attr('src', '');
+      $("#video").attr("src", "");
 
       // Make the call
-      axios.get('/api/videos/' + this.$route.params.id).then((response) => {
+      axios
+        .get("/api/videos/" + this.$route.params.id)
+        .then(response => {
+          // Finish loading on frontend
+          this.$Progress.finish();
 
-        // Finish loading on frontend
-        this.$Progress.finish();
+          // Set video object
+          this.data = response.data;
 
-        // Set video object
-        this.data = response.data;
+          // Loading
+          this.loading = false;
 
-        // Loading
-        this.loading = false;
+          // Use replace to not effect the browser history
+          $("#video")[0].contentWindow.location.replace(this.data.embed);
 
-        // Use replace to not effect the browser history
-        $('#video')[0].contentWindow.location.replace(this.data.embed);
+          this.getRelated();
+        })
+        .catch(error => {
+          // Console log API error.
+          console.log("Error calling API.");
 
-        this.getRelated();
+          // Loading
+          this.loading = false;
 
-      }).catch(error => {
-        // Console log API error.
-        console.log('Error calling API.');
-
-        // Loading
-        this.loading = false;
-
-        // Failed frontend progress bar
-        this.$Progress.fail();
-      });
+          // Failed frontend progress bar
+          this.$Progress.fail();
+        });
     },
     getRelated() {
-
       this.related_loading = true;
 
-      axios.get('/api/videos/' + this.$route.params.id + '?category=' + this.data.categories[0].name.toLowerCase()).then((response) => {
-          
+      axios
+        .get(
+          "/api/videos/" +
+            this.$route.params.id +
+            "?category=" +
+            this.data.categories[0].name.toLowerCase()
+        )
+        .then(response => {
           this.related = response.data;
           this.related_loading = false;
-          
-        }).catch((error) => {
-          
+        })
+        .catch(error => {
           this.related_loading = false;
-          console.log('There was an error retrieving data.');
-
-      });
-
+          console.log("There was an error retrieving data.");
+        });
     }
   },
-  props: [
-    'categories'
-  ],
+  props: ["categories"],
   watch: {
     $route(to, from) {
       // Clear data hen route changes.
@@ -165,5 +199,5 @@ export default {
       this.getVideo();
     }
   }
-}
+};
 </script>
