@@ -2418,7 +2418,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  props: ['videos', 'cards', 'cols'],
+  props: ["videos", "cards", "cols"],
   mounted: function mounted() {// this.slideShow()
   },
   methods: {
@@ -2603,10 +2603,10 @@ __webpack_require__.r(__webpack_exports__);
       interval: 1000
     };
   },
-  props: ['data'],
+  props: ["data"],
   computed: {
     views: function views() {
-      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     },
     rating: function rating() {
       if (this.data.likes >= 1) {
@@ -2632,7 +2632,7 @@ __webpack_require__.r(__webpack_exports__);
       //     this.nextImage(event.target.children)
       //   }, this.interval)
 
-      console.log('Hover');
+      console.log("Hover");
 
       if (start) {
         this.timer = setInterval(function () {
@@ -2640,20 +2640,20 @@ __webpack_require__.r(__webpack_exports__);
         }, this.interval);
         this.preloadImages(srcs, function () {
           for (var i = 0; i < images.length; i++) {
-            images[i].setAttribute('src', srcs[i]);
+            images[i].setAttribute("src", srcs[i]);
           }
         });
       } else {
         clearInterval(this.timer);
-        console.log('Mouse out');
+        console.log("Mouse out");
       }
     },
     nextImage: function nextImage(images) {
       for (var i = 0; i < images.length; i++) {
-        images[i].classList.remove('active');
+        images[i].classList.remove("active");
       }
 
-      $(images).eq(this.next).addClass('active');
+      $(images).eq(this.next).addClass("active");
       this.next = (this.next + 1) % images.length;
     },
     // Preload images
@@ -2695,7 +2695,7 @@ __webpack_require__.r(__webpack_exports__);
       var srcs = [];
 
       for (var i = 0; i < imgs.length; i++) {
-        srcs.push(imgs[i].getAttribute('data-src'));
+        srcs.push(imgs[i].getAttribute("data-src"));
       }
 
       return srcs;

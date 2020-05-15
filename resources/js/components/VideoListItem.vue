@@ -47,12 +47,12 @@ export default {
       interval: 1000,
     }
   },
-  props: ['data'],
+  props: ["data"],
   computed: {
     views: function() {
       return this.data.views
         .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     },
     rating: function() {
       if (this.data.likes >= 1) {
@@ -79,7 +79,7 @@ export default {
       //     this.nextImage(event.target.children)
       //   }, this.interval)
 
-      console.log('Hover')
+      console.log("Hover")
 
       if (start) {
         this.timer = setInterval(() => {
@@ -87,22 +87,22 @@ export default {
         }, this.interval)
         this.preloadImages(srcs, () => {
           for (let i = 0; i < images.length; i++) {
-            images[i].setAttribute('src', srcs[i])
+            images[i].setAttribute("src", srcs[i])
           }
         })
       } else {
         clearInterval(this.timer)
-        console.log('Mouse out')
+        console.log("Mouse out")
       }
     },
 
     nextImage(images) {
       for (let i = 0; i < images.length; i++) {
-        images[i].classList.remove('active')
+        images[i].classList.remove("active")
       }
       $(images)
         .eq(this.next)
-        .addClass('active')
+        .addClass("active")
       this.next = (this.next + 1) % images.length
     },
 
@@ -142,7 +142,7 @@ export default {
     srcToArray(imgs) {
       let srcs = []
       for (let i = 0; i < imgs.length; i++) {
-        srcs.push(imgs[i].getAttribute('data-src'))
+        srcs.push(imgs[i].getAttribute("data-src"))
       }
       return srcs
     },

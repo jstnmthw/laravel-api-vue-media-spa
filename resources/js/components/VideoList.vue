@@ -27,7 +27,7 @@ export default {
   data() {
     return {}
   },
-  props: ['videos', 'cards', 'cols'],
+  props: ["videos", "cards", "cols"],
   mounted() {
     // this.slideShow()
   },
