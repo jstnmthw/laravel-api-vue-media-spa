@@ -14672,12 +14672,16 @@ a:hover,
 }
 
 .video-listing .video .video-poster .carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
   width: 100%;
-  display: none;
+  visibility: hidden;
 }
 
 .video-listing .video .video-poster .carousel img.active {
-  display: block;
+  visibility: visible;
 }
 
 .video-listing .video .video-poster .duration {

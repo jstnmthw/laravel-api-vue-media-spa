@@ -37,8 +37,8 @@ class VideoController extends Controller
          */
         $cat        = $this->getCategory($request->input('category'));
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
-        $limit      = 50;
-        $offset     = $page > 1 ? ($page - 1) * 50 + 1 : 0;
+        $limit      = 5;
+        $offset     = $page > 1 ? ($page - 1) * $limit + 1 : 0;
 
         // Check for sortby request
         switch ($request->input('sortby')) {

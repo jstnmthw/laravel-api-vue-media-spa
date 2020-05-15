@@ -6,7 +6,7 @@ body {
 }
 
 // General CSS
-a, 
+a,
 .btn-link {
   color: $lilac;
   &:hover {
@@ -43,7 +43,7 @@ a,
     box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
   }
 }
-.form-control, 
+.form-control,
 .form-control:focus {
   background: $indigo;
   color: $lilac;
@@ -92,7 +92,9 @@ a,
   }
 }
 .custom-select {
-  background: $indigo url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23CACAEE' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  background: $indigo
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23CACAEE' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
+    no-repeat right 0.75rem center/8px 10px;
   color: darken($lilac, 15%);
   border: none;
   &:hover {
@@ -180,10 +182,14 @@ a,
         bottom: 0;
         left: 0;
         img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
           width: 100%;
-          display: none;
+          visibility: hidden;
           &.active {
-            display: block;
+            visibility: visible;
           }
         }
       }
@@ -193,7 +199,7 @@ a,
         right: 8px;
         border-radius: 3px;
         padding: 0 3px;
-        background: rgba(0,0,0,0.65);
+        background: rgba(0, 0, 0, 0.65);
         color: $white;
         font-size: 12px;
       }
@@ -206,13 +212,13 @@ a,
       }
       .liked {
         color: $green;
-        [name="thumbs-down"] {
+        [name='thumbs-down'] {
           display: none;
         }
       }
       .disliked {
         color: $red;
-        [name="thumbs-up"] {
+        [name='thumbs-up'] {
           display: none;
         }
       }
@@ -220,19 +226,19 @@ a,
   }
 }
 
-// Video component 
+// Video component
 .video-frame {
   position: relative;
   background: $lavendar;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */ 
-  iframe{
+  padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
+  iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    }
+  }
 }
 .video-rating {
   font-size: 12px;
@@ -254,7 +260,7 @@ a,
 
 // Main categories aside
 .main-categories {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   margin-bottom: 2rem;
   li {
     margin-bottom: 5px;
@@ -270,6 +276,6 @@ a,
 // Main site footer
 .main-footer {
   background: $purple;
-  border-top: 1px solid lighten($purple,10%);
+  border-top: 1px solid lighten($purple, 10%);
   padding: 3rem 0;
 }

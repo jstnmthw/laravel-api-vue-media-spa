@@ -2419,97 +2419,128 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   props: ['videos', 'cards', 'cols'],
-  mounted: function mounted() {
-    this.slideShow();
+  mounted: function mounted() {// this.slideShow()
   },
   methods: {
-    // Create slideshow
-    slideShow: function slideShow() {
-      var carousel = document.getElementsByClassName('carousel');
-      var interval = 3000;
-      var current = 0;
-      var next = 1;
-      var sliderTimer; // For each carousel attach hover event
+    // Preload images
+    preloadImages: function preloadImages(srcs) {
+      function loadImage(src) {
+        return new Promise(function (resolve, reject) {
+          var img = new Image();
 
-      for (var i = 0; i < carousel.length; i++) {
-        // Mouse over event
-        carousel[i].addEventListener('mouseenter', function (e) {
-          startSlider(e);
-        }); // Mouse leave event
+          img.onload = function () {
+            resolve(img);
+          };
 
-        carousel[i].addEventListener('mouseleave', function (e) {
-          console.log(sliderTimer);
-          clearInterval(sliderTimer);
-          sliderTimer = 0;
-          current = 0;
-          next = 1;
+          img.onerror = img.onabort = function () {
+            reject(src);
+          };
+
+          img.src = src;
         });
-      } // Next slide
-      // function nextSlide(element) {
-      //   let children = element.originalTarget.children
-      //   children[current].classList.remove('active')
-      //   children[next].classList.add('active')
-      //   next = next + 1 < children.length ? next + 1 : 0
-      //   current = current + 1 < children.length ? current + 1 : 1
-      // }
-      // Start the interval
-
-
-      function startSlider(element) {
-        var imgs = element.originalTarget.children;
-        var srcs = []; // console.log(imgs)
-        // Set array of img srcs
-
-        for (var _i = 0; _i < imgs.length; _i++) {
-          srcs.push(imgs[_i].getAttribute('data-src'));
-        }
-
-        preloadImages(srcs).then(function (loadedImgs) {
-          // Set images after loaded
-          for (var _i2 = 0; _i2 < imgs.length; _i2++) {
-            element.originalTarget.children[_i2].src = loadedImgs[_i2].src;
-          } // Start the slider
-
-
-          sliderTimer = setInterval(function () {
-            var children = element.originalTarget.children;
-            children[current].classList.remove('active');
-            children[next].classList.add('active');
-            next = next + 1 < children.length ? next + 1 : 0;
-            current = current + 1 < children.length ? current + 1 : 1;
-          }, interval);
-        }, function (errImg) {
-          alert('Failed');
-        });
-      } // Preloading slideshow images
-
-
-      function preloadImages(srcs) {
-        function loadImage(src) {
-          return new Promise(function (resolve, reject) {
-            var img = new Image();
-
-            img.onload = function () {
-              resolve(img);
-            };
-
-            img.onerror = img.onabort = function () {
-              reject(src);
-            };
-
-            img.src = src;
-          });
-        }
-
-        var promises = [];
-
-        for (var _i3 = 0; _i3 < srcs.length; _i3++) {
-          promises.push(loadImage(srcs[_i3]));
-        }
-
-        return Promise.all(promises);
       }
-    }
+
+      var promises = [];
+
+      for (var i = 0; i < srcs.length; i++) {
+        promises.push(loadImage(srcs[i]));
+      }
+
+      return Promise.all(promises);
+    },
+    // Check if images are already loaded
+    imagesLoaded: function imagesLoaded(imgs) {
+      var loaded = false;
+
+      for (var i = 0; i < imgs.length; i++) {
+        if (imgs[i].complete && imgs[i].naturalHeight !== 0) {
+          loaded = true;
+        } else {
+          loaded = false;
+        }
+      }
+    },
+    startCarousel: function startCarousel(element) {} // Create slideshow
+    // slideShow() {
+    //   let carousel = document.getElementsByClassName('carousel')
+    //   let interval = 3000
+    //   let current = 0
+    //   let next = 1
+    //   let sliderTimer
+    //   // For each carousel attach hover event
+    //   for (let i = 0; i < carousel.length; i++) {
+    //     // Mouse over event
+    //     carousel[i].addEventListener('mouseenter', e => {
+    //       startSlider(e)
+    //     })
+    //     // Mouse leave event
+    //     carousel[i].addEventListener('mouseleave', e => {
+    //       console.log(sliderTimer)
+    //       clearInterval(sliderTimer)
+    //       sliderTimer = 0
+    //       current = 0
+    //       next = 1
+    //     })
+    //   }
+    //   // Next slide
+    //   // function nextSlide(element) {
+    //   //   let children = element.originalTarget.children
+    //   //   children[current].classList.remove('active')
+    //   //   children[next].classList.add('active')
+    //   //   next = next + 1 < children.length ? next + 1 : 0
+    //   //   current = current + 1 < children.length ? current + 1 : 1
+    //   // }
+    //   // Start the interval
+    //   function startSlider(element) {
+    //     let imgs = element.originalTarget.children
+    //     let srcs = []
+    //     // console.log(imgs)
+    //     // Set array of img srcs
+    //     for (let i = 0; i < imgs.length; i++) {
+    //       srcs.push(imgs[i].getAttribute('data-src') + '.jpg')
+    //     }
+    //     preloadImages(srcs).then(
+    //       loadedImgs => {
+    //         // Set images after loaded
+    //         for (let i = 0; i < imgs.length; i++) {
+    //           element.originalTarget.children[i].src = loadedImgs[i].src
+    //         }
+    //         // Start the slider
+    //         sliderTimer = setInterval(function() {
+    //           let children = element.originalTarget.children
+    //           children[current].classList.remove('active')
+    //           children[next].classList.add('active')
+    //           next = next + 1 < children.length ? next + 1 : 0
+    //           current = current + 1 < children.length ? current + 1 : 1
+    //         }, interval)
+    //       },
+    //       function(errImg) {
+    //         alert('Failed')
+    //       }
+    //     )
+    //   }
+    //   // Preloading slideshow images
+    //   function preloadImages(srcs) {
+    //     function loadImage(src) {
+    //       return new Promise(function(resolve, reject) {
+    //         let img = new Image()
+    //         img.onload = function() {
+    //           resolve(img)
+    //         }
+    //         img.onerror = img.onabort = function() {
+    //           reject(src)
+    //         }
+    //         img.src = src
+    //       })
+    //     }
+    //     let promises = []
+    //     for (let i = 0; i < srcs.length; i++) {
+    //       promises.push(loadImage(srcs[i]))
+    //     }
+    //     return Promise.all(promises)
+    //   }
+    // }
+
   }
 });
 
@@ -2554,7 +2585,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      next: 1,
+      current: 0,
+      timer: 0,
+      interval: 1000
+    };
+  },
   props: ['data'],
   computed: {
     views: function views() {
@@ -2568,7 +2616,89 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     duration: function duration() {
+      // TODO: This only formats duration under an hour.
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
+    }
+  },
+  methods: {
+    // Image Carousel
+    carousel: function carousel(event) {
+      var _this = this;
+
+      var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var images = event.target.children;
+      var srcs = this.srcToArray(images); // console.log(srcs)
+      // this.timer = setInterval(evt => {
+      //     this.nextImage(event.target.children)
+      //   }, this.interval)
+
+      console.log('Hover');
+
+      if (start) {
+        this.timer = setInterval(function () {
+          _this.nextImage(images);
+        }, this.interval);
+        this.preloadImages(srcs, function () {
+          for (var i = 0; i < images.length; i++) {
+            images[i].setAttribute('src', srcs[i]);
+          }
+        });
+      } else {
+        clearInterval(this.timer);
+        console.log('Mouse out');
+      }
+    },
+    nextImage: function nextImage(images) {
+      for (var i = 0; i < images.length; i++) {
+        images[i].classList.remove('active');
+      }
+
+      $(images).eq(this.next).addClass('active');
+      this.next = (this.next + 1) % images.length;
+    },
+    // Preload images
+    preloadImages: function preloadImages(urls, allImagesLoadedCallback) {
+      var loadedCounter = 0;
+      var toBeLoadedNumber = urls.length;
+      urls.forEach(function (url) {
+        preloadImage(url, function () {
+          loadedCounter++;
+
+          if (loadedCounter == toBeLoadedNumber) {
+            allImagesLoadedCallback();
+          }
+        });
+      });
+
+      function preloadImage(url, anImageLoadedCallback) {
+        var img = new Image();
+        img.onload = anImageLoadedCallback;
+        img.src = url;
+      }
+    },
+    // Check images are loaded
+    imagesLoaded: function imagesLoaded(imgs) {
+      var loaded = false;
+
+      for (var i = 0; i < imgs.length; i++) {
+        if (imgs[i].complete && imgs[i].naturalHeight !== 0) {
+          loaded = true;
+        } else {
+          loaded = false;
+        }
+      }
+
+      return loaded;
+    },
+    // Image sources to array
+    srcToArray: function srcToArray(imgs) {
+      var srcs = [];
+
+      for (var i = 0; i < imgs.length; i++) {
+        srcs.push(imgs[i].getAttribute('data-src'));
+      }
+
+      return srcs;
     }
   }
 });
@@ -40925,11 +41055,19 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "carousel" },
+          {
+            staticClass: "carousel",
+            on: {
+              mouseenter: _vm.carousel,
+              mouseleave: function($event) {
+                return _vm.carousel($event, false)
+              }
+            }
+          },
           _vm._l(_vm.data.album, function(image) {
             return _c("img", {
               key: image.index,
-              attrs: { "data-src": image, alt: "" }
+              attrs: { alt: "", "data-src": image }
             })
           }),
           0
@@ -40963,7 +41101,7 @@ var render = function() {
               staticStyle: { top: "3px" },
               attrs: { name: "eye" }
             }),
-            _vm._v(" \n        " + _vm._s(_vm.views) + "\n      ")
+            _vm._v("\n        " + _vm._s(_vm.views) + "\n      ")
           ],
           1
         ),
@@ -40975,7 +41113,7 @@ var render = function() {
             _c("ion-icon", { attrs: { name: "thumbs-up" } }),
             _vm._v(" "),
             _c("ion-icon", { attrs: { name: "thumbs-down" } }),
-            _vm._v(" \n        " + _vm._s(_vm.rating) + "%\n      ")
+            _vm._v("\n        " + _vm._s(_vm.rating) + "%\n      ")
           ],
           1
         )

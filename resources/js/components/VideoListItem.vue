@@ -2,9 +2,18 @@
   <div class="video">
     <div class="video-data">
       <div class="video-poster">
-        <img :src="data.thumbnail" class="card-img-top" :alt="data.title">
-        <div class="carousel">
-          <img v-for="image in data.album" :key="image.index" :data-src="image" alt="">
+        <img :src="data.thumbnail" class="card-img-top" :alt="data.title" />
+        <div
+          class="carousel"
+          @mouseenter="carousel"
+          @mouseleave="carousel($event, false)"
+        >
+          <img
+            alt=""
+            :key="image.index"
+            :data-src="image"
+            v-for="image in data.album"
+          />
         </div>
         <div class="duration">
           {{ duration }}
@@ -15,12 +24,12 @@
           <router-link :to="'/videos/' + data.id">{{ data.title }}</router-link>
         </h5>
         <span style="opacity: .5;" class="pr-2 position-relative">
-          <ion-icon name="eye" style="top: 3px;"></ion-icon> 
+          <ion-icon name="eye" style="top: 3px;"></ion-icon>
           {{ views }}
         </span>
         <span :class="rating > 50 ? 'liked' : 'disliked'">
-          <ion-icon name="thumbs-up"></ion-icon> 
-          <ion-icon name="thumbs-down"></ion-icon> 
+          <ion-icon name="thumbs-up"></ion-icon>
+          <ion-icon name="thumbs-down"></ion-icon>
           {{ rating }}%
         </span>
       </div>
@@ -30,23 +39,113 @@
 
 <script>
 export default {
-  props: [
-    'data'
-  ],
+  data() {
+    return {
+      next: 1,
+      current: 0,
+      timer: 0,
+      interval: 1000,
+    }
+  },
+  props: ['data'],
   computed: {
     views: function() {
-      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return this.data.views
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
     rating: function() {
-      if(this.data.likes >= 1) {
-        return Math.trunc((this.data.likes / (this.data.likes + this.data.dislikes)) * 100);
-      }else {
-        return 0;
+      if (this.data.likes >= 1) {
+        return Math.trunc(
+          (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
+        )
+      } else {
+        return 0
       }
     },
     duration: function() {
-      return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
-    }
-  }
+      // TODO: This only formats duration under an hour.
+      return new Date(this.data.duration * 1000).toISOString().substr(14, 5)
+    },
+  },
+  methods: {
+    // Image Carousel
+    carousel: function(event, start = true) {
+      let images = event.target.children
+      let srcs = this.srcToArray(images)
+
+      // console.log(srcs)
+      // this.timer = setInterval(evt => {
+      //     this.nextImage(event.target.children)
+      //   }, this.interval)
+
+      console.log('Hover')
+
+      if (start) {
+        this.timer = setInterval(() => {
+          this.nextImage(images)
+        }, this.interval)
+        this.preloadImages(srcs, () => {
+          for (let i = 0; i < images.length; i++) {
+            images[i].setAttribute('src', srcs[i])
+          }
+        })
+      } else {
+        clearInterval(this.timer)
+        console.log('Mouse out')
+      }
+    },
+
+    nextImage(images) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].classList.remove('active')
+      }
+      $(images)
+        .eq(this.next)
+        .addClass('active')
+      this.next = (this.next + 1) % images.length
+    },
+
+    // Preload images
+    preloadImages(urls, allImagesLoadedCallback) {
+      var loadedCounter = 0
+      var toBeLoadedNumber = urls.length
+      urls.forEach(function(url) {
+        preloadImage(url, function() {
+          loadedCounter++
+          if (loadedCounter == toBeLoadedNumber) {
+            allImagesLoadedCallback()
+          }
+        })
+      })
+      function preloadImage(url, anImageLoadedCallback) {
+        var img = new Image()
+        img.onload = anImageLoadedCallback
+        img.src = url
+      }
+    },
+
+    // Check images are loaded
+    imagesLoaded(imgs) {
+      let loaded = false
+      for (let i = 0; i < imgs.length; i++) {
+        if (imgs[i].complete && imgs[i].naturalHeight !== 0) {
+          loaded = true
+        } else {
+          loaded = false
+        }
+      }
+      return loaded
+    },
+
+    // Image sources to array
+    srcToArray(imgs) {
+      let srcs = []
+      for (let i = 0; i < imgs.length; i++) {
+        srcs.push(imgs[i].getAttribute('data-src'))
+      }
+      return srcs
+    },
+  },
 }
 </script>
