@@ -170,6 +170,7 @@ a,
       display: block;
     }
     .video-poster {
+      min-height: 154px;
       position: relative;
       background: $lavendar;
       img {
@@ -212,13 +213,13 @@ a,
       }
       .liked {
         color: $green;
-        [name='thumbs-down'] {
+        [name="thumbs-down"] {
           display: none;
         }
       }
       .disliked {
         color: $red;
-        [name='thumbs-up'] {
+        [name="thumbs-up"] {
           display: none;
         }
       }

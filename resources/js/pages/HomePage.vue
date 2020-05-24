@@ -32,10 +32,14 @@
           class="mb-5"
           v-if="loaded"
           :videos="videos.data"
-          :cards="50"
+          :cards="5"
           :cols="5"
         >
         </video-list>
+
+        <skeleton-video-card class="mb-5" v-if="!loaded" :cards="5" :cols="5">
+        </skeleton-video-card>
+
         <paginate
           class="mb-5"
           :pagination="videos"
@@ -48,7 +52,12 @@
 </template>
 
 <script>
+import SkeletonVideoCard from "../components/skeleton/VideoCard"
+
 export default {
+  components: {
+    SkeletonVideoCard: SkeletonVideoCard,
+  },
   data() {
     return {
       videos: [],

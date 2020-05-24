@@ -1,15 +1,5 @@
 <template>
   <div class="video-listing">
-    <!-- TODO: Put skeleton cards in parent -->
-    <div class="row skeleton-row no-gutters d-none" :class="'row-cols-' + cols">
-      <div
-        class="col px-2 mb-md-3 position-relative"
-        v-for="card in cards"
-        :key="card.index"
-      >
-        <skeleton-card-video></skeleton-card-video>
-      </div>
-    </div>
     <div class="row video-list no-gutters" :class="'row-cols-' + cols">
       <div
         class="col px-2 mb-md-3 position-relative"

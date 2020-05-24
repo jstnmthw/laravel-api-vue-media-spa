@@ -23,9 +23,6 @@ import TopAdBanner from "./components/TopAdBanner"
 import Paginate from "./components/Paginate"
 import PageHeader from "./components/PageHeader"
 
-// Skeleton Cards
-import SkeletonCardVideo from "./components/skeleton/Videos"
-
 // Register Router
 Vue.use(VueRouter)
 
@@ -42,14 +39,13 @@ Vue.component("VideoList", VideoList)
 Vue.component("VideoListItem", VideoListItem)
 Vue.component("PageHeader", PageHeader)
 Vue.component("Paginate", Paginate)
-Vue.component("SkeletonCardVideo", SkeletonCardVideo)
 Vue.component("TopAdBanner", TopAdBanner)
 
 // Vue Plugins
 Vue.use(VueProgressBar, {
   color: "rgba(217, 128, 250,1.0)",
   failedColor: "red",
-  height: "2px"
+  height: "2px",
 })
 
 // Register Routes
@@ -59,23 +55,23 @@ const router = new VueRouter({
     {
       path: "/",
       component: Homepage,
-      name: "home"
+      name: "home",
     },
     {
       path: "/categories/:category",
       component: Categories,
-      name: "categories"
+      name: "categories",
     },
     {
       path: "/videos/:id",
       component: Video,
-      name: "video"
+      name: "video",
     },
     {
       path: "*",
       component: NotFound,
-      name: "404"
-    }
+      name: "404",
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -83,7 +79,7 @@ const router = new VueRouter({
     } else {
       return { x: 0, y: 0 }
     }
-  }
+  },
 })
 
 // Initiate instance
@@ -91,12 +87,12 @@ const app = new Vue({
   el: "#app",
   router,
   data: {
-    categories: []
+    categories: [],
   },
   created() {
     var vm = this
     axios.get("/api/categories").then(function(response) {
       vm.categories = response.data
     })
-  }
+  },
 })
