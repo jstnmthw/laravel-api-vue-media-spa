@@ -37,7 +37,7 @@ class VideoController extends Controller
          */
         $cat        = $this->getCategory($request->input('category'));
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
-        $limit      = 5;
+        $limit      = is_numeric($request->input('limit')) && (int) $request->input('limit') < 50 ? (int) $request->input('limit') : 50;
         $offset     = $page > 1 ? ($page - 1) * $limit + 1 : 0;
 
         // Check for sortby request
@@ -55,25 +55,41 @@ class VideoController extends Controller
                 $sortby = 'created_at';
                 break;
             default:
-                $sortby = 'views';
+                $sortby = false;
             break;
         }
 
         // Run seek query by ids (and sort if present).
-        $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
-                    function () use ($cat, $sortby, $limit, $offset) {
-                        return Video::select('videos.id')
-                            ->when($cat, function ($query, $cat) {
-                                return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
-                                    ->where('categorizables.category_id', $cat);
-                            })
-                            ->offset($offset)
-                            ->orderBy($sortby, 'DESC')
-                            ->limit($limit)
-                            ->get();
-                    });
+        // $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
+        //             function () use ($cat, $sortby, $limit, $offset) {
+        //                 return Video::select('videos.id')
+        //                     ->when($cat, function ($query, $cat) {
+        //                         return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
+        //                             ->where('categorizables.category_id', $cat);
+        //                     })
+        //                     ->offset($offset)
+        //                     ->orderBy($sortby, 'DESC')
+        //                     ->limit($limit)
+        //                     ->get();
+        //             });
 
-        // Return error is no results.
+        // Temp cache disable
+        $seek = Video::select('videos.id')
+        ->when($cat, function ($query, $cat) {
+            return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
+                ->where('categorizables.category_id', $cat);
+        })
+        ->offset($offset)
+        ->when($sortby, function ($query, $sortby) {
+            return $query->orderBy($sortby, 'DESC');
+        })
+        ->when(!$sortby, function ($query) {
+            return $query->inRandomOrder();
+        })
+        ->limit($limit)
+        ->get();
+    
+        // Return error if no results.
         if(empty($seek->toArray())) {
             return ['error'=> 'No videos found in this category.'];
         }
@@ -100,7 +116,11 @@ class VideoController extends Controller
         }
 
         // Now, collect all the information from ids selected (fast).
-        $data['data'] = Video::whereIn('id', $ids)->orderBy($sortby, 'DESC')->get();
+        $data['data'] = Video::whereIn('id', $ids)
+                            ->when($sortby, function ($query, $sortby) {
+                                return $query->orderBy($sortby, 'DESC');
+                            })
+                            ->get();
 
         foreach ($data['data'] as $row => $value) {
             $value['album'] = explode(';',$value['album']);
@@ -146,12 +166,12 @@ class VideoController extends Controller
     {
 
         // Grab related videos
-        if($request->has('category')) {
+        if($request->has('related')) {
             /**
              * TODO: We need a better way of showing related videos. Possibily a full text search
              * on titles instead of picking one category out of the bunch.
              */
-            $cat_id = $_COOKIE['category'] ? $this->getCategory($_COOKIE['category']) : $this->getCategory($request->input('category'));
+            $cat_id = $_COOKIE['category'] != null ? $this->getCategory($_COOKIE['category']) : $this->getCategory($request->input('related'));
             $related = Video::whereHas('categories', function (Builder $query) use ($cat_id) {
                 $query->where('categories.id', $cat_id)
                     ->where('categories.id', '!=', 43); // TODO Need to add check for excemptions

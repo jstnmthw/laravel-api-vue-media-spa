@@ -2681,6 +2681,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2688,14 +2708,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pagination: [],
       loading: false,
       error: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
     };
   },
   mounted: function mounted() {
     // Get videos on page load
     this.getVideos(); // cookie for cats
 
-    document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 April 2020 00:00:00 UTC; path=/";
+    document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/";
   },
   computed: {
     category_title: function category_title() {
@@ -2705,7 +2725,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var key = categories.indexOf(this.$route.params.category);
 
       if (key >= 0) {
-        return this.categories[key]['name'] + ' Video Category';
+        return this.categories[key]["name"] + " Video Category";
       }
     }
   },
@@ -2720,9 +2740,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true; // Stop unfinished images loading
 
-      $('.video-poster img').attr('src', ''); // Make the call
+      $(".video-poster img").attr("src", ""); // Make the call
 
-      axios.get('/api/videos', {
+      axios.get("/api/videos", {
         params: _objectSpread({}, this.$route.params, {}, this.$route.query)
       }).then(function (response) {
         // Finish frontend progress bar
@@ -2739,7 +2759,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.loading = false; // console.log(document.cookie);
       })["catch"](function (error) {
         // Console log API error.
-        console.log('Error calling API.'); // Failed frontend progress bar
+        console.log("Error calling API."); // Failed frontend progress bar
 
         _this.$Progress.fail();
       });
@@ -2753,15 +2773,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  props: ['categories'],
+  props: ["categories"],
   watch: {
     $route: function $route(to, from) {
-      console.log('rotyue ca'); // Get new videos on route change
+      console.log("rotyue ca"); // Get new videos on route change
 
       this.videos = [];
       this.getVideos(); // cookie for cats
 
-      document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 April 2020 00:00:00 UTC; path=/";
+      document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/";
     }
   }
 });
@@ -3114,9 +3134,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.loading = false; // Use replace to not effect the browser history
 
-        $("#video")[0].contentWindow.location.replace(_this.data.embed);
+        $("#video")[0].contentWindow.location.replace(_this.data.embed); // Fetch Related Videos
 
-        _this.getRelated();
+        _this.getRelated(12);
       })["catch"](function (error) {
         // Console log API error.
         console.log("Error calling API."); // Loading
@@ -3126,17 +3146,41 @@ __webpack_require__.r(__webpack_exports__);
         _this.$Progress.fail();
       });
     },
-    getRelated: function getRelated() {
+    getRelated: function getRelated(limit) {
       var _this2 = this;
 
       this.related_loading = true;
-      axios.get("/api/videos/" + this.$route.params.id + "?category=" + this.data.categories[0].name.toLowerCase()).then(function (response) {
-        _this2.related = response.data;
+      var category = "";
+
+      if (null !== this.getCookie("category")) {
+        category = this.getCookie("category");
+      } else {
+        category = this.data.categories[0].name.toLowerCase();
+      }
+
+      axios.get("/api/videos/" + "?limit=" + limit + "&category=" + category).then(function (response) {
+        _this2.related = response.data.data;
         _this2.related_loading = false;
       })["catch"](function (error) {
         _this2.related_loading = false;
-        console.log("There was an error retrieving data.");
+        console.log("There was an error fetching data.");
       });
+    },
+    getCookie: function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(";");
+
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+
+        while (c.charAt(0) == " ") {
+          c = c.substring(1, c.length);
+        }
+
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+
+      return null;
     }
   },
   props: ["categories"],

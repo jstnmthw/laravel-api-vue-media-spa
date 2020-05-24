@@ -98,106 +98,119 @@ export default {
       data: [],
       related: [],
       loading: false,
-      related_loading: false
-    };
+      related_loading: false,
+    }
   },
   mounted() {
-    this.getVideo();
+    this.getVideo()
   },
   computed: {
     rating: function() {
       if (this.data.likes >= 1) {
         return Math.trunc(
           (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
-        );
+        )
       } else {
-        return 0;
+        return 0
       }
     },
     views: function() {
-      return this.formatNumber(this.data.views);
+      return this.formatNumber(this.data.views)
     },
     likes: function() {
-      return this.formatNumber(this.data.likes);
+      return this.formatNumber(this.data.likes)
     },
     dislikes: function() {
-      return this.formatNumber(this.data.dislikes);
-    }
+      return this.formatNumber(this.data.dislikes)
+    },
   },
   methods: {
     formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     },
     getVideo() {
       // Start loading on frontend
-      this.$Progress.start();
+      this.$Progress.start()
 
       // Loading
-      this.loading = true;
+      this.loading = true
 
       // Stop unfinished images loading
-      $(".video-poster img").attr("src", "");
+      $(".video-poster img").attr("src", "")
 
       // Clear iframe src
-      $("#video").attr("src", "");
+      $("#video").attr("src", "")
 
       // Make the call
       axios
         .get("/api/videos/" + this.$route.params.id)
         .then(response => {
           // Finish loading on frontend
-          this.$Progress.finish();
+          this.$Progress.finish()
 
           // Set video object
-          this.data = response.data;
+          this.data = response.data
 
           // Loading
-          this.loading = false;
+          this.loading = false
 
           // Use replace to not effect the browser history
-          $("#video")[0].contentWindow.location.replace(this.data.embed);
+          $("#video")[0].contentWindow.location.replace(this.data.embed)
 
-          this.getRelated();
+          // Fetch Related Videos
+          this.getRelated(12)
         })
         .catch(error => {
           // Console log API error.
-          console.log("Error calling API.");
+          console.log("Error calling API.")
 
           // Loading
-          this.loading = false;
+          this.loading = false
 
           // Failed frontend progress bar
-          this.$Progress.fail();
-        });
+          this.$Progress.fail()
+        })
     },
-    getRelated() {
-      this.related_loading = true;
+    getRelated(limit) {
+      this.related_loading = true
+
+      let category = ""
+      if (null !== this.getCookie("category")) {
+        category = this.getCookie("category")
+      } else {
+        category = this.data.categories[0].name.toLowerCase()
+      }
 
       axios
-        .get(
-          "/api/videos/" +
-            this.$route.params.id +
-            "?category=" +
-            this.data.categories[0].name.toLowerCase()
-        )
+        .get("/api/videos/" + "?limit=" + limit + "&category=" + category)
         .then(response => {
-          this.related = response.data;
-          this.related_loading = false;
+          this.related = response.data.data
+          this.related_loading = false
         })
         .catch(error => {
-          this.related_loading = false;
-          console.log("There was an error retrieving data.");
-        });
-    }
+          this.related_loading = false
+          console.log("There was an error fetching data.")
+        })
+    },
+    getCookie(name) {
+      var nameEQ = name + "="
+      var ca = document.cookie.split(";")
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i]
+        while (c.charAt(0) == " ") c = c.substring(1, c.length)
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length)
+      }
+      return null
+    },
   },
   props: ["categories"],
   watch: {
     $route(to, from) {
       // Clear data hen route changes.
-      this.data = [];
-      this.related = [];
-      this.getVideo();
-    }
-  }
-};
+      this.data = []
+      this.related = []
+      this.getVideo()
+    },
+  },
+}
 </script>
