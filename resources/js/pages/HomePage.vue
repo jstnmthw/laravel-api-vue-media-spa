@@ -1,39 +1,48 @@
 <template>
-  <div class="container">
-    <div class="row bg-purple">
-    <main-sidebar :categories="categories"></main-sidebar>
-    <main class="col-md-10">
-      <top-ad-banner></top-ad-banner>
-      <page-header :title="'Most Viewed Videos'" icon="eye" v-show="loaded"></page-header>
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="text-center" v-show="!loaded">Loading API</h3>
-        <div v-show="loaded">
-          Showing: {{ videos.current_page }} of {{ videos.last_page }}
+  <div class="content container bg-purple">
+    <div class="row">
+      <main-sidebar :categories="categories"></main-sidebar>
+      <main class="col-md-10">
+        <top-ad-banner></top-ad-banner>
+        <page-header
+          :title="'Most Viewed Videos'"
+          icon="eye"
+          v-show="loaded"
+        ></page-header>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="text-center" v-show="!loaded">Loading API</h3>
+          <div v-show="loaded">
+            Showing: {{ videos.current_page }} of {{ videos.last_page }}
+          </div>
+          <div v-show="loaded">
+            <select
+              v-model="sort"
+              name="sortby"
+              class="custom-select"
+              @change="sortBy()"
+            >
+              <option value="most_views">Most Views</option>
+              <option value="top_rated">Top Rated</option>
+              <option value="duration">Duration</option>
+              <option value="most_recent">Most Recent</option>
+            </select>
+          </div>
         </div>
-        <div v-show="loaded">
-          <select v-model="sort" name="sortby" class="custom-select" @change="sortBy()">
-            <option value="most_views">Most Views</option>
-            <option value="top_rated">Top Rated</option>
-            <option value="duration">Duration</option>
-            <option value="most_recent">Most Recent</option>
-          </select>
-        </div>
-      </div>
-      <video-list 
-        class="mb-5"
-        v-if="loaded"
-        :videos="videos.data"
-        :cards="50"
-        :cols="5"
-      >
-      </video-list>
-      <paginate
-        class="mb-5"
-        :pagination="videos"
-        :loading="!loaded"
-        @paginate="getVideos()"
+        <video-list
+          class="mb-5"
+          v-if="loaded"
+          :videos="videos.data"
+          :cards="50"
+          :cols="5"
+        >
+        </video-list>
+        <paginate
+          class="mb-5"
+          :pagination="videos"
+          :loading="!loaded"
+          @paginate="getVideos()"
         ></paginate>
-    </main>
+      </main>
     </div>
   </div>
 </template>
@@ -46,69 +55,70 @@ export default {
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
     }
   },
   mounted() {
     // Get videos on page load
-    this.getVideos(); 
+    this.getVideos()
   },
   methods: {
     // Axios Call
     async getVideos() {
       // Set error
-      this.error = false;
+      this.error = false
 
       // Start loading on frontend
-      this.$Progress.start();
+      this.$Progress.start()
 
       // Set loading
-      this.loading = true;
+      this.loading = true
 
       // Stop unfinished images loading
-      $('.video-poster img').attr('src', '');
+      $(".video-poster img").attr("src", "")
 
       // Make the call
-      await axios.get('/api/videos', { params: {...this.$route.params, ...this.$route.query } }).then((response) => {
+      await axios
+        .get("/api/videos", {
+          params: { ...this.$route.params, ...this.$route.query },
+        })
+        .then(response => {
+          // Finish loading on frontend
+          this.$Progress.finish()
 
-        // Finish loading on frontend
-        this.$Progress.finish();
+          // Set video object
+          this.videos = response.data
 
-        // Set video object
-        this.videos = response.data;
-      
-        // Disable loading
-        this.loading = false;
-        this.loaded = true;
+          // Disable loading
+          this.loading = false
+          this.loaded = true
+        })
+        .catch(error => {
+          // Console log API error.
+          console.log("Error calling API.")
 
-
-      }).catch(error => {
-        // Console log API error.
-        console.log('Error calling API.');
-
-        // Failed frontend progress bar
-        this.$Progress.fail();
-      });
+          // Failed frontend progress bar
+          this.$Progress.fail()
+        })
     },
 
     // Set default or user sortby
     sortBy() {
-      this.$router.push({ query: Object.assign({}, this.$route.query, { sortby: this.sort }) });
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, { sortby: this.sort }),
+      })
     },
   },
-  props: [
-    'categories'
-  ],
+  props: ["categories"],
   watch: {
     // When route changes, call API
     $route(to, from) {
-
       // Clear data
-      this.videos = [];
+      this.videos = []
 
       // Get new data
-      this.getVideos();
-    }
+      this.getVideos()
+    },
   },
 }
 </script>

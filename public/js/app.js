@@ -2015,17 +2015,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       search: null
     };
   },
-  props: ['categories'],
+  props: ["categories"],
   methods: {
     search_category: function search_category() {
       var search = [this.search];
-      $('#search-list li').each(function (i) {
+      $("#search-list li").each(function (i) {
         var haystack = search[0].toUpperCase();
         var needle = this.innerText.toUpperCase();
 
@@ -2038,7 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clear_search: function clear_search() {
       this.search = null;
-      $('#search-list li').show();
+      $("#search-list li").show();
     }
   }
 });
@@ -2925,6 +2930,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2932,7 +2946,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
     };
   },
   mounted: function mounted() {
@@ -2957,10 +2971,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.loading = true; // Stop unfinished images loading
 
-                $('.video-poster img').attr('src', ''); // Make the call
+                $(".video-poster img").attr("src", ""); // Make the call
 
                 _context.next = 6;
-                return axios.get('/api/videos', {
+                return axios.get("/api/videos", {
                   params: _objectSpread({}, _this.$route.params, {}, _this.$route.query)
                 }).then(function (response) {
                   // Finish loading on frontend
@@ -2973,7 +2987,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.loaded = true;
                 })["catch"](function (error) {
                   // Console log API error.
-                  console.log('Error calling API.'); // Failed frontend progress bar
+                  console.log("Error calling API."); // Failed frontend progress bar
 
                   _this.$Progress.fail();
                 });
@@ -2995,7 +3009,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     }
   },
-  props: ['categories'],
+  props: ["categories"],
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
@@ -40439,7 +40453,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "all-categories" }, [
         _c("div", { staticClass: "sidebar-filter-container" }, [
-          _c("div", { staticClass: "search-wrap" }, [
+          _c("div", { staticClass: "search-wrap position-relative" }, [
             _c("input", {
               directives: [
                 {
@@ -41408,10 +41422,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "content container bg-purple" }, [
     _c(
       "div",
-      { staticClass: "row bg-purple" },
+      { staticClass: "row" },
       [
         _c("main-sidebar", { attrs: { categories: _vm.categories } }),
         _vm._v(" "),
@@ -41470,11 +41484,11 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n        Showing: " +
+                      "\n          Showing: " +
                         _vm._s(_vm.videos.current_page) +
                         " of " +
                         _vm._s(_vm.videos.last_page) +
-                        "\n      "
+                        "\n        "
                     )
                   ]
                 ),

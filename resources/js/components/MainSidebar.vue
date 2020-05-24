@@ -38,15 +38,20 @@
     </div>
     <div class="all-categories">
       <div class="sidebar-filter-container">
-        <div class="search-wrap">
-          <input 
-            v-model="search" 
-            @keyup="search_category()" 
-            class="form-control mb-3" 
-            type="text" 
+        <div class="search-wrap position-relative">
+          <input
+            v-model="search"
+            @keyup="search_category()"
+            class="form-control mb-3"
+            type="text"
             placeholder="Filter by category…"
+          />
+          <button
+            type="button"
+            class="btn-clear-search"
+            v-show="search"
+            @click.prevent="clear_search()"
           >
-          <button type="button" class="btn-clear-search" v-show="search" @click.prevent="clear_search()">
             <ion-icon name="close-circle"></ion-icon>
           </button>
         </div>
@@ -66,27 +71,27 @@
 export default {
   data() {
     return {
-      search: null
+      search: null,
     }
   },
-  props: ['categories'],
+  props: ["categories"],
   methods: {
     search_category() {
-      const search = [this.search];
-      $('#search-list li').each(function(i) {
-        const haystack = search[0].toUpperCase();
-        const needle = this.innerText.toUpperCase();
-        if(needle.indexOf(haystack) > -1) {
-          $(this).show();
+      const search = [this.search]
+      $("#search-list li").each(function(i) {
+        const haystack = search[0].toUpperCase()
+        const needle = this.innerText.toUpperCase()
+        if (needle.indexOf(haystack) > -1) {
+          $(this).show()
         } else {
-          $(this).hide();
+          $(this).hide()
         }
-      }, search);
+      }, search)
     },
     clear_search() {
-      this.search = null;
-      $('#search-list li').show();
-    }
-  }
+      this.search = null
+      $("#search-list li").show()
+    },
+  },
 }
 </script>

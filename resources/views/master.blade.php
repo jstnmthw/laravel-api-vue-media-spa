@@ -20,11 +20,9 @@
 </head>
 <body>
     <div id="app">
-        <div class="content">
-            <vue-progress-bar></vue-progress-bar>
-            <navbar></navbar>
-            <router-view :categories="categories"></router-view>
-        </div>
+        <vue-progress-bar></vue-progress-bar>
+        <navbar></navbar>
+        <router-view :categories="categories"></router-view>
         <main-footer></main-footer>
     </div>
 
