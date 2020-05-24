@@ -12,8 +12,8 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="text-center" v-show="!loaded">Loading API</h3>
           <div v-if="loaded">
-            Showing: {{ current_page }} of
-            {{ last_page }}
+            Showing: {{ uf_num(videos.current_page) }} of
+            {{ uf_num(videos.last_page) }}
           </div>
           <div v-show="loaded">
             <select
@@ -122,14 +122,6 @@ export default {
     // Format to user friendly number
     uf_num(int) {
       return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    },
-  },
-  computed: {
-    last_page: function() {
-      return this.uf_num(this.videos.last_page)
-    },
-    current_page: function() {
-      return this.uf_num(this.videos.current_page)
     },
   },
   props: ["categories"],

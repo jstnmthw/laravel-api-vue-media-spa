@@ -2939,14 +2939,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
   },
-  computed: {
-    last_page: function last_page() {
-      return this.uf_num(this.videos.last_page);
-    },
-    current_page: function current_page() {
-      return this.uf_num(this.videos.current_page);
-    }
-  },
   props: ["categories"],
   watch: {
     // When route changes, call API
@@ -41434,9 +41426,9 @@ var render = function() {
                   ? _c("div", [
                       _vm._v(
                         "\n          Showing: " +
-                          _vm._s(_vm.current_page) +
+                          _vm._s(_vm.uf_num(_vm.videos.current_page)) +
                           " of\n          " +
-                          _vm._s(_vm.last_page) +
+                          _vm._s(_vm.uf_num(_vm.videos.last_page)) +
                           "\n        "
                       )
                     ])
