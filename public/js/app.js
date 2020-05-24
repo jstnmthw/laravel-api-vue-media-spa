@@ -2845,6 +2845,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2917,6 +2918,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           sortby: this.sort
         })
       });
+    },
+    // Format to user friendly number
+    uf_num: function uf_num(_int) {
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
   },
   props: ["categories"],
@@ -41393,9 +41398,9 @@ var render = function() {
                   [
                     _vm._v(
                       "\n          Showing: " +
-                        _vm._s(_vm.videos.current_page) +
-                        " of " +
-                        _vm._s(_vm.videos.last_page) +
+                        _vm._s(_vm.uf_num(_vm.videos.current_page)) +
+                        " of\n          " +
+                        _vm._s(_vm.uf_num(_vm.videos.last_page)) +
                         "\n        "
                     )
                   ]

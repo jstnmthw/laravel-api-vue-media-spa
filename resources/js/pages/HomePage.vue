@@ -12,7 +12,8 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="text-center" v-show="!loaded">Loading API</h3>
           <div v-show="loaded">
-            Showing: {{ videos.current_page }} of {{ videos.last_page }}
+            Showing: {{ uf_num(videos.current_page) }} of
+            {{ uf_num(videos.last_page) }}
           </div>
           <div v-show="loaded">
             <select
@@ -116,6 +117,11 @@ export default {
       this.$router.push({
         query: Object.assign({}, this.$route.query, { sortby: this.sort }),
       })
+    },
+
+    // Format to user friendly number
+    uf_num(int) {
+      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     },
   },
   props: ["categories"],
