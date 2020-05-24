@@ -3,13 +3,13 @@
     <div class="row">
       <ul class="pagination pagination-lg mx-auto">
         <li class="page-item" v-if="pagination.current_page > 1">
-          <a 
+          <a
             :class="{ disabled: loading }"
             class="page-link"
-            href="javascript:void(0)" 
-            aria-label="Previous" 
+            href="javascript:void(0)"
+            aria-label="Previous"
             v-on:click.prevent="changePage(pagination.current_page - 1)"
-            >
+          >
             <span aria-hidden="true">
               <ion-icon style="top: 2" name="chevron-back-outline"></ion-icon>
             </span>
@@ -17,73 +17,91 @@
           </a>
         </li>
         <li class="page-item" v-if="pagination.current_page > 3">
-          <a 
+          <a
             :class="{ disabled: loading }"
-            class="page-link" 
-            href="javascript:void(0)" 
-            aria-label="First Page" 
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="First Page"
             v-on:click.prevent="changePage(1)"
-            >
+          >
             1
           </a>
         </li>
         <li class="page-item" v-if="pagination.current_page > 3">
-          <a 
+          <a
             :class="{ disabled: loading }"
-            class="page-link page-hellip" 
-            href="javascript:void(0)" 
-            aria-label="..." 
+            class="page-link page-hellip"
+            href="javascript:void(0)"
+            aria-label="..."
             v-on:click.prevent=""
-            >
+          >
             &hellip;
           </a>
         </li>
-        <li 
-          v-for="page in pagesNumber" 
+        <li
+          v-for="page in pagesNumber"
           class="page-item"
-          :class="{ 'active': page == pagination.current_page }"
+          :class="{ active: page == pagination.current_page }"
           :key="page.index"
-          >
+        >
           <a
             :disabled="{ disabled: loading }"
             :class="{ disabled: loading }"
             class="page-link"
             href="javascript:void(0)"
             v-on:click.prevent="changePage(page)"
-            >
-            {{ page }}
+          >
+            {{ uf_num(page) }}
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page >= 5">
+        <li
+          class="page-item"
+          v-if="
+            pagination.current_page < pagination.last_page &&
+              pagination.last_page >= 5
+          "
+        >
           <a
             :class="{ disabled: loading }"
-            class="page-link page-hellip" 
-            href="javascript:void(0)" 
-            aria-label="Last Page" 
+            class="page-link page-hellip"
+            href="javascript:void(0)"
+            aria-label="Last Page"
             v-on:click.prevent=""
-            >
+          >
             &hellip;
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page && pagination.last_page >= 5">
+        <li
+          class="page-item"
+          v-if="
+            pagination.current_page < pagination.last_page &&
+              pagination.last_page >= 5
+          "
+        >
           <a
-            class="page-link" 
-            :class="{ 'active': pagination.current_page <= pagination.last_page, disabled: loading }"
-            href="javascript:void(0)" 
-            aria-label="Last Page" 
+            class="page-link"
+            :class="{
+              active: pagination.current_page <= pagination.last_page,
+              disabled: loading,
+            }"
+            href="javascript:void(0)"
+            aria-label="Last Page"
             v-on:click.prevent="changePage(pagination.last_page)"
-            >
-            {{ pagination.last_page }}
+          >
+            {{ uf_num(pagination.last_page) }}
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+        <li
+          class="page-item"
+          v-if="pagination.current_page < pagination.last_page"
+        >
           <a
             :class="{ disabled: loading }"
-            class="page-link" 
-            href="javascript:void(0)" 
-            aria-label="Next" 
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Next"
             v-on:click.prevent="changePage(pagination.current_page + 1)"
-            >
+          >
             Next
             <span aria-hidden="true">
               <ion-icon name="chevron-forward-outline"></ion-icon>
@@ -96,40 +114,53 @@
 </template>
 
 <script>
-export default{
+export default {
+  data() {
+    return {
+      last_page: Number,
+    }
+  },
   props: {
     pagination: {},
     loading: false,
   },
   computed: {
     pagesNumber() {
-      let totalPage  = Math.ceil(this.pagination.total / this.pagination.per_page);
-      let startPage  = (this.pagination.current_page < 3) ? 1 : this.pagination.current_page - 2;
-      let endPage    = 4 + startPage;
-      endPage        = (totalPage < endPage) ? totalPage : endPage;
-      let diff       = startPage - endPage + 4;
-      startPage     -= (startPage - diff > 0) ? diff : 0;
+      let totalPage = Math.ceil(
+        this.pagination.total / this.pagination.per_page
+      )
+      let startPage =
+        this.pagination.current_page < 3 ? 1 : this.pagination.current_page - 2
+      let endPage = 4 + startPage
+      endPage = totalPage < endPage ? totalPage : endPage
+      let diff = startPage - endPage + 4
+      startPage -= startPage - diff > 0 ? diff : 0
 
-      let pagesArray = [];
-      for(let i = startPage; i <= endPage; i++) {
-        pagesArray.push(i);
+      let pagesArray = []
+      for (let i = startPage; i <= endPage; i++) {
+        pagesArray.push(i)
       }
 
-      this.currentPage = startPage;
+      this.currentPage = startPage
 
-      return pagesArray;
-    }
+      return pagesArray
+    },
   },
   methods: {
     changePage(page) {
-      if(!this.loading && this.pagination.current_page != page) {
-        this.pagination.current_page = page;
+      if (!this.loading && this.pagination.current_page != page) {
+        this.pagination.current_page = page
 
         // Push URL
-        this.$router.push({ query: Object.assign({}, this.$route.query, { page: page }) });
+        this.$router.push({
+          query: Object.assign({}, this.$route.query, { page: page }),
+        })
         // this.$router.push({ query: { page: page } });
       }
-    }
-  }
+    },
+    uf_num(int) {
+      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    },
+  },
 }
 </script>

@@ -2301,7 +2301,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      last_page: Number
+    };
+  },
   props: {
     pagination: {},
     loading: false
@@ -2335,6 +2358,9 @@ __webpack_require__.r(__webpack_exports__);
           })
         }); // this.$router.push({ query: { page: page } });
       }
+    },
+    uf_num: function uf_num(_int) {
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
   }
 });
@@ -40840,7 +40866,11 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n          " + _vm._s(page) + "\n        ")]
+                  [
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.uf_num(page)) + "\n        "
+                    )
+                  ]
                 )
               ]
             )
@@ -40895,7 +40925,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n          " +
-                        _vm._s(_vm.pagination.last_page) +
+                        _vm._s(_vm.uf_num(_vm.pagination.last_page)) +
                         "\n        "
                     )
                   ]
