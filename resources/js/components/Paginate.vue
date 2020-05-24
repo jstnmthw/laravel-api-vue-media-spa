@@ -115,11 +115,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      last_page: Number,
-    }
-  },
   props: {
     pagination: {},
     loading: false,

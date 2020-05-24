@@ -11,9 +11,9 @@
         ></page-header>
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="text-center" v-show="!loaded">Loading API</h3>
-          <div v-show="loaded">
-            Showing: {{ uf_num(videos.current_page) }} of
-            {{ uf_num(videos.last_page) }}
+          <div v-if="loaded">
+            Showing: {{ current_page }} of
+            {{ last_page }}
           </div>
           <div v-show="loaded">
             <select
@@ -22,7 +22,7 @@
               class="custom-select"
               @change="sortBy()"
             >
-              <option value="most_views">Most Views</option>
+              <option selected value="most_views">Most Views</option>
               <option value="top_rated">Top Rated</option>
               <option value="duration">Duration</option>
               <option value="most_recent">Most Recent</option>
@@ -122,6 +122,14 @@ export default {
     // Format to user friendly number
     uf_num(int) {
       return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    },
+  },
+  computed: {
+    last_page: function() {
+      return this.uf_num(this.videos.last_page)
+    },
+    current_page: function() {
+      return this.uf_num(this.videos.current_page)
     },
   },
   props: ["categories"],

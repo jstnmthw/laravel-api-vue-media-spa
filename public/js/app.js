@@ -2320,11 +2320,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      last_page: Number
-    };
-  },
   props: {
     pagination: {},
     loading: false
@@ -2942,6 +2937,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // Format to user friendly number
     uf_num: function uf_num(_int) {
       return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+  },
+  computed: {
+    last_page: function last_page() {
+      return this.uf_num(this.videos.last_page);
+    },
+    current_page: function current_page() {
+      return this.uf_num(this.videos.current_page);
     }
   },
   props: ["categories"],
@@ -41427,28 +41430,17 @@ var render = function() {
                   [_vm._v("Loading API")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.loaded,
-                        expression: "loaded"
-                      }
-                    ]
-                  },
-                  [
-                    _vm._v(
-                      "\n          Showing: " +
-                        _vm._s(_vm.uf_num(_vm.videos.current_page)) +
-                        " of\n          " +
-                        _vm._s(_vm.uf_num(_vm.videos.last_page)) +
-                        "\n        "
-                    )
-                  ]
-                ),
+                _vm.loaded
+                  ? _c("div", [
+                      _vm._v(
+                        "\n          Showing: " +
+                          _vm._s(_vm.current_page) +
+                          " of\n          " +
+                          _vm._s(_vm.last_page) +
+                          "\n        "
+                      )
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -41498,9 +41490,11 @@ var render = function() {
                         }
                       },
                       [
-                        _c("option", { attrs: { value: "most_views" } }, [
-                          _vm._v("Most Views")
-                        ]),
+                        _c(
+                          "option",
+                          { attrs: { selected: "", value: "most_views" } },
+                          [_vm._v("Most Views")]
+                        ),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "top_rated" } }, [
                           _vm._v("Top Rated")
