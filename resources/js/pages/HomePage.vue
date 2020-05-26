@@ -38,13 +38,14 @@
         >
         </video-list>
 
-        <skeleton-video-card class="mb-5" v-if="!loaded" :cards="5" :cols="5">
+        <skeleton-video-card class="mb-5" v-if="!loaded" :cards="50" :cols="5">
         </skeleton-video-card>
 
         <paginate
+          v-show="loaded"
           class="mb-5"
           :pagination="videos"
-          :loading="!loaded"
+          :loaded="loaded"
           @paginate="getVideos()"
         ></paginate>
       </main>
@@ -82,7 +83,7 @@ export default {
       this.$Progress.start()
 
       // Set loading
-      this.loading = true
+      this.loaded = false
 
       // Stop unfinished images loading
       $(".video-poster img").attr("src", "")
@@ -100,7 +101,6 @@ export default {
           this.videos = response.data
 
           // Disable loading
-          this.loading = false
           this.loaded = true
         })
         .catch(error => {

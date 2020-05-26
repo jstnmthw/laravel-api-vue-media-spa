@@ -4,7 +4,6 @@
       <ul class="pagination pagination-lg mx-auto">
         <li class="page-item" v-if="pagination.current_page > 1">
           <a
-            :class="{ disabled: loading }"
             class="page-link"
             href="javascript:void(0)"
             aria-label="Previous"
@@ -18,7 +17,6 @@
         </li>
         <li class="page-item" v-if="pagination.current_page > 3">
           <a
-            :class="{ disabled: loading }"
             class="page-link"
             href="javascript:void(0)"
             aria-label="First Page"
@@ -29,7 +27,6 @@
         </li>
         <li class="page-item" v-if="pagination.current_page > 3">
           <a
-            :class="{ disabled: loading }"
             class="page-link page-hellip"
             href="javascript:void(0)"
             aria-label="..."
@@ -45,8 +42,6 @@
           :key="page.index"
         >
           <a
-            :disabled="{ disabled: loading }"
-            :class="{ disabled: loading }"
             class="page-link"
             href="javascript:void(0)"
             v-on:click.prevent="changePage(page)"
@@ -62,7 +57,6 @@
           "
         >
           <a
-            :class="{ disabled: loading }"
             class="page-link page-hellip"
             href="javascript:void(0)"
             aria-label="Last Page"
@@ -82,7 +76,6 @@
             class="page-link"
             :class="{
               active: pagination.current_page <= pagination.last_page,
-              disabled: loading,
             }"
             href="javascript:void(0)"
             aria-label="Last Page"
@@ -96,7 +89,6 @@
           v-if="pagination.current_page < pagination.last_page"
         >
           <a
-            :class="{ disabled: loading }"
             class="page-link"
             href="javascript:void(0)"
             aria-label="Next"
@@ -115,10 +107,7 @@
 
 <script>
 export default {
-  props: {
-    pagination: {},
-    loading: false,
-  },
+  props: ["loaded", "pagination"],
   computed: {
     pagesNumber() {
       let totalPage = Math.ceil(
@@ -143,14 +132,13 @@ export default {
   },
   methods: {
     changePage(page) {
-      if (!this.loading && this.pagination.current_page != page) {
+      if (this.loaded && this.pagination.current_page != page) {
         this.pagination.current_page = page
 
         // Push URL
         this.$router.push({
           query: Object.assign({}, this.$route.query, { page: page }),
         })
-        // this.$router.push({ query: { page: page } });
       }
     },
     uf_num(int) {

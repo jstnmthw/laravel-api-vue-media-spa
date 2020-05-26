@@ -2311,19 +2311,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    pagination: {},
-    loading: false
-  },
+  props: ["loaded", "pagination"],
   computed: {
     pagesNumber: function pagesNumber() {
       var totalPage = Math.ceil(this.pagination.total / this.pagination.per_page);
@@ -2344,14 +2333,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changePage: function changePage(page) {
-      if (!this.loading && this.pagination.current_page != page) {
+      if (this.loaded && this.pagination.current_page != page) {
         this.pagination.current_page = page; // Push URL
 
         this.$router.push({
           query: Object.assign({}, this.$route.query, {
             page: page
           })
-        }); // this.$router.push({ query: { page: page } });
+        });
       }
     },
     uf_num: function uf_num(_int) {
@@ -2861,6 +2850,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2895,7 +2885,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$Progress.start(); // Set loading
 
 
-                _this.loading = true; // Stop unfinished images loading
+                _this.loaded = false; // Stop unfinished images loading
 
                 $(".video-poster img").attr("src", ""); // Make the call
 
@@ -2909,7 +2899,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.videos = response.data; // Disable loading
 
-                  _this.loading = false;
                   _this.loaded = true;
                 })["catch"](function (error) {
                   // Console log API error.
@@ -40697,7 +40686,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link",
-                    class: { disabled: _vm.loading },
                     attrs: {
                       href: "javascript:void(0)",
                       "aria-label": "Previous"
@@ -40733,7 +40721,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link",
-                    class: { disabled: _vm.loading },
                     attrs: {
                       href: "javascript:void(0)",
                       "aria-label": "First Page"
@@ -40756,7 +40743,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link page-hellip",
-                    class: { disabled: _vm.loading },
                     attrs: { href: "javascript:void(0)", "aria-label": "..." },
                     on: {
                       click: function($event) {
@@ -40782,11 +40768,7 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link",
-                    class: { disabled: _vm.loading },
-                    attrs: {
-                      disabled: { disabled: _vm.loading },
-                      href: "javascript:void(0)"
-                    },
+                    attrs: { href: "javascript:void(0)" },
                     on: {
                       click: function($event) {
                         $event.preventDefault()
@@ -40811,7 +40793,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link page-hellip",
-                    class: { disabled: _vm.loading },
                     attrs: {
                       href: "javascript:void(0)",
                       "aria-label": "Last Page"
@@ -40836,8 +40817,7 @@ var render = function() {
                     staticClass: "page-link",
                     class: {
                       active:
-                        _vm.pagination.current_page <= _vm.pagination.last_page,
-                      disabled: _vm.loading
+                        _vm.pagination.current_page <= _vm.pagination.last_page
                     },
                     attrs: {
                       href: "javascript:void(0)",
@@ -40867,7 +40847,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "page-link",
-                    class: { disabled: _vm.loading },
                     attrs: { href: "javascript:void(0)", "aria-label": "Next" },
                     on: {
                       click: function($event) {
@@ -41516,13 +41495,21 @@ var render = function() {
             !_vm.loaded
               ? _c("skeleton-video-card", {
                   staticClass: "mb-5",
-                  attrs: { cards: 5, cols: 5 }
+                  attrs: { cards: 50, cols: 5 }
                 })
               : _vm._e(),
             _vm._v(" "),
             _c("paginate", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loaded,
+                  expression: "loaded"
+                }
+              ],
               staticClass: "mb-5",
-              attrs: { pagination: _vm.videos, loading: !_vm.loaded },
+              attrs: { pagination: _vm.videos, loaded: _vm.loaded },
               on: {
                 paginate: function($event) {
                   return _vm.getVideos()
