@@ -14,5 +14,13 @@ class Category extends Model
     {
         return $this->morphedByMany('App\Video', 'categorizable');
     }
+
+    /**
+     * Get the parent of the category.
+     */
+    public function parentable()
+    {
+        return $this->morphedByMany();
+    }
     
 }

@@ -62,33 +62,36 @@ class VideoController extends Controller
         // Run seek query by ids (and sort if present).
         // $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
         //             function () use ($cat, $sortby, $limit, $offset) {
-        //                 return Video::select('videos.id')
-        //                     ->when($cat, function ($query, $cat) {
-        //                         return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
-        //                             ->where('categorizables.category_id', $cat);
-        //                     })
-        //                     ->offset($offset)
-        //                     ->orderBy($sortby, 'DESC')
-        //                     ->limit($limit)
-        //                     ->get();
-        //             });
+        //                 return Video::whereDoesntHave('categories', function (Builder $query) {
+                                    //     $query->whereIn('categories.id', config('const.excempt'));
+                                    // })
+                                    // ->select('videos.id')
+                                    // ->when($cat, function ($query, $cat) {
+                                    //     return $query->where('categorizables.category_id', $cat);
+                                    // })
+                                    // ->offset($offset)
+                                    // ->when($sortby, function ($query, $sortby) {
+                                    //     return $query->orderBy($sortby, 'DESC');
+                                    // })
+                                    // ->limit($limit)
+                                    // ->get();
+        //        });
 
         // Temp cache disable
-        $seek = Video::select('videos.id')
-        ->when($cat, function ($query, $cat) {
-            return $query->join('categorizables', 'videos.id', '=' ,'categorizables.categorizable_id')
-                ->where('categorizables.category_id', $cat);
-        })
-        ->offset($offset)
-        ->when($sortby, function ($query, $sortby) {
-            return $query->orderBy($sortby, 'DESC');
-        })
-        ->when(!$sortby, function ($query) {
-            return $query->inRandomOrder();
-        })
-        ->limit($limit)
-        ->get();
-    
+        $seek = Video::whereDoesntHave('categories', function (Builder $query) {
+                    $query->whereIn('categories.id', config('const.excempt'));
+                })
+                ->select('videos.id')
+                ->when($cat, function ($query, $cat) {
+                    return $query->where('categorizables.category_id', $cat);
+                })
+                ->offset($offset)
+                ->when($sortby, function ($query, $sortby) {
+                    return $query->orderBy($sortby, 'DESC');
+                })
+                ->limit($limit)
+                ->get();
+        
         // Return error if no results.
         if(empty($seek->toArray())) {
             return ['error'=> 'No videos found in this category.'];

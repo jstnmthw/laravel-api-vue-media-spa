@@ -33,7 +33,7 @@
           class="mb-5"
           v-if="loaded"
           :videos="videos.data"
-          :cards="5"
+          :cards="50"
           :cols="5"
         >
         </video-list>

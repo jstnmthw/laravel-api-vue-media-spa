@@ -41509,7 +41509,7 @@ var render = function() {
             _vm.loaded
               ? _c("video-list", {
                   staticClass: "mb-5",
-                  attrs: { videos: _vm.videos.data, cards: 5, cols: 5 }
+                  attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
                 })
               : _vm._e(),
             _vm._v(" "),
