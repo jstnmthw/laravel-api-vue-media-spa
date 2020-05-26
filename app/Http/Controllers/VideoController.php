@@ -63,19 +63,19 @@ class VideoController extends Controller
         // $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
         //             function () use ($cat, $sortby, $limit, $offset) {
         //                 return Video::whereDoesntHave('categories', function (Builder $query) {
-                                    //     $query->whereIn('categories.id', config('const.excempt'));
-                                    // })
-                                    // ->select('videos.id')
-                                    // ->when($cat, function ($query, $cat) {
-                                    //     return $query->where('categorizables.category_id', $cat);
-                                    // })
-                                    // ->offset($offset)
-                                    // ->when($sortby, function ($query, $sortby) {
-                                    //     return $query->orderBy($sortby, 'DESC');
-                                    // })
-                                    // ->limit($limit)
-                                    // ->get();
-        //        });
+        //                                 $query->whereIn('categories.id', config('const.excempt'));
+        //                             })
+        //                             ->select('videos.id')
+        //                             ->when($cat, function ($query, $cat) {
+        //                                 return $query->where('categorizables.category_id', $cat);
+        //                             })
+        //                             ->offset($offset)
+        //                             ->when($sortby, function ($query, $sortby) {
+        //                                 return $query->orderBy($sortby, 'DESC');
+        //                             })
+        //                             ->limit($limit)
+        //                             ->get();
+        // });
 
         // Temp cache disable
         $seek = Video::whereDoesntHave('categories', function (Builder $query) {
