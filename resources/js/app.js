@@ -1,19 +1,14 @@
 // Laravel's bootstrap
 require("./bootstrap")
 
-// Library Imports
+// Libraries
+import axios from "axios"
 import Vue from "vue"
-import Vuex from "vuex"
-import VueRouter from "vue-router"
+import router from "@/router"
+import store from "@/store"
 import VueProgressBar from "vue-progressbar"
 
-// Import Pages
-import Homepage from "./pages/Homepage"
-import Categories from "./pages/Categories"
-import Video from "./pages/Video"
-import NotFound from "./pages/NotFound"
-
-// Import global components
+// Global components
 import Navbar from "./components/Navbar"
 import MainFooter from "./components/MainFooter"
 
@@ -21,64 +16,47 @@ import MainFooter from "./components/MainFooter"
 Vue.component("Navbar", Navbar)
 Vue.component("MainFooter", MainFooter)
 
-// Plugin Settings
-const pbSettings = {
+// Axios settings
+axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
+axios.defaults.withCredentials = true
+
+// Axios cancel token request interceptor
+axios.interceptors.request.use(
+  function(config) {
+    //  Generate cancel token source
+    let source = axios.CancelToken.source()
+
+    // Set cancel token on this request
+    config.cancelToken = source.token
+
+    // Add to vuex to make cancellation available from anywhere
+    store.commit("ADD_CANCEL_TOKEN", source)
+
+    return config
+  },
+  function(error) {
+    return Promise.reject(error)
+  }
+)
+
+// Vue Progressbar
+const vpbSettings = {
   color: "rgba(217, 128, 250,1.0)",
   failedColor: "red",
   height: "2px",
 }
 
-// Register Instances
-Vue.use(VueRouter)
-Vue.use(Vuex)
-Vue.use(VueProgressBar, pbSettings)
-
 // Ignore Ion's Font Icons custom elements
 Vue.config.ignoredElements = ["ion-icon"]
 
-// Register Routes
-const router = new VueRouter({
-  mode: "history",
-  routes: [
-    {
-      path: "/",
-      component: Homepage,
-      name: "home",
-    },
-    {
-      path: "/categories/:category",
-      component: Categories,
-      name: "categories",
-    },
-    {
-      path: "/videos/:id",
-      component: Video,
-      name: "video",
-    },
-    {
-      path: "*",
-      component: NotFound,
-      name: "404",
-    },
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  },
-})
-
-router.beforeEach((to, from, next) => {
-  // ...
-  next()
-})
+// Register Instances
+Vue.use(VueProgressBar, vpbSettings)
 
 // Initiate instance
 const app = new Vue({
   el: "#app",
   router,
+  store,
   data: {
     categories: [],
   },
@@ -93,4 +71,10 @@ const app = new Vue({
       })
     },
   },
+})
+
+// Before creation callback
+router.beforeEach((to, from, next) => {
+  store.dispatch("CANCEL_PENDING_REQUESTS")
+  next()
 })
