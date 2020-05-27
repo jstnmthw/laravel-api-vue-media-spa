@@ -15,8 +15,9 @@
             Showing: {{ uf_num(videos.current_page) }} of
             {{ uf_num(videos.last_page) }}
           </div>
-          <div v-show="loaded">
+          <div>
             <select
+              id="sortby"
               v-model="sort"
               name="sortby"
               class="custom-select"
@@ -88,10 +89,14 @@ export default {
       // Stop unfinished images loading
       $(".video-poster img").attr("src", "")
 
+      console.log({ sortby: "most_views" })
+
+      let sort = !this.$route.query.sortby ? { sortby: "most_views " } : ""
+
       // Make the call
       await axios
         .get("/api/videos", {
-          params: { ...this.$route.params, ...this.$route.query },
+          params: { ...this.$route.params, ...this.$route.query, ...sort },
         })
         .then(response => {
           // Finish loading on frontend

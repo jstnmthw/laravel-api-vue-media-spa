@@ -2851,6 +2851,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2875,6 +2876,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var sort;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2887,11 +2889,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.loaded = false; // Stop unfinished images loading
 
-                $(".video-poster img").attr("src", ""); // Make the call
+                $(".video-poster img").attr("src", "");
+                console.log({
+                  sortby: "most_views"
+                });
+                sort = !_this.$route.query.sortby ? {
+                  sortby: "most_views "
+                } : ""; // Make the call
 
-                _context.next = 6;
+                _context.next = 8;
                 return axios.get("/api/videos", {
-                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query)
+                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query, {}, sort)
                 }).then(function (response) {
                   // Finish loading on frontend
                   _this.$Progress.finish(); // Set video object
@@ -2907,7 +2915,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$Progress.fail();
                 });
 
-              case 6:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -41413,75 +41421,62 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.loaded,
-                        expression: "loaded"
-                      }
-                    ]
-                  },
-                  [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.sort,
-                            expression: "sort"
-                          }
-                        ],
-                        staticClass: "custom-select",
-                        attrs: { name: "sortby" },
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.sort = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function($event) {
-                              return _vm.sortBy()
-                            }
-                          ]
+                _c("div", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sort,
+                          expression: "sort"
                         }
-                      },
-                      [
-                        _c(
-                          "option",
-                          { attrs: { selected: "", value: "most_views" } },
-                          [_vm._v("Most Views")]
-                        ),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "top_rated" } }, [
-                          _vm._v("Top Rated")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "duration" } }, [
-                          _vm._v("Duration")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "most_recent" } }, [
-                          _vm._v("Most Recent")
-                        ])
-                      ]
-                    )
-                  ]
-                )
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { id: "sortby", name: "sortby" },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.sort = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          function($event) {
+                            return _vm.sortBy()
+                          }
+                        ]
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { selected: "", value: "most_views" } },
+                        [_vm._v("Most Views")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "top_rated" } }, [
+                        _vm._v("Top Rated")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "duration" } }, [
+                        _vm._v("Duration")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "most_recent" } }, [
+                        _vm._v("Most Recent")
+                      ])
+                    ]
+                  )
+                ])
               ]
             ),
             _vm._v(" "),
