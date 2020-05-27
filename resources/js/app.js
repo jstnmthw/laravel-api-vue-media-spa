@@ -3,6 +3,7 @@ require("./bootstrap")
 
 // Imports
 import Vue from "vue"
+import Vuex from "vuex"
 import VueRouter from "vue-router"
 import VueProgressBar from "vue-progressbar"
 
@@ -23,8 +24,9 @@ import TopAdBanner from "./components/TopAdBanner"
 import Paginate from "./components/Paginate"
 import PageHeader from "./components/PageHeader"
 
-// Register Router
+// Register
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 // Vue Config
 Vue.config.ignoredElements = ["ion-icon"]
@@ -47,6 +49,14 @@ Vue.use(VueProgressBar, {
   failedColor: "red",
   height: "2px",
 })
+
+// Vue.mixin({
+//   created: function() {
+//     const CancelToken = axios.CancelToken
+//     const source = CancelToken.source()
+//     // console.log(source)
+//   },
+// })
 
 // Register Routes
 const router = new VueRouter({
@@ -82,6 +92,11 @@ const router = new VueRouter({
   },
 })
 
+router.beforeEach((to, from, next) => {
+  // ...
+  next()
+})
+
 // Initiate instance
 const app = new Vue({
   el: "#app",
@@ -89,10 +104,14 @@ const app = new Vue({
   data: {
     categories: [],
   },
-  created() {
-    var vm = this
-    axios.get("/api/categories").then(function(response) {
-      vm.categories = response.data
-    })
+  mounted() {
+    this.getCategories()
+  },
+  methods: {
+    async getCategories() {
+      await axios.get("/api/categories").then(response => {
+        this.categories = response.data
+      })
+    },
   },
 })

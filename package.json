@@ -25,6 +25,7 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
-    "vue-progressbar": "^0.7.5"
+    "vue-progressbar": "^0.7.5",
+    "vuex": "^3.4.0"
   }
 }

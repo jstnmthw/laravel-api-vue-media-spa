@@ -83,22 +83,21 @@ class VideoController extends Controller
         //         );
 
         // Temp cache disable
-        // return $query->where('categories.id', '!=', config('const.excempt'));
-        // whereHas('categories', function (Builder $query) use ($cat) {
-        //   return $query->where('categories.id', $cat);
-        //})
         $seek =  
         Video::select('videos.id')
+            // Select category specific videos
             ->when($cat, function ($query, $cat) {
                 return $query->whereHas('categories', function (Builder $query) use ($cat) {
                     return $query->where('categories.id', $cat);
                 });
             })
+            // Excempt certain categories from default listing
             ->when(!$cat, function ($query) {
                 return $query->whereDoesntHave('categories', function (Builder $query) {
                     return $query->whereIn('categories.id', config('const.excempt'));
                 });
             })
+            // Sorting
             ->when($sortby, function ($query) use ($sortby) {
                 return $query->orderBy($sortby, 'DESC');
             })
@@ -108,7 +107,7 @@ class VideoController extends Controller
         
         // Return error if no results.
         if(empty($seek->toArray())) {
-            return ['error'=> 'No videos found in this category.'];
+            return ['error'=> 'No videos found.'];
         }
 
         // Push collect of IDs to array.
@@ -134,10 +133,10 @@ class VideoController extends Controller
 
         // Now, collect all the information from ids selected (fast).
         $data['data'] = Video::whereIn('id', $ids)
-                            ->when($sortby, function ($query, $sortby) {
-                                return $query->orderBy($sortby, 'DESC');
-                            })
-                            ->get();
+            ->when($sortby, function ($query, $sortby) {
+                return $query->orderBy($sortby, 'DESC');
+            })
+            ->get();
 
         foreach ($data['data'] as $row => $value) {
             $value['album'] = explode(';',$value['album']);

@@ -56,6 +56,8 @@
 
 <script>
 import SkeletonVideoCard from "../components/skeleton/VideoCard"
+// const CancelToken = axios.CancelToken
+// const source = CancelToken.source()
 
 export default {
   components: {
@@ -77,43 +79,40 @@ export default {
   methods: {
     // Axios Call
     async getVideos() {
-      // Set error
-      this.error = false
-
-      // Start loading on frontend
+      const CancelToken = axios.CancelToken
+      const source = CancelToken.source()
       this.$Progress.start()
-
-      // Set loading
+      this.error = false
       this.loaded = false
 
       // Stop unfinished images loading
       $(".video-poster img").attr("src", "")
 
-      console.log({ sortby: "most_views" })
-
+      // Check for sort query string
       let sort = !this.$route.query.sortby ? { sortby: "most_views" } : "test"
 
       // Make the call
       await axios
         .get("/api/videos", {
-          params: { ...this.$route.params, ...this.$route.query, ...sort },
+          params: {
+            ...this.$route.params,
+            ...this.$route.query,
+            ...sort,
+          },
+          cancelToken: source.token,
         })
         .then(response => {
-          // Finish loading on frontend
           this.$Progress.finish()
-
-          // Set video object
           this.videos = response.data
-
-          // Disable loading
           this.loaded = true
         })
         .catch(error => {
-          // Console log API error.
-          console.log("Error calling API.")
-
-          // Failed frontend progress bar
           this.$Progress.fail()
+          if (axios.isCancel(error)) {
+            console.log("API Request canceled by user.")
+          } else {
+            console.log("Error calling API.")
+          }
         })
     },
 
@@ -133,10 +132,7 @@ export default {
   watch: {
     // When route changes, call API
     $route(to, from) {
-      // Clear data
       this.videos = []
-
-      // Get new data
       this.getVideos()
     },
   },
