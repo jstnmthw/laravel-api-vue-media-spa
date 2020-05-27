@@ -2894,8 +2894,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   sortby: "most_views"
                 });
                 sort = !_this.$route.query.sortby ? {
-                  sortby: "most_views "
-                } : ""; // Make the call
+                  sortby: "most_views"
+                } : "test"; // Make the call
 
                 _context.next = 8;
                 return axios.get("/api/videos", {
@@ -56985,8 +56985,10 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.defaults.withCredentials = true;
+var CancelToken = window.axios.CancelToken;
+var source = CancelToken.source();
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

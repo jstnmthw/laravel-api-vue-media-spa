@@ -78,19 +78,28 @@ class VideoController extends Controller
         // });
 
         // Temp cache disable
-        $seek = Video::whereDoesntHave('categories', function (Builder $query) {
-                    $query->whereIn('categories.id', config('const.excempt'));
-                })
-                ->select('videos.id')
-                ->when($cat, function ($query, $cat) {
-                    return $query->where('categorizables.category_id', $cat);
-                })
-                ->offset($offset)
-                ->when($sortby, function ($query, $sortby) {
-                    return $query->orderBy($sortby, 'DESC');
-                })
-                ->limit($limit)
-                ->get();
+        // return $query->where('categories.id', '!=', config('const.excempt'));
+        // whereHas('categories', function (Builder $query) use ($cat) {
+        //   return $query->where('categories.id', $cat);
+        //})
+        $seek =  
+        Video::select('videos.id')
+            ->when($cat, function ($query, $cat) {
+                return $query->whereHas('categories', function (Builder $query) use ($cat) {
+                    return $query->where('categories.id', $cat);
+                });
+            })
+            ->when(!$cat, function ($query) {
+                return $query->whereDoesntHave('categories', function (Builder $query) {
+                    return $query->whereIn('categories.id', config('const.excempt'));
+                });
+            })
+            ->when($sortby, function ($query) use ($sortby) {
+                return $query->orderBy($sortby, 'DESC');
+            })
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
         
         // Return error if no results.
         if(empty($seek->toArray())) {

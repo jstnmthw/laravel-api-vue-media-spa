@@ -91,7 +91,7 @@ export default {
 
       console.log({ sortby: "most_views" })
 
-      let sort = !this.$route.query.sortby ? { sortby: "most_views " } : ""
+      let sort = !this.$route.query.sortby ? { sortby: "most_views" } : "test"
 
       // Make the call
       await axios
