@@ -102,7 +102,7 @@ export default {
       $(".video-poster img").attr("src", "")
 
       // Check for sort query string
-      let sort = !this.$route.query.sortby ? { sortby: "most_views" } : "test"
+      let sort = !this.$route.query.sortby ? { sortby: "most_views" } : ""
 
       // Make the call
       await axios

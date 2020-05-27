@@ -2928,7 +2928,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 sort = !_this.$route.query.sortby ? {
                   sortby: "most_views"
-                } : "test"; // Make the call
+                } : ""; // Make the call
 
                 _context.next = 7;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos", {
