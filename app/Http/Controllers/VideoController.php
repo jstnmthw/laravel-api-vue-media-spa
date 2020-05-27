@@ -62,20 +62,25 @@ class VideoController extends Controller
         // Run seek query by ids (and sort if present).
         // $seek = Cache::remember('videos_'.($cat ? $cat.'_' : '').$sortby.'_page_'.$page, 33000, 
         //             function () use ($cat, $sortby, $limit, $offset) {
-        //                 return Video::whereDoesntHave('categories', function (Builder $query) {
-        //                                 $query->whereIn('categories.id', config('const.excempt'));
-        //                             })
-        //                             ->select('videos.id')
-        //                             ->when($cat, function ($query, $cat) {
-        //                                 return $query->where('categorizables.category_id', $cat);
-        //                             })
-        //                             ->offset($offset)
-        //                             ->when($sortby, function ($query, $sortby) {
-        //                                 return $query->orderBy($sortby, 'DESC');
-        //                             })
-        //                             ->limit($limit)
-        //                             ->get();
-        // });
+        //                 return Video::select('videos.id')
+        //                     ->when($cat, function ($query, $cat) {
+        //                         return $query->whereHas('categories', function (Builder $query) use ($cat) {
+        //                             return $query->where('categories.id', $cat);
+        //                         });
+        //                     })
+        //                     ->when(!$cat, function ($query) {
+        //                         return $query->whereDoesntHave('categories', function (Builder $query) {
+        //                             return $query->whereIn('categories.id', config('const.excempt'));
+        //                         });
+        //                     })
+        //                     ->when($sortby, function ($query) use ($sortby) {
+        //                         return $query->orderBy($sortby, 'DESC');
+        //                     })
+        //                     ->limit($limit)
+        //                     ->offset($offset)
+        //                     ->get();
+        //             }
+        //         );
 
         // Temp cache disable
         // return $query->where('categories.id', '!=', config('const.excempt'));
@@ -97,8 +102,8 @@ class VideoController extends Controller
             ->when($sortby, function ($query) use ($sortby) {
                 return $query->orderBy($sortby, 'DESC');
             })
-            ->offset($offset)
             ->limit($limit)
+            ->offset($offset)
             ->get();
         
         // Return error if no results.
