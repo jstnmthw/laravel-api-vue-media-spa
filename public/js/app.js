@@ -2479,14 +2479,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      next: 1,
-      current: 0,
-      timer: 0,
-      interval: 1000
-    };
-  },
   props: ["data"],
   computed: {
     views: function views() {
@@ -2504,23 +2496,43 @@ __webpack_require__.r(__webpack_exports__);
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
     }
   },
+  data: function data() {
+    return {
+      next: 1,
+      current: 0,
+      timer: 0,
+      interval: 1000,
+      debounceTimer: 0
+    };
+  },
   methods: {
+    // Debounce hover
+    debounce: function debounce(event) {
+      var _this = this;
+
+      var clear = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (clear) {
+        clearTimeout(this.debounceTimer);
+        this.carousel(event, false);
+      } else {
+        this.debounceTimer = setTimeout(function () {
+          _this.carousel(event);
+        }, 3000);
+      }
+    },
     // Image Carousel
     carousel: function carousel(event) {
-      var _this = this;
+      var _this2 = this;
 
       var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var images = event.target.children;
-      var srcs = this.srcToArray(images); // console.log(srcs)
-      // this.timer = setInterval(evt => {
-      //     this.nextImage(event.target.children)
-      //   }, this.interval)
-
-      console.log("Hover");
+      var srcs = this.srcToArray(images);
 
       if (start) {
+        console.log("Mouseover.");
         this.timer = setInterval(function () {
-          _this.nextImage(images);
+          _this2.nextImage(images);
         }, this.interval);
         this.preloadImages(srcs, function () {
           for (var i = 0; i < images.length; i++) {
@@ -2529,7 +2541,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         clearInterval(this.timer);
-        console.log("Mouse out");
+        console.log("Mouseout.");
       }
     },
     nextImage: function nextImage(images) {
@@ -24014,9 +24026,11 @@ var render = function() {
           {
             staticClass: "carousel",
             on: {
-              mouseenter: _vm.carousel,
+              mouseenter: function($event) {
+                return _vm.debounce($event)
+              },
               mouseleave: function($event) {
-                return _vm.carousel($event, false)
+                return _vm.debounce($event, true)
               }
             }
           },

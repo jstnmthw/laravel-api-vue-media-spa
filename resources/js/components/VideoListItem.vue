@@ -5,8 +5,8 @@
         <img :src="data.thumbnail" class="card-img-top" :alt="data.title" />
         <div
           class="carousel"
-          @mouseenter="carousel"
-          @mouseleave="carousel($event, false)"
+          @mouseenter="debounce($event)"
+          @mouseleave="debounce($event, true)"
         >
           <img
             alt=""
@@ -39,14 +39,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      next: 1,
-      current: 0,
-      timer: 0,
-      interval: 1000,
-    }
-  },
   props: ["data"],
   computed: {
     views: function() {
@@ -68,20 +60,34 @@ export default {
       return new Date(this.data.duration * 1000).toISOString().substr(14, 5)
     },
   },
+  data() {
+    return {
+      next: 1,
+      current: 0,
+      timer: 0,
+      interval: 1000,
+      debounceTimer: 0,
+    }
+  },
   methods: {
+    // Debounce hover
+    debounce: function(event, clear = false) {
+      if (clear) {
+        clearTimeout(this.debounceTimer)
+        this.carousel(event, false)
+      } else {
+        this.debounceTimer = setTimeout(() => {
+          this.carousel(event)
+        }, 3000)
+      }
+    },
     // Image Carousel
     carousel: function(event, start = true) {
       let images = event.target.children
       let srcs = this.srcToArray(images)
 
-      // console.log(srcs)
-      // this.timer = setInterval(evt => {
-      //     this.nextImage(event.target.children)
-      //   }, this.interval)
-
-      console.log("Hover")
-
       if (start) {
+        console.log("Mouseover.")
         this.timer = setInterval(() => {
           this.nextImage(images)
         }, this.interval)
@@ -92,7 +98,7 @@ export default {
         })
       } else {
         clearInterval(this.timer)
-        console.log("Mouse out")
+        console.log("Mouseout.")
       }
     },
 
