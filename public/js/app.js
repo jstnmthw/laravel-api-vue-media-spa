@@ -3035,10 +3035,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
-/* harmony import */ var _components_VideoLabels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/VideoLabels */ "./resources/js/components/VideoLabels.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
+/* harmony import */ var _components_VideoLabels__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/VideoLabels */ "./resources/js/components/VideoLabels.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3137,15 +3145,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_1__["default"],
-    VideoLabels: _components_VideoLabels__WEBPACK_IMPORTED_MODULE_2__["default"]
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_2__["default"],
+    VideoLabels: _components_VideoLabels__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
       data: [],
       related: [],
-      loading: false,
-      related_loading: false
+      loaded: false,
+      related_loaded: false
     };
   },
   mounted: function mounted() {
@@ -3176,45 +3184,81 @@ __webpack_require__.r(__webpack_exports__);
     getVideo: function getVideo() {
       var _this = this;
 
-      this.$Progress.start();
-      this.loading = true; // Clear iframe src
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.$Progress.start();
 
-      $("#video").attr("src", ""); // Make the call
+                _this.loaded = true; // Clear iframe src
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/videos/" + this.$route.params.id).then(function (response) {
-        _this.$Progress.finish();
+                $("#video").attr("src", ""); // Make the call
 
-        _this.data = response.data;
-        _this.loading = false;
-        $("#video")[0].contentWindow.location.replace(_this.data.embed);
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos/" + _this.$route.params.id).then(function (response) {
+                  _this.$Progress.finish();
 
-        _this.getRelated(12);
-      })["catch"](function (error) {
-        console.log("Error calling API.");
-        _this.loading = false;
+                  _this.data = response.data;
+                  _this.loaded = true;
+                  $("#video")[0].contentWindow.location.replace(_this.data.embed);
 
-        _this.$Progress.fail();
-      });
+                  _this.getRelated(12);
+                })["catch"](function (error) {
+                  console.log(error);
+                  _this.loaded = false;
+
+                  _this.$Progress.fail();
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     getRelated: function getRelated(limit) {
       var _this2 = this;
 
-      this.related_loading = true;
-      var category = "";
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var category;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.related_loaded = false;
+                category = "";
 
-      if (null !== this.getCookie("category")) {
-        category = this.getCookie("category");
-      } else {
-        category = this.data.categories[0].name.toLowerCase();
-      }
+                if (null !== _this2.getCookie("category")) {
+                  category = _this2.getCookie("category");
+                } else {
+                  category = _this2.data.categories[0].name.toLowerCase();
+                }
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/videos/" + "?limit=" + limit + "&category=" + category).then(function (response) {
-        _this2.related = response.data.data;
-        _this2.related_loading = false;
-      })["catch"](function (error) {
-        _this2.related_loading = false;
-        console.log("There was an error fetching data.");
-      });
+                _context2.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos", {
+                  params: {
+                    limit: limit,
+                    offset: 0,
+                    random: 1
+                  }
+                }).then(function (response) {
+                  _this2.related = response.data.data;
+                  _this2.related_loaded = true;
+                })["catch"](function (error) {
+                  _this2.related_loaded = false;
+                  console.log("There was an error fetching data.");
+                });
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     getCookie: function getCookie(name) {
       var nameEQ = name + "=";
@@ -24655,7 +24699,7 @@ var render = function() {
             staticClass: "mb-5",
             attrs: {
               videos: _vm.related,
-              loading: _vm.related_loading,
+              loaded: _vm.related_loaded,
               cards: 12,
               cols: 6
             }

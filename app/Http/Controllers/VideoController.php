@@ -35,6 +35,7 @@ class VideoController extends Controller
          * This is called the seek method.
          * For more info: https://use-the-index-luke.com/sql/partial-results/fetch-next-page
          */
+        $rand       = $request->input('random');
         $cat        = $this->getCategory($request->input('category'));
         $page       = is_numeric($request->input('page')) ? (int) $request->input('page') : 1;
         $limit      = is_numeric($request->input('limit')) && (int) $request->input('limit') < 50 ? (int) $request->input('limit') : 50;
@@ -100,6 +101,10 @@ class VideoController extends Controller
             // Sorting
             ->when($sortby, function ($query) use ($sortby) {
                 return $query->orderBy($sortby, 'DESC');
+            })
+            // Random Order
+            ->when($rand, function ($query) {
+                return $query->inRandomOrder();
             })
             ->limit($limit)
             ->offset($offset)

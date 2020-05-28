@@ -81,7 +81,7 @@
         <h4 class="mb-3">Related Videos</h4>
         <video-list
           :videos="related"
-          :loading="related_loading"
+          :loaded="related_loaded"
           :cards="12"
           :cols="6"
           class="mb-5"
@@ -105,8 +105,8 @@ export default {
     return {
       data: [],
       related: [],
-      loading: false,
-      related_loading: false,
+      loaded: false,
+      related_loaded: false,
     }
   },
   mounted() {
@@ -136,33 +136,33 @@ export default {
     formatNumber(num) {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     },
-    getVideo() {
+    async getVideo() {
       this.$Progress.start()
-      this.loading = true
+      this.loaded = true
 
       // Clear iframe src
       $("#video").attr("src", "")
 
       // Make the call
-      axios
+      await axios
         .get("/api/videos/" + this.$route.params.id)
         .then(response => {
           this.$Progress.finish()
           this.data = response.data
-          this.loading = false
+          this.loaded = true
 
           $("#video")[0].contentWindow.location.replace(this.data.embed)
 
           this.getRelated(12)
         })
         .catch(error => {
-          console.log("Error calling API.")
-          this.loading = false
+          console.log(error)
+          this.loaded = false
           this.$Progress.fail()
         })
     },
-    getRelated(limit) {
-      this.related_loading = true
+    async getRelated(limit) {
+      this.related_loaded = false
 
       let category = ""
       if (null !== this.getCookie("category")) {
@@ -171,14 +171,20 @@ export default {
         category = this.data.categories[0].name.toLowerCase()
       }
 
-      axios
-        .get("/api/videos/" + "?limit=" + limit + "&category=" + category)
+      await axios
+        .get("/api/videos", {
+          params: {
+            limit: limit,
+            offset: 0,
+            random: 1,
+          },
+        })
         .then(response => {
           this.related = response.data.data
-          this.related_loading = false
+          this.related_loaded = true
         })
         .catch(error => {
-          this.related_loading = false
+          this.related_loaded = false
           console.log("There was an error fetching data.")
         })
     },
