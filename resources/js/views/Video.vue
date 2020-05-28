@@ -177,6 +177,7 @@ export default {
             limit: limit,
             offset: 0,
             random: 1,
+            category: category,
           },
         })
         .then(response => {

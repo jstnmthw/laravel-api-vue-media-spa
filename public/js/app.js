@@ -3242,7 +3242,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     limit: limit,
                     offset: 0,
-                    random: 1
+                    random: 1,
+                    category: category
                   }
                 }).then(function (response) {
                   _this2.related = response.data.data;
