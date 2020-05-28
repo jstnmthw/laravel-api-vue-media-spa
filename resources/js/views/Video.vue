@@ -22,7 +22,7 @@
               v-for="label in data.categories"
               :key="label.index"
             >
-              <video-category-labels :label="label"></video-category-labels>
+              <video-labels :label="label"></video-labels>
             </li>
           </ul>
         </div>
@@ -94,10 +94,12 @@
 <script>
 import axios from "axios"
 import VideoList from "@/components/VideoList"
+import VideoLabels from "@/components/VideoLabels"
 
 export default {
   components: {
     VideoList: VideoList,
+    VideoLabels: VideoLabels,
   },
   data() {
     return {
@@ -135,14 +137,8 @@ export default {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     },
     getVideo() {
-      // Start loading on frontend
       this.$Progress.start()
-
-      // Loading
       this.loading = true
-
-      // Stop unfinished images loading
-      $(".video-poster img").attr("src", "")
 
       // Clear iframe src
       $("#video").attr("src", "")
@@ -151,29 +147,17 @@ export default {
       axios
         .get("/api/videos/" + this.$route.params.id)
         .then(response => {
-          // Finish loading on frontend
           this.$Progress.finish()
-
-          // Set video object
           this.data = response.data
-
-          // Loading
           this.loading = false
 
-          // Use replace to not effect the browser history
           $("#video")[0].contentWindow.location.replace(this.data.embed)
 
-          // Fetch Related Videos
           this.getRelated(12)
         })
         .catch(error => {
-          // Console log API error.
           console.log("Error calling API.")
-
-          // Loading
           this.loading = false
-
-          // Failed frontend progress bar
           this.$Progress.fail()
         })
     },
@@ -212,7 +196,6 @@ export default {
   props: ["categories"],
   watch: {
     $route(to, from) {
-      // Clear data hen route changes.
       this.data = []
       this.related = []
       this.getVideo()
