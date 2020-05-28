@@ -92,7 +92,13 @@
 </template>
 
 <script>
+import axios from "axios"
+import VideoList from "@/components/VideoList"
+
 export default {
+  components: {
+    VideoList: VideoList,
+  },
   data() {
     return {
       data: [],
