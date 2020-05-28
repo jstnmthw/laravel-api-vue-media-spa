@@ -115,6 +115,15 @@ a,
     color: lighten($purple, 10%);
   }
 }
+.loader-icon {
+  width: 60px;
+  margin: -7px auto 0 auto;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 
 // Skeleton Cards
 .skeleton-card-video {

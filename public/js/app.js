@@ -2500,9 +2500,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       next: 1,
       current: 0,
-      timer: 0,
       interval: 1000,
-      debounceTimer: 0
+      debounceTimer: 0,
+      timer: 0
     };
   },
   methods: {
@@ -2515,10 +2515,15 @@ __webpack_require__.r(__webpack_exports__);
       if (clear) {
         clearTimeout(this.debounceTimer);
         this.carousel(event, false);
+        $(".loader-icon").remove();
       } else {
+        $(event.target).parent().prepend($("<img>", {
+          src: "/imgs/loader.svg",
+          "class": "loader-icon"
+        }));
         this.debounceTimer = setTimeout(function () {
           _this.carousel(event);
-        }, 3000);
+        }, 1000);
       }
     },
     // Image Carousel
@@ -2530,20 +2535,20 @@ __webpack_require__.r(__webpack_exports__);
       var srcs = this.srcToArray(images);
 
       if (start) {
-        console.log("Mouseover.");
         this.timer = setInterval(function () {
           _this2.nextImage(images);
         }, this.interval);
         this.preloadImages(srcs, function () {
           for (var i = 0; i < images.length; i++) {
             images[i].setAttribute("src", srcs[i]);
+            $(".loader-icon").remove();
           }
         });
       } else {
         clearInterval(this.timer);
-        console.log("Mouseout.");
       }
     },
+    // Next Images
     nextImage: function nextImage(images) {
       for (var i = 0; i < images.length; i++) {
         images[i].classList.remove("active");

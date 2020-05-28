@@ -64,9 +64,9 @@ export default {
     return {
       next: 1,
       current: 0,
-      timer: 0,
       interval: 1000,
       debounceTimer: 0,
+      timer: 0,
     }
   },
   methods: {
@@ -75,33 +75,40 @@ export default {
       if (clear) {
         clearTimeout(this.debounceTimer)
         this.carousel(event, false)
+        $(".loader-icon").remove()
       } else {
+        $(event.target)
+          .parent()
+          .prepend(
+            $("<img>", { src: "/imgs/loader.svg", class: "loader-icon" })
+          )
         this.debounceTimer = setTimeout(() => {
           this.carousel(event)
-        }, 3000)
+        }, 1000)
       }
     },
+
     // Image Carousel
     carousel: function(event, start = true) {
       let images = event.target.children
       let srcs = this.srcToArray(images)
 
       if (start) {
-        console.log("Mouseover.")
         this.timer = setInterval(() => {
           this.nextImage(images)
         }, this.interval)
         this.preloadImages(srcs, () => {
           for (let i = 0; i < images.length; i++) {
             images[i].setAttribute("src", srcs[i])
+            $(".loader-icon").remove()
           }
         })
       } else {
         clearInterval(this.timer)
-        console.log("Mouseout.")
       }
     },
 
+    // Next Images
     nextImage(images) {
       for (let i = 0; i < images.length; i++) {
         images[i].classList.remove("active")

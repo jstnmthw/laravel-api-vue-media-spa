@@ -14593,6 +14593,16 @@ a:hover,
   color: #52529b;
 }
 
+.loader-icon {
+  width: 60px;
+  margin: -7px auto 0 auto;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .skeleton-card-video {
   width: 100%;
 }
