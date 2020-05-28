@@ -24,10 +24,9 @@ export default new Vuex.Store({
   actions: {
     CANCEL_PENDING_REQUESTS(context) {
       // Cancel all request where a token exists
-      context.state.cancelTokens.forEach((request, i) => {
+      context.state.cancelTokens.forEach(request => {
         if (request.cancel) {
-          console.log("Request canceled.")
-          request.cancel()
+          request.cancel("Request canceled.")
         }
       })
 

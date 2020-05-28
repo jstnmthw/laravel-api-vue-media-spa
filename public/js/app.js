@@ -41706,10 +41706,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   actions: {
     CANCEL_PENDING_REQUESTS: function CANCEL_PENDING_REQUESTS(context) {
       // Cancel all request where a token exists
-      context.state.cancelTokens.forEach(function (request, i) {
+      context.state.cancelTokens.forEach(function (request) {
         if (request.cancel) {
-          console.log("Request canceled.");
-          request.cancel();
+          request.cancel("Request canceled.");
         }
       }); // Reset the cancelTokens store
 
