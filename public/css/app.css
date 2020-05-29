@@ -14537,6 +14537,10 @@ a:hover,
   border: 1px solid #40407a;
 }
 
+.pagination .page-item .page-link:focus {
+  box-shadow: 0 0 0 0.2rem #d980fa;
+}
+
 .pagination .page-item .page-link:hover {
   background-color: #5d5daa;
 }

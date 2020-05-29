@@ -63,6 +63,9 @@ a,
       color: $lilac;
       background-color: lighten($purple, 10%);
       border: 1px solid $purple;
+      &:focus {
+        box-shadow: 0 0 0 0.2rem $pink;
+      }
       &:hover {
         background-color: lighten($purple, 15%);
       }
