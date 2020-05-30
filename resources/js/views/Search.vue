@@ -33,13 +33,13 @@
           </div>
         </div>
 
-        <video-list
+        <!-- <video-list
           class="mb-5"
           v-if="loaded"
           :videos="videos.data"
           :cards="50"
           :cols="5"
-        ></video-list>
+        ></video-list> -->
 
         <skeleton-video-card
           class="mb-5"
@@ -48,21 +48,51 @@
           :cols="5"
         ></skeleton-video-card>
 
-        <paginate
+        <!-- <paginate
           class="mb-5"
           v-show="loaded"
           :pagination="videos"
           :loaded="loaded"
           @paginate="getVideos()"
-        ></paginate>
+        ></paginate> -->
       </main>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios"
+import PageHeader from "@/components/PageHeader"
+import Paginate from "@/components/Paginate"
+import MainSidebar from "@/components/MainSidebar"
+import TopAdBanner from "@/components/TopAdBanner"
+import SkeletonVideoCard from "@/components/skeleton/VideoCard"
+import VideoList from "@/components/VideoList"
+
 export default {
+  components: {
+    pageHeader: PageHeader,
+    paginate: Paginate,
+    MainSidebar: MainSidebar,
+    SkeletonVideoCard: SkeletonVideoCard,
+    TopAdBanner: TopAdBanner,
+    VideoList: VideoList,
+  },
   props: ["categories"],
+  data() {
+    return {
+      loaded: false,
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+    }
+  },
+  methods: {
+    // Set default or user sortby
+    sortBy() {
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, { sortby: this.sort }),
+      })
+    },
+  },
 }
 </script>
 

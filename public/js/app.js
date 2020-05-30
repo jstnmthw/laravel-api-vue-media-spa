@@ -3052,6 +3052,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
+/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
+/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
 //
 //
 //
@@ -3114,8 +3122,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["categories"]
+  components: {
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__["default"],
+    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_2__["default"],
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__["default"],
+    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__["default"],
+    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__["default"],
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_6__["default"]
+  },
+  props: ["categories"],
+  data: function data() {
+    return {
+      loaded: false,
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
+    };
+  },
+  methods: {
+    // Set default or user sortby
+    sortBy: function sortBy() {
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -24785,37 +24824,12 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _vm.loaded
-              ? _c("video-list", {
-                  staticClass: "mb-5",
-                  attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
-                })
-              : _vm._e(),
-            _vm._v(" "),
             !_vm.loaded
               ? _c("skeleton-video-card", {
                   staticClass: "mb-5",
                   attrs: { cards: 50, cols: 5 }
                 })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("paginate", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.loaded,
-                  expression: "loaded"
-                }
-              ],
-              staticClass: "mb-5",
-              attrs: { pagination: _vm.videos, loaded: _vm.loaded },
-              on: {
-                paginate: function($event) {
-                  return _vm.getVideos()
-                }
-              }
-            })
+              : _vm._e()
           ],
           1
         )
