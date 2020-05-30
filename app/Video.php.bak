@@ -2,17 +2,15 @@
 
 namespace App;
 
-use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-
-// use Laravel\Scout\Searchable;
+use Laravel\Scout\Searchable;
 
 class Video extends Model
 {
     use Searchable;
 
-    protected $indexConfigurator = VideosIndex::class;
+    protected $indexConfigurator = MyIndexConfigurator::class;
 
     protected $searchRules = [
         // ..
@@ -43,22 +41,22 @@ class Video extends Model
      *
      * @return string
      */
-    // public function searchableAs()
-    // {
-    //     return 'videos_idx';
-    // }
+    public function searchableAs()
+    {
+        return 'dev_VIDEOS';
+    }
     
     /**
      * Get the indexable data array for the model.
      *
      * @return array
      */
-    // public function toSearchableArray()
-    // {
-    //     $array = $this->toArray();
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
 
-    //     return $array;
-    // }
+        return $array;
+    }
 
     /**
      * Get the categories for the video.

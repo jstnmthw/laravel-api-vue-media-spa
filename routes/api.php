@@ -41,5 +41,7 @@ Route::post('/login', function (Request $request) {
 /**
  * API Resources
  */
+Route::get('videos/search', 'VideoController@search');
 Route::apiResource('videos', 'VideoController');
 Route::apiResource('categories', 'CategoryController');
+

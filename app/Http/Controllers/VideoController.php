@@ -84,7 +84,7 @@ class VideoController extends Controller
         //         );
 
         // Temp cache disable
-        $seek =  
+        $seek = 
         Video::select('videos.id')
             // Select category specific videos
             ->when($cat, function ($query, $cat) {
@@ -154,6 +154,14 @@ class VideoController extends Controller
         $data['current_page'] = $page;
 
         return $data;
+    }
+
+    /**
+     * Search model w/ Algolia
+     */
+    public function search(Request $request)
+    {
+        return Video::search($request->q)->raw();
     }
 
     /**
