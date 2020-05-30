@@ -39,28 +39,6 @@ class Video extends Model
     ];
 
     /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
-    // public function searchableAs()
-    // {
-    //     return 'videos_idx';
-    // }
-    
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    // public function toSearchableArray()
-    // {
-    //     $array = $this->toArray();
-
-    //     return $array;
-    // }
-
-    /**
      * Get the categories for the video.
      */
     public function categories()
