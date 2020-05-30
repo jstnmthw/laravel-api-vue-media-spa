@@ -161,7 +161,7 @@ class VideoController extends Controller
      */
     public function search(Request $request)
     {
-        return Video::search($request->q)->raw();
+        return Video::search($request->q)->explain();
     }
 
     /**

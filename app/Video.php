@@ -6,6 +6,8 @@ use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+use App\TextSearchRule;
+
 // use Laravel\Scout\Searchable;
 
 class Video extends Model
@@ -15,26 +17,19 @@ class Video extends Model
     protected $indexConfigurator = VideosIndex::class;
 
     protected $searchRules = [
-        // ..
+        TextSearchRule::class
     ];
 
     protected $mapping = [
         'properties' => [
             'title' => [
-                'type' => 'text'
-            ],
-            'category' => [
-                'type' => 'text'
-            ],
-            'views' => [
-                'type' => 'integer'
-            ],
-            'likes' => [
-                'type' => 'integer'
-            ],
-            'dislikes' => [
-                'type' => 'integer'
-            ],
+                'type' => 'text',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword'
+                    ]
+                ]
+            ]
         ]
     ];
 
@@ -44,6 +39,16 @@ class Video extends Model
     public function categories()
     {
         return $this->morphToMany('App\Category', 'categorizable');
+    }
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'videos_idx';
     }
 
 }
