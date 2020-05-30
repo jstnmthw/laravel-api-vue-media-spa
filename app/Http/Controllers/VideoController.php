@@ -157,11 +157,11 @@ class VideoController extends Controller
     }
 
     /**
-     * Search model w/ Algolia
+     * Search function
      */
     public function search(Request $request)
     {
-        return Video::search($request->q)->explain();
+        return Video::search($request->q)->where('views', '>', 10000)->get();
     }
 
     /**
