@@ -1,17 +1,24 @@
 // Body
-$body-bg: #2c2c55;
 
 // Typography
 $font-family-sans-serif: 'Roboto', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-// Colors
-$blue: #3490dc;
-$indigo: #2c2c54;
-$purple: #40407a;
-$lavendar: #5d5daf;
+// Theme Colors
+// $indigo: #2c2c54;
+// $purple: #40407a;
+// $lavendar: #5d5daf;
+// $lilac: #cacaee;
+
+// Brighter Theme
+$indigo: #20205b;
+$purple: #38388b;
+$lavendar: #5959cf;
 $lilac: #cacaee;
+
+// Basic Colors
+$blue: #3490dc;
 $pink: #d980fa;
 $red: #e3342f;
 $orange: #f6993f;
@@ -20,11 +27,11 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-// Custom colors
+// Map custom colors
 $theme-colors: (
-  "indigo": $indigo,
-  "pink": $pink,
-  "purple": $purple
+  'indigo': $indigo,
+  'pink': $pink,
+  'purple': $purple
 );
 
 // Grid breakpoints

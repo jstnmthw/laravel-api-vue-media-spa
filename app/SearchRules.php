@@ -22,20 +22,32 @@ class SearchRules extends SearchRule
         return [
             'should' => [
                 [
-                    'match' => [
+                    'match_phrase_prefix' => [
                         'title' => [
                             'query' => $this->builder->query,
-                            'boost' => 1,
                         ],
                     ],
                 ],
                 [
                     'match' => [
-                        'cateogires' => [
+                        'categories' => [
                             'query' => $this->builder->query,
+                            'boost' => 2,
+                        ],
+                    ],
+                ],
+                [
+                    'range' => [
+                        'views' => [
+                            'gte' => 100000,
                             'boost' => 3,
                         ],
                     ],
+                ],
+            ],
+            'must_not' => [
+                'match' => [
+                    'categories' => 'gay',
                 ],
             ],
         ];

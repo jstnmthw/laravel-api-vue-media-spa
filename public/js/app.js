@@ -2026,11 +2026,11 @@ __webpack_require__.r(__webpack_exports__);
       search: null
     };
   },
-  props: ["categories"],
+  props: ['categories'],
   methods: {
     search_category: function search_category() {
       var search = [this.search];
-      $("#search-list li").each(function (i) {
+      $('#search-list li').each(function (i) {
         var haystack = search[0].toUpperCase();
         var needle = this.innerText.toUpperCase();
 
@@ -2043,7 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clear_search: function clear_search() {
       this.search = null;
-      $("#search-list li").show();
+      $('#search-list li').show();
     }
   }
 });
@@ -2067,6 +2067,28 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2121,8 +2143,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 _context.next = 4;
                 return axios.post('/api/login', {
-                  'email': 'web@jstn.ly',
-                  'password': 'password'
+                  email: 'web@jstn.ly',
+                  password: 'password'
                 });
 
               case 4:
@@ -2312,7 +2334,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["loaded", "pagination"],
+  props: ['loaded', 'pagination'],
   computed: {
     pagesNumber: function pagesNumber() {
       var totalPage = Math.ceil(this.pagination.total / this.pagination.per_page);
@@ -2344,7 +2366,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     uf_num: function uf_num(_int) {
-      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
   }
 });
@@ -2422,7 +2444,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["videos", "cards", "cols"],
+  props: ['videos', 'cards', 'cols'],
   components: {
     VideoListItem: _components_VideoListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2479,10 +2501,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["data"],
+  props: ['data'],
   computed: {
     views: function views() {
-      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function rating() {
       if (this.data.likes >= 1) {
@@ -2515,11 +2537,11 @@ __webpack_require__.r(__webpack_exports__);
       if (clear) {
         clearTimeout(this.debounceTimer);
         this.carousel(event, false);
-        $(".loader-icon").remove();
+        $('.loader-icon').remove();
       } else {
-        $(event.target).parent().prepend($("<img>", {
-          src: "/imgs/loader.svg",
-          "class": "loader-icon"
+        $(event.target).parent().prepend($('<img>', {
+          src: '/imgs/loader.svg',
+          "class": 'loader-icon'
         }));
         this.debounceTimer = setTimeout(function () {
           _this.carousel(event);
@@ -2540,8 +2562,8 @@ __webpack_require__.r(__webpack_exports__);
         }, this.interval);
         this.preloadImages(srcs, function () {
           for (var i = 0; i < images.length; i++) {
-            images[i].setAttribute("src", srcs[i]);
-            $(".loader-icon").remove();
+            images[i].setAttribute('src', srcs[i]);
+            $('.loader-icon').remove();
           }
         });
       } else {
@@ -2551,10 +2573,10 @@ __webpack_require__.r(__webpack_exports__);
     // Next Images
     nextImage: function nextImage(images) {
       for (var i = 0; i < images.length; i++) {
-        images[i].classList.remove("active");
+        images[i].classList.remove('active');
       }
 
-      $(images).eq(this.next).addClass("active");
+      $(images).eq(this.next).addClass('active');
       this.next = (this.next + 1) % images.length;
     },
     // Preload images
@@ -2596,7 +2618,7 @@ __webpack_require__.r(__webpack_exports__);
       var srcs = [];
 
       for (var i = 0; i < imgs.length; i++) {
-        srcs.push(imgs[i].getAttribute("data-src"));
+        srcs.push(imgs[i].getAttribute('data-src'));
       }
 
       return srcs;
@@ -2730,6 +2752,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2752,14 +2775,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
   mounted: function mounted() {
     // Get videos on page load
     this.getVideos(); // cookie for cats
 
-    document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/";
+    document.cookie = 'category=' + this.$route.params.category + '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/';
   },
   computed: {
     category_title: function category_title() {
@@ -2769,7 +2792,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var key = categories.indexOf(this.$route.params.category);
 
       if (key >= 0) {
-        return this.categories[key]["name"] + " Video Category";
+        return this.categories[key]['name'] + ' Video Category';
       }
     }
   },
@@ -2781,13 +2804,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$Progress.start();
       this.loaded = false; // Stop unfinished images loading
 
-      $(".video-poster img").attr("src", ""); // Check for sort query string
+      $('.video-poster img').attr('src', ''); // Check for sort query string
 
       var sort = !this.$route.query.sortby ? {
-        sortby: "most_views"
-      } : ""; // Make the call
+        sortby: 'most_views'
+      } : ''; // Make the call
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/videos", {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/videos', {
         params: _objectSpread({}, this.$route.params, {}, this.$route.query, {}, sort)
       }).then(function (response) {
         _this.$Progress.finish();
@@ -2803,9 +2826,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$Progress.fail();
 
         if (axios__WEBPACK_IMPORTED_MODULE_0___default.a.isCancel(error)) {
-          console.log("API Request canceled by user.");
+          console.log('API Request canceled by user.');
         } else {
-          console.log("Error calling API.");
+          console.log('Error calling API.');
         }
       });
     },
@@ -2817,12 +2840,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     $route: function $route(to, from) {
       this.videos = [];
       this.getVideos();
-      document.cookie = "category=" + this.$route.params.category + "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/";
+      document.cookie = 'category=' + this.$route.params.category + '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/';
     }
   }
 });
@@ -2944,7 +2967,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
   mounted: function mounted() {
@@ -2967,14 +2990,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.error = false;
                 _this.loaded = false; // Stop unfinished images loading
 
-                $(".video-poster img").attr("src", ""); // Check for sort query string
+                $('.video-poster img').attr('src', ''); // Check for sort query string
 
                 sort = !_this.$route.query.sortby ? {
-                  sortby: "most_views"
-                } : ""; // Make the call
+                  sortby: 'most_views'
+                } : ''; // Make the call
 
                 _context.next = 7;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos", {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: _objectSpread({}, _this.$route.params, {}, _this.$route.query, {}, sort)
                 }).then(function (response) {
                   _this.$Progress.finish();
@@ -2985,9 +3008,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$Progress.fail();
 
                   if (axios__WEBPACK_IMPORTED_MODULE_1___default.a.isCancel(error)) {
-                    console.log("API Request canceled by user.");
+                    console.log('API Request canceled by user.');
                   } else {
-                    console.log("Error calling API.");
+                    console.log('Error calling API.');
                   }
                 });
 
@@ -3009,10 +3032,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // Format to user friendly number
     uf_num: function uf_num(_int) {
-      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
@@ -3134,7 +3157,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       videos: [],
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views',
       query: this.$route.query.q
     };
   },
@@ -3149,7 +3172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_5__["default"],
     VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
-  props: ["categories"],
+  props: ['categories'],
   methods: {
     // Get Video Listing
     getVideos: function getVideos() {
@@ -3164,7 +3187,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.loaded = false;
                 _context.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos/search", {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos/search', {
                   params: _this.$route.query
                 }).then(function (response) {
                   _this.$Progress.finish();
@@ -3196,20 +3219,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // Thousands number seperator
     number_seperator: function number_seperator(_int) {
-      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
   },
   computed: {
     page_title: function page_title() {
       if (this.loaded) {
-        return "Search Result: " + this.query;
+        return 'Search Result: ' + this.query;
       }
     }
   },
   watch: {
     // When route changes, call API
     $route: function $route(to, from) {
-      $(".video-poster img").attr("src", "");
+      $('.video-poster img').attr('src', '');
       this.videos = [];
       this.getVideos();
     }
@@ -3371,7 +3394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     formatNumber: function formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     getVideo: function getVideo() {
       var _this = this;
@@ -3385,15 +3408,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.loaded = true; // Clear iframe src
 
-                $("#video").attr("src", ""); // Make the call
+                $('#video').attr('src', ''); // Make the call
 
                 _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos/" + _this.$route.params.id).then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos/' + _this.$route.params.id).then(function (response) {
                   _this.$Progress.finish();
 
                   _this.data = response.data;
                   _this.loaded = true;
-                  $("#video")[0].contentWindow.location.replace(_this.data.embed);
+                  $('#video')[0].contentWindow.location.replace(_this.data.embed);
 
                   _this.getRelated(12);
                 })["catch"](function (error) {
@@ -3421,16 +3444,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.related_loaded = false;
-                category = "";
+                category = '';
 
-                if (null !== _this2.getCookie("category")) {
-                  category = _this2.getCookie("category");
+                if (null !== _this2.getCookie('category')) {
+                  category = _this2.getCookie('category');
                 } else {
                   category = _this2.data.categories[0].name.toLowerCase();
                 }
 
                 _context2.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos", {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: {
                     limit: limit,
                     offset: 0,
@@ -3442,7 +3465,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.related_loaded = true;
                 })["catch"](function (error) {
                   _this2.related_loaded = false;
-                  console.log("There was an error fetching data.");
+                  console.log('There was an error fetching data.');
                 });
 
               case 5:
@@ -3454,13 +3477,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getCookie: function getCookie(name) {
-      var nameEQ = name + "=";
-      var ca = document.cookie.split(";");
+      var nameEQ = name + '=';
+      var ca = document.cookie.split(';');
 
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
 
-        while (c.charAt(0) == " ") {
+        while (c.charAt(0) == ' ') {
           c = c.substring(1, c.length);
         }
 
@@ -3470,7 +3493,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return null;
     }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     $route: function $route(to, from) {
       this.data = [];
@@ -8044,7 +8067,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
 
 // exports
 
@@ -24244,7 +24267,7 @@ var render = function() {
           "span",
           {
             staticClass: "pr-2 position-relative",
-            staticStyle: { opacity: ".5" }
+            staticStyle: { opacity: "0.5" }
           },
           [
             _c("ion-icon", {
@@ -24403,7 +24426,7 @@ var render = function() {
                             _vm._v(
                               "\n            Showing: " +
                                 _vm._s(_vm.videos.current_page) +
-                                " of " +
+                                " of\n            " +
                                 _vm._s(_vm.videos.last_page) +
                                 "\n          "
                             )
@@ -41341,10 +41364,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Librar
 
  // Register global components
 
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component("Navbar", _components_Navbar__WEBPACK_IMPORTED_MODULE_6__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component("MainFooter", _components_MainFooter__WEBPACK_IMPORTED_MODULE_7__["default"]); // Axios settings
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('Navbar', _components_Navbar__WEBPACK_IMPORTED_MODULE_6__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('MainFooter', _components_MainFooter__WEBPACK_IMPORTED_MODULE_7__["default"]); // Axios settings
 
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.withCredentials = true; // Axios cancel token request interceptor
 
 axios__WEBPACK_IMPORTED_MODULE_1___default.a.interceptors.request.use(function (config) {
@@ -41353,24 +41376,24 @@ axios__WEBPACK_IMPORTED_MODULE_1___default.a.interceptors.request.use(function (
 
   config.cancelToken = source.token; // Add to vuex to make cancellation available from anywhere
 
-  _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit("ADD_CANCEL_TOKEN", source);
+  _store__WEBPACK_IMPORTED_MODULE_4__["default"].commit('ADD_CANCEL_TOKEN', source);
   return config;
 }, function (error) {
   return Promise.reject(error);
 }); // Vue Progressbar
 
 var vpbSettings = {
-  color: "rgba(217, 128, 250,1.0)",
-  failedColor: "red",
-  height: "2px"
+  color: 'rgba(217, 128, 250,1.0)',
+  failedColor: 'red',
+  height: '2px'
 }; // Ignore Ion's Font Icons custom elements
 
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.config.ignoredElements = ["ion-icon"]; // Register Instances
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.config.ignoredElements = ['ion-icon']; // Register Instances
 
 vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_5___default.a, vpbSettings); // Initiate instance
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
-  el: "#app",
+  el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],
   store: _store__WEBPACK_IMPORTED_MODULE_4__["default"],
   data: {
@@ -41389,9 +41412,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/categories").then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/categories').then(function (response) {
                   _this.categories = response.data;
-                  console.log("Getting categories.");
+                  console.log('Getting categories.');
                 });
 
               case 2:
@@ -41406,7 +41429,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
 }); // Before creation callback
 
 _router__WEBPACK_IMPORTED_MODULE_3__["default"].beforeEach(function (to, from, next) {
-  _store__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch("CANCEL_PENDING_REQUESTS");
+  _store__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch('CANCEL_PENDING_REQUESTS');
   next();
 });
 
@@ -42187,27 +42210,27 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   base: process.env.BASE_URL,
-  mode: "history",
+  mode: 'history',
   routes: [{
-    path: "/",
+    path: '/',
     component: _views_Homepage__WEBPACK_IMPORTED_MODULE_3__["default"],
-    name: "home"
+    name: 'home'
   }, {
-    path: "/categories/:category",
+    path: '/categories/:category',
     component: _views_Categories__WEBPACK_IMPORTED_MODULE_2__["default"],
-    name: "categories"
+    name: 'categories'
   }, {
-    path: "/videos/:id",
+    path: '/videos/:id',
     component: _views_Video__WEBPACK_IMPORTED_MODULE_6__["default"],
-    name: "video"
+    name: 'video'
   }, {
-    path: "/search",
+    path: '/search',
     component: _views_Search__WEBPACK_IMPORTED_MODULE_5__["default"],
-    name: "search"
+    name: 'search'
   }, {
-    path: "*",
+    path: '*',
     component: _views_NotFound__WEBPACK_IMPORTED_MODULE_4__["default"],
-    name: "404"
+    name: '404'
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -42262,11 +42285,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       // Cancel all request where a token exists
       context.state.cancelTokens.forEach(function (request) {
         if (request.cancel) {
-          request.cancel("Request canceled.");
+          request.cancel('Request canceled.');
         }
       }); // Reset the cancelTokens store
 
-      context.commit("CLEAR_CANCEL_TOKENS");
+      context.commit('CLEAR_CANCEL_TOKENS');
     }
   }
 }));

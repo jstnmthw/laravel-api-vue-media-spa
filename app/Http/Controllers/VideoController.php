@@ -177,11 +177,10 @@ class VideoController extends Controller
     public function search(Request $request)
     {
         $data = Video::search($request->q)
-            ->where('views', '>', 10000)
             // ->orderBy('views', 'DESC')
             ->paginate(50);
 
-        // return Video::search($request->q)->explain();
+        return Video::search($request->q)->explain();
 
         foreach ($data as $row => $value) {
             $value['album'] = explode(';', $value['album']);

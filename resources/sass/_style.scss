@@ -3,6 +3,7 @@
  */
 body {
   color: $lilac;
+  background: $indigo;
 }
 
 // General CSS
@@ -225,13 +226,13 @@ a,
       }
       .liked {
         color: $green;
-        [name="thumbs-down"] {
+        [name='thumbs-down'] {
           display: none;
         }
       }
       .disliked {
         color: $red;
-        [name="thumbs-up"] {
+        [name='thumbs-up'] {
           display: none;
         }
       }
