@@ -50,5 +50,16 @@ class Video extends Model
     {
         return 'videos_idx';
     }
+        
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only(['id', 'title', 'categories', 'views', 'likes', 'dislikes'])->toArray();
+        return $array;
+    }
 
 }

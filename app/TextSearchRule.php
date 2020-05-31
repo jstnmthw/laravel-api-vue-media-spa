@@ -20,11 +20,11 @@ class TextSearchRule extends SearchRule
     public function buildQueryPayload()
     {
         return [
-            'should' => [
-                'match' => [
-                    'title' => $this->builder->query
+            "must" => [
+                "match_phrase" => [
+                    "title" => $this->builder->query
                 ]
-            ],
+            ]
         ];
     }
 

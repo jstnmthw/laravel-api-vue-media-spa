@@ -3052,22 +3052,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
-/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
-/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
-/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
-/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
-/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
+/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
+/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3130,22 +3130,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__["default"],
-    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__["default"],
-    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__["default"],
-    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__["default"],
-    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_6__["default"]
-  },
-  props: ["categories"],
   data: function data() {
     return {
+      videos: [],
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views"
+      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+      query: this.$route.query.q
     };
   },
+  mounted: function mounted() {
+    this.getVideos();
+  },
+  components: {
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_2__["default"],
+    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_3__["default"],
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_4__["default"],
+    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__["default"],
+    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_5__["default"],
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_7__["default"]
+  },
+  props: ["categories"],
   methods: {
+    // Get Video Listing
+    getVideos: function getVideos() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.$Progress.start();
+
+                _this.loaded = false;
+                _context.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/videos/search", {
+                  params: _this.$route.query
+                }).then(function (response) {
+                  _this.$Progress.finish();
+
+                  _this.loaded = true;
+                  _this.videos = response.data;
+                })["catch"](function (error) {
+                  _this.$Progress.fail();
+
+                  _this.error = true;
+                  console.log(error);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     // Set default or user sortby
     sortBy: function sortBy() {
       this.$router.push({
@@ -3153,6 +3193,25 @@ __webpack_require__.r(__webpack_exports__);
           sortby: this.sort
         })
       });
+    },
+    // Thousands number seperator
+    number_seperator: function number_seperator(_int) {
+      return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+  },
+  computed: {
+    page_title: function page_title() {
+      if (this.loaded) {
+        return "Search Result: " + this.query;
+      }
+    }
+  },
+  watch: {
+    // When route changes, call API
+    $route: function $route(to, from) {
+      $(".video-poster img").attr("src", "");
+      this.videos = [];
+      this.getVideos();
     }
   }
 });
@@ -24716,6 +24775,7 @@ var render = function() {
           "main",
           { staticClass: "col-md-10" },
           [
+            _vm._v("\n      " + _vm._s(_vm.query) + "\n      "),
             _c("top-ad-banner"),
             _vm._v(" "),
             _c("page-header", {
@@ -24727,7 +24787,7 @@ var render = function() {
                   expression: "loaded"
                 }
               ],
-              attrs: { title: "Most Viewed Videos", icon: "eye" }
+              attrs: { title: _vm.page_title }
             }),
             _vm._v(" "),
             _c(
@@ -24757,9 +24817,11 @@ var render = function() {
                   ? _c("div", [
                       _vm._v(
                         "\n          Showing: " +
-                          _vm._s(_vm.uf_num(_vm.videos.current_page)) +
+                          _vm._s(
+                            _vm.number_seperator(_vm.videos.current_page)
+                          ) +
                           " of\n          " +
-                          _vm._s(_vm.uf_num(_vm.videos.last_page)) +
+                          _vm._s(_vm.number_seperator(_vm.videos.last_page)) +
                           "\n        "
                       )
                     ])
@@ -24824,12 +24886,37 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
+            _vm.loaded
+              ? _c("video-list", {
+                  staticClass: "mb-5",
+                  attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
+                })
+              : _vm._e(),
+            _vm._v(" "),
             !_vm.loaded
               ? _c("skeleton-video-card", {
                   staticClass: "mb-5",
                   attrs: { cards: 50, cols: 5 }
                 })
-              : _vm._e()
+              : _vm._e(),
+            _vm._v(" "),
+            _c("paginate", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loaded,
+                  expression: "loaded"
+                }
+              ],
+              staticClass: "mb-5",
+              attrs: { pagination: _vm.videos, loaded: _vm.loaded },
+              on: {
+                paginate: function($event) {
+                  return _vm.getVideos()
+                }
+              }
+            })
           ],
           1
         )
