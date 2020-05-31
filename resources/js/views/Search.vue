@@ -67,7 +67,7 @@ export default {
       videos: [],
       loaded: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
-      query: this.$route.query.q,
+      query: this.$route.query.q
     }
   },
   mounted() {
@@ -79,7 +79,7 @@ export default {
     MainSidebar: MainSidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,
-    VideoList: VideoList,
+    VideoList: VideoList
   },
   props: ["categories"],
   methods: {
@@ -89,14 +89,14 @@ export default {
       this.loaded = false
       await axios
         .get("/api/videos/search", {
-          params: this.$route.query,
+          params: this.$route.query
         })
-        .then(response => {
+        .then((response) => {
           this.$Progress.finish()
           this.loaded = true
           this.videos = response.data
         })
-        .catch(error => {
+        .catch((error) => {
           this.$Progress.fail()
           this.error = true
           console.log(error)
@@ -106,21 +106,23 @@ export default {
     // Set default or user sortby
     sortBy() {
       this.$router.push({
-        query: Object.assign({}, this.$route.query, { sortby: this.sort }),
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
       })
     },
 
     // Thousands number seperator
     number_seperator(int) {
       return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    },
+    }
   },
   computed: {
-    page_title: function() {
+    page_title: function () {
       if (this.loaded) {
         return "Search Result: " + this.query
       }
-    },
+    }
   },
   watch: {
     // When route changes, call API
@@ -128,8 +130,8 @@ export default {
       $(".video-poster img").attr("src", "")
       this.videos = []
       this.getVideos()
-    },
-  },
+    }
+  }
 }
 </script>
 

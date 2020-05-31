@@ -7,20 +7,20 @@ use ScoutElastic\Migratable;
 
 class VideosIndex extends IndexConfigurator
 {
-    use Migratable;
+  use Migratable;
 
-    // Index name
-    protected $name = 'videos_idx'; 
+  // Index name
+  protected $name = 'videos_idx';
 
-    /**
-     * Elastic Search settings
-     * 
-     * @var array
-     * @return json
-     */
-    protected $settings = [
-        "analysis" => [
-            "analyzer" => "standard"
-        ]
-    ];
+  /**
+   * Elastic Search settings
+   *
+   * @var array
+   * @return json
+   */
+  protected $settings = [
+    "analysis" => [
+      "analyzer" => "standard",
+    ],
+  ];
 }
