@@ -16,9 +16,7 @@ class Video extends Model
 
     protected $indexConfigurator = VideosIndex::class;
 
-    protected $searchRules = [
-        TextSearchRule::class
-    ];
+    protected $searchRules = [TextSearchRule::class];
 
     protected $mapping = [
         'properties' => [
@@ -26,11 +24,11 @@ class Video extends Model
                 'type' => 'text',
                 'fields' => [
                     'raw' => [
-                        'type' => 'keyword'
-                    ]
-                ]
-            ]
-        ]
+                        'type' => 'keyword',
+                    ],
+                ],
+            ],
+        ],
     ];
 
     /**
@@ -50,7 +48,7 @@ class Video extends Model
     {
         return 'videos_idx';
     }
-        
+
     /**
      * Get the indexable data array for the model.
      *
@@ -58,8 +56,14 @@ class Video extends Model
      */
     public function toSearchableArray()
     {
-        $array = $this->only(['id', 'title', 'categories', 'views', 'likes', 'dislikes'])->toArray();
+        $array = $this->only([
+            'id',
+            'title',
+            'categories',
+            'views',
+            'likes',
+            'dislikes',
+        ])->toArray();
         return $array;
     }
-
 }

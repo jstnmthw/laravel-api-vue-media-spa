@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/categories/'+slug" class="btn btn-sm btn-category">
+  <router-link :to="'/categories/' + slug" class="btn btn-sm btn-category">
     {{ label.name }}
   </router-link>
 </template>
@@ -8,13 +8,11 @@
 export default {
   props: ['label'],
   computed: {
-    slug: function() {
-      return this.label.name.replace(' ', '-').toLocaleLowerCase();
+    slug: function () {
+      return this.label.name.replace(' ', '-').toLocaleLowerCase()
     }
   }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

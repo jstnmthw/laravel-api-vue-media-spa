@@ -5,14 +5,12 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style>
-  .banner-placeholder {
-    width: 739px;
-    height: 90px;
-  }
+.banner-placeholder {
+  width: 739px;
+  height: 90px;
+}
 </style>

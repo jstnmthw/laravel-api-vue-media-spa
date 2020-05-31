@@ -1,44 +1,44 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
 // Pages
-import Categories from "@/views/Categories"
-import Homepage from "@/views/Homepage"
-import NotFound from "@/views/NotFound"
-import Search from "@/views/Search"
-import Video from "@/views/Video"
+import Categories from '@/views/Categories'
+import Homepage from '@/views/Homepage'
+import NotFound from '@/views/NotFound'
+import Search from '@/views/Search'
+import Video from '@/views/Video'
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
   base: process.env.BASE_URL,
-  mode: "history",
+  mode: 'history',
   routes: [
     {
-      path: "/",
+      path: '/',
       component: Homepage,
-      name: "home",
+      name: 'home'
     },
     {
-      path: "/categories/:category",
+      path: '/categories/:category',
       component: Categories,
-      name: "categories",
+      name: 'categories'
     },
     {
-      path: "/videos/:id",
+      path: '/videos/:id',
       component: Video,
-      name: "video",
+      name: 'video'
     },
     {
-      path: "/search",
+      path: '/search',
       component: Search,
-      name: "search",
+      name: 'search'
     },
     {
-      path: "*",
+      path: '*',
       component: NotFound,
-      name: "404",
-    },
+      name: '404'
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -46,5 +46,5 @@ export default new VueRouter({
     } else {
       return { x: 0, y: 0 }
     }
-  },
+  }
 })

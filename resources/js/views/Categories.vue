@@ -18,7 +18,8 @@
 
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div v-show="loaded">
-              Showing: {{ videos.current_page }} of {{ videos.last_page }}
+              Showing: {{ videos.current_page }} of
+              {{ videos.last_page }}
             </div>
             <div v-show="loaded">
               <select
@@ -66,13 +67,13 @@
 </template>
 
 <script>
-import axios from "axios"
-import PageHeader from "@/components/PageHeader"
-import Paginate from "@/components/Paginate"
-import MainSidebar from "@/components/MainSidebar"
-import TopAdBanner from "@/components/TopAdBanner"
-import SkeletonVideoCard from "@/components/skeleton/VideoCard"
-import VideoList from "@/components/VideoList"
+import axios from 'axios'
+import PageHeader from '@/components/PageHeader'
+import Paginate from '@/components/Paginate'
+import MainSidebar from '@/components/MainSidebar'
+import TopAdBanner from '@/components/TopAdBanner'
+import SkeletonVideoCard from '@/components/skeleton/VideoCard'
+import VideoList from '@/components/VideoList'
 
 export default {
   components: {
@@ -81,7 +82,7 @@ export default {
     MainSidebar: MainSidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,
-    VideoList: VideoList,
+    VideoList: VideoList
   },
   data() {
     return {
@@ -89,7 +90,7 @@ export default {
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
   mounted() {
@@ -98,18 +99,18 @@ export default {
 
     // cookie for cats
     document.cookie =
-      "category=" +
+      'category=' +
       this.$route.params.category +
-      "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/"
+      '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/'
   },
   computed: {
-    category_title: function() {
-      const categories = this.categories.map(el => el.slug)
+    category_title: function () {
+      const categories = this.categories.map((el) => el.slug)
       const key = categories.indexOf(this.$route.params.category)
       if (key >= 0) {
-        return this.categories[key]["name"] + " Video Category"
+        return this.categories[key]['name'] + ' Video Category'
       }
-    },
+    }
   },
   methods: {
     getVideos() {
@@ -118,21 +119,21 @@ export default {
       this.loaded = false
 
       // Stop unfinished images loading
-      $(".video-poster img").attr("src", "")
+      $('.video-poster img').attr('src', '')
 
       // Check for sort query string
-      let sort = !this.$route.query.sortby ? { sortby: "most_views" } : ""
+      let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
 
       // Make the call
       axios
-        .get("/api/videos", {
+        .get('/api/videos', {
           params: {
             ...this.$route.params,
             ...this.$route.query,
-            ...sort,
-          },
+            ...sort
+          }
         })
-        .then(response => {
+        .then((response) => {
           this.$Progress.finish()
           if (response.data.error) {
             this.error = response.data.error
@@ -141,31 +142,33 @@ export default {
           }
           this.loaded = true
         })
-        .catch(error => {
+        .catch((error) => {
           this.$Progress.fail()
           if (axios.isCancel(error)) {
-            console.log("API Request canceled by user.")
+            console.log('API Request canceled by user.')
           } else {
-            console.log("Error calling API.")
+            console.log('Error calling API.')
           }
         })
     },
     sortBy() {
       this.$router.push({
-        query: Object.assign({}, this.$route.query, { sortby: this.sort }),
+        query: Object.assign({}, this.$route.query, {
+          sortby: this.sort
+        })
       })
-    },
+    }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     $route(to, from) {
       this.videos = []
       this.getVideos()
       document.cookie =
-        "category=" +
+        'category=' +
         this.$route.params.category +
-        "; expires=Sun, 25 December 2022 00:00:00 UTC; path=/"
-    },
-  },
+        '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/'
+    }
+  }
 }
 </script>

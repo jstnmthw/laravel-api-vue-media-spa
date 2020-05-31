@@ -14,11 +14,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h4 {
-    text-transform: capitalize;
-  }
-  ion-icon {
-    top: 3px;
-    position: relative;
-  }
+h4 {
+  text-transform: capitalize;
+}
+ion-icon {
+  top: 3px;
+  position: relative;
+}
 </style>

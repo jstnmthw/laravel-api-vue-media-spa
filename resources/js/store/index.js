@@ -1,17 +1,17 @@
-import Vue from "vue"
-import Vuex from "vuex"
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
   state: {
-    cancelTokens: [],
+    cancelTokens: []
   },
   getters: {
     cancelTokens(state) {
       return state.cancelTokens
-    },
+    }
   },
   mutations: {
     ADD_CANCEL_TOKEN(state, token) {
@@ -19,19 +19,19 @@ export default new Vuex.Store({
     },
     CLEAR_CANCEL_TOKENS(state) {
       state.cancelTokens = []
-    },
+    }
   },
   actions: {
     CANCEL_PENDING_REQUESTS(context) {
       // Cancel all request where a token exists
-      context.state.cancelTokens.forEach(request => {
+      context.state.cancelTokens.forEach((request) => {
         if (request.cancel) {
-          request.cancel("Request canceled.")
+          request.cancel('Request canceled.')
         }
       })
 
       // Reset the cancelTokens store
-      context.commit("CLEAR_CANCEL_TOKENS")
-    },
-  },
+      context.commit('CLEAR_CANCEL_TOKENS')
+    }
+  }
 })

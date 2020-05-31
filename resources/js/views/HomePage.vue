@@ -61,13 +61,13 @@
 </template>
 
 <script>
-import axios from "axios"
-import PageHeader from "@/components/PageHeader"
-import Paginate from "@/components/Paginate"
-import MainSidebar from "@/components/MainSidebar"
-import TopAdBanner from "@/components/TopAdBanner"
-import SkeletonVideoCard from "@/components/skeleton/VideoCard"
-import VideoList from "@/components/VideoList"
+import axios from 'axios'
+import PageHeader from '@/components/PageHeader'
+import Paginate from '@/components/Paginate'
+import MainSidebar from '@/components/MainSidebar'
+import TopAdBanner from '@/components/TopAdBanner'
+import SkeletonVideoCard from '@/components/skeleton/VideoCard'
+import VideoList from '@/components/VideoList'
 
 export default {
   components: {
@@ -76,7 +76,7 @@ export default {
     MainSidebar: MainSidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,
-    VideoList: VideoList,
+    VideoList: VideoList
   },
   data() {
     return {
@@ -84,7 +84,7 @@ export default {
       pagination: [],
       error: false,
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
   mounted() {
@@ -99,31 +99,31 @@ export default {
       this.loaded = false
 
       // Stop unfinished images loading
-      $(".video-poster img").attr("src", "")
+      $('.video-poster img').attr('src', '')
 
       // Check for sort query string
-      let sort = !this.$route.query.sortby ? { sortby: "most_views" } : ""
+      let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
 
       // Make the call
       await axios
-        .get("/api/videos", {
+        .get('/api/videos', {
           params: {
             ...this.$route.params,
             ...this.$route.query,
-            ...sort,
-          },
+            ...sort
+          }
         })
-        .then(response => {
+        .then((response) => {
           this.$Progress.finish()
           this.videos = response.data
           this.loaded = true
         })
-        .catch(error => {
+        .catch((error) => {
           this.$Progress.fail()
           if (axios.isCancel(error)) {
-            console.log("API Request canceled by user.")
+            console.log('API Request canceled by user.')
           } else {
-            console.log("Error calling API.")
+            console.log('Error calling API.')
           }
         })
     },
@@ -131,22 +131,22 @@ export default {
     // Set default or user sortby
     sortBy() {
       this.$router.push({
-        query: Object.assign({}, this.$route.query, { sortby: this.sort }),
+        query: Object.assign({}, this.$route.query, { sortby: this.sort })
       })
     },
 
     // Format to user friendly number
     uf_num(int) {
-      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    },
+      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     // When route changes, call API
     $route(to, from) {
       this.videos = []
       this.getVideos()
-    },
-  },
+    }
+  }
 }
 </script>

@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import VideoListItem from "../components/VideoListItem"
+import VideoListItem from '../components/VideoListItem'
 export default {
-  props: ["videos", "cards", "cols"],
+  props: ['videos', 'cards', 'cols'],
   components: {
-    VideoListItem: VideoListItem,
-  },
+    VideoListItem: VideoListItem
+  }
 }
 </script>

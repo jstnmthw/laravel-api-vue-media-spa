@@ -53,20 +53,20 @@
 </template>
 
 <script>
-import axios from "axios"
-import PageHeader from "@/components/PageHeader"
-import Paginate from "@/components/Paginate"
-import MainSidebar from "@/components/MainSidebar"
-import TopAdBanner from "@/components/TopAdBanner"
-import SkeletonVideoCard from "@/components/skeleton/VideoCard"
-import VideoList from "@/components/VideoList"
+import axios from 'axios'
+import PageHeader from '@/components/PageHeader'
+import Paginate from '@/components/Paginate'
+import MainSidebar from '@/components/MainSidebar'
+import TopAdBanner from '@/components/TopAdBanner'
+import SkeletonVideoCard from '@/components/skeleton/VideoCard'
+import VideoList from '@/components/VideoList'
 
 export default {
   data() {
     return {
       videos: [],
       loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : "most_views",
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views',
       query: this.$route.query.q
     }
   },
@@ -81,14 +81,14 @@ export default {
     TopAdBanner: TopAdBanner,
     VideoList: VideoList
   },
-  props: ["categories"],
+  props: ['categories'],
   methods: {
     // Get Video Listing
     async getVideos() {
       this.$Progress.start()
       this.loaded = false
       await axios
-        .get("/api/videos/search", {
+        .get('/api/videos/search', {
           params: this.$route.query
         })
         .then((response) => {
@@ -114,20 +114,20 @@ export default {
 
     // Thousands number seperator
     number_seperator(int) {
-      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
   },
   computed: {
     page_title: function () {
       if (this.loaded) {
-        return "Search Result: " + this.query
+        return 'Search Result: ' + this.query
       }
     }
   },
   watch: {
     // When route changes, call API
     $route(to, from) {
-      $(".video-poster img").attr("src", "")
+      $('.video-poster img').attr('src', '')
       this.videos = []
       this.getVideos()
     }

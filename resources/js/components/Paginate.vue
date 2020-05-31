@@ -10,7 +10,7 @@
             v-on:click.prevent="changePage(pagination.current_page - 1)"
           >
             <span aria-hidden="true">
-              <ion-icon style="top: 2" name="chevron-back-outline"></ion-icon>
+              <ion-icon style="top: 2;" name="chevron-back-outline"></ion-icon>
             </span>
             Prev
           </a>
@@ -53,7 +53,7 @@
           class="page-item"
           v-if="
             pagination.current_page < pagination.last_page &&
-              pagination.last_page >= 5
+            pagination.last_page >= 5
           "
         >
           <a
@@ -69,13 +69,13 @@
           class="page-item"
           v-if="
             pagination.current_page < pagination.last_page &&
-              pagination.last_page >= 5
+            pagination.last_page >= 5
           "
         >
           <a
             class="page-link"
             :class="{
-              active: pagination.current_page <= pagination.last_page,
+              active: pagination.current_page <= pagination.last_page
             }"
             href="javascript:void(0)"
             aria-label="Last Page"
@@ -107,7 +107,7 @@
 
 <script>
 export default {
-  props: ["loaded", "pagination"],
+  props: ['loaded', 'pagination'],
   computed: {
     pagesNumber() {
       let totalPage = Math.ceil(
@@ -128,7 +128,7 @@ export default {
       this.currentPage = startPage
 
       return pagesArray
-    },
+    }
   },
   methods: {
     changePage(page) {
@@ -137,13 +137,13 @@ export default {
 
         // Push URL
         this.$router.push({
-          query: Object.assign({}, this.$route.query, { page: page }),
+          query: Object.assign({}, this.$route.query, { page: page })
         })
       }
     },
     uf_num(int) {
-      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    },
-  },
+      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+  }
 }
 </script>

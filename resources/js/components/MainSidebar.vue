@@ -71,14 +71,14 @@
 export default {
   data() {
     return {
-      search: null,
+      search: null
     }
   },
-  props: ["categories"],
+  props: ['categories'],
   methods: {
     search_category() {
       const search = [this.search]
-      $("#search-list li").each(function(i) {
+      $('#search-list li').each(function (i) {
         const haystack = search[0].toUpperCase()
         const needle = this.innerText.toUpperCase()
         if (needle.indexOf(haystack) > -1) {
@@ -90,8 +90,8 @@ export default {
     },
     clear_search() {
       this.search = null
-      $("#search-list li").show()
-    },
-  },
+      $('#search-list li').show()
+    }
+  }
 }
 </script>

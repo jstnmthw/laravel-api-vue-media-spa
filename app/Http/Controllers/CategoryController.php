@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $data = Category::select('id', 'name')->get();
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $json[$key]['name'] = $value['name'];
             $json[$key]['slug'] = Str::slug($value['name'], '-');
         }
@@ -88,10 +88,4 @@ class CategoryController extends Controller
     {
         //
     }
-
-
-
-
-
-
 }

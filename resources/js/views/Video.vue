@@ -92,28 +92,28 @@
 </template>
 
 <script>
-import axios from "axios"
-import VideoList from "@/components/VideoList"
-import VideoLabels from "@/components/VideoLabels"
+import axios from 'axios'
+import VideoList from '@/components/VideoList'
+import VideoLabels from '@/components/VideoLabels'
 
 export default {
   components: {
     VideoList: VideoList,
-    VideoLabels: VideoLabels,
+    VideoLabels: VideoLabels
   },
   data() {
     return {
       data: [],
       related: [],
       loaded: false,
-      related_loaded: false,
+      related_loaded: false
     }
   },
   mounted() {
     this.getVideo()
   },
   computed: {
-    rating: function() {
+    rating: function () {
       if (this.data.likes >= 1) {
         return Math.trunc(
           (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
@@ -122,40 +122,40 @@ export default {
         return 0
       }
     },
-    views: function() {
+    views: function () {
       return this.formatNumber(this.data.views)
     },
-    likes: function() {
+    likes: function () {
       return this.formatNumber(this.data.likes)
     },
-    dislikes: function() {
+    dislikes: function () {
       return this.formatNumber(this.data.dislikes)
-    },
+    }
   },
   methods: {
     formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
     async getVideo() {
       this.$Progress.start()
       this.loaded = true
 
       // Clear iframe src
-      $("#video").attr("src", "")
+      $('#video').attr('src', '')
 
       // Make the call
       await axios
-        .get("/api/videos/" + this.$route.params.id)
-        .then(response => {
+        .get('/api/videos/' + this.$route.params.id)
+        .then((response) => {
           this.$Progress.finish()
           this.data = response.data
           this.loaded = true
 
-          $("#video")[0].contentWindow.location.replace(this.data.embed)
+          $('#video')[0].contentWindow.location.replace(this.data.embed)
 
           this.getRelated(12)
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
           this.loaded = false
           this.$Progress.fail()
@@ -164,49 +164,49 @@ export default {
     async getRelated(limit) {
       this.related_loaded = false
 
-      let category = ""
-      if (null !== this.getCookie("category")) {
-        category = this.getCookie("category")
+      let category = ''
+      if (null !== this.getCookie('category')) {
+        category = this.getCookie('category')
       } else {
         category = this.data.categories[0].name.toLowerCase()
       }
 
       await axios
-        .get("/api/videos", {
+        .get('/api/videos', {
           params: {
             limit: limit,
             offset: 0,
             random: 1,
-            category: category,
-          },
+            category: category
+          }
         })
-        .then(response => {
+        .then((response) => {
           this.related = response.data.data
           this.related_loaded = true
         })
-        .catch(error => {
+        .catch((error) => {
           this.related_loaded = false
-          console.log("There was an error fetching data.")
+          console.log('There was an error fetching data.')
         })
     },
     getCookie(name) {
-      var nameEQ = name + "="
-      var ca = document.cookie.split(";")
+      var nameEQ = name + '='
+      var ca = document.cookie.split(';')
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i]
-        while (c.charAt(0) == " ") c = c.substring(1, c.length)
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length)
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length)
       }
       return null
-    },
+    }
   },
-  props: ["categories"],
+  props: ['categories'],
   watch: {
     $route(to, from) {
       this.data = []
       this.related = []
       this.getVideo()
-    },
-  },
+    }
+  }
 }
 </script>
