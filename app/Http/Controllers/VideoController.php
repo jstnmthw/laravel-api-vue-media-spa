@@ -180,7 +180,7 @@ class VideoController extends Controller
             // ->orderBy('views', 'DESC')
             ->paginate(50);
 
-        return Video::search($request->q)->explain();
+        // return Video::search($request->q)->profile();
 
         foreach ($data as $row => $value) {
             $value['album'] = explode(';', $value['album']);
