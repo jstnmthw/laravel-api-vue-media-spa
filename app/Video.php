@@ -6,7 +6,7 @@ use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-use App\TextSearchRule;
+use App\SearchRules;
 
 // use Laravel\Scout\Searchable;
 
@@ -16,7 +16,7 @@ class Video extends Model
 
     protected $indexConfigurator = VideosIndex::class;
 
-    protected $searchRules = [TextSearchRule::class];
+    protected $searchRules = [SearchRules::class];
 
     protected $mapping = [
         'properties' => [
@@ -64,6 +64,7 @@ class Video extends Model
             'likes',
             'dislikes',
         ])->toArray();
+
         return $array;
     }
 }
