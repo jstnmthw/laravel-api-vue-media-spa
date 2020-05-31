@@ -19,8 +19,8 @@ class VideosIndex extends IndexConfigurator
    * @return json
    */
   protected $settings = [
-    "analysis" => [
-      "analyzer" => "standard",
+    'analysis' => [
+      'analyzer' => 'standard',
     ],
   ];
 }

@@ -296,7 +296,7 @@ class VideoController extends Controller
         ->toArray();
       $match = array_search(
         $cat,
-        array_map('strtolower', array_column($db_cats, 'name'))
+        array_map('strtolower', array_column($db_cats, 'name')),
       );
 
       return $match !== false ? $db_cats[$match]['id'] : abort(404);
