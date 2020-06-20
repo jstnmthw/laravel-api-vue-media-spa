@@ -18,7 +18,7 @@ use App\Data;
 */
 
 /**
- * Protected API
+ * Protected
  */
 Route::group(['middleware' => ['auth:sanctum', 'throttle:60,1']], function () {
     Route::get('/user', function (Request $request) {
@@ -27,21 +27,22 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:60,1']], function () {
 });
 
 /**
- * Unprotected API
+ * Unprotected
  */
 Route::post('/login', function (Request $request) {
     $data = $request->validate([
         'email' => 'required',
-        'password' => 'required'
+        'password' => 'required',
     ]);
     Auth::attempt($data);
     return Response::make('', 204);
 });
 
 /**
- * API Resources
+ * Resources
  */
 Route::get('videos/search', 'VideoController@search');
+Route::get('videos/category', 'VideoController@category');
+
 Route::apiResource('videos', 'VideoController');
 Route::apiResource('categories', 'CategoryController');
-

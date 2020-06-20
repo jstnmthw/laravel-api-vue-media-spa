@@ -14444,7 +14444,7 @@ a.text-purple:focus {
  */
 
 body {
-  color: #cacaee;
+  color: #fff;
   background: #20205b;
 }
 
@@ -14539,7 +14539,7 @@ a:hover,
 }
 
 .pagination .page-item .page-link:focus {
-  box-shadow: 0 0 0 0.2rem #d980fa;
+  box-shadow: 0 0 0 0.2rem #7575d3;
 }
 
 .pagination .page-item .page-link:hover {
@@ -14673,10 +14673,13 @@ a:hover,
   min-height: 154px;
   position: relative;
   background: #5959cf;
+  overflow: hidden;
 }
 
 .video-listing .video .video-poster img {
   border-radius: 0;
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
 }
 
 .video-listing .video .video-poster .carousel {

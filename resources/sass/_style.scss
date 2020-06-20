@@ -2,7 +2,7 @@
  * Stylesheet
  */
 body {
-  color: $lilac;
+  color: $white;
   background: $indigo;
 }
 
@@ -65,7 +65,7 @@ a,
       background-color: lighten($purple, 10%);
       border: 1px solid $purple;
       &:focus {
-        box-shadow: 0 0 0 0.2rem $pink;
+        box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
       }
       &:hover {
         background-color: lighten($purple, 15%);
@@ -186,8 +186,10 @@ a,
       min-height: 154px;
       position: relative;
       background: $lavendar;
+      overflow: hidden;
       img {
         border-radius: 0;
+        filter: blur(5px);
       }
       .carousel {
         position: absolute;

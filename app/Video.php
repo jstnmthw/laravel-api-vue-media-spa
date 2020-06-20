@@ -6,8 +6,6 @@ use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-use App\SearchRules;
-
 // use Laravel\Scout\Searchable;
 
 class Video extends Model
@@ -15,8 +13,6 @@ class Video extends Model
     use Searchable;
 
     protected $indexConfigurator = VideosIndex::class;
-
-    protected $searchRules = [SearchRules::class];
 
     protected $mapping = [
         'properties' => [
