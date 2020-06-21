@@ -3415,8 +3415,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$Progress.finish();
 
                   _this.data = response.data;
-                  _this.loaded = true;
-                  $('#video')[0].contentWindow.location.replace(_this.data.embed);
+                  _this.loaded = true; // $('#video')[0].contentWindow.location.replace(this.data.embed)
 
                   _this.getRelated(12);
                 })["catch"](function (error) {
@@ -3438,59 +3437,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var category;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.related_loaded = false;
-                category = '';
-
-                if (null !== _this2.getCookie('category')) {
-                  category = _this2.getCookie('category');
-                } else {
-                  category = _this2.data.categories[0].name.toLowerCase();
-                }
-
-                _context2.next = 5;
+                _context2.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: {
+                    query: _this2.data.title,
                     limit: limit,
-                    offset: 0,
-                    random: 1,
-                    category: category
+                    exclude: _this2.data.id
                   }
                 }).then(function (response) {
                   _this2.related = response.data.data;
                   _this2.related_loaded = true;
                 })["catch"](function (error) {
                   _this2.related_loaded = false;
-                  console.log('There was an error fetching data.');
+                  console.log('There was an error fetching the data.');
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    },
-    getCookie: function getCookie(name) {
-      var nameEQ = name + '=';
-      var ca = document.cookie.split(';');
-
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1, c.length);
-        }
-
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-      }
-
-      return null;
     }
   },
   props: ['categories'],

@@ -19,21 +19,34 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
+        // Limit
+        $limit = $request->has('limit') ? (int) $request->input('limit') : 50;
+
+        // Model category listing
         if ($request->has('category')) {
             return Video::search($request->category)
                 ->rule(CategoryRule::class)
                 ->orderBy('views', 'DESC')
-                ->paginate(50);
+                ->paginate($limit);
         }
 
-        if ($request->has('search')) {
-            return Video::search($request->search)->paginate(50);
+        // Search model listing
+        if ($request->has('query')) {
+            $data = Video::search($request->input('query'));
+            $data->whereNotMatch('categories', config('const.excluded_cats'));
+
+            if ($request->has('exclude')) {
+                $data->whereNotIn('id', [$request->input('exclude')]);
+            }
+
+            return $data->paginate($limit);
         }
 
+        // Default model listing
         return Video::search('*')
             ->whereNotMatch('categories', config('const.excluded_cats'))
             ->orderby('views', 'desc')
-            ->paginate(50);
+            ->paginate($limit);
     }
 
     /**
@@ -44,39 +57,12 @@ class VideoController extends Controller
      */
     public function show(Request $request, $id)
     {
-        // Grab related videos
-        if ($request->has('related')) {
-            /**
-             * TODO: We need a better way of showing related videos. Possibily a full text search
-             * on titles instead of picking one category out of the bunch.
-             */
-            $cat_id =
-                $_COOKIE['category'] != null
-                    ? $this->getCategory($_COOKIE['category'])
-                    : $this->getCategory($request->input('related'));
-
-            $related = Video::whereHas('categories', function (
-                Builder $query
-            ) use ($cat_id) {
-                $query
-                    ->where('categories.id', $cat_id)
-                    ->where('categories.id', '!=', 43); // TODO Need to add check for excemptions
-            })
-                ->where('id', '!=', $id)
-                ->where('views', '>', 10000)
-                ->inRandomOrder()
-                ->limit(12)
-                ->get();
-
-            return $related;
-        }
-
         // Get video with categories
         $data = Video::where('videos.id', $id)
             ->with('categories:categories.id,name')
             ->first();
 
-        // TODO: Replace at database insert
+        // TODO: Transform data at insert.
         preg_match(config('regex.domain'), $data->embed, $url);
         $data->embed = $url[0];
 

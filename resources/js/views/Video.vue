@@ -151,7 +151,7 @@ export default {
           this.data = response.data
           this.loaded = true
 
-          $('#video')[0].contentWindow.location.replace(this.data.embed)
+          // $('#video')[0].contentWindow.location.replace(this.data.embed)
 
           this.getRelated(12)
         })
@@ -164,20 +164,12 @@ export default {
     async getRelated(limit) {
       this.related_loaded = false
 
-      let category = ''
-      if (null !== this.getCookie('category')) {
-        category = this.getCookie('category')
-      } else {
-        category = this.data.categories[0].name.toLowerCase()
-      }
-
       await axios
         .get('/api/videos', {
           params: {
+            query: this.data.title,
             limit: limit,
-            offset: 0,
-            random: 1,
-            category: category
+            exclude: this.data.id
           }
         })
         .then((response) => {
@@ -186,18 +178,8 @@ export default {
         })
         .catch((error) => {
           this.related_loaded = false
-          console.log('There was an error fetching data.')
+          console.log('There was an error fetching the data.')
         })
-    },
-    getCookie(name) {
-      var nameEQ = name + '='
-      var ca = document.cookie.split(';')
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i]
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length)
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length)
-      }
-      return null
     }
   },
   props: ['categories'],
