@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import PageHeader from '@/components/PageHeader'
 import Paginate from '@/components/Paginate'
 import MainSidebar from '@/components/MainSidebar'
@@ -75,15 +74,10 @@ import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import VideoList from '@/components/VideoList'
 
+// Mixins
+import getVideosMixin from '@/mixins/getVideosMixin'
+
 export default {
-  components: {
-    pageHeader: PageHeader,
-    paginate: Paginate,
-    MainSidebar: MainSidebar,
-    SkeletonVideoCard: SkeletonVideoCard,
-    TopAdBanner: TopAdBanner,
-    VideoList: VideoList
-  },
   data() {
     return {
       videos: [],
@@ -93,15 +87,13 @@ export default {
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
-  mounted() {
-    // Get videos on page load
-    this.getVideos()
-
-    // cookie for cats
-    document.cookie =
-      'category=' +
-      this.$route.params.category +
-      '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/'
+  components: {
+    pageHeader: PageHeader,
+    paginate: Paginate,
+    MainSidebar: MainSidebar,
+    SkeletonVideoCard: SkeletonVideoCard,
+    TopAdBanner: TopAdBanner,
+    VideoList: VideoList
   },
   computed: {
     category_title: function () {
@@ -113,46 +105,6 @@ export default {
     }
   },
   methods: {
-    getVideos() {
-      this.error = false
-      this.$Progress.start()
-      this.loaded = false
-
-      // Stop unfinished images loading
-      $('.video-poster img').attr('src', '')
-
-      // Check for sort query string
-      let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
-
-      // Make the call
-      axios
-        .get('/api/videos', {
-          params: {
-            ...this.$route.params,
-            ...this.$route.query,
-            ...sort
-          }
-        })
-        .then((response) => {
-          this.$Progress.finish()
-          if (response.data.error) {
-            this.error = response.data.error
-          } else if (response.data.data.length == 0) {
-            this.error = "Sorry, looks like there's no results."
-          } else {
-            this.videos = response.data
-          }
-          this.loaded = true
-        })
-        .catch((error) => {
-          this.$Progress.fail()
-          if (axios.isCancel(error)) {
-            console.log('API Request canceled by user.')
-          } else {
-            console.log('Error calling API.')
-          }
-        })
-    },
     sortBy() {
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
@@ -161,6 +113,7 @@ export default {
       })
     }
   },
+  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
     $route(to, from) {

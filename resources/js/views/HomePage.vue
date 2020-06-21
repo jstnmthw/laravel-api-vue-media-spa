@@ -62,13 +62,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+// Components
 import PageHeader from '@/components/PageHeader'
 import Paginate from '@/components/Paginate'
 import MainSidebar from '@/components/MainSidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import VideoList from '@/components/VideoList'
+
+// Mixins
+import getVideosMixin from '@/mixins/getVideosMixin.js'
 
 export default {
   components: {
@@ -84,66 +87,19 @@ export default {
       videos: [],
       pagination: [],
       error: false,
-      loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
+      loaded: false
     }
   },
-  mounted() {
-    // Get videos on page load
-    this.getVideos()
-  },
   methods: {
-    // Axios Call
-    async getVideos() {
-      this.$Progress.start()
-      this.error = false
-      this.loaded = false
-
-      // Stop unfinished images loading
-      $('.video-poster img').attr('src', '')
-
-      // Check for sort query string
-      let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
-
-      // Make the call
-      await axios
-        .get('/api/videos', {
-          params: {
-            ...this.$route.params,
-            ...this.$route.query,
-            ...sort
-          }
-        })
-        .then((response) => {
-          this.$Progress.finish()
-          this.videos = response.data
-          this.loaded = true
-        })
-        .catch((error) => {
-          this.$Progress.fail()
-          if (axios.isCancel(error)) {
-            console.log('API Request canceled by user.')
-          } else {
-            console.log('Error calling API.')
-          }
-        })
-    },
-
-    // Set default or user sortby
-    sortBy() {
-      this.$router.push({
-        query: Object.assign({}, this.$route.query, { sortby: this.sort })
-      })
-    },
-
     // Format to user friendly number
     uf_num(int) {
       return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
   },
+  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
-    // When route changes, call API
+    // Watch route changes
     $route(to, from) {
       this.videos = []
       this.getVideos()

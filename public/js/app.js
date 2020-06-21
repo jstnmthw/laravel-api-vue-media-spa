@@ -2677,20 +2677,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
-/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
-/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
-/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
-/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
-/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
+/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
+/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
+/* harmony import */ var _mixins_getVideosMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/getVideosMixin */ "./resources/js/mixins/getVideosMixin.js");
 //
 //
 //
@@ -2764,17 +2757,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+ // Mixins
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__["default"],
-    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_2__["default"],
-    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_3__["default"],
-    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_5__["default"],
-    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_4__["default"],
-    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_6__["default"]
-  },
   data: function data() {
     return {
       videos: [],
@@ -2784,11 +2770,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos(); // cookie for cats
-
-    document.cookie = 'category=' + this.$route.params.category + '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/';
+  components: {
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__["default"],
+    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_3__["default"],
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   computed: {
     category_title: function category_title() {
@@ -2803,43 +2791,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
-    getVideos: function getVideos() {
-      var _this = this;
-
-      this.error = false;
-      this.$Progress.start();
-      this.loaded = false; // Stop unfinished images loading
-
-      $('.video-poster img').attr('src', ''); // Check for sort query string
-
-      var sort = !this.$route.query.sortby ? {
-        sortby: 'most_views'
-      } : ''; // Make the call
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/videos', {
-        params: _objectSpread({}, this.$route.params, {}, this.$route.query, {}, sort)
-      }).then(function (response) {
-        _this.$Progress.finish();
-
-        if (response.data.error) {
-          _this.error = response.data.error;
-        } else if (response.data.data.length == 0) {
-          _this.error = "Sorry, looks like there's no results.";
-        } else {
-          _this.videos = response.data;
-        }
-
-        _this.loaded = true;
-      })["catch"](function (error) {
-        _this.$Progress.fail();
-
-        if (axios__WEBPACK_IMPORTED_MODULE_0___default.a.isCancel(error)) {
-          console.log('API Request canceled by user.');
-        } else {
-          console.log('Error calling API.');
-        }
-      });
-    },
     sortBy: function sortBy() {
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
@@ -2848,6 +2799,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
+  mixins: [_mixins_getVideosMixin__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: ['categories'],
   watch: {
     $route: function $route(to, from) {
@@ -2868,28 +2820,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
-/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
-/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
-/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
-/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
-/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_Paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Paginate */ "./resources/js/components/Paginate.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
+/* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
+/* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
+/* harmony import */ var _mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/getVideosMixin.js */ "./resources/js/mixins/getVideosMixin.js");
 //
 //
 //
@@ -2953,99 +2890,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+// Components
 
 
 
 
 
+ // Mixins
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_2__["default"],
-    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_3__["default"],
-    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_4__["default"],
-    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__["default"],
-    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_5__["default"],
-    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_7__["default"]
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    paginate: _components_Paginate__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__["default"],
+    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_3__["default"],
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
       videos: [],
       pagination: [],
       error: false,
-      loaded: false,
-      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
+      loaded: false
     };
   },
-  mounted: function mounted() {
-    // Get videos on page load
-    this.getVideos();
-  },
   methods: {
-    // Axios Call
-    getVideos: function getVideos() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sort;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.$Progress.start();
-
-                _this.error = false;
-                _this.loaded = false; // Stop unfinished images loading
-
-                $('.video-poster img').attr('src', ''); // Check for sort query string
-
-                sort = !_this.$route.query.sortby ? {
-                  sortby: 'most_views'
-                } : ''; // Make the call
-
-                _context.next = 7;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
-                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query, {}, sort)
-                }).then(function (response) {
-                  _this.$Progress.finish();
-
-                  _this.videos = response.data;
-                  _this.loaded = true;
-                })["catch"](function (error) {
-                  _this.$Progress.fail();
-
-                  if (axios__WEBPACK_IMPORTED_MODULE_1___default.a.isCancel(error)) {
-                    console.log('API Request canceled by user.');
-                  } else {
-                    console.log('Error calling API.');
-                  }
-                });
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    // Set default or user sortby
-    sortBy: function sortBy() {
-      this.$router.push({
-        query: Object.assign({}, this.$route.query, {
-          sortby: this.sort
-        })
-      });
-    },
     // Format to user friendly number
     uf_num: function uf_num(_int) {
       return _int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
   },
+  mixins: [_mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: ['categories'],
   watch: {
-    // When route changes, call API
+    // Watch route changes
     $route: function $route(to, from) {
       this.videos = [];
       this.getVideos();
@@ -42105,6 +41985,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VideoCard_vue_vue_type_template_id_548e9fd4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/getVideosMixin.js":
+/*!***********************************************!*\
+  !*** ./resources/js/mixins/getVideosMixin.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    // Get videos on page load
+    this.getVideos();
+    console.log('Mixin called.');
+  },
+  methods: {
+    // Axios Call
+    getVideos: function getVideos() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var sort;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.$Progress.start();
+
+                _this.error = false;
+                _this.loaded = false; // Stop unfinished images loading
+
+                $('.video-poster img').attr('src', ''); // Check for sort query string
+
+                sort = !_this.$route.query.sortby ? {
+                  sortby: 'most_views'
+                } : ''; // Make the call
+
+                _context.next = 7;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
+                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query, {}, sort)
+                }).then(function (response) {
+                  _this.$Progress.finish();
+
+                  if (response.data.error) {
+                    _this.error = response.data.error;
+                  } else if (response.data.data.length == 0) {
+                    _this.error = "Sorry, looks like there's no results.";
+                  } else {
+                    _this.videos = response.data;
+                  }
+
+                  _this.loaded = true;
+                })["catch"](function (error) {
+                  _this.$Progress.fail();
+
+                  if (axios__WEBPACK_IMPORTED_MODULE_1___default.a.isCancel(error)) {
+                    console.log('API Request canceled by user.');
+                  } else {
+                    console.log('Error calling API.');
+                  }
+                });
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
+});
 
 /***/ }),
 
