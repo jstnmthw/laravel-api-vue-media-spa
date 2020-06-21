@@ -10,18 +10,18 @@
         </div>
 
         <div v-else>
-          <page-header
-            :title="category_title"
-            icon=""
-            v-show="loaded"
-          ></page-header>
-
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div v-show="loaded">
-              Showing: {{ videos.current_page }} of
-              {{ videos.last_page }}
+          <div
+            v-if="loaded"
+            class="d-flex justify-content-between align-items-center mb-3"
+          >
+            <div>
+              <page-header :title="category_title" icon=""></page-header>
+              <div class="text-sage">
+                Showing: {{ videos.current_page }} of
+                {{ videos.last_page }}
+              </div>
             </div>
-            <div v-show="loaded">
+            <div>
               <select
                 v-model="sort"
                 name="sortby"
@@ -137,6 +137,8 @@ export default {
           this.$Progress.finish()
           if (response.data.error) {
             this.error = response.data.error
+          } else if (response.data.data.length == 0) {
+            this.error = "Sorry, looks like there's no results."
           } else {
             this.videos = response.data
           }
@@ -164,10 +166,6 @@ export default {
     $route(to, from) {
       this.videos = []
       this.getVideos()
-      document.cookie =
-        'category=' +
-        this.$route.params.category +
-        '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/'
     }
   }
 }

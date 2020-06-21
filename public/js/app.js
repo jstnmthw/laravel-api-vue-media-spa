@@ -2823,6 +2823,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (response.data.error) {
           _this.error = response.data.error;
+        } else if (response.data.data.length == 0) {
+          _this.error = "Sorry, looks like there's no results.";
         } else {
           _this.videos = response.data;
         }
@@ -2851,7 +2853,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     $route: function $route(to, from) {
       this.videos = [];
       this.getVideos();
-      document.cookie = 'category=' + this.$route.params.category + '; expires=Sun, 25 December 2022 00:00:00 UTC; path=/';
     }
   }
 });
@@ -24387,128 +24388,107 @@ var render = function() {
               : _c(
                   "div",
                   [
-                    _c("page-header", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.loaded,
-                          expression: "loaded"
-                        }
-                      ],
-                      attrs: { title: _vm.category_title, icon: "" }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "d-flex justify-content-between align-items-center mb-3"
-                      },
-                      [
-                        _c(
+                    _vm.loaded
+                      ? _c(
                           "div",
                           {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.loaded,
-                                expression: "loaded"
-                              }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n            Showing: " +
-                                _vm._s(_vm.videos.current_page) +
-                                " of\n            " +
-                                _vm._s(_vm.videos.last_page) +
-                                "\n          "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.loaded,
-                                expression: "loaded"
-                              }
-                            ]
+                            staticClass:
+                              "d-flex justify-content-between align-items-center mb-3"
                           },
                           [
                             _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.sort,
-                                    expression: "sort"
-                                  }
-                                ],
-                                staticClass: "custom-select",
-                                attrs: { name: "sortby" },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.sort = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    },
-                                    function($event) {
-                                      return _vm.sortBy()
-                                    }
-                                  ]
-                                }
-                              },
+                              "div",
                               [
-                                _c(
-                                  "option",
-                                  {
-                                    attrs: { selected: "", value: "most_views" }
-                                  },
-                                  [_vm._v("Most Views")]
-                                ),
+                                _c("page-header", {
+                                  attrs: { title: _vm.category_title, icon: "" }
+                                }),
                                 _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "top_rated" } },
-                                  [_vm._v("Top Rated")]
-                                ),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "duration" } }, [
-                                  _vm._v("Duration")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "most_recent" } },
-                                  [_vm._v("Most Recent")]
-                                )
-                              ]
-                            )
+                                _c("div", { staticClass: "text-sage" }, [
+                                  _vm._v(
+                                    "\n              Showing: " +
+                                      _vm._s(_vm.videos.current_page) +
+                                      " of\n              " +
+                                      _vm._s(_vm.videos.last_page) +
+                                      "\n            "
+                                  )
+                                ])
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.sort,
+                                      expression: "sort"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { name: "sortby" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.sort = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      function($event) {
+                                        return _vm.sortBy()
+                                      }
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    {
+                                      attrs: {
+                                        selected: "",
+                                        value: "most_views"
+                                      }
+                                    },
+                                    [_vm._v("Most Views")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "top_rated" } },
+                                    [_vm._v("Top Rated")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "duration" } },
+                                    [_vm._v("Duration")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "most_recent" } },
+                                    [_vm._v("Most Recent")]
+                                  )
+                                ]
+                              )
+                            ])
                           ]
                         )
-                      ]
-                    ),
+                      : _vm._e(),
                     _vm._v(" "),
                     _vm.loaded
                       ? _c("video-list", {
@@ -24643,64 +24623,7 @@ var render = function() {
                       : _vm._e()
                   ],
                   1
-                ),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.sort,
-                          expression: "sort"
-                        }
-                      ],
-                      staticClass: "custom-select",
-                      attrs: { id: "sortby", name: "sortby" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.sort = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          function($event) {
-                            return _vm.sortBy()
-                          }
-                        ]
-                      }
-                    },
-                    [
-                      _c(
-                        "option",
-                        { attrs: { selected: "", value: "most_views" } },
-                        [_vm._v("Most Views")]
-                      ),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "top_rated" } }, [
-                        _vm._v("Top Rated")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "duration" } }, [
-                        _vm._v("Duration")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "most_recent" } }, [
-                        _vm._v("Most Recent")
-                      ])
-                    ]
-                  )
-                ])
+                )
               ]
             ),
             _vm._v(" "),

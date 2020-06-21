@@ -18,7 +18,7 @@
               {{ uf_num(videos.last_page) }}
             </div>
           </div>
-          <div>
+          <!-- <div>
             <select
               id="sortby"
               v-model="sort"
@@ -31,7 +31,7 @@
               <option value="duration">Duration</option>
               <option value="most_recent">Most Recent</option>
             </select>
-          </div>
+          </div> -->
         </div>
 
         <video-list
