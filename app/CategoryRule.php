@@ -27,7 +27,7 @@ class CategoryRule extends SearchRule
             ],
             'must_not' => [
                 'match' => [
-                    'categories' => '',
+                    'categories' => config('const.excluded_cats'),
                 ],
             ],
         ];

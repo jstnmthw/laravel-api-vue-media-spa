@@ -11,5 +11,5 @@ return [
     */
     // Videos cateogories excempt from main listings
     // 'excempt' => []
-    'excempt' => ['11, 19, 43, 48, 65, 83, 87']
+    'excluded_cats' => env('EXCLUDED_CATEGORIES', 'null'),
 ];
