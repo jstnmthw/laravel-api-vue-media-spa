@@ -25,11 +25,12 @@ class CategoryRule extends SearchRule
                     'categories' => $this->builder->query,
                 ],
             ],
-            'must_not' => [
-                'match' => [
-                    'categories' => config('const.excluded_cats'),
-                ],
-            ],
+            // TODO: Need to group categories in the future.
+            // 'must_not' => [
+            //     'match' => [
+            //         'categories' => config('const.excluded_cats'),
+            //     ],
+            // ],
         ];
     }
 }
