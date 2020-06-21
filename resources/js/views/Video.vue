@@ -2,7 +2,7 @@
   <div class="container bg-purple">
     <div class="d-flex align-items-center mb-1">
       <h3 class="mr-3 mb-1">{{ data.title }}</h3>
-      <div v-if="data.views">
+      <div v-if="data.views" class="text-muted">
         <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon>
         {{ views }}
         <ion-icon
@@ -151,7 +151,7 @@ export default {
           this.data = response.data
           this.loaded = true
 
-          // $('#video')[0].contentWindow.location.replace(this.data.embed)
+          $('#video')[0].contentWindow.location.replace(this.data.embed)
 
           this.getRelated(12)
         })

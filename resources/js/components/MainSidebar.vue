@@ -4,34 +4,40 @@
       <ul class="list-unstyled pl-4">
         <li>
           <a href="/my/subscriptions">
-            <ion-icon name="mail-outline"></ion-icon>Subscriptions
+            <ion-icon class="text-lilac" name="mail-outline"></ion-icon
+            >Subscriptions
             <span class="counter counter-subscriptions"></span>
           </a>
         </li>
         <li>
           <a href="/my/watch-history">
-            <ion-icon name="sync-circle-outline"></ion-icon>Watch History
+            <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon
+            >Watch History
           </a>
         </li>
         <div class="line"></div>
         <li>
           <a href="/best/weekly">
-            <ion-icon name="trophy-outline"></ion-icon>Best Videos
+            <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>Best
+            Videos
           </a>
         </li>
         <li>
           <a href="/most-viewed/weekly">
-            <ion-icon name="eye-outline"></ion-icon>Most Viewed
+            <ion-icon class="text-lilac" name="eye-outline"></ion-icon>Most
+            Viewed
           </a>
         </li>
         <li>
           <a href="/most-commented/weekly">
-            <ion-icon name="chatbox-outline"></ion-icon>Most Commented
+            <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most
+            Commented
           </a>
         </li>
         <li>
           <a href="/videos/recommended">
-            <ion-icon name="thumbs-up-outline"></ion-icon>Recommended
+            <ion-icon class="text-lilac" name="thumbs-up-outline"></ion-icon
+            >Recommended
           </a>
         </li>
       </ul>

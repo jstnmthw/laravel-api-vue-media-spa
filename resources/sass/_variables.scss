@@ -15,7 +15,8 @@ $line-height-base: 1.6;
 $indigo: #20205b;
 $purple: #38388b;
 $lavendar: #5959cf;
-$lilac: #cacaee;
+$sage: #8f8fe9;
+$lilac: #cacaf1;
 
 // Basic Colors
 $blue: #3490dc;
@@ -29,6 +30,8 @@ $cyan: #6cb2eb;
 
 // Map custom colors
 $theme-colors: (
+  'lilac': $lilac,
+  'sage': $sage,
   'indigo': $indigo,
   'pink': $pink,
   'purple': $purple

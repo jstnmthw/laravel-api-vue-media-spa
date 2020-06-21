@@ -2020,6 +2020,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2945,6 +2951,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -3415,7 +3422,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$Progress.finish();
 
                   _this.data = response.data;
-                  _this.loaded = true; // $('#video')[0].contentWindow.location.replace(this.data.embed)
+                  _this.loaded = true;
+                  $('#video')[0].contentWindow.location.replace(_this.data.embed);
 
                   _this.getRelated(12);
                 })["catch"](function (error) {
@@ -23504,7 +23512,10 @@ var render = function() {
               "a",
               { attrs: { href: "/my/subscriptions" } },
               [
-                _c("ion-icon", { attrs: { name: "mail-outline" } }),
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "mail-outline" }
+                }),
                 _vm._v("Subscriptions\n          "),
                 _c("span", { staticClass: "counter counter-subscriptions" })
               ],
@@ -23517,7 +23528,10 @@ var render = function() {
               "a",
               { attrs: { href: "/my/watch-history" } },
               [
-                _c("ion-icon", { attrs: { name: "sync-circle-outline" } }),
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "sync-circle-outline" }
+                }),
                 _vm._v("Watch History\n        ")
               ],
               1
@@ -23531,8 +23545,11 @@ var render = function() {
               "a",
               { attrs: { href: "/best/weekly" } },
               [
-                _c("ion-icon", { attrs: { name: "trophy-outline" } }),
-                _vm._v("Best Videos\n        ")
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "trophy-outline" }
+                }),
+                _vm._v("Best\n          Videos\n        ")
               ],
               1
             )
@@ -23543,8 +23560,11 @@ var render = function() {
               "a",
               { attrs: { href: "/most-viewed/weekly" } },
               [
-                _c("ion-icon", { attrs: { name: "eye-outline" } }),
-                _vm._v("Most Viewed\n        ")
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "eye-outline" }
+                }),
+                _vm._v("Most\n          Viewed\n        ")
               ],
               1
             )
@@ -23555,8 +23575,11 @@ var render = function() {
               "a",
               { attrs: { href: "/most-commented/weekly" } },
               [
-                _c("ion-icon", { attrs: { name: "chatbox-outline" } }),
-                _vm._v("Most Commented\n        ")
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "chatbox-outline" }
+                }),
+                _vm._v("Most\n          Commented\n        ")
               ],
               1
             )
@@ -23567,7 +23590,10 @@ var render = function() {
               "a",
               { attrs: { href: "/videos/recommended" } },
               [
-                _c("ion-icon", { attrs: { name: "thumbs-up-outline" } }),
+                _c("ion-icon", {
+                  staticClass: "text-lilac",
+                  attrs: { name: "thumbs-up-outline" }
+                }),
                 _vm._v("Recommended\n        ")
               ],
               1
@@ -24238,10 +24264,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "span",
-          {
-            staticClass: "pr-2 position-relative",
-            staticStyle: { opacity: "0.5" }
-          },
+          { staticClass: "pr-2 position-relative text-sage" },
           [
             _c("ion-icon", {
               staticStyle: { top: "3px" },
@@ -24569,52 +24592,58 @@ var render = function() {
           [
             _c("top-ad-banner"),
             _vm._v(" "),
-            _c("page-header", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.loaded,
-                  expression: "loaded"
-                }
-              ],
-              attrs: { title: "Most Viewed Videos", icon: "eye" }
-            }),
-            _vm._v(" "),
             _c(
               "div",
               {
                 staticClass:
-                  "d-flex justify-content-between align-items-center mb-3"
+                  "d-flex justify-content-between align-items-top mb-3"
               },
               [
                 _c(
-                  "h3",
-                  {
-                    directives: [
+                  "div",
+                  [
+                    _c("page-header", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.loaded,
+                          expression: "loaded"
+                        }
+                      ],
+                      attrs: { title: "Hot Videos", icon: "flame" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "h3",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.loaded,
-                        expression: "!loaded"
-                      }
-                    ],
-                    staticClass: "text-center"
-                  },
-                  [_vm._v("Loading API")]
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.loaded,
+                            expression: "!loaded"
+                          }
+                        ],
+                        staticClass: "text-center"
+                      },
+                      [_vm._v("Loading API")]
+                    ),
+                    _vm._v(" "),
+                    _vm.loaded
+                      ? _c("div", { staticClass: "text-sage" }, [
+                          _vm._v(
+                            "\n            Showing: " +
+                              _vm._s(_vm.uf_num(_vm.videos.current_page)) +
+                              " of\n            " +
+                              _vm._s(_vm.uf_num(_vm.videos.last_page)) +
+                              "\n          "
+                          )
+                        ])
+                      : _vm._e()
+                  ],
+                  1
                 ),
-                _vm._v(" "),
-                _vm.loaded
-                  ? _c("div", [
-                      _vm._v(
-                        "\n          Showing: " +
-                          _vm._s(_vm.uf_num(_vm.videos.current_page)) +
-                          " of\n          " +
-                          _vm._s(_vm.uf_num(_vm.videos.last_page)) +
-                          "\n        "
-                      )
-                    ])
-                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", [
                   _c(
@@ -24950,6 +24979,7 @@ var render = function() {
       _vm.data.views
         ? _c(
             "div",
+            { staticClass: "text-muted" },
             [
               _c("ion-icon", {
                 staticStyle: { position: "relative", top: "3px" },

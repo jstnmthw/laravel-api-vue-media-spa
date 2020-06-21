@@ -23,7 +23,7 @@
         <h5 class="video-title mt-2 mb-1">
           <router-link :to="'/videos/' + data.id">{{ data.title }}</router-link>
         </h5>
-        <span style="opacity: 0.5;" class="pr-2 position-relative">
+        <span class="pr-2 position-relative text-sage">
           <ion-icon name="eye" style="top: 3px;"></ion-icon>
           {{ views }}
         </span>

@@ -44,6 +44,9 @@ a,
     box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
   }
 }
+.text-muted {
+  color: $sage !important;
+}
 .form-control,
 .form-control:focus {
   background: $indigo;
@@ -61,7 +64,7 @@ a,
   .page-item {
     .page-link {
       font-weight: bold;
-      color: $lilac;
+      color: $white;
       background-color: lighten($purple, 10%);
       border: 1px solid $purple;
       &:focus {
@@ -225,6 +228,12 @@ a,
       min-height: 58px;
       .video-title {
         word-break: break-word;
+        a {
+          color: $lilac;
+          &:hover {
+            color: $white;
+          }
+        }
       }
       .liked {
         color: $green;
@@ -285,6 +294,14 @@ a,
       font-size: 20px;
       top: 5px;
       margin-right: 7px;
+    }
+  }
+}
+.all-categories {
+  a {
+    color: $lilac;
+    &:hover {
+      color: $white;
     }
   }
 }

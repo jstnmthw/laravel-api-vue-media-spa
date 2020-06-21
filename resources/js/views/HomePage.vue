@@ -5,17 +5,18 @@
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
 
-        <page-header
-          :title="'Most Viewed Videos'"
-          icon="eye"
-          v-show="loaded"
-        ></page-header>
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h3 class="text-center" v-show="!loaded">Loading API</h3>
-          <div v-if="loaded">
-            Showing: {{ uf_num(videos.current_page) }} of
-            {{ uf_num(videos.last_page) }}
+        <div class="d-flex justify-content-between align-items-top mb-3">
+          <div>
+            <page-header
+              :title="'Hot Videos'"
+              icon="flame"
+              v-show="loaded"
+            ></page-header>
+            <h3 class="text-center" v-show="!loaded">Loading API</h3>
+            <div v-if="loaded" class="text-sage">
+              Showing: {{ uf_num(videos.current_page) }} of
+              {{ uf_num(videos.last_page) }}
+            </div>
           </div>
           <div>
             <select
