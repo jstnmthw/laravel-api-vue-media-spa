@@ -14956,6 +14956,19 @@ a:hover,
   left: 0;
 }
 
+.logo {
+  padding: 0.25em 0;
+}
+
+.logo h1 {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
 .skeleton-card-video {
   width: 100%;
 }

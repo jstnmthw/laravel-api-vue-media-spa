@@ -2125,6 +2125,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -23593,8 +23596,12 @@ var render = function() {
         "navbar navbar-expand-md navbar-light bg-purple border-bottom-1 container"
     },
     [
-      _c("router-link", { attrs: { to: "/" } }, [
-        _c("h1", { staticStyle: { "font-size": "20px" } }, [_vm._v("Site")])
+      _c("router-link", { staticClass: "logo", attrs: { to: "/" } }, [
+        _c("h1", { staticStyle: { "font-size": "20px" } }, [
+          _c("img", {
+            attrs: { src: "imgs/logo.svg", alt: "Logo", height: "40px" }
+          })
+        ])
       ]),
       _vm._v(" "),
       _vm._m(0),

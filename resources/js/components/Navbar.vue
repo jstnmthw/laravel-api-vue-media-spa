@@ -2,8 +2,11 @@
   <nav
     class="navbar navbar-expand-md navbar-light bg-purple border-bottom-1 container"
   >
-    <router-link to="/">
-      <h1 style="font-size: 20px;">Site</h1>
+    <router-link to="/" class="logo">
+      <h1 style="font-size: 20px;">
+        <img src="imgs/logo.svg" alt="Logo" height="40px" />
+        <!-- <small class="position-relative" style="top: 2px; left: 2px;">slogan</small> -->
+      </h1>
     </router-link>
     <button
       class="navbar-toggler"

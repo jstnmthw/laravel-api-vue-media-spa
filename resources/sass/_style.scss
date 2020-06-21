@@ -131,6 +131,16 @@ a,
   bottom: 0;
   left: 0;
 }
+.logo {
+  padding: 0.25em 0;
+  h1 {
+    font-weight: 700;
+    font-style: italic;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 // Skeleton Cards
 .skeleton-card-video {
