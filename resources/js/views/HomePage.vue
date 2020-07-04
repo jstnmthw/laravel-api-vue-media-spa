@@ -75,8 +75,8 @@ import getVideosMixin from '@/mixins/getVideosMixin.js'
 
 export default {
   components: {
-    pageHeader: PageHeader,
-    paginate: Paginate,
+    PageHeader: PageHeader,
+    Paginate: Paginate,
     MainSidebar: MainSidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,

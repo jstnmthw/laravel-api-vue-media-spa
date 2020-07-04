@@ -134,11 +134,29 @@ a,
 .logo {
   padding: 0.25em 0;
   h1 {
-    font-weight: 700;
-    font-style: italic;
+    font-size: 32px;
   }
   &:hover {
     text-decoration: none;
+  }
+}
+.main-search {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  input[type='text'] {
+    font-weight: 500;
+    border-radius: 500px;
+    padding: 1.15em;
+    color: $white;
+    border: 1px solid $indigo;
+  }
+  .btn {
+    border-radius: 0 500px 500px 0 !important;
+    &:hover {
+      border-color: $orange;
+      background-color: $orange;
+    }
   }
 }
 

@@ -22,7 +22,22 @@ class VideoController extends Controller
         // Limit
         $limit = $request->has('limit') ? (int) $request->input('limit') : 50;
 
-        // Model category listing
+        // Sorting
+        if ($request->has('sortby')) {
+            switch ($request->input('sortby')) {
+                case 'most_views':
+                    $sort = 'views';
+                    break;
+                case 'duration':
+                    $sort = 'duration';
+                    break;
+                case 'most_recent':
+                    $sort = 'created_at';
+                    break;
+            }
+        }
+
+        // Category model listing
         if ($request->has('category')) {
             return Video::search($request->category)
                 ->rule(CategoryRule::class)
@@ -31,12 +46,16 @@ class VideoController extends Controller
         }
 
         // Search model listing
-        if ($request->has('query')) {
-            $data = Video::search($request->input('query'));
+        if ($request->has('q') && !empty($request->input('q'))) {
+            $data = Video::search($request->input('q'));
             $data->whereNotMatch('categories', config('const.excluded_cats'));
 
             if ($request->has('exclude')) {
                 $data->whereNotIn('id', [$request->input('exclude')]);
+            }
+
+            if ($sort) {
+                $data->orderBy($sort, 'DESC');
             }
 
             return $data->paginate($limit);

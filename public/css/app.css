@@ -14961,12 +14961,34 @@ a:hover,
 }
 
 .logo h1 {
-  font-weight: 700;
-  font-style: italic;
+  font-size: 32px;
 }
 
 .logo:hover {
   text-decoration: none;
+}
+
+.main-search {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main-search input[type=text] {
+  font-weight: 500;
+  border-radius: 500px;
+  padding: 1.15em;
+  color: #fff;
+  border: 1px solid #20205b;
+}
+
+.main-search .btn {
+  border-radius: 0 500px 500px 0 !important;
+}
+
+.main-search .btn:hover {
+  border-color: #f6993f;
+  background-color: #f6993f;
 }
 
 .skeleton-card-video {
