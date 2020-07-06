@@ -30,12 +30,21 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:60,1']], function () {
  * Unprotected
  */
 Route::post('/login', function (Request $request) {
-    $data = $request->validate([
-        'email' => 'required',
-        'password' => 'required',
-    ]);
-    Auth::attempt($data);
-    return Response::make('', 204);
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        // Authentication passed...
+        return response()->json('Sucess', 200);
+    } else {
+        return response()->json('Failed', 401);
+    }
+
+    // $data = $request->validate([
+    //     'email' => 'required',
+    //     'password' => 'required',
+    // ]);
+
+    // return Response::make('', 204);
 });
 
 /**

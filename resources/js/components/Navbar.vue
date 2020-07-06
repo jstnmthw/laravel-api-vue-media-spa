@@ -64,16 +64,20 @@ export default {
   mounted() {},
   methods: {
     async login() {
-      await axios.get('/sanctum/csrf-cookie')
-      await axios.post('/api/login', {
-        email: 'web@jstn.ly',
-        password: 'password'
+      await axios.get('/sanctum/csrf-cookie').then((res) => {
+        axios
+          .post('/api/login', {
+            email: 'web@jstn.ly',
+            password: 'passwordx'
+          })
+          .then((res) => {
+            axios.get('/api/user').then((res) => {
+              localStorage.setItem('Authenticated', true)
+              this.auth = true
+              console.log(res)
+            })
+          })
       })
-
-      let userData = await axios.get('/api/user')
-      console.log(userData)
-      localStorage.setItem('Authenticated', true)
-      this.auth = true
     },
     async logout() {
       await axios.post('/logout')

@@ -2143,32 +2143,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var userData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/sanctum/csrf-cookie');
-
-              case 2:
-                _context.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/login', {
-                  email: 'web@jstn.ly',
-                  password: 'password'
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/sanctum/csrf-cookie').then(function (res) {
+                  axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/login', {
+                    email: 'web@jstn.ly',
+                    password: 'passwordx'
+                  }).then(function (res) {
+                    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user').then(function (res) {
+                      localStorage.setItem('Authenticated', true);
+                      _this.auth = true;
+                      console.log(res);
+                    });
+                  });
                 });
 
-              case 4:
-                _context.next = 6;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user');
-
-              case 6:
-                userData = _context.sent;
-                console.log(userData);
-                localStorage.setItem('Authenticated', true);
-                _this.auth = true;
-
-              case 10:
+              case 2:
               case "end":
                 return _context.stop();
             }
