@@ -2541,22 +2541,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data'],
+  props: ['video'],
   computed: {
+    album: function album() {
+      return this.video.album.split(';');
+    },
     views: function views() {
-      return this.data.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return this.video.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function rating() {
-      if (this.data.likes >= 1) {
-        return Math.trunc(this.data.likes / (this.data.likes + this.data.dislikes) * 100);
+      if (this.video.likes >= 1) {
+        return Math.trunc(this.video.likes / (this.video.likes + this.video.dislikes) * 100);
       } else {
         return 0;
       }
     },
     duration: function duration() {
       // TODO: This only formats duration under an hour.
-      return new Date(this.data.duration * 1000).toISOString().substr(14, 5);
+      return new Date(this.video.duration * 1000).toISOString().substr(14, 5);
     }
   },
   data: function data() {
@@ -2594,8 +2599,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      console.log(event);
       var images = event.target.children;
       var srcs = this.srcToArray(images);
+      console.log(images);
 
       if (start) {
         this.timer = setInterval(function () {
@@ -23594,7 +23601,7 @@ var render = function() {
     "nav",
     {
       staticClass:
-        "navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center"
+        "navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
     },
     [
       _c("router-link", { staticClass: "logo", attrs: { to: "/" } }, [
@@ -23605,7 +23612,7 @@ var render = function() {
       _vm._v(" "),
       _c("search-input"),
       _vm._v(" "),
-      _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+      _c("ul", { staticClass: "navbar-nav" }, [
         !_vm.auth
           ? _c("li", { staticClass: "nav-item" }, [
               _c(
@@ -23983,7 +23990,7 @@ var render = function() {
   return _c(
     "form",
     {
-      staticClass: "main-search my-2",
+      staticClass: "main-search my-2 mx-auto",
       attrs: { action: "/search", method: "get" }
     },
     [
@@ -24114,7 +24121,7 @@ var render = function() {
             key: video.index,
             staticClass: "col px-2 mb-md-3 position-relative"
           },
-          [_c("video-list-item", { attrs: { data: video } })],
+          [_c("video-list-item", { attrs: { video: video } })],
           1
         )
       }),
@@ -24149,7 +24156,7 @@ var render = function() {
       _c("div", { staticClass: "video-poster" }, [
         _c("img", {
           staticClass: "card-img-top",
-          attrs: { src: _vm.data.thumbnail, alt: _vm.data.title }
+          attrs: { src: _vm.video.thumbnail, alt: _vm.video.title }
         }),
         _vm._v(" "),
         _c(
@@ -24165,7 +24172,7 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.data.album, function(image) {
+          _vm._l(_vm.album, function(image) {
             return _c("img", {
               key: image.index,
               attrs: { alt: "", "data-src": image }
@@ -24184,8 +24191,8 @@ var render = function() {
           "h5",
           { staticClass: "video-title mt-2 mb-1" },
           [
-            _c("router-link", { attrs: { to: "/videos/" + _vm.data.id } }, [
-              _vm._v(_vm._s(_vm.data.title))
+            _c("router-link", { attrs: { to: "/videos/" + _vm.video.id } }, [
+              _vm._v(_vm._s(_vm.video.title))
             ])
           ],
           1

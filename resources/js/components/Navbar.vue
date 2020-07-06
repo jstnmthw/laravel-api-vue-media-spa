@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center"
+    class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
   >
     <router-link to="/" class="logo">
       <h1 class="mb-0">🍑</h1>
@@ -17,7 +17,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <search-input></search-input>
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav">
       <li v-if="!auth" class="nav-item">
         <button @click="login" class="btn btn-link">Login</button>
       </li>

@@ -1,5 +1,5 @@
 <template>
-  <form action="/search" method="get" class="main-search my-2">
+  <form action="/search" method="get" class="main-search my-2 mx-auto">
     <div class="input-group input-group-lg">
       <input
         type="text"

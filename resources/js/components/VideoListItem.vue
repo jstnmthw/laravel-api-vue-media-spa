@@ -2,7 +2,7 @@
   <div class="video">
     <div class="video-data">
       <div class="video-poster">
-        <img :src="data.thumbnail" class="card-img-top" :alt="data.title" />
+        <img :src="video.thumbnail" class="card-img-top" :alt="video.title" />
         <div
           class="carousel"
           @mouseenter="debounce($event)"
@@ -12,7 +12,7 @@
             alt=""
             :key="image.index"
             :data-src="image"
-            v-for="image in data.album"
+            v-for="image in album"
           />
         </div>
         <div class="duration">
@@ -21,7 +21,9 @@
       </div>
       <div class="video-info px-0">
         <h5 class="video-title mt-2 mb-1">
-          <router-link :to="'/videos/' + data.id">{{ data.title }}</router-link>
+          <router-link :to="'/videos/' + video.id">{{
+            video.title
+          }}</router-link>
         </h5>
         <span class="pr-2 position-relative text-sage">
           <ion-icon name="eye" style="top: 3px;"></ion-icon>
@@ -39,17 +41,20 @@
 
 <script>
 export default {
-  props: ['data'],
+  props: ['video'],
   computed: {
+    album: function () {
+      return this.video.album.split(';')
+    },
     views: function () {
-      return this.data.views
+      return this.video.views
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
     rating: function () {
-      if (this.data.likes >= 1) {
+      if (this.video.likes >= 1) {
         return Math.trunc(
-          (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
+          (this.video.likes / (this.video.likes + this.video.dislikes)) * 100
         )
       } else {
         return 0
@@ -57,7 +62,7 @@ export default {
     },
     duration: function () {
       // TODO: This only formats duration under an hour.
-      return new Date(this.data.duration * 1000).toISOString().substr(14, 5)
+      return new Date(this.video.duration * 1000).toISOString().substr(14, 5)
     }
   },
   data() {
@@ -90,8 +95,10 @@ export default {
 
     // Image Carousel
     carousel: function (event, start = true) {
+      console.log(event)
       let images = event.target.children
       let srcs = this.srcToArray(images)
+      console.log(images)
       if (start) {
         this.timer = setInterval(() => {
           this.nextImage(images)

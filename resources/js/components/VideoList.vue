@@ -6,7 +6,7 @@
         v-for="video in videos"
         :key="video.index"
       >
-        <video-list-item :data="video"></video-list-item>
+        <video-list-item :video="video"></video-list-item>
       </div>
     </div>
   </div>
