@@ -7,6 +7,7 @@
         class="form-control"
         aria-label="Search by videos"
         aria-describedby="search-label"
+        placeholder="Search videos"
       />
       <div class="input-group-append">
         <button class="btn" id="search-label">

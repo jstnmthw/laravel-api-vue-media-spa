@@ -93,10 +93,8 @@ export default {
 
     // Image Carousel
     carousel: function (event, start = true) {
-      console.log(event)
       let images = event.target.children
       let srcs = this.srcToArray(images)
-      console.log(images)
       if (start) {
         this.timer = setInterval(() => {
           this.nextImage(images)

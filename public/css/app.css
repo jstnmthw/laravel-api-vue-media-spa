@@ -15001,7 +15001,8 @@ a:hover,
   font-size: 21px !important;
   border-radius: 0 500px 500px 0 !important;
   border: none;
-  color: #d980fa;
+  border-left: 1px solid #2d2d81;
+  color: #8181da;
 }
 
 .main-search .btn:hover {

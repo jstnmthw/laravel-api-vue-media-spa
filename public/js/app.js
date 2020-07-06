@@ -2413,6 +2413,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -2602,10 +2603,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      console.log(event);
       var images = event.target.children;
       var srcs = this.srcToArray(images);
-      console.log(images);
 
       if (start) {
         this.timer = setInterval(function () {
@@ -24004,7 +24003,8 @@ var render = function() {
             type: "text",
             name: "q",
             "aria-label": "Search by videos",
-            "aria-describedby": "search-label"
+            "aria-describedby": "search-label",
+            placeholder: "Search videos"
           }
         }),
         _vm._v(" "),
