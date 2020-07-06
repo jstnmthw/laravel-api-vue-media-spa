@@ -35,7 +35,7 @@
           aria-expanded="false"
           v-pre
         >
-          Name <span class="caret"></span>
+          {{ this.auth }} <span class="caret"></span>
         </a>
         <div
           class="dropdown-menu dropdown-menu-right"
@@ -55,7 +55,8 @@ import SearchInput from '@/components/SearchInput'
 export default {
   data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true'
+      auth: localStorage.getItem('Authenticated') == 'true',
+      user: false
     }
   },
   components: {
@@ -68,13 +69,13 @@ export default {
         axios
           .post('/api/login', {
             email: 'web@jstn.ly',
-            password: 'passwordx'
+            password: 'password'
           })
           .then((res) => {
             axios.get('/api/user').then((res) => {
               localStorage.setItem('Authenticated', true)
               this.auth = true
-              console.log(res)
+              this.user = res.data
             })
           })
       })

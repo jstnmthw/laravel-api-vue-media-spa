@@ -34,9 +34,9 @@ Route::post('/login', function (Request $request) {
 
     if (Auth::attempt($credentials)) {
         // Authentication passed...
-        return response()->json('Sucess', 200);
+        return Response::make('', 201);
     } else {
-        return response()->json('Failed', 401);
+        return Reponse::make('', 401);
     }
 
     // $data = $request->validate([

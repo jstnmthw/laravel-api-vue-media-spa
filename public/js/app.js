@@ -2131,7 +2131,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true'
+      auth: localStorage.getItem('Authenticated') == 'true',
+      user: false
     };
   },
   components: {
@@ -2151,12 +2152,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/sanctum/csrf-cookie').then(function (res) {
                   axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/login', {
                     email: 'web@jstn.ly',
-                    password: 'passwordx'
+                    password: 'password'
                   }).then(function (res) {
                     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user').then(function (res) {
                       localStorage.setItem('Authenticated', true);
                       _this.auth = true;
-                      console.log(res);
+                      _this.user = res.data;
                     });
                   });
                 });
@@ -23696,7 +23697,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n        Name "),
+        _vm._v("\n        {{ this.auth }} "),
         _c("span", { pre: true, attrs: { class: "caret" } })
       ]
     )
