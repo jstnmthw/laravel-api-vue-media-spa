@@ -2067,7 +2067,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_SearchInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/SearchInput */ "./resources/js/components/SearchInput.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_SearchInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/SearchInput */ "./resources/js/components/SearchInput.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2125,6 +2127,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2132,7 +2135,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   components: {
-    searchInput: _components_SearchInput__WEBPACK_IMPORTED_MODULE_1__["default"]
+    searchInput: _components_SearchInput__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {},
   methods: {
@@ -2146,18 +2149,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/sanctum/csrf-cookie');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/sanctum/csrf-cookie');
 
               case 2:
                 _context.next = 4;
-                return axios.post('/api/login', {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/login', {
                   email: 'web@jstn.ly',
                   password: 'password'
                 });
 
               case 4:
                 _context.next = 6;
-                return axios.get('/api/user');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user');
 
               case 6:
                 userData = _context.sent;
@@ -2182,7 +2185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.post('/logout');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/logout');
 
               case 2:
                 localStorage.removeItem('Authenticated', true);
@@ -24008,7 +24011,7 @@ var render = function() {
         _c("div", { staticClass: "input-group-append" }, [
           _c(
             "button",
-            { staticClass: "btn btn-indigo", attrs: { id: "search-label" } },
+            { staticClass: "btn", attrs: { id: "search-label" } },
             [
               _c("span", { staticClass: "sr-only" }, [_vm._v("Search")]),
               _vm._v(" "),

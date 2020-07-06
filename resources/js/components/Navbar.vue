@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import SearchInput from '@/components/SearchInput'
 
 export default {

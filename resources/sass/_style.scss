@@ -149,13 +149,31 @@ a,
     border-radius: 500px;
     padding: 1.15em;
     color: $white;
-    border: 1px solid $indigo;
+    border: none;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .input-group {
+    background: $indigo;
+    border-radius: 500px;
+    transition: box-shadow 0.15s ease-in-out;
+    &:focus-within {
+      box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
+    }
   }
   .btn {
+    line-height: 1 !important;
+    font-size: 21px !important;
     border-radius: 0 500px 500px 0 !important;
+    border: none;
+    color: $pink;
     &:hover {
-      border-color: $orange;
-      background-color: $orange;
+      background-color: $pink;
+      color: $white;
+    }
+    &:focus {
+      box-shadow: none;
     }
   }
 }

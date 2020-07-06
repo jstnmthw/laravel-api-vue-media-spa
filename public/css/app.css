@@ -14979,16 +14979,38 @@ a:hover,
   border-radius: 500px;
   padding: 1.15em;
   color: #fff;
-  border: 1px solid #20205b;
+  border: none;
+}
+
+.main-search input[type=text]:focus {
+  box-shadow: none;
+}
+
+.main-search .input-group {
+  background: #20205b;
+  border-radius: 500px;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.main-search .input-group:focus-within {
+  box-shadow: 0 0 0 0.2rem #7171da;
 }
 
 .main-search .btn {
+  line-height: 1 !important;
+  font-size: 21px !important;
   border-radius: 0 500px 500px 0 !important;
+  border: none;
+  color: #d980fa;
 }
 
 .main-search .btn:hover {
-  border-color: #f6993f;
-  background-color: #f6993f;
+  background-color: #d980fa;
+  color: #fff;
+}
+
+.main-search .btn:focus {
+  box-shadow: none;
 }
 
 .skeleton-card-video {

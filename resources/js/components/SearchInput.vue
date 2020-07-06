@@ -9,7 +9,7 @@
         aria-describedby="search-label"
       />
       <div class="input-group-append">
-        <button class="btn btn-indigo" id="search-label">
+        <button class="btn" id="search-label">
           <span class="sr-only">Search</span>
           <ion-icon name="search-sharp"></ion-icon>
         </button>
