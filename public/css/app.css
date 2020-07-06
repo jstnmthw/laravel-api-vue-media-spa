@@ -14996,6 +14996,10 @@ a:hover,
   box-shadow: 0 0 0 0.2rem #7171da;
 }
 
+.main-search .input-group .input-group-append {
+  margin-left: 0;
+}
+
 .main-search .btn {
   line-height: 1 !important;
   font-size: 21px !important;

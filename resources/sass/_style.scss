@@ -161,6 +161,9 @@ a,
     &:focus-within {
       box-shadow: 0 0 0 0.2rem darken($lilac, 22%);
     }
+    .input-group-append {
+      margin-left: 0;
+    }
   }
   .btn {
     line-height: 1 !important;
