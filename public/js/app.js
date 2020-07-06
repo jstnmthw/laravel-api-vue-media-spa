@@ -2067,9 +2067,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_SearchInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/SearchInput */ "./resources/js/components/SearchInput.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_SearchInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/SearchInput */ "./resources/js/components/SearchInput.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2125,20 +2126,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true',
-      user: false
+      auth: localStorage.getItem('Authenticated') == 'true'
     };
   },
-  components: {
-    searchInput: _components_SearchInput__WEBPACK_IMPORTED_MODULE_2__["default"]
+  mounted: function mounted() {
+    if (this.auth) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/user').then(function (res) {
+        _store__WEBPACK_IMPORTED_MODULE_1__["default"].commit('ADD_USER_INFO', res.data);
+      });
+    }
   },
-  mounted: function mounted() {},
+  components: {
+    searchInput: _components_SearchInput__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  computed: {
+    name: function name() {
+      return this.$store.state.user.name;
+    }
+  },
   methods: {
     login: function login() {
       var _this = this;
@@ -2149,15 +2160,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/sanctum/csrf-cookie').then(function (res) {
-                  axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/login', {
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/sanctum/csrf-cookie').then(function (res) {
+                  axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', {
                     email: 'web@jstn.ly',
                     password: 'password'
                   }).then(function (res) {
-                    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user').then(function (res) {
+                    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/user').then(function (res) {
                       localStorage.setItem('Authenticated', true);
                       _this.auth = true;
-                      _this.user = res.data;
+                      _store__WEBPACK_IMPORTED_MODULE_1__["default"].commit('ADD_USER_INFO', res.data);
                     });
                   });
                 });
@@ -2179,7 +2190,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/logout');
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/logout');
 
               case 2:
                 localStorage.removeItem('Authenticated', true);
@@ -23634,7 +23645,24 @@ var render = function() {
         _vm._v(" "),
         _vm.auth
           ? _c("li", { staticClass: "nav-item dropdown" }, [
-              _vm._m(1),
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link dropdown-toggle",
+                  attrs: {
+                    id: "navbarDropdown",
+                    href: "#",
+                    role: "button",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [
+                  _vm._v("\n        " + _vm._s(_vm.name) + " "),
+                  _c("span", { staticClass: "caret" })
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -23676,30 +23704,6 @@ var staticRenderFns = [
         }
       },
       [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        pre: true,
-        attrs: {
-          id: "navbarDropdown",
-          class: "nav-link dropdown-toggle",
-          href: "#",
-          role: "button",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _vm._v("\n        {{ this.auth }} "),
-        _c("span", { pre: true, attrs: { class: "caret" } })
-      ]
     )
   }
 ]
@@ -42300,7 +42304,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   strict: true,
   state: {
-    cancelTokens: []
+    cancelTokens: [],
+    user: []
   },
   getters: {
     cancelTokens: function cancelTokens(state) {
@@ -42308,6 +42313,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     }
   },
   mutations: {
+    ADD_USER_INFO: function ADD_USER_INFO(state, payload) {
+      state.user = payload;
+    },
     ADD_CANCEL_TOKEN: function ADD_CANCEL_TOKEN(state, token) {
       state.cancelTokens.push(token);
     },

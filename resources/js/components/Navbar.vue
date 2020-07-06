@@ -33,9 +33,8 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          v-pre
         >
-          {{ this.auth }} <span class="caret"></span>
+          {{ name }} <span class="caret"></span>
         </a>
         <div
           class="dropdown-menu dropdown-menu-right"
@@ -49,20 +48,31 @@
 </template>
 
 <script>
+import store from '@/store'
 import axios from 'axios'
 import SearchInput from '@/components/SearchInput'
 
 export default {
   data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true',
-      user: false
+      auth: localStorage.getItem('Authenticated') == 'true'
+    }
+  },
+  mounted() {
+    if (this.auth) {
+      axios.get('/api/user').then((res) => {
+        store.commit('ADD_USER_INFO', res.data)
+      })
     }
   },
   components: {
     searchInput: SearchInput
   },
-  mounted() {},
+  computed: {
+    name() {
+      return this.$store.state.user.name
+    }
+  },
   methods: {
     async login() {
       await axios.get('/sanctum/csrf-cookie').then((res) => {
@@ -75,7 +85,7 @@ export default {
             axios.get('/api/user').then((res) => {
               localStorage.setItem('Authenticated', true)
               this.auth = true
-              this.user = res.data
+              store.commit('ADD_USER_INFO', res.data)
             })
           })
       })

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
-    cancelTokens: []
+    cancelTokens: [],
+    user: []
   },
   getters: {
     cancelTokens(state) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    ADD_USER_INFO(state, payload) {
+      state.user = payload
+    },
     ADD_CANCEL_TOKEN(state, token) {
       state.cancelTokens.push(token)
     },
