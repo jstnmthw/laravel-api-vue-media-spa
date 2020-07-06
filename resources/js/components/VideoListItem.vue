@@ -84,9 +84,7 @@ export default {
       } else {
         $(event.target)
           .parent()
-          .prepend(
-            $('<img>', { src: '/imgs/loader.svg', class: 'loader-icon' })
-          )
+          .append($('<img>', { src: '/imgs/loader.svg', class: 'loader-icon' }))
         this.debounceTimer = setTimeout(() => {
           this.carousel(event)
         }, 1000)

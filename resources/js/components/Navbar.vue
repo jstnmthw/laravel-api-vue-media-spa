@@ -69,6 +69,7 @@ export default {
         email: 'web@jstn.ly',
         password: 'password'
       })
+
       let userData = await axios.get('/api/user')
       console.log(userData)
       localStorage.setItem('Authenticated', true)

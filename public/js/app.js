@@ -2471,7 +2471,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_VideoListItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/VideoListItem */ "./resources/js/components/VideoListItem.vue");
+/* harmony import */ var _components_VideoListItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/VideoListItem */ "./resources/js/components/VideoListItem.vue");
 //
 //
 //
@@ -2588,7 +2588,7 @@ __webpack_require__.r(__webpack_exports__);
         this.carousel(event, false);
         $('.loader-icon').remove();
       } else {
-        $(event.target).parent().prepend($('<img>', {
+        $(event.target).parent().append($('<img>', {
           src: '/imgs/loader.svg',
           "class": 'loader-icon'
         }));
