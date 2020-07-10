@@ -2939,6 +2939,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 // Components
 
 
@@ -24508,17 +24516,89 @@ var render = function() {
           [
             _c("top-ad-banner"),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-flex justify-content-between align-items-top mb-3"
-              },
-              [
-                _c(
+            _vm.error
+              ? _c("div", { staticClass: "error" }, [
+                  _c("h4", { staticClass: "text-center mt-lg-3" }, [
+                    _vm._v(
+                      "\n          An error has occured, please try again later.\n        "
+                    )
+                  ])
+                ])
+              : _c(
                   "div",
                   [
-                    _c("page-header", {
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex justify-content-between align-items-top mb-3"
+                      },
+                      [
+                        _c(
+                          "div",
+                          [
+                            _c("page-header", {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.loaded,
+                                  expression: "loaded"
+                                }
+                              ],
+                              attrs: { title: "Hot Videos", icon: "flame" }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "h3",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.loaded,
+                                    expression: "!loaded"
+                                  }
+                                ],
+                                staticClass: "text-center"
+                              },
+                              [_vm._v("Loading API")]
+                            ),
+                            _vm._v(" "),
+                            _vm.loaded
+                              ? _c("div", { staticClass: "text-sage" }, [
+                                  _vm._v(
+                                    "\n              Showing: " +
+                                      _vm._s(
+                                        _vm.uf_num(_vm.videos.current_page)
+                                      ) +
+                                      " of\n              " +
+                                      _vm._s(_vm.uf_num(_vm.videos.last_page)) +
+                                      "\n            "
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.loaded
+                      ? _c("video-list", {
+                          staticClass: "mb-5",
+                          attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.loaded
+                      ? _c("skeleton-video-card", {
+                          staticClass: "mb-5",
+                          attrs: { cards: 50, cols: 5 }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("paginate", {
                       directives: [
                         {
                           name: "show",
@@ -24527,73 +24607,17 @@ var render = function() {
                           expression: "loaded"
                         }
                       ],
-                      attrs: { title: "Hot Videos", icon: "flame" }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "h3",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.loaded,
-                            expression: "!loaded"
-                          }
-                        ],
-                        staticClass: "text-center"
-                      },
-                      [_vm._v("Loading API")]
-                    ),
-                    _vm._v(" "),
-                    _vm.loaded
-                      ? _c("div", { staticClass: "text-sage" }, [
-                          _vm._v(
-                            "\n            Showing: " +
-                              _vm._s(_vm.uf_num(_vm.videos.current_page)) +
-                              " of\n            " +
-                              _vm._s(_vm.uf_num(_vm.videos.last_page)) +
-                              "\n          "
-                          )
-                        ])
-                      : _vm._e()
+                      staticClass: "mb-5",
+                      attrs: { pagination: _vm.videos, loaded: _vm.loaded },
+                      on: {
+                        paginate: function($event) {
+                          return _vm.getVideos()
+                        }
+                      }
+                    })
                   ],
                   1
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.loaded
-              ? _c("video-list", {
-                  staticClass: "mb-5",
-                  attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loaded
-              ? _c("skeleton-video-card", {
-                  staticClass: "mb-5",
-                  attrs: { cards: 50, cols: 5 }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("paginate", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.loaded,
-                  expression: "loaded"
-                }
-              ],
-              staticClass: "mb-5",
-              attrs: { pagination: _vm.videos, loaded: _vm.loaded },
-              on: {
-                paginate: function($event) {
-                  return _vm.getVideos()
-                }
-              }
-            })
           ],
           1
         )
@@ -42205,6 +42229,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     console.log('API Request canceled by user.');
                   } else {
                     console.log('Error calling API.');
+                    _this.error = true;
                   }
                 });
 

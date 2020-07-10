@@ -44,6 +44,7 @@ export default {
             console.log('API Request canceled by user.')
           } else {
             console.log('Error calling API.')
+            this.error = true
           }
         })
     }
