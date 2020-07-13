@@ -45,6 +45,9 @@ class VideoController extends Controller
             preg_match(config('regex.domain'), $data->embed, $url);
             $data->embed = $url[0];
 
+            // Explode Categories
+            $data->categories = explode(';', $data->categories);
+
             return $data;
         }
 

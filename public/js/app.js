@@ -2461,7 +2461,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['label'],
   computed: {
     slug: function slug() {
-      return this.label.name.replace(' ', '-').toLocaleLowerCase();
+      return this.label.replaceAll(' ', '-').toLocaleLowerCase();
     }
   }
 });
@@ -24099,7 +24099,7 @@ var render = function() {
       staticClass: "btn btn-sm btn-category",
       attrs: { to: "/categories/" + _vm.slug }
     },
-    [_vm._v("\n  " + _vm._s(_vm.label.name) + "\n")]
+    [_vm._v("\n  " + _vm._s(_vm.label) + "\n")]
   )
 }
 var staticRenderFns = []
