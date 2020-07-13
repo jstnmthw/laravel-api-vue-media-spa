@@ -2,8 +2,7 @@ import axios from 'axios'
 export default {
   mounted() {
     // Get videos on page load
-    // this.getVideos()
-    console.log('Mixin called.')
+    this.getVideos()
   },
   methods: {
     // Axios Call

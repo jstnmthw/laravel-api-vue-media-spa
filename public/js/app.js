@@ -2967,12 +2967,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      videos: [],
+      data: [],
       pagination: [],
       error: false,
       loaded: false
     };
   },
+  mounted: function mounted() {},
   methods: {
     // Format to user friendly number
     uf_num: function uf_num(_int) {
@@ -3170,6 +3171,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
 /* harmony import */ var _components_VideoLabels__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/VideoLabels */ "./resources/js/components/VideoLabels.vue");
+/* harmony import */ var _mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/mixins/getVideosMixin.js */ "./resources/js/mixins/getVideosMixin.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3271,6 +3273,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
+ // Mixins
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3325,7 +3329,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 $('#video').attr('src', ''); // Make the call
 
                 _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos/' + _this.$route.params.id).then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
+                  params: {
+                    id: _this.$route.params.id
+                  }
+                }).then(function (response) {
                   _this.$Progress.finish();
 
                   _this.data = response.data;
@@ -3347,28 +3355,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    } // async getRelated(limit) {
-    //   this.related_loaded = false
-    //   await axios
-    //     .get('/api/videos', {
-    //       params: {
-    //         query: this.data.title,
-    //         limit: limit,
-    //         exclude: this.data.id
-    //       }
-    //     })
-    //     .then((response) => {
-    //       this.related = response.data.data
-    //       this.related_loaded = true
-    //     })
-    //     .catch((error) => {
-    //       this.related_loaded = false
-    //       console.log('There was an error fetching the data.')
-    //     })
-    // }
+    },
+    getRelated: function getRelated(limit) {
+      var _this2 = this;
 
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.related_loaded = false;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
+                  params: {
+                    q: _this2.data.title,
+                    limit: limit,
+                    exclude: _this2.data.id
+                  }
+                }).then(function (response) {
+                  _this2.related = response.data.data;
+                  _this2.related_loaded = true;
+                })["catch"](function (error) {
+                  _this2.related_loaded = false;
+                  console.log('There was an error fetching the data.');
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
   },
-  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
     $route: function $route(to, from) {
@@ -42170,8 +42190,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     // Get videos on page load
-    // this.getVideos()
-    console.log('Mixin called.');
+    this.getVideos();
   },
   methods: {
     // Axios Call

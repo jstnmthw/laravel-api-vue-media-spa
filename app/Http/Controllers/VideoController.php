@@ -37,7 +37,7 @@ class VideoController extends Controller
             }
         }
 
-        // Specific model by ID
+        // Model by ID
         if ($request->has('id')) {
             $data = Video::where('id', $request->input('id'))->firstOrFail();
 
@@ -65,7 +65,7 @@ class VideoController extends Controller
                 $data->whereNotIn('id', [$request->input('exclude')]);
             }
 
-            if ($sort) {
+            if ($request->has('sortby')) {
                 $data->orderBy($sort, 'DESC');
             }
 

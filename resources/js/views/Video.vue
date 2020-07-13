@@ -96,6 +96,9 @@ import axios from 'axios'
 import VideoList from '@/components/VideoList'
 import VideoLabels from '@/components/VideoLabels'
 
+// Mixins
+import getVideosMixin from '@/mixins/getVideosMixin.js'
+
 export default {
   components: {
     VideoList: VideoList,
@@ -145,7 +148,11 @@ export default {
 
       // Make the call
       await axios
-        .get('/api/videos/' + this.$route.params.id)
+        .get('/api/videos', {
+          params: {
+            id: this.$route.params.id
+          }
+        })
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
@@ -160,29 +167,28 @@ export default {
           this.loaded = false
           this.$Progress.fail()
         })
-    }
-    // async getRelated(limit) {
-    //   this.related_loaded = false
+    },
+    async getRelated(limit) {
+      this.related_loaded = false
 
-    //   await axios
-    //     .get('/api/videos', {
-    //       params: {
-    //         query: this.data.title,
-    //         limit: limit,
-    //         exclude: this.data.id
-    //       }
-    //     })
-    //     .then((response) => {
-    //       this.related = response.data.data
-    //       this.related_loaded = true
-    //     })
-    //     .catch((error) => {
-    //       this.related_loaded = false
-    //       console.log('There was an error fetching the data.')
-    //     })
-    // }
+      await axios
+        .get('/api/videos', {
+          params: {
+            q: this.data.title,
+            limit: limit,
+            exclude: this.data.id
+          }
+        })
+        .then((response) => {
+          this.related = response.data.data
+          this.related_loaded = true
+        })
+        .catch((error) => {
+          this.related_loaded = false
+          console.log('There was an error fetching the data.')
+        })
+    }
   },
-  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
     $route(to, from) {

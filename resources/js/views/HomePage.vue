@@ -92,12 +92,13 @@ export default {
   },
   data() {
     return {
-      videos: [],
+      data: [],
       pagination: [],
       error: false,
       loaded: false
     }
   },
+  mounted() {},
   methods: {
     // Format to user friendly number
     uf_num(int) {
