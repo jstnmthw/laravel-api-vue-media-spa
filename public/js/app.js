@@ -3368,7 +3368,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: {
-                    q: _this2.data.title,
+                    q: _this2.data.title.replace(/\W/g, '+'),
                     limit: limit,
                     exclude: _this2.data.id
                   }

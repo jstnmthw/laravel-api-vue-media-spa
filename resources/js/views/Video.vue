@@ -174,7 +174,7 @@ export default {
       await axios
         .get('/api/videos', {
           params: {
-            q: this.data.title,
+            q: this.data.title.replace(/\W/g, '+'),
             limit: limit,
             exclude: this.data.id
           }
