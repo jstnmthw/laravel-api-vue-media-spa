@@ -37,6 +37,17 @@ class VideoController extends Controller
             }
         }
 
+        // Specific model by ID
+        if ($request->has('id')) {
+            $data = Video::where('id', $request->input('id'))->firstOrFail();
+
+            // TODO: Transform data at insert.
+            preg_match(config('regex.domain'), $data->embed, $url);
+            $data->embed = $url[0];
+
+            return $data;
+        }
+
         // Category model listing
         if ($request->has('category')) {
             return Video::search($request->category)
@@ -66,25 +77,5 @@ class VideoController extends Controller
             ->whereNotMatch('categories', config('const.excluded_cats'))
             ->orderby('views', 'desc')
             ->paginate($limit);
-    }
-
-    /**
-     * Select Video model and related models
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, $id)
-    {
-        // Get video with categories
-        $data = Video::where('videos.id', $id)
-            ->with('categories:categories.id,name')
-            ->first();
-
-        // TODO: Transform data at insert.
-        preg_match(config('regex.domain'), $data->embed, $url);
-        $data->embed = $url[0];
-
-        return $data;
     }
 }

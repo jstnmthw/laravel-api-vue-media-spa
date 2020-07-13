@@ -160,28 +160,29 @@ export default {
           this.loaded = false
           this.$Progress.fail()
         })
-    },
-    async getRelated(limit) {
-      this.related_loaded = false
-
-      await axios
-        .get('/api/videos', {
-          params: {
-            query: this.data.title,
-            limit: limit,
-            exclude: this.data.id
-          }
-        })
-        .then((response) => {
-          this.related = response.data.data
-          this.related_loaded = true
-        })
-        .catch((error) => {
-          this.related_loaded = false
-          console.log('There was an error fetching the data.')
-        })
     }
+    // async getRelated(limit) {
+    //   this.related_loaded = false
+
+    //   await axios
+    //     .get('/api/videos', {
+    //       params: {
+    //         query: this.data.title,
+    //         limit: limit,
+    //         exclude: this.data.id
+    //       }
+    //     })
+    //     .then((response) => {
+    //       this.related = response.data.data
+    //       this.related_loaded = true
+    //     })
+    //     .catch((error) => {
+    //       this.related_loaded = false
+    //       console.log('There was an error fetching the data.')
+    //     })
+    // }
   },
+  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
     $route(to, from) {
