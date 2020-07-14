@@ -3008,6 +3008,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3178,10 +3187,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -24169,78 +24174,90 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "video" }, [
-    _c("div", { staticClass: "video-data" }, [
-      _c("div", { staticClass: "video-poster" }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: { src: _vm.video.thumbnail, alt: _vm.video.title }
-        }),
-        _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "video-data" },
+      [
         _c(
-          "div",
+          "router-link",
           {
-            staticClass: "carousel",
-            on: {
-              mouseenter: function($event) {
-                return _vm.debounce($event)
-              },
-              mouseleave: function($event) {
-                return _vm.debounce($event, true)
-              }
-            }
+            staticClass: "video-poster",
+            attrs: { to: "/videos/" + _vm.video.id }
           },
-          _vm._l(_vm.album, function(image) {
-            return _c("img", {
-              key: image.index,
-              attrs: { alt: "", "data-src": image }
-            })
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "duration" }, [
-          _vm._v("\n        " + _vm._s(_vm.duration) + "\n      ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "video-info px-0" }, [
-        _c(
-          "h5",
-          { staticClass: "video-title mt-2 mb-1" },
           [
-            _c("router-link", { attrs: { to: "/videos/" + _vm.video.id } }, [
-              _vm._v(_vm._s(_vm.video.title))
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          { staticClass: "pr-2 position-relative text-sage" },
-          [
-            _c("ion-icon", {
-              staticStyle: { top: "3px" },
-              attrs: { name: "eye" }
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: _vm.video.thumbnail, alt: _vm.video.title }
             }),
-            _vm._v("\n        " + _vm._s(_vm.views) + "\n      ")
-          ],
-          1
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "carousel",
+                on: {
+                  mouseenter: function($event) {
+                    return _vm.debounce($event)
+                  },
+                  mouseleave: function($event) {
+                    return _vm.debounce($event, true)
+                  }
+                }
+              },
+              _vm._l(_vm.album, function(image) {
+                return _c("img", {
+                  key: image.index,
+                  attrs: { alt: "", "data-src": image }
+                })
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "duration" }, [
+              _vm._v("\n        " + _vm._s(_vm.duration) + "\n      ")
+            ])
+          ]
         ),
         _vm._v(" "),
-        _c(
-          "span",
-          { class: _vm.rating > 50 ? "liked" : "disliked" },
-          [
-            _c("ion-icon", { attrs: { name: "thumbs-up" } }),
-            _vm._v(" "),
-            _c("ion-icon", { attrs: { name: "thumbs-down" } }),
-            _vm._v("\n        " + _vm._s(_vm.rating) + "%\n      ")
-          ],
-          1
-        )
-      ])
-    ])
+        _c("div", { staticClass: "video-info px-0" }, [
+          _c(
+            "h5",
+            { staticClass: "video-title mt-2 mb-1" },
+            [
+              _c("router-link", { attrs: { to: "/videos/" + _vm.video.id } }, [
+                _vm._v(_vm._s(_vm.video.title))
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { staticClass: "pr-2 position-relative text-sage" },
+            [
+              _c("ion-icon", {
+                staticStyle: { top: "3px" },
+                attrs: { name: "eye" }
+              }),
+              _vm._v("\n        " + _vm._s(_vm.views) + "\n      ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            { class: _vm.rating > 50 ? "liked" : "disliked" },
+            [
+              _c("ion-icon", { attrs: { name: "thumbs-up" } }),
+              _vm._v(" "),
+              _c("ion-icon", { attrs: { name: "thumbs-down" } }),
+              _vm._v("\n        " + _vm._s(_vm.rating) + "%\n      ")
+            ],
+            1
+          )
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -24656,7 +24673,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n  404 Not Found!\n")])
+  return _c("div", { staticClass: "content container bg-purple" }, [
+    _c("div", { staticClass: "text-center" }, [
+      _c("h1", { staticClass: "mt-lg-5" }, [_vm._v("404 Not Found!")]),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _vm._v(
+            "\n      Looks like you stumpled upon a missing page.\n      "
+          ),
+          _c(
+            "router-link",
+            {
+              staticStyle: { "text-decoration": "underline" },
+              attrs: { to: "/" }
+            },
+            [_vm._v("Click here")]
+          ),
+          _vm._v("\n      to redirect to the home page.\n    ")
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -24881,7 +24921,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container bg-purple" }, [
     _c("div", { staticClass: "d-flex align-items-center mb-1" }, [
-      _c("h3", { staticClass: "mr-3 mb-1" }, [_vm._v(_vm._s(_vm.data.title))]),
+      _c("h3", { staticClass: "mr-3 mb-1 font-weight-bold" }, [
+        _vm._v(_vm._s(_vm.data.title))
+      ]),
       _vm._v(" "),
       _vm.data.views
         ? _c(
@@ -24931,67 +24973,62 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          {
-            staticClass:
-              "video-actions d-flex justify-content-between align-items-top mb-5"
-          },
+          { staticClass: "d-flex align-items-center mb-md-3 mb-lg-5" },
           [
-            _c("div", { staticClass: "d-flex align-items-center" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
-                1
-              ),
-              _vm._v(" "),
-              _vm.data.likes
-                ? _c("div", { staticClass: "video-rating ml-3" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(_vm.likes) +
-                        " Likes / " +
-                        _vm._s(_vm.dislikes) +
-                        " Dislikes\n            "
-                    ),
-                    _c("div", { staticClass: "video-rating-bar mt-1" }, [
-                      _c("div", {
-                        staticClass: "video-rating-likes",
-                        style: { width: _vm.rating + "%" }
-                      })
-                    ])
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
+              1
+            ),
+            _vm._v(" "),
+            _vm.data.likes
+              ? _c("div", { staticClass: "video-rating ml-3" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.likes) +
+                      " Likes / " +
+                      _vm._s(_vm.dislikes) +
+                      " Dislikes\n          "
+                  ),
+                  _c("div", { staticClass: "video-rating-bar mt-1" }, [
+                    _c("div", {
+                      staticClass: "video-rating-likes",
+                      style: { width: _vm.rating + "%" }
+                    })
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary ml-3",
-                  attrs: { type: "button" }
-                },
-                [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary ml-2" },
-                [
-                  _c("ion-icon", {
-                    staticStyle: { position: "relative", top: "3px" },
-                    attrs: { name: "heart" }
-                  }),
-                  _vm._v("\n            Favorite\n          ")
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary ml-2" },
-                [_c("ion-icon", { attrs: { name: "flag" } })],
-                1
-              )
-            ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary ml-3",
+                attrs: { type: "button" }
+              },
+              [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary ml-2" },
+              [
+                _c("ion-icon", {
+                  staticStyle: { position: "relative", top: "3px" },
+                  attrs: { name: "heart" }
+                }),
+                _vm._v("\n          Favorite\n        ")
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary ml-auto" },
+              [_c("ion-icon", { attrs: { name: "flag" } })],
+              1
+            )
           ]
         )
       ]),
@@ -25004,7 +25041,9 @@ var render = function() {
         "div",
         { staticClass: "col-12" },
         [
-          _c("h4", { staticClass: "mb-3" }, [_vm._v("Related Videos")]),
+          _c("h4", { staticClass: "font-weight-bold mb-3" }, [
+            _vm._v("Related Videos")
+          ]),
           _vm._v(" "),
           _c("video-list", {
             staticClass: "mb-5",

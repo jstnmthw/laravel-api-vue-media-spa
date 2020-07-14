@@ -1,7 +1,7 @@
 <template>
   <div class="video">
     <div class="video-data">
-      <div class="video-poster">
+      <router-link class="video-poster" :to="'/videos/' + video.id">
         <img :src="video.thumbnail" class="card-img-top" :alt="video.title" />
         <div
           class="carousel"
@@ -18,7 +18,7 @@
         <div class="duration">
           {{ duration }}
         </div>
-      </div>
+      </router-link>
       <div class="video-info px-0">
         <h5 class="video-title mt-2 mb-1">
           <router-link :to="'/videos/' + video.id">{{

@@ -15080,6 +15080,7 @@ a:hover,
 }
 
 .video-listing .video .video-poster {
+  display: block;
   min-height: 154px;
   position: relative;
   background: #5959cf;

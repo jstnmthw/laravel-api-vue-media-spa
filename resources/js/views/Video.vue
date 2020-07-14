@@ -1,7 +1,7 @@
 <template>
   <div class="container bg-purple">
     <div class="d-flex align-items-center mb-1">
-      <h3 class="mr-3 mb-1">{{ data.title }}</h3>
+      <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
         <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon>
         {{ views }}
@@ -40,36 +40,32 @@
             scrolling="no"
           ></iframe>
         </div>
-        <div
-          class="video-actions d-flex justify-content-between align-items-top mb-5"
-        >
-          <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-primary">
-              <ion-icon name="thumbs-up"></ion-icon>
-            </button>
-            <div class="video-rating ml-3" v-if="data.likes">
-              {{ likes }} Likes / {{ dislikes }} Dislikes
-              <div class="video-rating-bar mt-1">
-                <div
-                  class="video-rating-likes"
-                  :style="{ width: rating + '%' }"
-                ></div>
-              </div>
+        <div class="d-flex align-items-center mb-md-3 mb-lg-5">
+          <button type="button" class="btn btn-primary">
+            <ion-icon name="thumbs-up"></ion-icon>
+          </button>
+          <div class="video-rating ml-3" v-if="data.likes">
+            {{ likes }} Likes / {{ dislikes }} Dislikes
+            <div class="video-rating-bar mt-1">
+              <div
+                class="video-rating-likes"
+                :style="{ width: rating + '%' }"
+              ></div>
             </div>
-            <button type="button" class="btn btn-primary ml-3">
-              <ion-icon name="thumbs-down"></ion-icon>
-            </button>
-            <button class="btn btn-primary ml-2">
-              <ion-icon
-                name="heart"
-                style="position: relative; top: 3px;"
-              ></ion-icon>
-              Favorite
-            </button>
-            <button class="btn btn-primary ml-2">
-              <ion-icon name="flag"></ion-icon>
-            </button>
           </div>
+          <button type="button" class="btn btn-primary ml-3">
+            <ion-icon name="thumbs-down"></ion-icon>
+          </button>
+          <button class="btn btn-primary ml-2">
+            <ion-icon
+              name="heart"
+              style="position: relative; top: 3px;"
+            ></ion-icon>
+            Favorite
+          </button>
+          <button class="btn btn-primary ml-auto">
+            <ion-icon name="flag"></ion-icon>
+          </button>
         </div>
       </main>
       <aside class="col-sm-12 col-md-3">
@@ -78,7 +74,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <h4 class="mb-3">Related Videos</h4>
+        <h4 class="font-weight-bold mb-3">Related Videos</h4>
         <video-list
           :videos="related"
           :loaded="related_loaded"
