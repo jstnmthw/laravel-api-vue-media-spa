@@ -14823,6 +14823,10 @@ a:hover,
   color: #d980fa;
 }
 
+.btn.btn-primary.disabled {
+  pointer-events: none;
+}
+
 .btn.btn-category {
   background: #20205b;
   color: #6d6dd5;

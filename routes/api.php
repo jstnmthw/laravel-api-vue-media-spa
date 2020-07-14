@@ -45,5 +45,8 @@ Route::post('/login', function (Request $request) {
 Route::get('videos/search', 'VideoController@search');
 Route::get('videos/category', 'VideoController@category');
 
+Route::post('videos/{id}/like', 'VideoController@like');
+Route::post('videos/{id}/dislike', 'VideoController@dislike');
+
 Route::apiResource('videos', 'VideoController');
 Route::apiResource('categories', 'CategoryController');

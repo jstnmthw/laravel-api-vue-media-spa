@@ -81,4 +81,28 @@ class VideoController extends Controller
             ->orderby('views', 'desc')
             ->paginate($limit);
     }
+
+    /**
+     * Increment likes column on respective model
+     *
+     * @return int
+     */
+    public function like($id)
+    {
+        if (Video::where('id', $id)->increment('likes')) {
+            return response()->json(['success' => 1], 200);
+        }
+    }
+
+    /**
+     * Increment dislikes column on respective model
+     *
+     * @return int
+     */
+    public function dislike($id)
+    {
+        if (Video::where('id', $id)->increment('dislikes')) {
+            return response()->json(['success' => 1], 200);
+        }
+    }
 }

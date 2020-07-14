@@ -31,6 +31,9 @@ a,
       background: darken($indigo, 4%);
       color: $pink;
     }
+    &.disabled {
+      pointer-events: none;
+    }
   }
   &.btn-category {
     background: $indigo;

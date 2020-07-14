@@ -3276,6 +3276,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // Mixins
@@ -3291,11 +3309,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       data: [],
       related: [],
       loaded: false,
-      related_loaded: false
+      related_loaded: false,
+      voted: false
     };
   },
   mounted: function mounted() {
     this.getVideo();
+    this.voteStatus();
   },
   computed: {
     rating: function rating() {
@@ -3313,6 +3333,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     dislikes: function dislikes() {
       return this.formatNumber(this.data.dislikes);
+    },
+    voteClass: function voteClass() {
+      return this.voted;
     }
   },
   methods: {
@@ -3392,6 +3415,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    like: function like() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/videos/' + _this3.data.id + '/like').then(function (response) {
+                  if (response.data.success) {
+                    _this3.storeVote(_this3.data.id);
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    dislike: function dislike() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/videos/' + _this4.data.id + '/dislike').then(function (response) {
+                  if (response.data.success) {
+                    _this4.storeVote(_this4.data.id);
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    storeVote: function storeVote(id) {
+      var votes = [];
+
+      if (this.getVotes()) {
+        votes = this.getVotes();
+      }
+
+      votes.push(id);
+      localStorage.setItem('votes', JSON.stringify(votes));
+      this.voted = true;
+    },
+    getVotes: function getVotes() {
+      if (localStorage.getItem('votes') != undefined) {
+        return JSON.parse(localStorage.getItem('votes'));
+      }
+
+      return false;
+    },
+    voteStatus: function voteStatus() {
+      var votes = this.getVotes();
+
+      if (votes.includes(Number(this.$route.params.id))) {
+        this.voted = true;
+      }
     }
   },
   props: ['categories'],
@@ -3399,6 +3493,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     $route: function $route(to, from) {
       this.data = [];
       this.related = [];
+      this.voted = false;
       this.getVideo();
     }
   }
@@ -24977,7 +25072,18 @@ var render = function() {
           [
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              {
+                staticClass: "btn btn-primary",
+                class: { disabled: _vm.voted },
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    {
+                      _vm.like(), (_vm.data.likes += 1)
+                    }
+                  }
+                }
+              },
               [_c("ion-icon", { attrs: { name: "thumbs-up" } })],
               1
             ),
@@ -24986,7 +25092,7 @@ var render = function() {
               ? _c("div", { staticClass: "video-rating ml-3" }, [
                   _vm._v(
                     "\n          " +
-                      _vm._s(_vm.likes) +
+                      _vm._s(_vm.data.likes) +
                       " Likes / " +
                       _vm._s(_vm.dislikes) +
                       " Dislikes\n          "
@@ -25004,7 +25110,15 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary ml-3",
-                attrs: { type: "button" }
+                class: { disabled: _vm.voted },
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    {
+                      _vm.dislike(), (_vm.data.dislikes += 1)
+                    }
+                  }
+                }
               },
               [_c("ion-icon", { attrs: { name: "thumbs-down" } })],
               1

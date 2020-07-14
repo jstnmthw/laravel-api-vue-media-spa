@@ -41,11 +41,20 @@
           ></iframe>
         </div>
         <div class="d-flex align-items-center mb-md-3 mb-lg-5">
-          <button type="button" class="btn btn-primary">
+          <button
+            @click="
+              {
+                like(), (data.likes += 1)
+              }
+            "
+            type="button"
+            class="btn btn-primary"
+            :class="{ disabled: voted }"
+          >
             <ion-icon name="thumbs-up"></ion-icon>
           </button>
           <div class="video-rating ml-3" v-if="data.likes">
-            {{ likes }} Likes / {{ dislikes }} Dislikes
+            {{ data.likes }} Likes / {{ dislikes }} Dislikes
             <div class="video-rating-bar mt-1">
               <div
                 class="video-rating-likes"
@@ -53,7 +62,16 @@
               ></div>
             </div>
           </div>
-          <button type="button" class="btn btn-primary ml-3">
+          <button
+            @click="
+              {
+                dislike(), (data.dislikes += 1)
+              }
+            "
+            type="button"
+            class="btn btn-primary ml-3"
+            :class="{ disabled: voted }"
+          >
             <ion-icon name="thumbs-down"></ion-icon>
           </button>
           <button class="btn btn-primary ml-2">
@@ -105,11 +123,13 @@ export default {
       data: [],
       related: [],
       loaded: false,
-      related_loaded: false
+      related_loaded: false,
+      voted: false
     }
   },
   mounted() {
     this.getVideo()
+    this.voteStatus()
   },
   computed: {
     rating: function () {
@@ -129,6 +149,9 @@ export default {
     },
     dislikes: function () {
       return this.formatNumber(this.data.dislikes)
+    },
+    voteClass: function () {
+      return this.voted
     }
   },
   methods: {
@@ -183,6 +206,45 @@ export default {
           this.related_loaded = false
           console.log('There was an error fetching the data.')
         })
+    },
+    async like() {
+      await axios
+        .post('/api/videos/' + this.data.id + '/like')
+        .then((response) => {
+          if (response.data.success) {
+            this.storeVote(this.data.id)
+          }
+        })
+    },
+    async dislike() {
+      await axios
+        .post('/api/videos/' + this.data.id + '/dislike')
+        .then((response) => {
+          if (response.data.success) {
+            this.storeVote(this.data.id)
+          }
+        })
+    },
+    storeVote(id) {
+      let votes = []
+      if (this.getVotes()) {
+        votes = this.getVotes()
+      }
+      votes.push(id)
+      localStorage.setItem('votes', JSON.stringify(votes))
+      this.voted = true
+    },
+    getVotes() {
+      if (localStorage.getItem('votes') != undefined) {
+        return JSON.parse(localStorage.getItem('votes'))
+      }
+      return false
+    },
+    voteStatus() {
+      let votes = this.getVotes()
+      if (votes.includes(Number(this.$route.params.id))) {
+        this.voted = true
+      }
     }
   },
   props: ['categories'],
@@ -190,6 +252,7 @@ export default {
     $route(to, from) {
       this.data = []
       this.related = []
+      this.voted = false
       this.getVideo()
     }
   }
