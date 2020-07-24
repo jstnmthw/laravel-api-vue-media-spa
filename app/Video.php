@@ -59,7 +59,7 @@ class Video extends Model
             'views',
             'likes',
             'dislikes',
-        ])->toArray();
+        ]);
 
         return $array;
     }
