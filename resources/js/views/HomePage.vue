@@ -92,8 +92,7 @@ export default {
   },
   data() {
     return {
-      data: [],
-      pagination: [],
+      videos: [],
       error: false,
       loaded: false
     }

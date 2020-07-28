@@ -130,6 +130,7 @@ export default {
   mounted() {
     this.getVideo()
     this.voteStatus()
+    this.watched()
   },
   computed: {
     rating: function () {
@@ -212,7 +213,7 @@ export default {
         .post('/api/videos/' + this.data.id + '/like')
         .then((response) => {
           if (response.data.success) {
-            this.storeVote(this.data.id)
+            this.storeVote(String(this.data.id))
           }
         })
     },
@@ -221,7 +222,7 @@ export default {
         .post('/api/videos/' + this.data.id + '/dislike')
         .then((response) => {
           if (response.data.success) {
-            this.storeVote(this.data.id)
+            this.storeVote(String(his.data.id))
           }
         })
     },
@@ -242,8 +243,22 @@ export default {
     },
     voteStatus() {
       let votes = this.getVotes()
-      if (votes.includes(Number(this.$route.params.id))) {
+      if (votes.includes(this.$route.params.id)) {
         this.voted = true
+      }
+    },
+    watched() {
+      let watched = []
+      const id = String(this.$route.params.id)
+      if (localStorage.getItem('watched_ids') != undefined) {
+        watched = JSON.parse(localStorage.getItem('watched_ids'))
+      }
+      if (!watched.includes(id)) {
+        watched.push(id)
+        if (watched.length > 20) {
+          watched.shift()
+        }
+        localStorage.setItem('watched_ids', JSON.stringify(watched))
       }
     }
   },
@@ -254,6 +269,7 @@ export default {
       this.related = []
       this.voted = false
       this.getVideo()
+      this.watched()
     }
   }
 }

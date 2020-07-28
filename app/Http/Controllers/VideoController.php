@@ -51,6 +51,12 @@ class VideoController extends Controller
             return $data;
         }
 
+        // Collectio of models
+        if ($request->has('collection')) {
+            $collection = explode(',', $request->input('collection'));
+            return Video::whereIn('id', $collection)->get();
+        }
+
         // Category model listing
         if ($request->has('category')) {
             return Video::search($request->category)

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 // Pages
 import Categories from '@/views/Categories'
 import Homepage from '@/views/Homepage'
+import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Search from '@/views/Search'
 import Video from '@/views/Video'
@@ -33,6 +34,11 @@ export default new VueRouter({
       path: '/search',
       component: Search,
       name: 'search'
+    },
+    {
+      path: '/my/watch-history',
+      component: Watched,
+      name: 'watched'
     },
     {
       path: '*',
