@@ -30,10 +30,10 @@ class Video extends Model
     /**
      * Get the categories for the video.
      */
-    public function categories()
-    {
-        return $this->morphToMany('App\Category', 'categorizable');
-    }
+    // public function categories()
+    // {
+    //     return $this->morphToMany('App\Category', 'categorizable');
+    // }
 
     /**
      * Get the index name for the model.

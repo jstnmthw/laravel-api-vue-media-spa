@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Config;
 use App\Video;
+use App\QueryRule;
 use App\CategoryRule;
-use App\DefaultRule;
 
 class VideoController extends Controller
 {
@@ -67,7 +67,7 @@ class VideoController extends Controller
 
         // Search model listing
         if ($request->has('q') && !empty($request->input('q'))) {
-            $data = Video::search($request->input('q'));
+            $data = Video::search($request->input('q'))->rule(QueryRule::class);
             $data->whereNotMatch('categories', config('const.excluded_cats'));
 
             if ($request->has('exclude')) {
@@ -78,6 +78,7 @@ class VideoController extends Controller
                 $data->orderBy($sort, 'DESC');
             }
 
+            return $data->buildPayload();
             return $data->paginate($limit);
         }
 
