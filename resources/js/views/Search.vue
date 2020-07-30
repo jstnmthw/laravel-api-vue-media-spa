@@ -6,7 +6,7 @@
         <top-ad-banner></top-ad-banner>
 
         <div v-if="error" class="text-center m-4">
-          {{ error }}
+          There was an error, please try again later.
         </div>
 
         <div v-else>

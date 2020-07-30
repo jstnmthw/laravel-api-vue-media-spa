@@ -21,8 +21,24 @@ class QueryRule extends SearchRule
     {
         return [
             'should' => [
-                'match' => [
-                    'title' => $this->builder->query,
+                'function_score' => [
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                'match' => [
+                                    'title' => $this->builder->query,
+                                ],
+                            ],
+                            'should' => [
+                                'match' => [
+                                    'categories' => $this->builder->query,
+                                ],
+                            ],
+                        ],
+                    ],
+                    'field_value_factor' => [
+                        'field' => 'likes',
+                    ],
                 ],
             ],
         ];

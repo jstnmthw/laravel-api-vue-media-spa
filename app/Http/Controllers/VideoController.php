@@ -78,7 +78,6 @@ class VideoController extends Controller
                 $data->orderBy($sort, 'DESC');
             }
 
-            return $data->buildPayload();
             return $data->paginate($limit);
         }
 

@@ -243,7 +243,7 @@ export default {
     },
     voteStatus() {
       let votes = this.getVotes()
-      if (votes.includes(this.$route.params.id)) {
+      if (votes && votes.includes(this.$route.params.id)) {
         this.voted = true
       }
     },

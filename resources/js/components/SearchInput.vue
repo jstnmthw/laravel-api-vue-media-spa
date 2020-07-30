@@ -8,6 +8,7 @@
         aria-label="Search by videos"
         aria-describedby="search-label"
         placeholder="Search videos"
+        v-bind:value="search_query"
       />
       <div class="input-group-append">
         <button class="btn" id="search-label">
@@ -20,7 +21,20 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    search_query: {
+      get: function () {
+        return this.$route.query.q
+      },
+      set: function (value) {
+        this.$router.replace({
+          query: { q: value }
+        })
+      }
+    }
+  }
+}
 </script>
 
 <style></style>

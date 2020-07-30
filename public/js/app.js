@@ -2419,7 +2419,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    search_query: {
+      get: function get() {
+        return this.$route.query.q;
+      },
+      set: function set(value) {
+        this.$router.replace({
+          query: {
+            q: value
+          }
+        });
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -3483,7 +3499,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     voteStatus: function voteStatus() {
       var votes = this.getVotes();
 
-      if (votes.includes(this.$route.params.id)) {
+      if (votes && votes.includes(this.$route.params.id)) {
         this.voted = true;
       }
     },
@@ -8193,7 +8209,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
 
 // exports
 
@@ -24249,7 +24265,8 @@ var render = function() {
             "aria-label": "Search by videos",
             "aria-describedby": "search-label",
             placeholder: "Search videos"
-          }
+          },
+          domProps: { value: _vm.search_query }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "input-group-append" }, [
@@ -24960,7 +24977,9 @@ var render = function() {
             _vm._v(" "),
             _vm.error
               ? _c("div", { staticClass: "text-center m-4" }, [
-                  _vm._v("\n        " + _vm._s(_vm.error) + "\n      ")
+                  _vm._v(
+                    "\n        There was an error, please try again later.\n      "
+                  )
                 ])
               : _c(
                   "div",
@@ -42544,7 +42563,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var sort;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -42555,14 +42573,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.loaded = false; // Stop unfinished images loading
 
                 $('.video-poster img').attr('src', ''); // Check for sort query string
+                // let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
+                // Make the call
 
-                sort = !_this.$route.query.sortby ? {
-                  sortby: 'most_views'
-                } : ''; // Make the call
-
-                _context.next = 7;
+                _context.next = 6;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
-                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query, {}, sort)
+                  params: _objectSpread({}, _this.$route.params, {}, _this.$route.query)
                 }).then(function (response) {
                   _this.$Progress.finish();
 
@@ -42586,7 +42602,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 7:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -43155,8 +43171,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/justin/Sites/media/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/justin/Sites/media/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

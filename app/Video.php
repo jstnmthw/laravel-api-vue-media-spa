@@ -59,6 +59,8 @@ class Video extends Model
             'views',
             'likes',
             'dislikes',
+            'duration',
+            'author',
         ]);
 
         return $array;
