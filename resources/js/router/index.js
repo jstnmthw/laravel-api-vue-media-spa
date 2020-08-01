@@ -8,6 +8,7 @@ import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Search from '@/views/Search'
 import Video from '@/views/Video'
+import Best from '@/views/Best'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ export default new VueRouter({
       path: '/my/watch-history',
       component: Watched,
       name: 'watched'
+    },
+    {
+      path: '/best/weekly',
+      component: Best,
+      name: 'best'
     },
     {
       path: '*',

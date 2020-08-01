@@ -15,7 +15,10 @@
             class="d-flex justify-content-between align-items-center mb-3"
           >
             <div>
-              <page-header title="Results for" icon=""></page-header>
+              <page-header
+                :title="'Results for ' + this.$route.query.q"
+                icon=""
+              ></page-header>
               <div class="text-sage">
                 Showing: {{ videos.current_page }} of
                 {{ videos.last_page }}

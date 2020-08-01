@@ -2,7 +2,9 @@
   <div class="content container bg-purple">
     <div class="row">
       <main-sidebar :categories="categories"></main-sidebar>
-      <main class="col-md-10"></main>
+      <main class="col-md-10">
+        Best
+      </main>
     </div>
   </div>
 </template>
