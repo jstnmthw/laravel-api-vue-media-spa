@@ -5,7 +5,7 @@
       <main class="col-md-10">
         <page-header
           :title="'Weekly Best Videos'"
-          icon="flame"
+          icon="thumbs-up-outline"
           v-show="loaded"
         ></page-header>
       </main>

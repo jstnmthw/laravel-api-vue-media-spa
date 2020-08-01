@@ -24645,7 +24645,7 @@ var render = function() {
                   expression: "loaded"
                 }
               ],
-              attrs: { title: "Weekly Best Videos", icon: "flame" }
+              attrs: { title: "Weekly Best Videos", icon: "thumbs-up-outline" }
             })
           ],
           1
