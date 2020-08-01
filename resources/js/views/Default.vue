@@ -2,16 +2,25 @@
   <div class="content container bg-purple">
     <div class="row">
       <main-sidebar :categories="categories"></main-sidebar>
-      <main class="col-md-10"></main>
+      <main class="col-md-10">
+        <page-header :title="''" icon="" v-show="loaded"></page-header>
+      </main>
     </div>
   </div>
 </template>
 
 <script>
+import PageHeader from '@/components/PageHeader'
 import MainSidebar from '@/components/MainSidebar'
 export default {
+  data() {
+    return {
+      loaded: true
+    }
+  },
   components: {
-    MainSidebar: MainSidebar
+    MainSidebar: MainSidebar,
+    PageHeader: PageHeader
   },
   props: ['categories']
 }

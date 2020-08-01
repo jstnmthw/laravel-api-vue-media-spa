@@ -2742,7 +2742,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -2755,9 +2760,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loaded: true
+    };
+  },
   components: {
-    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_0__["default"]
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ['categories']
 });
@@ -24620,7 +24632,24 @@ var render = function() {
       [
         _c("main-sidebar", { attrs: { categories: _vm.categories } }),
         _vm._v(" "),
-        _c("main", { staticClass: "col-md-10" }, [_vm._v("\n      Best\n    ")])
+        _c(
+          "main",
+          { staticClass: "col-md-10" },
+          [
+            _c("page-header", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loaded,
+                  expression: "loaded"
+                }
+              ],
+              attrs: { title: "Weekly Best Videos", icon: "flame" }
+            })
+          ],
+          1
+        )
       ],
       1
     )
