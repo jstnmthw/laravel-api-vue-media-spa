@@ -53,7 +53,6 @@ class Video extends Model
     public function toSearchableArray()
     {
         $array = $this->only([
-            'id',
             'title',
             'categories',
             'views',
@@ -61,6 +60,8 @@ class Video extends Model
             'dislikes',
             'duration',
             'author',
+            'created_at',
+            'updated_at',
         ]);
 
         return $array;

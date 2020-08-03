@@ -93,6 +93,13 @@ class VideoController extends Controller
      */
     public function best()
     {
+        return Video::search('*')
+            ->where(
+                'created_at',
+                '>=',
+                date('Y-m-d', time() - 7 * 24 * 60 * 60),
+            )
+            ->paginate(50);
     }
 
     /**
