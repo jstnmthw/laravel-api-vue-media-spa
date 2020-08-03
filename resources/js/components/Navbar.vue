@@ -19,7 +19,14 @@
     <search-input></search-input>
     <ul class="navbar-nav">
       <li v-if="!auth" class="nav-item">
-        <button @click="login" class="btn btn-link">Login</button>
+        <button @click="login" class="btn btn-link">
+          <ion-icon
+            name="person"
+            style="position: relative; top: 2px;"
+            class="mr-1"
+          ></ion-icon
+          >Login
+        </button>
       </li>
       <li v-if="!auth" class="nav-item">
         <a class="nav-link text-white" href="/register">Register</a>

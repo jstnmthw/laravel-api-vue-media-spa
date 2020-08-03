@@ -3,9 +3,10 @@
     <div class="row">
       <main-sidebar :categories="categories"></main-sidebar>
       <main class="col-md-10">
+        <top-ad-banner></top-ad-banner>
         <page-header
           :title="'Weekly Best Videos'"
-          icon="thumbs-up-outline"
+          icon="flash"
           v-show="loaded"
         ></page-header>
       </main>
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import TopAdBanner from '@/components/TopAdBanner'
 import PageHeader from '@/components/PageHeader'
 import MainSidebar from '@/components/MainSidebar'
 export default {
@@ -23,6 +25,7 @@ export default {
     }
   },
   components: {
+    TopAdBanner: TopAdBanner,
     MainSidebar: MainSidebar,
     PageHeader: PageHeader
   },

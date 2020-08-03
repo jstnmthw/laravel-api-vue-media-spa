@@ -89,9 +89,16 @@ class VideoController extends Controller
     }
 
     /**
+     * Return top models by week
+     */
+    public function best()
+    {
+    }
+
+    /**
      * Increment likes column on respective model
      *
-     * @return int
+     * @return json
      */
     public function like($id)
     {
@@ -103,7 +110,7 @@ class VideoController extends Controller
     /**
      * Increment dislikes column on respective model
      *
-     * @return int
+     * @return json
      */
     public function dislike($id)
     {

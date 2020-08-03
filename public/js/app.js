@@ -2126,6 +2126,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2742,8 +2749,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
-/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
+/* harmony import */ var _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/TopAdBanner */ "./resources/js/components/TopAdBanner.vue");
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/MainSidebar */ "./resources/js/components/MainSidebar.vue");
 //
 //
 //
@@ -2759,6 +2767,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2768,8 +2778,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"]
+    TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_0__["default"],
+    MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ['categories']
 });
@@ -23933,7 +23944,15 @@ var render = function() {
               _c(
                 "button",
                 { staticClass: "btn btn-link", on: { click: _vm.login } },
-                [_vm._v("Login")]
+                [
+                  _c("ion-icon", {
+                    staticClass: "mr-1",
+                    staticStyle: { position: "relative", top: "2px" },
+                    attrs: { name: "person" }
+                  }),
+                  _vm._v("Login\n      ")
+                ],
+                1
               )
             ])
           : _vm._e(),
@@ -24636,6 +24655,8 @@ var render = function() {
           "main",
           { staticClass: "col-md-10" },
           [
+            _c("top-ad-banner"),
+            _vm._v(" "),
             _c("page-header", {
               directives: [
                 {
@@ -24645,7 +24666,7 @@ var render = function() {
                   expression: "loaded"
                 }
               ],
-              attrs: { title: "Weekly Best Videos", icon: "thumbs-up-outline" }
+              attrs: { title: "Weekly Best Videos", icon: "flash" }
             })
           ],
           1
