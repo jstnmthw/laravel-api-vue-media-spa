@@ -7,7 +7,7 @@
         <page-header
           v-if="loaded"
           :title="'Recently Viewed'"
-          icon="eye"
+          icon="sync-circle"
           class="mb-3"
         ></page-header>
         <video-list

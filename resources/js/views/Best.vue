@@ -6,7 +6,7 @@
         <top-ad-banner></top-ad-banner>
         <page-header
           :title="'Weekly Best Videos'"
-          icon="flash"
+          icon="trophy"
           v-show="loaded"
           class="mb-4"
         ></page-header>
@@ -42,7 +42,7 @@ import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 export default {
   data() {
     return {
-      loaded: true,
+      loaded: false,
       videos: []
     }
   },
@@ -50,17 +50,18 @@ export default {
     this.getBest()
   },
   components: {
+    VideoList: VideoList,
+    PageHeader: PageHeader,
     TopAdBanner: TopAdBanner,
     MainSidebar: MainSidebar,
-    PageHeader: PageHeader,
-    SkeletonVideoCard: SkeletonVideoCard,
-    VideoList: VideoList
+    SkeletonVideoCard: SkeletonVideoCard
   },
   props: ['categories'],
   methods: {
     async getBest() {
       await axios.get('/api/videos/best').then((res) => {
         this.videos = res.data
+        this.loaded = true
       })
     }
   }

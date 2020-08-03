@@ -2805,7 +2805,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      loaded: true,
+      loaded: false,
       videos: []
     };
   },
@@ -2813,11 +2813,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getBest();
   },
   components: {
+    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_5__["default"],
+    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__["default"],
     TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_2__["default"],
     MainSidebar: _components_MainSidebar__WEBPACK_IMPORTED_MODULE_4__["default"],
-    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__["default"],
-    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__["default"],
-    VideoList: _components_VideoList__WEBPACK_IMPORTED_MODULE_5__["default"]
+    SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: ['categories'],
   methods: {
@@ -2832,6 +2832,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos/best').then(function (res) {
                   _this.videos = res.data;
+                  _this.loaded = true;
                 });
 
               case 2:
@@ -24727,7 +24728,7 @@ var render = function() {
                 }
               ],
               staticClass: "mb-4",
-              attrs: { title: "Weekly Best Videos", icon: "flash" }
+              attrs: { title: "Weekly Best Videos", icon: "trophy" }
             }),
             _vm._v(" "),
             _vm.loaded
@@ -25584,7 +25585,7 @@ var render = function() {
             _vm.loaded
               ? _c("page-header", {
                   staticClass: "mb-3",
-                  attrs: { title: "Recently Viewed", icon: "eye" }
+                  attrs: { title: "Recently Viewed", icon: "sync-circle" }
                 })
               : _vm._e(),
             _vm._v(" "),
