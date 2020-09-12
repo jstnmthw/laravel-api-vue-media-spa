@@ -3007,6 +3007,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
 /* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
 /* harmony import */ var _mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/getVideosMixin.js */ "./resources/js/mixins/getVideosMixin.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -3086,6 +3087,8 @@ __webpack_require__.r(__webpack_exports__);
 
  // Mixins
 
+ // Getters
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3103,7 +3106,10 @@ __webpack_require__.r(__webpack_exports__);
       loaded: false
     };
   },
-  mounted: function mounted() {},
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapGetters"])(['isLoading']),
+  mounted: function mounted() {
+    console.log(this.$route.params);
+  },
   methods: {
     // Format to user friendly number
     uf_num: function uf_num(_int) {
@@ -8327,7 +8333,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
 
 // exports
 
@@ -25046,14 +25052,14 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.loaded
+                    !_vm.isLoading
                       ? _c("video-list", {
                           staticClass: "mb-5",
                           attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
                         })
                       : _vm._e(),
                     _vm._v(" "),
-                    !_vm.loaded
+                    _vm.isLoading
                       ? _c("skeleton-video-card", {
                           staticClass: "mb-5",
                           attrs: { cards: 50, cols: 5 }
@@ -42768,13 +42774,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$Progress.start();
 
                 _this.error = false;
-                _this.loaded = false; // Stop unfinished images loading
+                _this.loaded = false;
+
+                _this.$store.commit('LOADING_STARTED'); // Stop unfinished images loading
+
 
                 $('.video-poster img').attr('src', ''); // Check for sort query string
                 // let sort = !this.$route.query.sortby ? { sortby: 'most_views' } : ''
                 // Make the call
 
-                _context.next = 6;
+                _context.next = 7;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: _objectSpread({}, _this.$route.params, {}, _this.$route.query)
                 }).then(function (response) {
@@ -42789,6 +42798,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
 
                   _this.loaded = true;
+
+                  _this.$store.commit('LOADING_FINISHED');
                 })["catch"](function (error) {
                   _this.$Progress.fail();
 
@@ -42800,7 +42811,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 6:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -42909,11 +42920,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   strict: true,
   state: {
     cancelTokens: [],
-    user: []
+    user: [],
+    loading: false
   },
   getters: {
     cancelTokens: function cancelTokens(state) {
       return state.cancelTokens;
+    },
+    isLoading: function isLoading(state) {
+      return state.loading;
     }
   },
   mutations: {
@@ -42925,6 +42940,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     CLEAR_CANCEL_TOKENS: function CLEAR_CANCEL_TOKENS(state) {
       state.cancelTokens = [];
+    },
+    LOADING_STARTED: function LOADING_STARTED(state) {
+      state.loading = true;
+    },
+    LOADING_FINISHED: function LOADING_FINISHED(state) {
+      state.loading = false;
     }
   },
   actions: {
@@ -43444,8 +43465,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/justin/Sites/media/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/justin/Sites/media/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

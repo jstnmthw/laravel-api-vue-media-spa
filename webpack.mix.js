@@ -1,4 +1,4 @@
-const mix = require("laravel-mix")
+const mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -14,11 +14,17 @@ const mix = require("laravel-mix")
 mix
   .webpackConfig({
     resolve: {
-      extensions: [".js", ".vue", ".json"],
+      extensions: ['.js', '.vue', '.json'],
       alias: {
-        "@": path.resolve("resources/js"),
-      },
+        '@': path.resolve('resources/js')
+      }
     },
+    devServer: {
+      proxy: {
+        '*': 'http://localhost'
+      },
+      clientLogLevel: 'none'
+    }
   })
-  .js("resources/js/app.js", "public/js")
-  .sass("resources/sass/app.scss", "public/css")
+  .js('resources/js/app.js', 'public/js')
+  .sass('resources/sass/app.scss', 'public/css')

@@ -9,7 +9,7 @@ export default {
     async getVideos() {
       this.$Progress.start()
       this.error = false
-      this.loaded = false
+      this.$store.commit('LOADING_STARTED')
 
       // Stop unfinished images loading
       $('.video-poster img').attr('src', '')
@@ -28,6 +28,7 @@ export default {
         })
         .then((response) => {
           this.$Progress.finish()
+          this.$store.commit('LOADING_FINISHED')
           if (response.data.error) {
             this.error = response.data.error
           } else if (response.data.data.length == 0) {
@@ -35,10 +36,10 @@ export default {
           } else {
             this.videos = response.data
           }
-          this.loaded = true
         })
         .catch((error) => {
           this.$Progress.fail()
+          this.$store.commit('LOADING_FINISHED')
           if (axios.isCancel(error)) {
             console.log('API Request canceled by user.')
           } else {

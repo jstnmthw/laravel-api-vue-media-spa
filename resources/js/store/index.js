@@ -7,11 +7,15 @@ export default new Vuex.Store({
   strict: true,
   state: {
     cancelTokens: [],
-    user: []
+    user: [],
+    loading: false
   },
   getters: {
     cancelTokens(state) {
       return state.cancelTokens
+    },
+    isLoading(state) {
+      return state.loading
     }
   },
   mutations: {
@@ -23,6 +27,12 @@ export default new Vuex.Store({
     },
     CLEAR_CANCEL_TOKENS(state) {
       state.cancelTokens = []
+    },
+    LOADING_STARTED(state) {
+      state.loading = true
+    },
+    LOADING_FINISHED(state) {
+      state.loading = false
     }
   },
   actions: {

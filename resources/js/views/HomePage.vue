@@ -43,7 +43,7 @@
 
           <video-list
             class="mb-5"
-            v-if="loaded"
+            v-if="!isLoading"
             :videos="videos.data"
             :cards="50"
             :cols="5"
@@ -51,7 +51,7 @@
 
           <skeleton-video-card
             class="mb-5"
-            v-if="!loaded"
+            v-if="isLoading"
             :cards="50"
             :cols="5"
           ></skeleton-video-card>
@@ -81,6 +81,9 @@ import VideoList from '@/components/VideoList'
 // Mixins
 import getVideosMixin from '@/mixins/getVideosMixin.js'
 
+// Getters
+import { mapState, mapGetters } from 'vuex'
+
 export default {
   components: {
     PageHeader: PageHeader,
@@ -97,6 +100,7 @@ export default {
       loaded: false
     }
   },
+  computed: { ...mapGetters(['isLoading']), ...mapState(['loading']) },
   mounted() {},
   methods: {
     // Format to user friendly number
