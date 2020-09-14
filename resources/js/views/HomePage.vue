@@ -13,19 +13,17 @@
 
         <div v-else>
           <div class="d-flex justify-content-between align-items-top mb-3">
-            <div>
-              <page-header
-                :title="'Hot Videos'"
-                icon="flame"
-                v-show="loaded"
-              ></page-header>
-              <h3 class="text-center" v-show="!loaded">Loading API</h3>
-              <div v-if="loaded" class="text-sage">
-                Showing: {{ uf_num(videos.current_page) }} of
-                {{ uf_num(videos.last_page) }}
-              </div>
+            <page-header
+              :title="'Hot Videos'"
+              icon="flame"
+              v-show="!isLoading"
+            ></page-header>
+            <h3 class="text-center" v-show="!loaded">Loading API</h3>
+            <div v-if="!isLoading" class="text-sage">
+              Showing: {{ uf_num(videos.current_page) }} of
+              {{ uf_num(videos.last_page) }}
             </div>
-            <!-- <div>
+            <div>
               <select
                 id="sortby"
                 v-model="sort"
@@ -38,7 +36,7 @@
                 <option value="duration">Duration</option>
                 <option value="most_recent">Most Recent</option>
               </select>
-            </div> -->
+            </div>
           </div>
 
           <video-list
@@ -97,15 +95,19 @@ export default {
     return {
       videos: [],
       error: false,
-      loaded: false
+      loaded: false,
+      sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
   computed: { ...mapGetters(['isLoading']), ...mapState(['loading']) },
   mounted() {},
   methods: {
-    // Format to user friendly number
-    uf_num(int) {
-      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    // // Format to user friendly number
+    // uf_num(int) {
+    //   return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    // }
+    sortyBy() {
+      return null
     }
   },
   mixins: [getVideosMixin],

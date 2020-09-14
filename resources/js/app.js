@@ -9,8 +9,11 @@ import store from '@/store'
 import VueProgressBar from 'vue-progressbar'
 
 // Global components
-import Navbar from './components/Navbar'
-import MainFooter from './components/MainFooter'
+import Navbar from '@/components/Navbar'
+import MainFooter from '@/components/MainFooter'
+
+// Mixins
+import Helpers from '@/mixins/Helpers.js'
 
 // Register global components
 Vue.component('Navbar', Navbar)
@@ -51,6 +54,9 @@ Vue.config.ignoredElements = ['ion-icon']
 
 // Register Instances
 Vue.use(VueProgressBar, vpbSettings)
+
+// Register Global Mixin
+Vue.mixin(Helpers)
 
 // Initiate instance
 const app = new Vue({

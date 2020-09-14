@@ -4,6 +4,7 @@
       <ion-icon :name="icon" v-if="icon"></ion-icon>
       {{ title }}
     </h4>
+    <span class="skeleton-text w-25"></span>
   </div>
 </template>
 

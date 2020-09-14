@@ -218,6 +218,11 @@ a,
     float: left;
   }
 }
+.skeleton-text {
+  display: inline-block;
+  height: 9px;
+  background: $lavendar;
+}
 
 // Placeholders
 .sidead-placeholder {
