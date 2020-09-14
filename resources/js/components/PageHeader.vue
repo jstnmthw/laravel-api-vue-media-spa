@@ -1,10 +1,9 @@
 <template>
-  <div class="row">
-    <h4 class="col mb-0 font-weight-bold">
+  <div>
+    <h4 class="font-weight-bold">
       <ion-icon :name="icon" v-if="icon"></ion-icon>
       {{ title }}
     </h4>
-    <span class="skeleton-text w-25"></span>
   </div>
 </template>
 

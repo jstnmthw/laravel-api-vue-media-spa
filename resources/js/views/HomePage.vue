@@ -12,16 +12,19 @@
         </div>
 
         <div v-else>
-          <div class="d-flex justify-content-between align-items-top mb-3">
-            <page-header
-              :title="'Hot Videos'"
-              icon="flame"
-              v-show="!isLoading"
-            ></page-header>
-            <h3 class="text-center" v-show="!loaded">Loading API</h3>
-            <div v-if="!isLoading" class="text-sage">
-              Showing: {{ uf_num(videos.current_page) }} of
-              {{ uf_num(videos.last_page) }}
+          <div class="d-flex mb-3">
+            <div class="flex-grow-1 mr-5">
+              <page-header
+                :title="'Hot Videos'"
+                icon="flame"
+                v-if="!isLoading"
+              ></page-header>
+              <div v-else class="skeleton-header w-100"></div>
+              <div v-if="!isLoading" class="text-sage">
+                Showing: {{ uf_num(videos.current_page) }} of
+                {{ uf_num(videos.last_page) }}
+              </div>
+              <div v-else class="skeleton-text w-75"></div>
             </div>
             <div>
               <select
