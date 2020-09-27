@@ -107,7 +107,7 @@
 
 <script>
 export default {
-  props: ['loaded', 'pagination'],
+  props: ['loading', 'pagination'],
   computed: {
     pagesNumber() {
       let totalPage = Math.ceil(
@@ -132,7 +132,8 @@ export default {
   },
   methods: {
     changePage(page) {
-      if (this.loaded && this.pagination.current_page != page) {
+      if (!this.loading && this.pagination.current_page != page) {
+        console.log('change page.')
         this.pagination.current_page = page
 
         // Push URL

@@ -2357,7 +2357,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['loaded', 'pagination'],
+  props: ['loading', 'pagination'],
   computed: {
     pagesNumber: function pagesNumber() {
       var totalPage = Math.ceil(this.pagination.total / this.pagination.per_page);
@@ -2378,7 +2378,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changePage: function changePage(page) {
-      if (this.loaded && this.pagination.current_page != page) {
+      if (!this.loading && this.pagination.current_page != page) {
+        console.log('change page.');
         this.pagination.current_page = page; // Push URL
 
         this.$router.push({
@@ -3074,13 +3075,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 // Components
 
 
@@ -3105,7 +3099,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       videos: [],
       error: false,
-      loaded: false,
+      loading: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     };
   },
@@ -3117,8 +3111,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.comma_delimiter(this.videos.last_page);
     }
   },
-  mounted: function mounted() {
-    // Get videos on page load
+  created: function created() {
     this.getVideos();
   },
   methods: {
@@ -3126,15 +3119,11 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
   },
-  mixins: [_mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
-  props: ['categories'],
   watch: {
-    // Watch route changes
-    $route: function $route(to, from) {
-      this.videos = [];
-      this.getVideos();
-    }
-  }
+    $route: 'getVideos'
+  },
+  mixins: [_mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  props: ['categories']
 });
 
 /***/ }),
@@ -8343,7 +8332,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
 
 // exports
 
@@ -25053,17 +25042,17 @@ var render = function() {
                     _c("div", { staticClass: "d-flex mb-3" }, [
                       _c(
                         "div",
-                        { staticClass: "flex-grow-1 mr-5" },
+                        { staticClass: "d-flex flex-column flex-grow-1 mr-5" },
                         [
-                          _vm.loaded
+                          !_vm.loading
                             ? _c("page-header", {
                                 attrs: { title: "Hot Videos", icon: "flame" }
                               })
                             : _c("div", {
-                                staticClass: "skeleton-header w-25"
+                                staticClass: "skeleton-header mb-2 w-25"
                               }),
                           _vm._v(" "),
-                          _vm.loaded
+                          !_vm.loading
                             ? _c("div", { staticClass: "text-sage" }, [
                                 _vm._v(
                                   "\n              Showing: " +
@@ -25137,16 +25126,16 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm.loaded
+                    !_vm.loading
                       ? _c("video-list", {
                           staticClass: "mb-5",
                           attrs: { videos: _vm.videos.data, cards: 50, cols: 5 }
                         })
                       : _vm._e(),
                     _vm._v(" "),
-                    !_vm.loaded
+                    _vm.loading
                       ? _c("skeleton-video-card", {
-                          staticClass: "mb-5",
+                          staticClass: "mb-5 video-listing",
                           attrs: { cards: 50, cols: 5 }
                         })
                       : _vm._e(),
@@ -25156,12 +25145,12 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.loaded,
-                          expression: "loaded"
+                          value: !_vm.loading,
+                          expression: "!loading"
                         }
                       ],
                       staticClass: "mb-5",
-                      attrs: { pagination: _vm.videos, loaded: _vm.loaded },
+                      attrs: { loading: _vm.loading, pagination: _vm.videos },
                       on: {
                         paginate: function($event) {
                           return _vm.getVideos()
@@ -42890,11 +42879,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this.$Progress.start();
 
-                _this.error = false; // Stop unfinished images loading
+                _this.error = false;
+                _this.loading = true; // Stop unfinished images loading
 
                 $('.video-poster img').attr('src', ''); // Make the call
 
-                _context.next = 5;
+                _context.next = 6;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/videos', {
                   params: _objectSpread(_objectSpread({}, _this.$route.params), _this.$route.query)
                 }).then(function (response) {
@@ -42908,7 +42898,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.$Progress.finish();
 
-                  _this.loaded = true;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   if (axios__WEBPACK_IMPORTED_MODULE_1___default.a.isCancel(error)) {
                     console.log('API Request canceled by user.');
@@ -42919,10 +42909,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.$Progress.fail();
 
-                  _this.loaded = true;
+                  _this.loading = true;
                 });
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -43566,8 +43556,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Justin\Sites\adult\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/justin/Sites/media/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/justin/Sites/media/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
