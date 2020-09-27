@@ -17,14 +17,15 @@
               <page-header
                 :title="'Hot Videos'"
                 icon="flame"
-                v-if="!isLoading"
+                v-if="loaded"
               ></page-header>
-              <div v-else class="skeleton-header w-100"></div>
-              <div v-if="!isLoading" class="text-sage">
-                Showing: {{ uf_num(videos.current_page) }} of
-                {{ uf_num(videos.last_page) }}
+              <div v-else class="skeleton-header w-25"></div>
+
+              <div v-if="loaded" class="text-sage">
+                Showing: {{ first_page }} of {{ last_page }}
               </div>
-              <div v-else class="skeleton-text w-75"></div>
+
+              <div v-else class="skeleton-text w-25"></div>
             </div>
             <div>
               <select
@@ -44,7 +45,7 @@
 
           <video-list
             class="mb-5"
-            v-if="!isLoading"
+            v-if="loaded"
             :videos="videos.data"
             :cards="50"
             :cols="5"
@@ -52,7 +53,7 @@
 
           <skeleton-video-card
             class="mb-5"
-            v-if="isLoading"
+            v-if="!loaded"
             :cards="50"
             :cols="5"
           ></skeleton-video-card>
@@ -102,8 +103,18 @@ export default {
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
-  computed: { ...mapGetters(['isLoading']), ...mapState(['loading']) },
-  mounted() {},
+  computed: {
+    first_page() {
+      return this.comma_delimiter(this.videos.current_page)
+    },
+    last_page() {
+      return this.comma_delimiter(this.videos.last_page)
+    }
+  },
+  mounted() {
+    // Get videos on page load
+    this.getVideos()
+  },
   methods: {
     sortyBy() {
       return null

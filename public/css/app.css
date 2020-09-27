@@ -3085,11 +3085,6 @@ pre code {
   box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
-.form-control::-webkit-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
@@ -14852,11 +14847,6 @@ a:hover,
   border: 1px solid #38388b;
 }
 
-.form-control::-webkit-input-placeholder, .form-control:focus::-webkit-input-placeholder {
-  color: #cacaf1;
-  opacity: 0.5;
-}
-
 .form-control::-moz-placeholder, .form-control:focus::-moz-placeholder {
   color: #cacaf1;
   opacity: 0.5;
@@ -15058,6 +15048,52 @@ a:hover,
   height: 9px;
   background: #5959cf;
   float: left;
+}
+
+.skeleton-text,
+.skeleton-header {
+  display: inline-block;
+  height: 11px;
+  background: #5959cf;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-text:after,
+.skeleton-header:after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  transform: translateX(100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 20%, #6e6eda 50%, rgba(255, 255, 255, 0) 80%);
+  -webkit-animation: shine-effect 750ms linear infinite;
+          animation: shine-effect 750ms linear infinite;
+}
+
+.skeleton-header {
+  height: 18px;
+}
+
+@-webkit-keyframes shine-effect {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shine-effect {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .sidead-placeholder {

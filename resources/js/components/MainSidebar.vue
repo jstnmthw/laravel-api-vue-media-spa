@@ -3,42 +3,42 @@
     <div class="main-categories">
       <ul class="list-unstyled pl-4">
         <li>
-          <a href="/my/subscriptions">
+          <router-link :to="'/my/subscriptions'">
             <ion-icon class="text-lilac" name="mail-outline"></ion-icon
             >Subscriptions
             <span class="counter counter-subscriptions"></span>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/my/watch-history">
+          <router-link :to="'/my/watch-history'">
             <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon
             >Watch History
-          </a>
+          </router-link>
         </li>
         <div class="line"></div>
         <li>
-          <a href="/best/weekly">
+          <router-link :to="'/best/weekly'">
             <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>Best
             Videos
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/most-viewed/weekly">
+          <router-link :to="'/most-viewed/weekly'">
             <ion-icon class="text-lilac" name="eye-outline"></ion-icon>Most
             Viewed
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/most-commented/weekly">
+          <router-link :to="'/most-commented/weekly'">
             <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most
             Commented
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/videos/recommended">
+          <router-link :to="'/videos/recommended'">
             <ion-icon class="text-lilac" name="thumbs-up-outline"></ion-icon
             >Recommended
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>

@@ -46,7 +46,7 @@
             href="javascript:void(0)"
             v-on:click.prevent="changePage(page)"
           >
-            {{ uf_num(page) }}
+            {{ comma_delimiter(page) }}
           </a>
         </li>
         <li
@@ -81,7 +81,7 @@
             aria-label="Last Page"
             v-on:click.prevent="changePage(pagination.last_page)"
           >
-            {{ uf_num(pagination.last_page) }}
+            {{ comma_delimiter(pagination.last_page) }}
           </a>
         </li>
         <li
@@ -141,7 +141,7 @@ export default {
         })
       }
     },
-    uf_num(int) {
+    comma_delimiter(int) {
       return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
   }
