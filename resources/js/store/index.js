@@ -13,7 +13,6 @@ export default new Vuex.Store({
   state: {
     user: [],
     categories: [],
-    catsLoading: false
   },
   getters: {
     categories({ state }) {

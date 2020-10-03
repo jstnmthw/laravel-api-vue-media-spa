@@ -47,7 +47,7 @@
           class="dropdown-menu dropdown-menu-right"
           aria-labelledby="navbarDropdown"
         >
-          <button @click="logout" class="btn btn-link">Logout</button>
+          <button @click="logout" class="btn btn-link text-purple">Logout</button>
         </div>
       </li>
     </ul>

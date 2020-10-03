@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\DataCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Data;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +32,9 @@ Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
     if (Auth::attempt($credentials)) {
         // Authentication passed...
-        return Response::make('', 201);
+        return Response::make('Success', 201);
     } else {
-        return Reponse::make('', 401);
+        return Response::make('Failed', 401);
     }
 });
 
