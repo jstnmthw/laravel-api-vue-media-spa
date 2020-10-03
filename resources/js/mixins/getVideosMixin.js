@@ -6,9 +6,9 @@ export default {
     async getVideos() {
       this.$Progress.start()
       this.error = false
-      this.loading = true
+      this.loaded = false
 
-      // Stop unfinished images loading
+      // Stop unfinished images loaded
       $('.video-poster img').attr('src', '')
 
       // Make the call
@@ -28,7 +28,7 @@ export default {
             this.videos = response.data
           }
           this.$Progress.finish()
-          this.loading = false
+          this.loaded = true
         })
         .catch((error) => {
           if (axios.isCancel(error)) {
@@ -38,7 +38,7 @@ export default {
             this.error = true
           }
           this.$Progress.fail()
-          this.loading = true
+          this.loaded = true
         })
     }
   }
