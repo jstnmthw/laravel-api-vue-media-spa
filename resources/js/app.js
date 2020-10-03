@@ -33,7 +33,7 @@ axios.interceptors.request.use(
     config.cancelToken = source.token
 
     // Add to vuex to make cancellation available from anywhere
-    store.commit('ADD_CANCEL_TOKEN', source)
+    store.commit('requestToken/ADD_CANCEL_TOKEN', source)
 
     return config
   },
@@ -63,24 +63,15 @@ const app = new Vue({
   el: '#app',
   router,
   store,
-  data: {
-    categories: []
-  },
+  data: {},
   mounted() {
-    this.getCategories()
+    store.dispatch('getCategories')
   },
-  methods: {
-    async getCategories() {
-      await axios.get('/api/categories').then((response) => {
-        this.categories = response.data
-        console.log('Getting categories.')
-      })
-    }
-  }
+  methods: {}
 })
 
 // Before creation callback
 router.beforeEach((to, from, next) => {
-  store.dispatch('CANCEL_PENDING_REQUESTS')
+  store.dispatch('requestToken/CANCEL_PENDING_REQUESTS')
   next()
 })

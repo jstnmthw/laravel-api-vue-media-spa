@@ -4,34 +4,31 @@
       <main-sidebar :categories="categories"></main-sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
-
         <div v-if="error" class="error">
           <h4 class="text-center mt-lg-3">
-            An error has occured, please try again later.
+            An error has occurred, please try again later.
           </h4>
         </div>
-
         <div v-else>
           <div class="d-flex mb-3">
             <div class="flex-grow-1 mr-5">
               <page-header
-                :title="'Hot Videos'"
+                :title="'Videos'"
                 icon="flame"
                 v-if="loaded"
               ></page-header>
               <div v-else class="skeleton-header w-25"></div>
-
               <div v-if="loaded" class="text-sage">
                 Showing: {{ first_page }} of {{ last_page }}
               </div>
-
               <div v-else class="skeleton-text w-25"></div>
             </div>
-            <div>
+            <div class="d-flex align-items-center sort-by">
+              <label for="sort_by" class="text-sage mb-0 mr-2">Sort By: </label>
               <select
-                id="sortby"
+                id="sort_by"
                 v-model="sort"
-                name="sortby"
+                name="sort_by"
                 class="custom-select"
                 @change="sortBy()"
               >
@@ -42,7 +39,6 @@
               </select>
             </div>
           </div>
-
           <video-list
             class="mb-5"
             v-if="loaded"
@@ -50,14 +46,12 @@
             :cards="50"
             :cols="5"
           ></video-list>
-
           <skeleton-video-card
             class="mb-5"
             v-if="!loaded"
             :cards="50"
             :cols="5"
           ></skeleton-video-card>
-
           <paginate
             class="mb-5"
             v-show="loaded"
@@ -82,9 +76,6 @@ import VideoList from '@/components/VideoList'
 
 // Mixins
 import getVideosMixin from '@/mixins/getVideosMixin.js'
-
-// Getters
-import { mapState, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -112,18 +103,16 @@ export default {
     }
   },
   mounted() {
-    // Get videos on page load
     this.getVideos()
   },
   methods: {
-    sortyBy() {
+    sort_by() {
       return null
     }
   },
   mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
-    // Watch route changes
     $route(to, from) {
       this.videos = []
       this.getVideos()

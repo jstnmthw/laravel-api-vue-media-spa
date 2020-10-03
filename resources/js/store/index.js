@@ -1,41 +1,38 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import RequestToken from '@/store/modules/request-token'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
+  modules: {
+    requestToken: RequestToken
+  },
   state: {
-    cancelTokens: [],
-    user: []
+    user: [],
+    categories: [],
+    catsLoading: false
   },
   getters: {
-    cancelTokens(state) {
-      return state.cancelTokens
+    categories({ state }) {
+      return state.categories
     }
   },
   mutations: {
     ADD_USER_INFO(state, payload) {
       state.user = payload
     },
-    ADD_CANCEL_TOKEN(state, token) {
-      state.cancelTokens.push(token)
-    },
-    CLEAR_CANCEL_TOKENS(state) {
-      state.cancelTokens = []
+    ADD_CATEGORIES(state, payload) {
+      state.categories = payload
     }
   },
   actions: {
-    CANCEL_PENDING_REQUESTS(context) {
-      // Cancel all request where a token exists
-      context.state.cancelTokens.forEach((request) => {
-        if (request.cancel) {
-          request.cancel('Request canceled.')
-        }
+    async getCategories({ commit }) {
+      await axios.get('/api/categories').then((response) => {
+        commit('ADD_CATEGORIES', response.data)
       })
-
-      // Reset the cancelTokens store
-      context.commit('CLEAR_CANCEL_TOKENS')
     }
   }
 })

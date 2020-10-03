@@ -21,7 +21,7 @@ mix
     },
     devServer: {
       proxy: {
-        '*': 'http://localhost'
+        '*': 'http://127.0.0.1:8000'
       },
       clientLogLevel: 'none'
     }

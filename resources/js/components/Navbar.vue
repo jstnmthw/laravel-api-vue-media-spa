@@ -3,7 +3,7 @@
     class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
   >
     <router-link to="/" class="logo">
-      <h1 class="mb-0">🍑</h1>
+        <h1 class="mb-0"><span class="sr-only">🍑</span></h1>
     </router-link>
     <button
       class="navbar-toggler"
@@ -62,7 +62,7 @@ import SearchInput from '@/components/SearchInput'
 export default {
   data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true'
+      auth: localStorage.getItem('Authenticated') === 'true'
     }
   },
   mounted() {
@@ -90,7 +90,7 @@ export default {
           })
           .then((res) => {
             axios.get('/api/user').then((res) => {
-              localStorage.setItem('Authenticated', true)
+              localStorage.setItem('Authenticated', 'true')
               this.auth = true
               store.commit('ADD_USER_INFO', res.data)
             })

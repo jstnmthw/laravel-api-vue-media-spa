@@ -7,8 +7,7 @@ body {
 }
 
 // General CSS
-a,
-.btn-link {
+a, .btn-link {
   color: $white;
   &:hover {
     color: $white;
@@ -184,6 +183,11 @@ a,
     }
   }
 }
+.sort-by {
+    label {
+        white-space: nowrap;
+    }
+}
 
 // Skeleton Cards
 .skeleton-card-video {
@@ -281,7 +285,7 @@ a,
       overflow: hidden;
       img {
         border-radius: 0;
-        filter: blur(15px);
+        filter: blur(35px);
       }
       .carousel {
         position: absolute;
@@ -318,6 +322,7 @@ a,
       .video-title {
         word-break: break-word;
         a {
+        filter: blur(2px);
           color: $lilac;
           &:hover {
             color: $white;
@@ -388,6 +393,7 @@ a,
 }
 .all-categories {
   a {
+    filter: blur(2px);
     color: $lilac;
     &:hover {
       color: $white;

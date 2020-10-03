@@ -2139,7 +2139,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      auth: localStorage.getItem('Authenticated') == 'true'
+      auth: localStorage.getItem('Authenticated') === 'true'
     };
   },
   mounted: function mounted() {
@@ -2173,7 +2173,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     password: 'password'
                   }).then(function (res) {
                     axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/user').then(function (res) {
-                      localStorage.setItem('Authenticated', true);
+                      localStorage.setItem('Authenticated', 'true');
                       _this.auth = true;
                       _store__WEBPACK_IMPORTED_MODULE_1__["default"].commit('ADD_USER_INFO', res.data);
                     });
@@ -3007,7 +3007,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/skeleton/VideoCard */ "./resources/js/components/skeleton/VideoCard.vue");
 /* harmony import */ var _components_VideoList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/VideoList */ "./resources/js/components/VideoList.vue");
 /* harmony import */ var _mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/getVideosMixin.js */ "./resources/js/mixins/getVideosMixin.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+//
 //
 //
 //
@@ -3089,8 +3089,6 @@ __webpack_require__.r(__webpack_exports__);
 
  // Mixins
 
- // Getters
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3118,18 +3116,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    // Get videos on page load
     this.getVideos();
   },
   methods: {
-    sortyBy: function sortyBy() {
+    sort_by: function sort_by() {
       return null;
     }
   },
   mixins: [_mixins_getVideosMixin_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: ['categories'],
   watch: {
-    // Watch route changes
     $route: function $route(to, from) {
       this.videos = [];
       this.getVideos();
@@ -25043,7 +25039,7 @@ var render = function() {
               ? _c("div", { staticClass: "error" }, [
                   _c("h4", { staticClass: "text-center mt-lg-3" }, [
                     _vm._v(
-                      "\n          An error has occured, please try again later.\n        "
+                      "\n          An error has occurred, please try again later.\n        "
                     )
                   ])
                 ])
@@ -25078,63 +25074,80 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.sort,
-                                expression: "sort"
-                              }
-                            ],
-                            staticClass: "custom-select",
-                            attrs: { id: "sortby", name: "sortby" },
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.sort = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                },
-                                function($event) {
-                                  return _vm.sortBy()
+                      _c(
+                        "div",
+                        { staticClass: "d-flex align-items-center sort-by" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "text-sage mb-0 mr-2",
+                              attrs: { for: "sort_by" }
+                            },
+                            [_vm._v("Sort By: ")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.sort,
+                                  expression: "sort"
                                 }
-                              ]
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { selected: "", value: "most_views" } },
-                              [_vm._v("Most Views")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "top_rated" } }, [
-                              _vm._v("Top Rated")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "duration" } }, [
-                              _vm._v("Duration")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "most_recent" } }, [
-                              _vm._v("Most Recent")
-                            ])
-                          ]
-                        )
-                      ])
+                              ],
+                              staticClass: "custom-select",
+                              attrs: { id: "sort_by", name: "sort_by" },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.sort = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  },
+                                  function($event) {
+                                    return _vm.sortBy()
+                                  }
+                                ]
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                {
+                                  attrs: { selected: "", value: "most_views" }
+                                },
+                                [_vm._v("Most Views")]
+                              ),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "top_rated" } }, [
+                                _vm._v("Top Rated")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "duration" } }, [
+                                _vm._v("Duration")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "most_recent" } },
+                                [_vm._v("Most Recent")]
+                              )
+                            ]
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _vm.loaded
@@ -43024,11 +43037,63 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_modules_request_token__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/store/modules/request-token */ "./resources/js/store/modules/request-token.js");
+/* harmony import */ var _store_modules_request_token__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_store_modules_request_token__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   strict: true,
+  modules: {
+    requestToken: _store_modules_request_token__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
+  state: {
+    // cancelTokens: [],
+    user: []
+  },
+  getters: {// cancelTokens(state) {
+    //   return state.cancelTokens
+    // }
+  },
+  mutations: {// ADD_USER_INFO(state, payload) {
+    //   state.user = payload
+    // },
+    // ADD_CANCEL_TOKEN(state, token) {
+    //   state.cancelTokens.push(token)
+    // },
+    // CLEAR_CANCEL_TOKENS(state) {
+    //   state.cancelTokens = []
+    // }
+  },
+  actions: {// CANCEL_PENDING_REQUESTS(context) {
+    //   // Cancel all request where a token exists
+    //   context.state.cancelTokens.forEach((request) => {
+    //     if (request.cancel) {
+    //       request.cancel('Request canceled.')
+    //     }
+    //   })
+    //
+    //   // Reset the cancelTokens store
+    //   context.commit('CLEAR_CANCEL_TOKENS')
+    // }
+  }
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/request-token.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/store/modules/request-token.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Cancel axios request tokens.
+ */
+var RequestToken = {
+  namespaced: true,
   state: {
     cancelTokens: [],
     user: []
@@ -43051,17 +43116,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   },
   actions: {
     CANCEL_PENDING_REQUESTS: function CANCEL_PENDING_REQUESTS(context) {
-      // Cancel all request where a token exists
       context.state.cancelTokens.forEach(function (request) {
         if (request.cancel) {
           request.cancel('Request canceled.');
         }
-      }); // Reset the cancelTokens store
-
+      });
       context.commit('CLEAR_CANCEL_TOKENS');
     }
   }
-}));
+};
 
 /***/ }),
 

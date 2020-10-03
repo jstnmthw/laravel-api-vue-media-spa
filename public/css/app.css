@@ -15012,6 +15012,10 @@ a:hover,
   box-shadow: none;
 }
 
+.sort-by label {
+  white-space: nowrap;
+}
+
 .skeleton-card-video {
   width: 100%;
 }
