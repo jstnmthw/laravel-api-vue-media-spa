@@ -1,7 +1,7 @@
 <template>
   <div class="content container bg-purple">
     <div class="row">
-      <main-sidebar :categories="categories"></main-sidebar>
+      <main-sidebar></main-sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
         <div v-if="error" class="error">
@@ -11,13 +11,13 @@
         </div>
         <div v-else>
           <div class="d-flex mb-3">
-            <div class="flex-grow-1 mr-5">
+            <div class="d-flex flex-grow-1 flex-column mr-5">
               <page-header
                 :title="'Videos'"
                 icon="flame"
                 v-if="loaded"
               ></page-header>
-              <div v-else class="skeleton-header w-25"></div>
+              <div v-else class="skeleton-header w-25 mb-2"></div>
               <div v-if="loaded" class="text-sage">
                 Showing: {{ first_page }} of {{ last_page }}
               </div>
@@ -47,7 +47,7 @@
             :cols="5"
           ></video-list>
           <skeleton-video-card
-            class="mb-5"
+            class="mb-5 video-listing"
             v-if="!loaded"
             :cards="50"
             :cols="5"
@@ -111,7 +111,6 @@ export default {
     }
   },
   mixins: [getVideosMixin],
-  props: ['categories'],
   watch: {
     $route(to, from) {
       this.videos = []
