@@ -23,7 +23,7 @@ export default new VueRouter({
     },
     {
       path: '/categories/:category',
-      component: Categories,
+      component: Homepage,
       name: 'categories'
     },
     {

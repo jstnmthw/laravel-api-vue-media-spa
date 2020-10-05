@@ -10,7 +10,7 @@
             v-on:click.prevent="changePage(pagination.current_page - 1)"
           >
             <span aria-hidden="true">
-              <ion-icon style="top: 2;" name="chevron-back-outline"></ion-icon>
+              <ion-icon style="top: 2px;" name="chevron-back-outline"></ion-icon>
             </span>
             Prev
           </a>
@@ -38,7 +38,7 @@
         <li
           v-for="page in pagesNumber"
           class="page-item"
-          :class="{ active: page == pagination.current_page }"
+          :class="{ active: page === pagination.current_page }"
           :key="page.index"
         >
           <a
@@ -119,23 +119,16 @@ export default {
       endPage = totalPage < endPage ? totalPage : endPage
       let diff = startPage - endPage + 4
       startPage -= startPage - diff > 0 ? diff : 0
-
       let pagesArray = []
       for (let i = startPage; i <= endPage; i++) {
         pagesArray.push(i)
       }
-
-      this.currentPage = startPage
-
       return pagesArray
     }
   },
   methods: {
     changePage(page) {
-      if (!this.loading && this.pagination.current_page != page) {
-        console.log('change page.')
-        this.pagination.current_page = page
-
+      if (!this.loading && this.pagination.current_page !== page) {
         // Push URL
         this.$router.push({
           query: Object.assign({}, this.$route.query, { page: page })

@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -82,9 +82,11 @@ export default {
       search: null
     }
   },
-  computed: mapState({
-    categories: (state) => state.categories
-  }),
+  computed: {
+    ...mapGetters([
+      'categories'
+    ]),
+  },
   methods: {
     search_category() {
       const search = [this.search]

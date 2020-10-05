@@ -20,4 +20,8 @@ export default {
     VideoListItem: VideoListItem
   }
 }
+// Take out page specific javascript of the API calls.
+//   document.querySelectorAll('.video-poster img').forEach((img) => {
+//     img.setAttribute('src', '');
+//   });
 </script>

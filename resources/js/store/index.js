@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import RequestToken from '@/store/modules/request-token'
 import axios from 'axios'
+import RequestToken from '@/store/modules/request-token'
+import api from '@/store/modules/api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
   modules: {
-    requestToken: RequestToken
+    requestToken: RequestToken,
+    api: api
   },
   state: {
     user: [],
-    categories: [],
+    categories: []
   },
   getters: {
-    categories({ state }) {
+    categories: (state) => {
       return state.categories
     }
   },
