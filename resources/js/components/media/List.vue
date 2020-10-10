@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import VideoListItem from '@/components/VideoListItem'
+import VideoListItem from '@/components/media/ListItem'
 export default {
   props: ['videos', 'cards', 'cols'],
   components: {

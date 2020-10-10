@@ -9,8 +9,8 @@ import store from '@/store'
 import VueProgressBar from 'vue-progressbar'
 
 // Global components
-import Navbar from '@/components/Navbar'
-import MainFooter from '@/components/MainFooter'
+import Navbar from '@/components/layout/Navbar'
+import MainFooter from '@/components/layout/Footer'
 
 // Mixins
 import Helpers from '@/mixins/Helpers.js'

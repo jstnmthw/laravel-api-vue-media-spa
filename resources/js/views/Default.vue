@@ -11,7 +11,7 @@
 
 <script>
 import PageHeader from '@/components/PageHeader'
-import MainSidebar from '@/components/MainSidebar'
+import MainSidebar from '@/components/layout/Sidebar'
 export default {
   data() {
     return {

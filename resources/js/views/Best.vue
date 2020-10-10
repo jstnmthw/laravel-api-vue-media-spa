@@ -35,8 +35,8 @@ import axios from 'axios'
 // Components
 import TopAdBanner from '@/components/TopAdBanner'
 import PageHeader from '@/components/PageHeader'
-import MainSidebar from '@/components/MainSidebar'
-import VideoList from '@/components/VideoList'
+import MainSidebar from '@/components/layout/Sidebar'
+import VideoList from '@/components/media/List'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 
 export default {

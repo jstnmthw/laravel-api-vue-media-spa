@@ -107,8 +107,8 @@
 
 <script>
 import axios from 'axios'
-import VideoList from '@/components/VideoList'
-import VideoLabels from '@/components/VideoLabels'
+import VideoList from '@/components/media/List'
+import VideoLabels from '@/components/media/Labels'
 
 // Mixins
 import getVideosMixin from '@/mixins/getVideosMixin.js'

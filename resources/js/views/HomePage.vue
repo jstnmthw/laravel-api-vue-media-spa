@@ -71,10 +71,10 @@
 // Components
 import PageHeader from '@/components/PageHeader'
 import Paginate from '@/components/Paginate'
-import MainSidebar from '@/components/MainSidebar'
+import MainSidebar from '@/components/layout/Sidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
-import VideoList from '@/components/VideoList'
+import VideoList from '@/components/media/List'
 
 // State
 import { mapActions, mapGetters, mapState } from 'vuex'

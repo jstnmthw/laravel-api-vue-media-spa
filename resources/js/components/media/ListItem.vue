@@ -9,6 +9,7 @@
           @mouseleave="debounce($event, true)"
         >
           <img
+            src=""
             alt=""
             :key="image.index"
             :data-src="image"
@@ -121,18 +122,18 @@ export default {
 
     // Preload images
     preloadImages(urls, allImagesLoadedCallback) {
-      var loadedCounter = 0
-      var toBeLoadedNumber = urls.length
+      let loadedCounter = 0
+      const toBeLoadedNumber = urls.length
       urls.forEach(function (url) {
         preloadImage(url, function () {
           loadedCounter++
-          if (loadedCounter == toBeLoadedNumber) {
+          if (loadedCounter === toBeLoadedNumber) {
             allImagesLoadedCallback()
           }
         })
       })
       function preloadImage(url, anImageLoadedCallback) {
-        var img = new Image()
+        const img = new Image()
         img.onload = anImageLoadedCallback
         img.src = url
       }
@@ -142,11 +143,7 @@ export default {
     imagesLoaded(imgs) {
       let loaded = false
       for (let i = 0; i < imgs.length; i++) {
-        if (imgs[i].complete && imgs[i].naturalHeight !== 0) {
-          loaded = true
-        } else {
-          loaded = false
-        }
+        loaded = imgs[i].complete && imgs[i].naturalHeight !== 0;
       }
       return loaded
     },
