@@ -91,7 +91,7 @@ class VideoController extends Controller
         // Default model listing
         return Video::search('*')
             ->whereNotMatch('categories', config('const.excluded_cats'))
-//            ->orderby('views', 'desc')
+            ->orderby('views', 'desc')
             ->paginate($limit);
     }
 

@@ -29,13 +29,13 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="'/most-commented/weekly'">
-            <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most
-            Commented
-          </router-link>
+<!--          <router-link :to="'/most-commented/weekly'">-->
+<!--            <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most-->
+<!--            Commented-->
+<!--          </router-link>-->
         </li>
         <li>
-          <router-link :to="'/videos/recommended'">
+          <router-link :to="'/recommended'">
             <ion-icon class="text-lilac" name="thumbs-up-outline"></ion-icon
             >Recommended
           </router-link>
