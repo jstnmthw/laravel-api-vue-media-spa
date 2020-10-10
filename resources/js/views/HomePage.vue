@@ -4,7 +4,7 @@
       <main-sidebar></main-sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
-        <div v-if="error" class="error">
+        <div v-if="error.status" class="error">
           <h4 class="text-center mt-lg-3">
             An error has occurred, please try again later.
           </h4>
@@ -90,7 +90,6 @@ export default {
   },
   data() {
     return {
-      error: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'most_views'
     }
   },
@@ -99,7 +98,8 @@ export default {
       'loading',
     ]),
     ...mapState('api', {
-      videos: (state) => state.data
+      videos: (state) => state.data,
+      error: (state) => state.error,
     }),
     first_page() {
       return this.comma_delimiter(this.videos.current_page)
@@ -115,7 +115,7 @@ export default {
     ...mapActions('api', [
       'api'
     ]),
-    sort_by() {
+    sortBy() {
       return null
     },
     callAPI() {

@@ -6,7 +6,11 @@ import axios from 'axios'
 const state = {
   data: [],
   loading: false,
-  current_page: 1
+  current_page: 1,
+  error: {
+    status: false,
+    msg: ''
+  }
 }
 
 const getters = {
@@ -24,8 +28,8 @@ const mutations = {
     state.currentPage = payload.data.current_page
   },
   SET_ERROR(state, payload) {
-    state.error = payload.error
-    state.error_msg = payload.error_msg ? payload.error_msg : false
+    state.error.status = payload.status
+    state.error.msg = payload.msg ? payload.msg : false
   }
 }
 
@@ -46,7 +50,7 @@ const actions = {
       })
       .catch((error) => {
         commit('SET_LOADING', 0)
-        commit('SET_ERROR', error)
+        commit('SET_ERROR', { status: true, msg: error })
       })
   }
 }
