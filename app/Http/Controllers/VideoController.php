@@ -15,7 +15,7 @@ class VideoController extends Controller
     /**
      * API Resource for Video Model
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index(Request $request)
     {
@@ -51,7 +51,7 @@ class VideoController extends Controller
             return $data;
         }
 
-        // Collectio of models
+        // Collection of models
         if ($request->has('collection')) {
             $collection = explode(',', $request->input('collection'));
             return Video::whereIn('id', $collection)->get();
@@ -59,7 +59,7 @@ class VideoController extends Controller
 
         // Category model listing
         if ($request->has('category')) {
-            return Video::search($request->category)
+            return Video::search($request->input('category'))
                 ->rule(CategoryRule::class)
                 ->orderBy('views', 'DESC')
                 ->paginate($limit);
@@ -81,10 +81,17 @@ class VideoController extends Controller
             return $data->paginate($limit);
         }
 
+        // Most Views
+        if ($request->has('most_viewed')) {
+            return Video::search('*')
+                ->orderBy('views', 'desc')
+                ->paginate($limit);
+        }
+
         // Default model listing
         return Video::search('*')
             ->whereNotMatch('categories', config('const.excluded_cats'))
-            ->orderby('views', 'desc')
+//            ->orderby('views', 'desc')
             ->paginate($limit);
     }
 

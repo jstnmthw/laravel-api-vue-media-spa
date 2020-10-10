@@ -23,7 +23,7 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="'/most-viewed/weekly'">
+          <router-link :to="'/most-viewed'">
             <ion-icon class="text-lilac" name="eye-outline"></ion-icon>
             Most Viewed
           </router-link>

@@ -78,16 +78,11 @@ import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import VideoList from '@/components/media/List'
 
-// Mixins
-import getVideosMixin from '@/mixins/getVideosMixin'
-
 export default {
   data() {
     return {
       videos: [],
       pagination: [],
-      error: false,
-      loaded: false,
       sort: this.$route.query.sortby ? this.$route.query.sortby : 'relevant'
     }
   },
@@ -117,7 +112,6 @@ export default {
       })
     }
   },
-  mixins: [getVideosMixin],
   props: ['categories'],
   watch: {
     $route(to, from) {

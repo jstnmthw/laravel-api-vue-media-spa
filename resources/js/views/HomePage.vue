@@ -119,6 +119,7 @@ export default {
       return null
     },
     callAPI() {
+      console.log(this.$route.params);
       return this.api({
         url: '/api/videos',
         params: { ...this.$route.params, ...this.$route.query }

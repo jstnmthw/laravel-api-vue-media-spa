@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 import Homepage from '@/views/Homepage'
 import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
-import Search from '@/views/Search'
 import Video from '@/views/Video'
 
 Vue.use(VueRouter)
@@ -31,7 +30,7 @@ export default new VueRouter({
     },
     {
       path: '/search',
-      component: Search,
+      component: Homepage,
       name: 'search'
     },
     {
@@ -43,6 +42,11 @@ export default new VueRouter({
       path: '/best',
       component: Homepage,
       name: 'best'
+    },
+    {
+      path: '/:most_viewed',
+      component: Homepage,
+      name: 'most-viewed'
     },
     {
       path: '*',
