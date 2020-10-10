@@ -1,7 +1,7 @@
 <template>
   <div class="content container bg-purple">
     <div class="row">
-      <main-sidebar></main-sidebar>
+      <sidebar></sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
         <div v-if="error.status" class="error">
@@ -71,7 +71,7 @@
 // Components
 import PageHeader from '@/components/PageHeader'
 import Paginate from '@/components/Paginate'
-import MainSidebar from '@/components/layout/Sidebar'
+import Sidebar from '@/components/layout/Sidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import VideoList from '@/components/media/List'
@@ -83,7 +83,7 @@ export default {
   components: {
     PageHeader: PageHeader,
     Paginate: Paginate,
-    MainSidebar: MainSidebar,
+    Sidebar: Sidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,
     VideoList: VideoList

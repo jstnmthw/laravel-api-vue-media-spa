@@ -1,5 +1,5 @@
 <template>
-  <footer class="main-footer container">
+  <footer class="footer container">
     <div class="col-10 mx-auto d-flex">
       <ul class="list-unstyled mr-5">
         <li><h5>Information</h5></li>

@@ -4,28 +4,28 @@
       <ul class="list-unstyled pl-4">
         <li>
           <router-link :to="'/my/subscriptions'">
-            <ion-icon class="text-lilac" name="mail-outline"></ion-icon
-            >Subscriptions
+            <ion-icon class="text-lilac" name="mail-outline"></ion-icon>
+            Subscriptions
             <span class="counter counter-subscriptions"></span>
           </router-link>
         </li>
         <li>
           <router-link :to="'/my/watch-history'">
-            <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon
-            >Watch History
+            <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon>
+            Watch History
           </router-link>
         </li>
-        <div class="line"></div>
+        <li class="line"><hr style="background: #fff; opacity: 0.1;"></li>
         <li>
-          <router-link :to="'/best/weekly'">
-            <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>Best
-            Videos
+          <router-link :to="'/best'">
+            <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>
+            Best Videos
           </router-link>
         </li>
         <li>
           <router-link :to="'/most-viewed/weekly'">
-            <ion-icon class="text-lilac" name="eye-outline"></ion-icon>Most
-            Viewed
+            <ion-icon class="text-lilac" name="eye-outline"></ion-icon>
+            Most Viewed
           </router-link>
         </li>
         <li>
@@ -45,13 +45,16 @@
     <div class="all-categories">
       <div class="sidebar-filter-container">
         <div class="search-wrap position-relative">
-          <input
-            v-model="search"
-            @keyup="search_category()"
-            class="form-control mb-3"
-            type="text"
-            placeholder="Filter by category…"
-          />
+          <label>
+            <span class="sr-only">Search Categories</span>
+            <input
+              v-model="search"
+              @keyup="search_category()"
+              class="form-control mb-3"
+              type="text"
+              placeholder="Filter by category…"
+            />
+          </label>
           <button
             type="button"
             class="btn-clear-search"

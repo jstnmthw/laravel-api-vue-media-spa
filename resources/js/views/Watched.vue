@@ -32,7 +32,7 @@
 import axios from 'axios'
 import TopAdBanner from '@/components/TopAdBanner'
 import PageHeader from '@/components/PageHeader'
-import MainSidebar from '@/components/layout/Sidebar'
+import Sidebar from '@/components/layout/Sidebar'
 import VideoList from '@/components/media/List'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 
@@ -52,7 +52,7 @@ export default {
   components: {
     TopAdBanner: TopAdBanner,
     PageHeader: PageHeader,
-    MainSidebar: MainSidebar,
+    Sidebar: Sidebar,
     VideoList: VideoList,
     SkeletonVideoCard: SkeletonVideoCard
   },

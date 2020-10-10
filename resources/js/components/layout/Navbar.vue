@@ -3,7 +3,7 @@
     class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
   >
     <router-link to="/" class="logo">
-        <h1 class="mb-0"><span class="sr-only">🍑</span></h1>
+        <h1 class="mb-0">🍑</h1>
     </router-link>
     <button
       class="navbar-toggler"
@@ -29,7 +29,7 @@
         </button>
       </li>
       <li v-if="!auth" class="nav-item">
-        <a class="nav-link text-white" href="/register">Register</a>
+        <a class="nav-link text-white" href="javascript: void(0);">Register</a>
       </li>
       <li v-if="auth" class="nav-item dropdown">
         <a

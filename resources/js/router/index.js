@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // Pages
-import Categories from '@/views/Categories'
 import Homepage from '@/views/Homepage'
 import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
@@ -42,8 +41,8 @@ export default new VueRouter({
       name: 'watched'
     },
     {
-      path: '/best/weekly',
-      component: Best,
+      path: '/best',
+      component: Homepage,
       name: 'best'
     },
     {

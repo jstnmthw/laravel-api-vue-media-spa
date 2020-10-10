@@ -10,14 +10,14 @@ import VueProgressBar from 'vue-progressbar'
 
 // Global components
 import Navbar from '@/components/layout/Navbar'
-import MainFooter from '@/components/layout/Footer'
+import Footer from '@/components/layout/Footer'
 
 // Mixins
 import Helpers from '@/mixins/Helpers.js'
 
 // Register global components
 Vue.component('Navbar', Navbar)
-Vue.component('MainFooter', MainFooter)
+Vue.component('MainFooter', Footer)
 
 // Axios settings
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'

@@ -11,7 +11,7 @@
 
 <script>
 import PageHeader from '@/components/PageHeader'
-import MainSidebar from '@/components/layout/Sidebar'
+import Sidebar from '@/components/layout/Sidebar'
 export default {
   data() {
     return {
@@ -19,7 +19,7 @@ export default {
     }
   },
   components: {
-    MainSidebar: MainSidebar,
+    Sidebar: Sidebar,
     PageHeader: PageHeader
   },
   props: ['categories']

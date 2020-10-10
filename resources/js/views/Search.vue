@@ -73,7 +73,7 @@
 <script>
 import PageHeader from '@/components/PageHeader'
 import Paginate from '@/components/Paginate'
-import MainSidebar from '@/components/layout/Sidebar'
+import Sidebar from '@/components/layout/Sidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import VideoList from '@/components/media/List'
@@ -94,7 +94,7 @@ export default {
   components: {
     pageHeader: PageHeader,
     paginate: Paginate,
-    MainSidebar: MainSidebar,
+    Sidebar: Sidebar,
     SkeletonVideoCard: SkeletonVideoCard,
     TopAdBanner: TopAdBanner,
     VideoList: VideoList
