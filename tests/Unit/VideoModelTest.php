@@ -12,7 +12,10 @@ class VideoModelTests extends TestCase
      *
      * @return void
      */
-    public function textExample()
+    public function testExample()
     {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
     }
 }

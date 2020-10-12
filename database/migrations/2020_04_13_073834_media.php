@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class VideoData extends Migration
+class Media extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class VideoData extends Migration
     public function up()
     {
 
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
 
             $table->id();
             $table->text('embed');
@@ -40,6 +40,6 @@ class VideoData extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('media');
     }
 }

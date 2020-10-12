@@ -5,12 +5,12 @@ namespace App;
 use ScoutElastic\IndexConfigurator;
 use ScoutElastic\Migratable;
 
-class VideosIndex extends IndexConfigurator
+class MediaIndex extends IndexConfigurator
 {
     use Migratable;
 
-    // Index name
-    protected $name = 'videos_idx';
+    // Index name for Elastic search index
+    protected $name = 'media_idx';
 
     /**
      * Elastic Search settings

@@ -99,7 +99,7 @@ export default {
       const categories = this.categories.map((el) => el.slug)
       const key = categories.indexOf(this.$route.params.category)
       if (key >= 0) {
-        return this.categories[key]['name'] + ' Video Category'
+        return this.categories[key]['name'] + ' Media Category'
       }
     }
   },

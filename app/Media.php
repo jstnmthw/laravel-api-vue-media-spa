@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 // use Laravel\Scout\Searchable;
 
-class Video extends Model
+class Media extends Model
 {
     use Searchable;
 
@@ -28,14 +28,6 @@ class Video extends Model
     ];
 
     /**
-     * Get the categories for the video.
-     */
-    // public function categories()
-    // {
-    //     return $this->morphToMany('App\Category', 'categorizable');
-    // }
-
-    /**
      * Get the index name for the model.
      *
      * @return string
@@ -46,13 +38,13 @@ class Video extends Model
     }
 
     /**
-     * Get the indexable data array for the model.
+     * Get the index data array for the model.
      *
      * @return array
      */
     public function toSearchableArray()
     {
-        $array = $this->only([
+        return $this->only([
             'title',
             'categories',
             'views',
@@ -63,7 +55,5 @@ class Video extends Model
             'created_at',
             'updated_at',
         ]);
-
-        return $array;
     }
 }

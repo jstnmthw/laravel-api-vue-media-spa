@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // Pages
-import Homepage from '@/views/Homepage'
+import Master from '@/views/Master'
 import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Video from '@/views/Video'
@@ -15,12 +15,12 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      component: Homepage,
+      component: Master,
       name: 'home'
     },
     {
       path: '/categories/:category',
-      component: Homepage,
+      component: Master,
       name: 'categories'
     },
     {
@@ -30,7 +30,7 @@ export default new VueRouter({
     },
     {
       path: '/search',
-      component: Homepage,
+      component: Master,
       name: 'search'
     },
     {
@@ -40,12 +40,12 @@ export default new VueRouter({
     },
     {
       path: '/best',
-      component: Homepage,
+      component: Master,
       name: 'best'
     },
     {
       path: '/:most_viewed',
-      component: Homepage,
+      component: Master,
       name: 'most-viewed'
     },
     {
