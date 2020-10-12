@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 use Config;
@@ -18,7 +20,7 @@ class VideoController extends Controller
      * API Resource for Media Model
      *
      * @param Request $request
-     * @return LengthAwarePaginator
+     * @return Media|Media[]|LengthAwarePaginator|Builder|Builder[]|Collection|Model
      */
     public function index(Request $request)
     {
@@ -26,6 +28,7 @@ class VideoController extends Controller
         $limit = $request->has('limit') ? (int) $request->input('limit') : 50;
 
         // Sorting
+        $sort = 'most_views';
         if ($request->has('sort_by')) {
             switch ($request->input('sort_by')) {
                 case 'most_views':
@@ -42,7 +45,7 @@ class VideoController extends Controller
 
         // Model by ID
         if ($request->has('id')) {
-            $data = Media::where('id', $request->input('id'))->firstOrFail();
+            $data = Media::query()->where('id', $request->input('id'))->firstOrFail();
 
             // TODO: Transform data at insert.
             preg_match(config('regex.domain'), $data->embed, $url);
@@ -57,7 +60,7 @@ class VideoController extends Controller
         // Collection of models
         if ($request->has('collection')) {
             $collection = explode(',', $request->input('collection'));
-            return Media::whereIn('id', $collection)->get();
+            return Media::query()->whereIn('id', $collection)->get();
         }
 
         // Category model listing
@@ -77,7 +80,7 @@ class VideoController extends Controller
                 $data->whereNotIn('id', [$request->input('exclude')]);
             }
 
-            if ($request->has('sortby')) {
+            if ($request->has('sort_by')) {
                 $data->orderBy($sort, 'DESC');
             }
 
@@ -117,25 +120,28 @@ class VideoController extends Controller
     /**
      * Increment likes column on respective model
      *
+     * @param $id
      * @return JsonResponse
      */
     public function like($id)
     {
-        if (Media::where('id', $id)->increment('likes')) {
-            return response()->json(['success' => 1], 200);
+        if (Media::query()->where('id', $id)->increment('likes')) {
+            return response()->json(['success' => true], 200);
         }
+        return response()->json(['success' => false], 200);
     }
 
     /**
      * Increment dislikes column on respective model
      *
+     * @param $id
      * @return JsonResponse
-     * @mixin Builder
      */
     public function dislike($id)
     {
-        if (Media::where('id', $id)->increment('dislikes')) {
+        if (Media::query()->where('id', $id)->increment('dislikes')) {
             return response()->json(['success' => 1], 200);
         }
+        return response()->json(['success' => false], 200);
     }
 }
