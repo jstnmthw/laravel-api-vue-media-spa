@@ -1,6 +1,5 @@
 <template>
   <form v-on:submit.prevent="onSubmit()" class="main-search my-2 mx-auto">
-    {{ search_query }}
     <div class="input-group input-group-lg">
       <input
         type="text"

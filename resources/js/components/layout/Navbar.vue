@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
-  >
+  <nav class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4">
     <router-link to="/" class="logo">
         <h1 class="mb-0">🍑</h1>
     </router-link>
@@ -99,7 +97,7 @@ export default {
     },
     async logout() {
       await axios.post('/logout')
-      localStorage.removeItem('Authenticated', true)
+      localStorage.removeItem('Authenticated')
       this.auth = false
     }
   }
