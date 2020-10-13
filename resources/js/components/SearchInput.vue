@@ -1,5 +1,6 @@
 <template>
-  <form action="/search" method="get" class="main-search my-2 mx-auto">
+  <form v-on:submit.prevent="onSubmit()" class="main-search my-2 mx-auto">
+    {{ search_query }}
     <div class="input-group input-group-lg">
       <input
         type="text"
@@ -8,10 +9,10 @@
         aria-label="Search by videos"
         aria-describedby="search-label"
         placeholder="Search videos"
-        v-bind:value="search_query"
+        v-model="search_query"
       />
       <div class="input-group-append">
-        <button class="btn" id="search-label">
+        <button type="submit" class="btn" id="search-label">
           <span class="sr-only">Search</span>
           <ion-icon name="search-sharp"></ion-icon>
         </button>
@@ -22,16 +23,19 @@
 
 <script>
 export default {
-  computed: {
-    search_query: {
-      get: function () {
-        return this.$route.query.q
-      },
-      set: function (value) {
-        this.$router.replace({
-          query: { q: value }
-        })
-      }
+  data() {
+    return {
+      search_query: this.$route.query.q ? this.$route.query.q : '',
+    }
+  },
+  methods: {
+    onSubmit() {
+      const current_query = this.$route.query.q;
+      console.log(current_query + '!==' + this.search_query);
+      if (current_query !== this.search_query)this.$router.push({
+        path: '/search',
+        query: { q: this.search_query }
+      })
     }
   }
 }

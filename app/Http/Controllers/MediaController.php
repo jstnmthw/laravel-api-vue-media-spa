@@ -10,17 +10,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 use Config;
-use App\Video;
+use App\Media;
 use App\QueryRule;
 use App\CategoryRule;
 
-class VideoController extends Controller
+class MediaController extends Controller
 {
     /**
-     * API Resource for Video Model
+     * API Resource for Media Model
      *
      * @param Request $request
-     * @return Video|Video[]|LengthAwarePaginator|Builder|Builder[]|Collection|Model
+     * @return Media|Media[]|LengthAwarePaginator|Builder|Builder[]|Collection|Model
      */
     public function index(Request $request)
     {
@@ -45,7 +45,7 @@ class VideoController extends Controller
 
         // Model by ID
         if ($request->has('id')) {
-            $data = Video::query()->where('id', $request->input('id'))->firstOrFail();
+            $data = Media::query()->where('id', $request->input('id'))->firstOrFail();
 
             // TODO: Transform data at insert.
             preg_match(config('regex.domain'), $data->embed, $url);
@@ -60,12 +60,12 @@ class VideoController extends Controller
         // Collection of models
         if ($request->has('collection')) {
             $collection = explode(',', $request->input('collection'));
-            return Video::query()->whereIn('id', $collection)->get();
+            return Media::query()->whereIn('id', $collection)->get();
         }
 
         // Category model listing
         if ($request->has('category')) {
-            return Video::search($request->input('category'))
+            return Media::search($request->input('category'))
                 ->rule(CategoryRule::class)
                 ->orderBy('views', 'DESC')
                 ->paginate($limit);
@@ -73,7 +73,7 @@ class VideoController extends Controller
 
         // Search model listing
         if ($request->has('q') && !empty($request->input('q'))) {
-            $data = Video::search($request->input('q'))->rule(QueryRule::class);
+            $data = Media::search($request->input('q'))->rule(QueryRule::class);
             $data->whereNotMatch('categories', config('const.excluded_cats'));
 
             if ($request->has('exclude')) {
@@ -89,13 +89,13 @@ class VideoController extends Controller
 
         // Most Views
         if ($request->has('most_viewed')) {
-            return Video::search('*')
+            return Media::search('*')
                 ->orderBy('views', 'desc')
                 ->paginate($limit);
         }
 
         // Default model listing
-        return Video::search('*')
+        return Media::search('*')
             ->whereNotMatch('categories', config('const.excluded_cats'))
             ->orderby('views', 'desc')
             ->paginate($limit);
@@ -108,7 +108,7 @@ class VideoController extends Controller
      */
     public function best()
     {
-        return Video::search('*')
+        return Media::search('*')
             ->where(
                 'created_at',
                 '>=',
@@ -125,7 +125,7 @@ class VideoController extends Controller
      */
     public function like($id)
     {
-        if (Video::query()->where('id', $id)->increment('likes')) {
+        if (Media::query()->where('id', $id)->increment('likes')) {
             return response()->json(['success' => true], 200);
         }
         return response()->json(['success' => false], 200);
@@ -139,7 +139,7 @@ class VideoController extends Controller
      */
     public function dislike($id)
     {
-        if (Video::query()->where('id', $id)->increment('dislikes')) {
+        if (Media::query()->where('id', $id)->increment('dislikes')) {
             return response()->json(['success' => 1], 200);
         }
         return response()->json(['success' => false], 200);

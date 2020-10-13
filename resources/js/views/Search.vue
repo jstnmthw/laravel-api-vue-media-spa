@@ -107,7 +107,7 @@ export default {
     sortBy() {
       this.$router.push({
         query: Object.assign({}, this.$route.query, {
-          sortby: this.sort
+          sort_by: this.sort
         })
       })
     }

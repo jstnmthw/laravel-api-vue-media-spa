@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.state.user.name
+      return this.$store.state.user.name ? this.$store.state.user.name : 'Guest';
     }
   },
   methods: {
