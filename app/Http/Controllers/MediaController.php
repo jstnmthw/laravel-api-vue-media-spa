@@ -16,6 +16,14 @@ use App\CategoryRule;
 
 class MediaController extends Controller
 {
+    private $limit;
+
+    public function __construct(Request $request)
+    {
+        // Set limit
+        $this->limit = $this->page_limit($request);
+    }
+
     /**
      * API Resource for Media Model
      *
@@ -24,8 +32,9 @@ class MediaController extends Controller
      */
     public function index(Request $request)
     {
-        // Limit
-        $limit = $request->has('limit') ? (int) $request->input('limit') : 50;
+
+        // Set limit
+        $limit = $this->page_limit($request);
 
         // Sorting
         $sort = 'most_views';
@@ -118,7 +127,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Increment likes column on respective model
+     * Increment likes column on
      *
      * @param $id
      * @return JsonResponse
@@ -132,7 +141,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Increment dislikes column on respective model
+     * Increment dislikes column
      *
      * @param $id
      * @return JsonResponse
@@ -143,5 +152,12 @@ class MediaController extends Controller
             return response()->json(['success' => 1], 200);
         }
         return response()->json(['success' => false], 200);
+    }
+
+    /*
+     * Set page limit (respectively query limit)
+     */
+    public function page_limit($request) {
+        return ($request->has('limit') && $request->input('limit') < 50) ? (int) $request->input('limit') : 50;
     }
 }

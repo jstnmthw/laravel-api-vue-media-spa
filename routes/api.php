@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,12 +41,11 @@ Route::post('/login', function (Request $request) {
 /**
  * Resources
  */
-Route::get('videos/search', 'VideoController@search');
-Route::get('videos/category', 'VideoController@category');
-Route::get('videos/best', 'VideoController@best');
-
 Route::post('videos/{id}/like', 'VideoController@like');
 Route::post('videos/{id}/dislike', 'VideoController@dislike');
+Route::post('media/{id}/like', 'MediaController@like');
+Route::post('media/{id}/dislike', 'MediaController@dislike');
 
 Route::apiResource('videos', 'VideoController');
+Route::apiResource('media', 'MediaController');
 Route::apiResource('categories', 'CategoryController');

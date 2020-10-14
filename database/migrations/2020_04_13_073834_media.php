@@ -22,7 +22,7 @@ class Media extends Migration
             $table->text('album');
             $table->text('title');
             $table->text('categories');
-            $table->text('author');
+            $table->text('author')->nullable();
             $table->integer('duration');
             $table->integer('views');
             $table->integer('likes');

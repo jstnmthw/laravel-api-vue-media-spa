@@ -12,7 +12,7 @@ class Media extends Model
 {
     use Searchable;
 
-    protected $indexConfigurator = VideosIndex::class;
+    protected $indexConfigurator = MediaIndex::class;
 
     protected $mapping = [
         'properties' => [
