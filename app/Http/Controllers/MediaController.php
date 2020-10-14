@@ -33,9 +33,6 @@ class MediaController extends Controller
     public function index(Request $request)
     {
 
-        // Set limit
-        $limit = $this->page_limit($request);
-
         // Sorting
         $sort = 'most_views';
         if ($request->has('sort_by')) {
@@ -68,6 +65,7 @@ class MediaController extends Controller
 
         // Collection of models
         if ($request->has('collection')) {
+            // TODO: Make sure array is not over 50 in order to limit query.
             $collection = explode(',', $request->input('collection'));
             return Media::query()->whereIn('id', $collection)->get();
         }
@@ -77,7 +75,7 @@ class MediaController extends Controller
             return Media::search($request->input('category'))
                 ->rule(CategoryRule::class)
                 ->orderBy('views', 'DESC')
-                ->paginate($limit);
+                ->paginate($this->limit);
         }
 
         // Search model listing
@@ -93,21 +91,21 @@ class MediaController extends Controller
                 $data->orderBy($sort, 'DESC');
             }
 
-            return $data->paginate($limit);
+            return $data->paginate($this->limit);
         }
 
         // Most Views
         if ($request->has('most_viewed')) {
             return Media::search('*')
                 ->orderBy('views', 'desc')
-                ->paginate($limit);
+                ->paginate($this->limit);
         }
 
         // Default model listing
         return Media::search('*')
             ->whereNotMatch('categories', config('const.excluded_cats'))
             ->orderby('views', 'desc')
-            ->paginate($limit);
+            ->paginate($this->limit);
     }
 
     /**
