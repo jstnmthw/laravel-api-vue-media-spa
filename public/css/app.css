@@ -15249,8 +15249,6 @@ a:hover,
 }
 
 .video-listing .video .video-info .video-title a {
-  -webkit-filter: blur(2px);
-          filter: blur(2px);
   color: #cacaf1;
 }
 

@@ -2121,18 +2121,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
-    search_query: {
-      get: function get() {
-        return this.$route.query.q;
-      },
-      set: function set(value) {
-        this.$router.replace({
-          query: {
-            q: value
-          }
-        });
-      }
+  data: function data() {
+    return {
+      search_query: this.$route.query.q ? this.$route.query.q : ''
+    };
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var current_query = this.$route.query.q;
+      console.log(current_query + '!==' + this.search_query);
+      if (current_query !== this.search_query) this.$router.push({
+        path: '/search',
+        query: {
+          q: this.search_query
+        }
+      });
     }
   }
 });
@@ -2264,8 +2267,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -2287,7 +2288,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     name: function name() {
-      return this.$store.state.user.name;
+      return this.$store.state.user.name ? this.$store.state.user.name : 'Guest';
     }
   },
   methods: {
@@ -2333,7 +2334,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/logout');
 
               case 2:
-                localStorage.removeItem('Authenticated', true);
+                localStorage.removeItem('Authenticated');
                 _this2.auth = false;
 
               case 4:
@@ -2886,9 +2887,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return null;
     },
     callAPI: function callAPI() {
-      console.log(this.$route.params);
       return this.api({
-        url: '/api/videos',
+        url: '/api/media',
         params: _objectSpread(_objectSpread({}, this.$route.params), this.$route.query)
       });
     }
@@ -7959,7 +7959,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
 
 // exports
 
@@ -23643,11 +23643,24 @@ var render = function() {
     "form",
     {
       staticClass: "main-search my-2 mx-auto",
-      attrs: { action: "/search", method: "get" }
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.onSubmit()
+        }
+      }
     },
     [
       _c("div", { staticClass: "input-group input-group-lg" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search_query,
+              expression: "search_query"
+            }
+          ],
           staticClass: "form-control",
           attrs: {
             type: "text",
@@ -23656,13 +23669,24 @@ var render = function() {
             "aria-describedby": "search-label",
             placeholder: "Search videos"
           },
-          domProps: { value: _vm.search_query }
+          domProps: { value: _vm.search_query },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search_query = $event.target.value
+            }
+          }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "input-group-append" }, [
           _c(
             "button",
-            { staticClass: "btn", attrs: { id: "search-label" } },
+            {
+              staticClass: "btn",
+              attrs: { type: "submit", id: "search-label" }
+            },
             [
               _c("span", { staticClass: "sr-only" }, [_vm._v("Search")]),
               _vm._v(" "),
@@ -42704,8 +42728,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Justin\Sites\media\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Justin\Sites\media\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/justin/Projects/media/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/justin/Projects/media/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

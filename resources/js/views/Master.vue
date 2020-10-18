@@ -120,7 +120,7 @@ export default {
     },
     callAPI() {
       return this.api({
-        url: '/api/videos',
+        url: '/api/media',
         params: { ...this.$route.params, ...this.$route.query }
       });
     }
