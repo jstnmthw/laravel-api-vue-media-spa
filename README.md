@@ -5,8 +5,6 @@ A single page application for media sources (eg. videos, images, music etc) writ
 #### 1.) Laradock (Optional)
 If you plan on using Laradock you must first pull it's submodule repo.
  
-`cd laradock`
-
 `git submodule update --init --recursive`
  
 ##### Launch apps
@@ -31,10 +29,10 @@ Import command:
 ##### Create index
 You can change the name of the index that you create in `App\MediaIndex.php` or use the default `media_idx`.
 
-`php artisan elastic:create-index media_idx`
+`php artisan elastic:create-index 'App\MediaIndex'`
 
 ##### Import Models
-`php artisan scout:import App\Media`
+`php artisan scout:import 'App\Media'`
 
 #### 4.) Composer
 `composer install`
