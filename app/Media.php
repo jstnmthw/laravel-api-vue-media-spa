@@ -4,13 +4,11 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-
-// use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
-    use Searchable;
+    use Searchable, HasFactory;
 
     protected $indexConfigurator = MediaIndex::class;
 

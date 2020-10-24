@@ -17,3 +17,7 @@ yarn-error.log
 ## Laravel mix
 /public/mix-manifest.json
 /laradock
+
+## PHPStorm stuff
+_ide_helper.php
+.phpstorm.meta.php

@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-use Config;
 use App\Media;
-use App\QueryRule;
-use App\CategoryRule;
 
 class MediaController extends Controller
 {
@@ -26,86 +21,100 @@ class MediaController extends Controller
 
     /**
      * API Resource for Media Model
-     *
-     * @param Request $request
-     * @return Media|Media[]|LengthAwarePaginator|Builder|Builder[]|Collection|Model
+     * @return LengthAwarePaginator|void
      */
-    public function index(Request $request)
+    public function index()
     {
-
-        // Sorting
-        $sort = 'most_views';
-        if ($request->has('sort_by')) {
-            switch ($request->input('sort_by')) {
-                case 'most_views':
-                    $sort = 'views';
-                    break;
-                case 'duration':
-                    $sort = 'duration';
-                    break;
-                case 'most_recent':
-                    $sort = 'created_at';
-                    break;
-            }
-        }
-
-        // Model by ID
-        if ($request->has('id')) {
-            $data = Media::query()->where('id', $request->input('id'))->firstOrFail();
-
-            // TODO: Transform data at insert.
-            preg_match(config('regex.domain'), $data->embed, $url);
-            $data->embed = $url[0];
-
-            // Explode Categories
-            $data->categories = explode(';', $data->categories);
-
-            return $data;
-        }
-
-        // Collection of models
-        if ($request->has('collection')) {
-            // TODO: Make sure array is not over 50 in order to limit query.
-            $collection = explode(',', $request->input('collection'));
-            return Media::query()->whereIn('id', $collection)->get();
-        }
-
-        // Category model listing
-        if ($request->has('category')) {
-            return Media::search($request->input('category'))
-                ->rule(CategoryRule::class)
-                ->orderBy('views', 'DESC')
-                ->paginate($this->limit);
-        }
-
-        // Search model listing
-        if ($request->has('q') && !empty($request->input('q'))) {
-            $data = Media::search($request->input('q'))->rule(QueryRule::class);
-            $data->whereNotMatch('categories', config('const.excluded_cats'));
-
-            if ($request->has('exclude')) {
-                $data->whereNotIn('id', [$request->input('exclude')]);
-            }
-
-            if ($request->has('sort_by')) {
-                $data->orderBy($sort, 'DESC');
-            }
-
-            return $data->paginate($this->limit);
-        }
-
-        // Most Views
-        if ($request->has('most_viewed')) {
-            return Media::search('*')
-                ->orderBy('views', 'desc')
-                ->paginate($this->limit);
-        }
-
         // Default model listing
-        return Media::search('*')
-            ->whereNotMatch('categories', config('const.excluded_cats'))
-            ->orderby('views', 'desc')
-            ->paginate($this->limit);
+        $data = Media::search('*')->paginate(50);
+        return $data->isNotEmpty() ? $data : abort(404);
+    }
+//    public function index(Request $request)
+//    {
+//
+//        // Sorting
+//        $sort = 'most_views';
+//        if ($request->has('sort_by')) {
+//            switch ($request->input('sort_by')) {
+//                case 'most_views':
+//                    $sort = 'views';
+//                    break;
+//                case 'duration':
+//                    $sort = 'duration';
+//                    break;
+//                case 'most_recent':
+//                    $sort = 'created_at';
+//                    break;
+//            }
+//        }
+//
+//        // Model by ID
+//        if ($request->has('id')) {
+//            $data = Media::query()->where('id', $request->input('id'))->firstOrFail();
+//
+//            // TODO: Transform data at insert.
+//            preg_match(config('regex.domain'), $data->embed, $url);
+//            $data->embed = $url[0];
+//
+//            // Explode Categories
+//            $data->categories = explode(';', $data->categories);
+//
+//            return $data;
+//        }
+//
+//        // Collection of models
+//        if ($request->has('collection')) {
+//            // TODO: Make sure array is not over 50 in order to limit query.
+//            $collection = explode(',', $request->input('collection'));
+//            return Media::query()->whereIn('id', $collection)->get();
+//        }
+//
+//        // Category model listing
+//        if ($request->has('category')) {
+//            return Media::search($request->input('category'))
+//                ->rule(CategoryRule::class)
+//                ->orderBy('views', 'DESC')
+//                ->paginate($this->limit);
+//        }
+//
+//        // Search model listing
+//        if ($request->has('q') && !empty($request->input('q'))) {
+//            $data = Media::search($request->input('q'))->rule(QueryRule::class);
+//            $data->whereNotMatch('categories', config('const.excluded_cats'));
+//
+//            if ($request->has('exclude')) {
+//                $data->whereNotIn('id', [$request->input('exclude')]);
+//            }
+//
+//            if ($request->has('sort_by')) {
+//                $data->orderBy($sort, 'DESC');
+//            }
+//
+//            return $data->paginate($this->limit);
+//        }
+//
+//        // Most Views
+//        if ($request->has('most_viewed')) {
+//            return Media::search('*')
+//                ->orderBy('views', 'desc')
+//                ->paginate($this->limit);
+//        }
+//
+//        // Default model listing
+//        return Media::search('*')
+//            ->whereNotMatch('categories', config('const.excluded_cats'))
+//            ->orderBy('views', 'desc')
+//            ->paginate($this->limit);
+//    }
+
+    /**
+     * Get Media model by id via ElasticSearch
+     * @param $id
+     * @return Model|void
+     */
+    public function get($id) {
+        $data = Media::search('*')->where('_id', $id)->first();
+        return $data ? $data : abort(404);
     }
 
     /**

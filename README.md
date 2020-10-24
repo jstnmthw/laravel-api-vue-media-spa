@@ -13,6 +13,11 @@ If you plan on using Laradock you must first pull it's submodule repo.
 ##### Start bash
 `docker-compose exec workspace`
 
+##### Docker Bash Bug Fix (Windows)
+Use the following fix after logging into Docker container bash via Windows terminal and getting the following error: `bash: $'\r': command not found`
+
+`sed -i 's/\r$//' /root/aliases.sh`
+
 #### 2.) Migrate databases
 `php artisan migrate`
  

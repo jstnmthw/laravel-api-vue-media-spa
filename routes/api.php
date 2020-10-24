@@ -46,6 +46,8 @@ Route::post('videos/{id}/dislike', 'VideoController@dislike');
 Route::post('media/{id}/like', 'MediaController@like');
 Route::post('media/{id}/dislike', 'MediaController@dislike');
 
+Route::get('media/{id}', 'MediaController@get');
+
 Route::apiResource('videos', 'VideoController');
 Route::apiResource('media', 'MediaController');
 Route::apiResource('categories', 'CategoryController');

@@ -9,24 +9,24 @@ use App\Category;
 
 class CategoryController extends Controller
 {
+
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
+     * @return array|void
      */
     public function index()
     {
         $data = Category::select('id', 'name')->get();
+        $json = null;
         foreach ($data as $key => $value) {
             $json[$key]['name'] = $value['name'];
             $json[$key]['slug'] = Str::slug($value['name'], '-');
         }
-        return $json;
+        return $json ? $json : abort(404);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return Response
      */
     public function create()
