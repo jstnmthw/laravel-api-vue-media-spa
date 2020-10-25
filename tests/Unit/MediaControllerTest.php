@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Media;
 use Database\Seeders\MediaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class MediaControllerTest extends TestCase
@@ -16,6 +17,21 @@ class MediaControllerTest extends TestCase
         $this->seed(MediaSeeder::class);
         $response = $this->get('/api/media');
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'current_page',
+            'data',
+            'first_page_url',
+            'from',
+            'last_page',
+            'last_page_url',
+            'links',
+            'next_page_url',
+            'path',
+            'per_page',
+            'prev_page_url',
+            'to',
+            'total',
+        ]);
     }
 
     /**
@@ -32,20 +48,20 @@ class MediaControllerTest extends TestCase
         $response = $this->get('/api/media/1');
         $response
         ->assertStatus(200)
-        ->assertJson([
-            "id" => true,
-            "embed" => true,
-            "thumbnail" => true,
-            "album" => true,
-            "title" => true,
-            "categories" => true,
-            "author" => true,
-            "duration" => true,
-            "views" => true,
-            "likes" => true,
-            "dislikes" => true,
-            "created_at" => true,
-            "updated_at" => true,
+        ->assertJsonStructure([
+            "id",
+            "embed",
+            "thumbnail",
+            "album",
+            "title",
+            "categories",
+            "author",
+            "duration",
+            "views",
+            "likes",
+            "dislikes",
+            "created_at",
+            "updated_at",
         ]);
     }
 }
