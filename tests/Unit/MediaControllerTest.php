@@ -46,7 +46,7 @@ class MediaControllerTest extends TestCase
      * Test MediaController's default api listing (index).
      * @return void
      */
-    public function test_api_get_default_listing()
+    public function test_api_get_default_listing() : void
     {
         $this->seed(MediaSeeder::class);
         $response = $this->get('/api/media');
@@ -58,7 +58,7 @@ class MediaControllerTest extends TestCase
      * Test MediaController's get by id for return json or 404 return.
      * @return void
      */
-    public function test_api_get_model_by_id()
+    public function test_api_get_model_by_id() : void
     {
         $response = $this->get('/api/media/1');
         $response->assertStatus(404);
@@ -68,7 +68,12 @@ class MediaControllerTest extends TestCase
         $response->assertJsonStructure($this->esJsonStructure);
     }
 
-    public function test_api_increment_likes_column() {
+    /**
+     * Test MediaController's `like` (increment column) function.
+     * @return void
+     */
+    public function test_api_increment_likes_column() : void
+    {
         $this->seed(MediaSeeder::class);
         $model = Media::query()->select('likes')->first();
         $response = $this->post('/api/media/1/like');
