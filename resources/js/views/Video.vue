@@ -110,9 +110,6 @@ import axios from 'axios'
 import VideoList from '@/components/media/List'
 import VideoLabels from '@/components/media/Labels'
 
-// Mixins
-import getVideosMixin from '@/mixins/getVideosMixin.js'
-
 export default {
   components: {
     VideoList: VideoList,
@@ -168,7 +165,7 @@ export default {
 
       // Make the call
       await axios
-        .get('/api/videos', {
+        .get('/api/media', {
           params: {
             id: this.$route.params.id
           }
@@ -190,9 +187,8 @@ export default {
     },
     async getRelated(limit) {
       this.related_loaded = false
-
       await axios
-        .get('/api/videos', {
+        .get('/api/media', {
           params: {
             q: this.data.title.replace(/\W/g, '+'),
             limit: limit,
@@ -210,7 +206,7 @@ export default {
     },
     async like() {
       await axios
-        .post('/api/videos/' + this.data.id + '/like')
+        .post('/api/media/' + this.data.id + '/like')
         .then((response) => {
           if (response.data.success) {
             this.storeVote(String(this.data.id))
@@ -219,7 +215,7 @@ export default {
     },
     async dislike() {
       await axios
-        .post('/api/videos/' + this.data.id + '/dislike')
+        .post('/api/media/' + this.data.id + '/dislike')
         .then((response) => {
           if (response.data.success) {
             this.storeVote(String(his.data.id))
@@ -236,7 +232,7 @@ export default {
       this.voted = true
     },
     getVotes() {
-      if (localStorage.getItem('votes') != undefined) {
+      if (localStorage.getItem('votes') !== undefined) {
         return JSON.parse(localStorage.getItem('votes'))
       }
       return false
@@ -250,7 +246,7 @@ export default {
     watched() {
       let watched = []
       const id = String(this.$route.params.id)
-      if (localStorage.getItem('watched_ids') != undefined) {
+      if (localStorage.getItem('watched_ids') !== undefined) {
         watched = JSON.parse(localStorage.getItem('watched_ids'))
       }
       if (!watched.includes(id)) {

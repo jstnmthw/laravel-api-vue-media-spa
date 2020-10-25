@@ -2,7 +2,6 @@
  * Global Mixin Helpers
  */
 export default {
-  mounted() {},
   methods: {
     // Format number with comma delimiter
     comma_delimiter(int = false) {
