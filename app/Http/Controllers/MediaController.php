@@ -144,7 +144,7 @@ class MediaController extends Controller
         if (Media::query()->where('id', $id)->increment('likes')) {
             return response()->json(['success' => true], 200);
         }
-        return response()->json(['success' => false], 200);
+        return response()->json(['success' => false], 404);
     }
 
     /**
