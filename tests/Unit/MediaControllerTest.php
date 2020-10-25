@@ -41,7 +41,6 @@ class MediaControllerTest extends TestCase
         'total',
     ];
 
-
     public function setUp() : void
     {
         parent::setUp();
