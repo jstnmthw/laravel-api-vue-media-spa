@@ -40,6 +40,7 @@ Route::post('/login', function (Request $request) {
 Route::prefix('media')->group(function() {
     Route::post('{id}/like', 'MediaController@like');
     Route::post('{id}/dislike', 'MediaController@dislike');
+    Route::get('best', 'MediaController@best');
     Route::get('{id}', 'MediaController@get');
     Route::get('/', 'MediaController@index');
 });
