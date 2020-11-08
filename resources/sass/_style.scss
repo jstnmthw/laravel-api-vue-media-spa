@@ -308,7 +308,6 @@ a, .btn-link {
       overflow: hidden;
       img {
         border-radius: 0;
-        filter: blur(35px);
       }
       .carousel {
         position: absolute;
@@ -345,7 +344,6 @@ a, .btn-link {
       .video-title {
         word-break: break-word;
         a {
-        //filter: blur(2px);
           color: $lilac;
           &:hover {
             color: $white;
@@ -416,7 +414,6 @@ a, .btn-link {
 }
 .all-categories {
   a {
-    filter: blur(2px);
     color: $lilac;
     &:hover {
       color: $white;

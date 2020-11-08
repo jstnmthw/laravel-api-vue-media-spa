@@ -24,9 +24,9 @@ class MediaFactory extends Factory
     {
         $this->faker->addProvider(new Youtube($this->faker));
         return [
-            'embed' => $this->faker->youtubeEmbedCode(),
-            'thumbnail' => $this->faker->imageUrl(205, 155, null, true),
-            'album' => $this->faker->imageUrl(205, 155, null, true) .';'. $this->faker->imageUrl(205, 155, null, true),
+            'embed' => $this->faker->youtubeShortUri(),
+            'thumbnail' => 'https://picsum.photos/205/155/?image='.$this->faker->randomDigit,
+            'album' => 'https://picsum.photos/205/155/?image='.$this->faker->randomDigit.';'.'https://picsum.photos/205/155/?image='.$this->faker->randomDigit.';'.'https://picsum.photos/205/155/?image='.$this->faker->randomDigit,
             'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'categories' => $this->faker->word .";". $this->faker->word .";". $this->faker->word,
             'author' => $this->faker->name,

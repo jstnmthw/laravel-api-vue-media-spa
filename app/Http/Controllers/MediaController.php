@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use\Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Media;
 
@@ -15,20 +15,27 @@ class MediaController extends Controller
 
     public function __construct(Request $request)
     {
-        // Set limit
+        // Set default limit
         $this->limit = $this->page_limit($request);
     }
 
     /**
      * API Resource for Media Model
-     * @return LengthAwarePaginator|void
+     * @param Request $request
+     * @return LengthAwarePaginator
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Default model listing
-        $data = Media::search('*')->paginate(50);
-        return $data->isNotEmpty() ? $data : abort(404);
+        // Default documents listing
+        $matches = Media::matchAllSearch()->size($this->limit)->execute();
+        $docs = $matches->documents();
+        $res = [];
+        foreach ($docs as $media) {
+            $res[] = array_merge(['id' => (int) $media->getId()], $media->getContent());
+        }
+        return new LengthAwarePaginator($res, $matches->total(), $this->limit, $request->input('page') ?? 1);
     }
+
 //    public function index(Request $request)
 //    {
 //
@@ -119,7 +126,6 @@ class MediaController extends Controller
 
     /**
      * Return top models by week
-     *
      * @return LengthAwarePaginator
      */
     public function best()
@@ -135,7 +141,6 @@ class MediaController extends Controller
 
     /**
      * Increment likes column on
-     *
      * @param $id
      * @return JsonResponse
      */
@@ -149,7 +154,6 @@ class MediaController extends Controller
 
     /**
      * Increment dislikes column
-     *
      * @param $id
      * @return JsonResponse
      */
@@ -161,8 +165,10 @@ class MediaController extends Controller
         return response()->json(['success' => false], 404);
     }
 
-    /*
-     * Set page limit (respectively query limit)
+    /**
+     * Set default page limit
+     * @param $request
+     * @return int
      */
     public function page_limit($request) {
         return ($request->has('limit') && $request->input('limit') < 50) ? (int) $request->input('limit') : 50;

@@ -2,38 +2,15 @@
 
 namespace App;
 
-use ScoutElastic\Searchable;
+use ElasticScoutDriverPlus\CustomSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Media extends Model
 {
-    use Searchable, HasFactory;
-
-    protected $indexConfigurator = MediaIndex::class;
-
-    protected $mapping = [
-        'properties' => [
-            'title' => [
-                'type' => 'text',
-                'fields' => [
-                    'raw' => [
-                        'type' => 'keyword',
-                    ],
-                ],
-            ],
-        ],
-    ];
-
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
-    public function searchableAs()
-    {
-        return 'videos_idx';
-    }
+    use SoftDeletes, Searchable, CustomSearch, HasFactory;
 
     /**
      * Get the index data array for the model.
@@ -44,6 +21,8 @@ class Media extends Model
     {
         return $this->only([
             'title',
+            'thumbnail',
+            'album',
             'categories',
             'views',
             'likes',

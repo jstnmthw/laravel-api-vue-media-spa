@@ -27,6 +27,7 @@ class Media extends Migration
             $table->integer('views');
             $table->integer('likes');
             $table->integer('dislikes');
+            $table->softDeletes();
             $table->timestamps();
 
         });
