@@ -3,11 +3,11 @@
     <div class="d-flex align-items-center mb-1">
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
-        <ion-icon name="eye" style="position: relative; top: 3px;"></ion-icon>
+        <ion-icon name="eye" style="position: relative; top: 3px"></ion-icon>
         {{ views }}
         <ion-icon
           name="thumbs-up"
-          style="position: relative; top: 2px;"
+          style="position: relative; top: 2px"
           class="ml-2"
         ></ion-icon>
         {{ rating }}%
@@ -77,7 +77,7 @@
           <button class="btn btn-primary ml-2">
             <ion-icon
               name="heart"
-              style="position: relative; top: 3px;"
+              style="position: relative; top: 3px"
             ></ion-icon>
             Favorite
           </button>
@@ -165,11 +165,7 @@ export default {
 
       // Make the call
       await axios
-        .get('/api/media', {
-          params: {
-            id: this.$route.params.id
-          }
-        })
+        .get('/api/media/' + this.$route.params.id)
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
