@@ -195,7 +195,7 @@ export default {
           this.related = response.data.data
           this.related_loaded = true
         })
-        .catch((error) => {
+        .catch(() => {
           this.related_loaded = false
           console.log('There was an error fetching the data.')
         })
