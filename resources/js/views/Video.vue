@@ -33,11 +33,9 @@
         <div class="video-frame mb-3">
           <iframe
             id="video"
-            allowfullscreen="true"
-            frameborder="0"
+            allowfullscreen
             height="100%"
             width="100%"
-            scrolling="no"
           ></iframe>
         </div>
         <div class="d-flex align-items-center mb-md-3 mb-lg-5">
