@@ -26,13 +26,11 @@ class MediaController extends Controller
      */
     public function index(Request $request)
     {
-        $matches = Media::matchAllSearch()->size($this->limit)->execute();
-        $docs = $matches->documents();
-        $res = [];
-        foreach ($docs as $media) {
-            $res[] = array_merge(['id' => (int) $media->getId()], $media->getContent());
-        }
-        return new LengthAwarePaginator($res, $matches->total(), $this->limit, $request->input('page') ?? 1);
+        $data = Media::matchAllSearch()
+            ->size($this->limit)
+            ->execute();
+
+        return $this->prepare_docs($request, $data);
     }
 
 //    public function index(Request $request)
@@ -122,10 +120,9 @@ class MediaController extends Controller
         $data = Media::idsSearch()
             ->values([$id])
             ->execute()
-            ->documents()
-            ->first()
-            ->getContent();
-        return $data ? $data : abort(404);
+            ->documents();
+
+        return $data->isNotEmpty() ? $data->first()->getContent() : abort(404);
     }
 
     /**
