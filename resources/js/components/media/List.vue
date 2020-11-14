@@ -1,23 +1,22 @@
 <template>
-  <div class="video-listing">
+  <div class="media-listing">
     <div class="row video-list no-gutters" :class="'row-cols-' + cols">
       <div
         class="col px-2 mb-md-3 position-relative"
-        v-for="video in videos"
-        :key="video.index"
+        v-for="(item, index) in media"
       >
-        <video-list-item :video="video"></video-list-item>
+        <media-item :media="item"></media-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import VideoListItem from '@/components/media/ListItem'
+import MediaItem from '@/components/media/ListItem'
 export default {
-  props: ['videos', 'cards', 'cols'],
+  props: ['media', 'cards', 'cols'],
   components: {
-    VideoListItem: VideoListItem
+    MediaItem
   }
 }
 // Take out page specific javascript of the API calls.

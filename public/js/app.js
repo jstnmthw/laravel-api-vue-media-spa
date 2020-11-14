@@ -2524,12 +2524,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['videos', 'cards', 'cols'],
+  props: ['media', 'cards', 'cols'],
   components: {
-    VideoListItem: _components_media_ListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+    MediaItem: _components_media_ListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 }); // Take out page specific javascript of the API calls.
 //   document.querySelectorAll('.video-poster img').forEach((img) => {
@@ -2590,24 +2589,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['video'],
+  props: ['media'],
   computed: {
     album: function album() {
-      return this.video.album.split(';');
+      return this.media.album.split(';');
     },
     views: function views() {
-      return this.video.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      return this.media.views.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
     rating: function rating() {
-      if (this.video.likes >= 1) {
-        return Math.trunc(this.video.likes / (this.video.likes + this.video.dislikes) * 100);
+      if (this.media.likes >= 1) {
+        return Math.trunc(this.media.likes / (this.media.likes + this.media.dislikes) * 100);
       } else {
         return 0;
       }
     },
     duration: function duration() {
       // TODO: This only formats duration under an hour.
-      return new Date(this.video.duration * 1000).toISOString().substr(14, 5);
+      return new Date(this.media.duration * 1000).toISOString().substr(14, 5);
     }
   },
   data: function data() {
@@ -2840,7 +2839,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 // Components
 
 
@@ -2857,7 +2855,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Sidebar: _components_layout_Sidebar__WEBPACK_IMPORTED_MODULE_2__["default"],
     SkeletonVideoCard: _components_skeleton_VideoCard__WEBPACK_IMPORTED_MODULE_4__["default"],
     TopAdBanner: _components_TopAdBanner__WEBPACK_IMPORTED_MODULE_3__["default"],
-    VideoList: _components_media_List__WEBPACK_IMPORTED_MODULE_5__["default"]
+    MediaList: _components_media_List__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -2865,7 +2863,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('api', ['loading'])), Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])('api', {
-    videos: function videos(state) {
+    media: function media(state) {
       return state.data;
     },
     error: function error(state) {
@@ -2873,10 +2871,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })), {}, {
     first_page: function first_page() {
-      return this.comma_delimiter(this.videos.current_page);
+      return this.comma_delimiter(this.media.current_page);
     },
     last_page: function last_page() {
-      return this.comma_delimiter(this.videos.last_page);
+      return this.comma_delimiter(this.media.last_page);
     }
   }),
   mounted: function mounted() {
@@ -3044,10 +3042,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -3062,11 +3056,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       related: [],
       loaded: false,
       related_loaded: false,
-      voted: false
+      voted: false,
+      categories: false
     };
   },
   mounted: function mounted() {
-    this.getVideo();
+    this.getMedia();
     this.voteStatus();
     this.watched();
   },
@@ -3095,7 +3090,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     formatNumber: function formatNumber(num) {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     },
-    getVideo: function getVideo() {
+    getMedia: function getMedia() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -3114,6 +3109,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$Progress.finish();
 
                   _this.data = response.data;
+                  _this.categories = _this.data.categories.split(';');
                   _this.loaded = true;
                   $('#video')[0].contentWindow.location.replace(_this.data.embed);
 
@@ -3240,27 +3236,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.voted = true;
       }
     },
-    watched: function watched() {// let watched = []
-      // const id = String(this.$route.params.id)
-      // if (localStorage.getItem('watched_ids') !== undefined) {
-      //   watched = JSON.parse(localStorage.getItem('watched_ids'))
-      // }
-      // if (!watched.includes(id)) {
-      //   watched.push(id)
-      //   if (watched.length > 20) {
-      //     watched.shift()
-      //   }
-      //   localStorage.setItem('watched_ids', JSON.stringify(watched))
-      // }
+    watched: function watched() {
+      var watched = [];
+      var id = String(this.$route.params.id);
+
+      if (localStorage.getItem('watched_ids')) {
+        watched = JSON.parse(localStorage.getItem('watched_ids'));
+      }
+
+      if (!watched.includes(id)) {
+        watched.push(id);
+
+        if (watched.length > 20) {
+          watched.shift();
+        }
+
+        localStorage.setItem('watched_ids', JSON.stringify(watched));
+      }
     }
   },
-  props: ['categories'],
   watch: {
     $route: function $route(to, from) {
       this.data = [];
       this.related = [];
       this.voted = false;
-      this.getVideo();
+      this.getMedia();
       this.watched();
     }
   }
@@ -24092,14 +24092,11 @@ var render = function() {
         staticClass: "row video-list no-gutters",
         class: "row-cols-" + _vm.cols
       },
-      _vm._l(_vm.videos, function(video) {
+      _vm._l(_vm.media, function(item, index) {
         return _c(
           "div",
-          {
-            key: video.index,
-            staticClass: "col px-2 mb-md-3 position-relative"
-          },
-          [_c("video-list-item", { attrs: { video: video } })],
+          { staticClass: "col px-2 mb-md-3 position-relative" },
+          [_c("media-item", { attrs: { media: item } })],
           1
         )
       }),
@@ -24129,21 +24126,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "video" }, [
+  return _c("div", { staticClass: "media" }, [
     _c(
       "div",
-      { staticClass: "video-data" },
+      { staticClass: "media-data" },
       [
         _c(
           "router-link",
           {
-            staticClass: "video-poster",
-            attrs: { to: "/videos/" + _vm.video.id }
+            staticClass: "media-poster",
+            attrs: { to: "/medias/" + _vm.media.id }
           },
           [
             _c("img", {
               staticClass: "card-img-top",
-              attrs: { src: _vm.video.thumbnail, alt: _vm.video.title }
+              attrs: { src: _vm.media.thumbnail, alt: _vm.media.title }
             }),
             _vm._v(" "),
             _c(
@@ -24174,13 +24171,13 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "video-info px-0" }, [
+        _c("div", { staticClass: "media-info px-0" }, [
           _c(
             "h5",
-            { staticClass: "video-title mt-2 mb-1" },
+            { staticClass: "media-title mt-2 mb-1" },
             [
-              _c("router-link", { attrs: { to: "/videos/" + _vm.video.id } }, [
-                _vm._v(_vm._s(_vm.video.title))
+              _c("router-link", { attrs: { to: "/medias/" + _vm.media.id } }, [
+                _vm._v(_vm._s(_vm.media.title))
               ])
             ],
             1
@@ -24356,11 +24353,11 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "text-sage" }, [
                                   _vm._v(
-                                    "\n              Showing: " +
+                                    "\n                Showing: " +
                                       _vm._s(_vm.first_page) +
                                       " of " +
                                       _vm._s(_vm.last_page) +
-                                      "\n            "
+                                      "\n              "
                                   )
                                 ])
                               ],
@@ -24379,7 +24376,7 @@ var render = function() {
                                     staticClass: "text-sage mb-0 mr-2",
                                     attrs: { for: "sort_by" }
                                   },
-                                  [_vm._v("Sort By: ")]
+                                  [_vm._v("Sort By:\n              ")]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -24457,19 +24454,15 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("video-list", {
+                          _c("media-list", {
                             staticClass: "mb-5",
-                            attrs: {
-                              videos: _vm.videos.data,
-                              cards: 50,
-                              cols: 5
-                            }
+                            attrs: { media: _vm.media.data, cards: 50, cols: 5 }
                           }),
                           _vm._v(" "),
                           _c("paginate", {
                             staticClass: "mb-5",
                             attrs: {
-                              pagination: _vm.videos,
+                              pagination: _vm.media,
                               loading: _vm.loading
                             },
                             on: {
@@ -24593,11 +24586,11 @@ var render = function() {
           _c(
             "ul",
             { staticClass: "list-inline" },
-            _vm._l(_vm.data.categories, function(label) {
+            _vm._l(_vm.categories, function(category) {
               return _c(
                 "li",
-                { key: label.index, staticClass: "list-inline-item" },
-                [_c("video-labels", { attrs: { label: label } })],
+                { staticClass: "list-inline-item" },
+                [_c("video-labels", { attrs: { label: category } })],
                 1
               )
             }),

@@ -17,10 +17,7 @@
       <div class="col">
         <div class="label-wrap">
           <ul class="list-inline">
-            <li
-              class="list-inline-item"
-              v-for="(category, index) in categories"
-            >
+            <li class="list-inline-item" v-for="category in categories">
               <video-labels :label="category"></video-labels>
             </li>
           </ul>

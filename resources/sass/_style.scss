@@ -291,19 +291,20 @@ iframe {
 }
 
 // VideoList component
-.video-listing {
+.media-listing {
   margin-left: -8px;
   margin-right: -8px;
   h5 {
     font-size: 14px;
     font-weight: 700;
   }
-  .video {
+
+  .media {
     position: relative;
-    .video-data {
+    .media-data {
       display: block;
     }
-    .video-poster {
+    .media-poster {
       display: block;
       min-height: 154px;
       position: relative;
@@ -341,7 +342,7 @@ iframe {
         font-size: 12px;
       }
     }
-    .video-info {
+    .media-info {
       font-size: 12px;
       min-height: 58px;
       .video-title {

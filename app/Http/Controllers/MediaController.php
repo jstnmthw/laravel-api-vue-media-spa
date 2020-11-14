@@ -105,6 +105,21 @@ class MediaController extends Controller
 //    }
 
     /**
+     * Elastic Search document by title
+     * @param $slug
+     * @return Collection
+     */
+    public function getByTitle($slug) {
+        $title = str_replace($slug,'-',' ');
+        $data = Media::boolSearch()
+            ->must('match', ['title' => $title])
+            ->execute()
+            ->documents();
+
+        return $data;
+    }
+
+    /**
      * Elastic Search document by ID
      * @param $id
      * @return Collection|void

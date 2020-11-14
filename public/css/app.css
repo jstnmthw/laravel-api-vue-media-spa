@@ -14804,6 +14804,10 @@ a:hover,
   color: #fff;
 }
 
+iframe {
+  border: none;
+}
+
 #app {
   display: flex;
   min-height: 100vh;
@@ -15177,25 +15181,25 @@ a:hover,
   height: 500px;
 }
 
-.video-listing {
+.media-listing {
   margin-left: -8px;
   margin-right: -8px;
 }
 
-.video-listing h5 {
+.media-listing h5 {
   font-size: 14px;
   font-weight: 700;
 }
 
-.video-listing .video {
+.media-listing .media {
   position: relative;
 }
 
-.video-listing .video .video-data {
+.media-listing .media .media-data {
   display: block;
 }
 
-.video-listing .video .video-poster {
+.media-listing .media .media-poster {
   display: block;
   min-height: 154px;
   position: relative;
@@ -15203,11 +15207,11 @@ a:hover,
   overflow: hidden;
 }
 
-.video-listing .video .video-poster img {
+.media-listing .media .media-poster img {
   border-radius: 0;
 }
 
-.video-listing .video .video-poster .carousel {
+.media-listing .media .media-poster .carousel {
   position: absolute;
   top: 0;
   right: 0;
@@ -15215,7 +15219,7 @@ a:hover,
   left: 0;
 }
 
-.video-listing .video .video-poster .carousel img {
+.media-listing .media .media-poster .carousel img {
   position: absolute;
   top: 0;
   left: 0;
@@ -15224,11 +15228,11 @@ a:hover,
   visibility: hidden;
 }
 
-.video-listing .video .video-poster .carousel img.active {
+.media-listing .media .media-poster .carousel img.active {
   visibility: visible;
 }
 
-.video-listing .video .video-poster .duration {
+.media-listing .media .media-poster .duration {
   position: absolute;
   bottom: 8px;
   right: 8px;
@@ -15239,36 +15243,36 @@ a:hover,
   font-size: 12px;
 }
 
-.video-listing .video .video-info {
+.media-listing .media .media-info {
   font-size: 12px;
   min-height: 58px;
 }
 
-.video-listing .video .video-info .video-title {
+.media-listing .media .media-info .video-title {
   word-break: break-word;
 }
 
-.video-listing .video .video-info .video-title a {
+.media-listing .media .media-info .video-title a {
   color: #cacaf1;
 }
 
-.video-listing .video .video-info .video-title a:hover {
+.media-listing .media .media-info .video-title a:hover {
   color: #fff;
 }
 
-.video-listing .video .video-info .liked {
+.media-listing .media .media-info .liked {
   color: #38c172;
 }
 
-.video-listing .video .video-info .liked [name=thumbs-down] {
+.media-listing .media .media-info .liked [name=thumbs-down] {
   display: none;
 }
 
-.video-listing .video .video-info .disliked {
+.media-listing .media .media-info .disliked {
   color: #e3342f;
 }
 
-.video-listing .video .video-info .disliked [name=thumbs-up] {
+.media-listing .media .media-info .disliked [name=thumbs-up] {
   display: none;
 }
 

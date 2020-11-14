@@ -1,8 +1,8 @@
 <template>
-  <div class="video">
-    <div class="video-data">
-      <router-link class="video-poster" :to="'/videos/' + video.id">
-        <img :src="video.thumbnail" class="card-img-top" :alt="video.title" />
+  <div class="media">
+    <div class="media-data">
+      <router-link class="media-poster" :to="'/medias/' + media.id">
+        <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
         <div
           class="carousel"
           @mouseenter="debounce($event)"
@@ -20,14 +20,14 @@
           {{ duration }}
         </div>
       </router-link>
-      <div class="video-info px-0">
-        <h5 class="video-title mt-2 mb-1">
-          <router-link :to="'/videos/' + video.id">{{
-            video.title
+      <div class="media-info px-0">
+        <h5 class="media-title mt-2 mb-1">
+          <router-link :to="'/medias/' + media.id">{{
+            media.title
           }}</router-link>
         </h5>
         <span class="pr-2 position-relative text-sage">
-          <ion-icon name="eye" style="top: 3px;"></ion-icon>
+          <ion-icon name="eye" style="top: 3px"></ion-icon>
           {{ views }}
         </span>
         <span :class="rating > 50 ? 'liked' : 'disliked'">
@@ -42,20 +42,20 @@
 
 <script>
 export default {
-  props: ['video'],
+  props: ['media'],
   computed: {
     album: function () {
-      return this.video.album.split(';')
+      return this.media.album.split(';')
     },
     views: function () {
-      return this.video.views
+      return this.media.views
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
     rating: function () {
-      if (this.video.likes >= 1) {
+      if (this.media.likes >= 1) {
         return Math.trunc(
-          (this.video.likes / (this.video.likes + this.video.dislikes)) * 100
+          (this.media.likes / (this.media.likes + this.media.dislikes)) * 100
         )
       } else {
         return 0
@@ -63,7 +63,7 @@ export default {
     },
     duration: function () {
       // TODO: This only formats duration under an hour.
-      return new Date(this.video.duration * 1000).toISOString().substr(14, 5)
+      return new Date(this.media.duration * 1000).toISOString().substr(14, 5)
     }
   },
   data() {
@@ -143,7 +143,7 @@ export default {
     imagesLoaded(imgs) {
       let loaded = false
       for (let i = 0; i < imgs.length; i++) {
-        loaded = imgs[i].complete && imgs[i].naturalHeight !== 0;
+        loaded = imgs[i].complete && imgs[i].naturalHeight !== 0
       }
       return loaded
     },

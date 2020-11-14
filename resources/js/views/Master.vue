@@ -15,7 +15,7 @@
               <div class="skeleton-header w-25 mb-2"></div>
               <div class="skeleton-text w-25 mb-4"></div>
               <skeleton-video-card
-                class="mb-5 video-listing"
+                class="mb-5 media-listing"
                 :cards="50"
                 :cols="5"
               ></skeleton-video-card>
@@ -24,39 +24,38 @@
           <div v-else>
             <div class="d-flex mb-3">
               <div class="d-flex flex-grow-1 flex-column mr-5">
-              <page-header
-                :title="'Videos'"
-                icon="flame"
-              ></page-header>
-              <div class="text-sage">
-                Showing: {{ first_page }} of {{ last_page }}
+                <page-header :title="'Videos'" icon="flame"></page-header>
+                <div class="text-sage">
+                  Showing: {{ first_page }} of {{ last_page }}
+                </div>
+              </div>
+              <div class="d-flex align-items-center sort-by">
+                <label for="sort_by" class="text-sage mb-0 mr-2"
+                  >Sort By:
+                </label>
+                <select
+                  id="sort_by"
+                  v-model="sort"
+                  name="sort_by"
+                  class="custom-select"
+                  @change="sortBy()"
+                >
+                  <option selected value="most_views">Most Views</option>
+                  <option value="top_rated">Top Rated</option>
+                  <option value="duration">Duration</option>
+                  <option value="most_recent">Most Recent</option>
+                </select>
               </div>
             </div>
-              <div class="d-flex align-items-center sort-by">
-              <label for="sort_by" class="text-sage mb-0 mr-2">Sort By: </label>
-              <select
-                id="sort_by"
-                v-model="sort"
-                name="sort_by"
-                class="custom-select"
-                @change="sortBy()"
-              >
-                <option selected value="most_views">Most Views</option>
-                <option value="top_rated">Top Rated</option>
-                <option value="duration">Duration</option>
-                <option value="most_recent">Most Recent</option>
-              </select>
-            </div>
-            </div>
-            <video-list
+            <media-list
               class="mb-5"
-              :videos="videos.data"
+              :media="media.data"
               :cards="50"
               :cols="5"
-            ></video-list>
+            ></media-list>
             <paginate
               class="mb-5"
-              :pagination="videos"
+              :pagination="media"
               :loading="loading"
               @paginate="callAPI()"
             ></paginate>
@@ -74,19 +73,19 @@ import Paginate from '@/components/Paginate'
 import Sidebar from '@/components/layout/Sidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
-import VideoList from '@/components/media/List'
+import MediaList from '@/components/media/List'
 
 // State
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   components: {
-    PageHeader: PageHeader,
-    Paginate: Paginate,
-    Sidebar: Sidebar,
-    SkeletonVideoCard: SkeletonVideoCard,
-    TopAdBanner: TopAdBanner,
-    VideoList: VideoList
+    PageHeader,
+    Paginate,
+    Sidebar,
+    SkeletonVideoCard,
+    TopAdBanner,
+    MediaList
   },
   data() {
     return {
@@ -94,27 +93,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('api', [
-      'loading',
-    ]),
+    ...mapGetters('api', ['loading']),
     ...mapState('api', {
-      videos: (state) => state.data,
-      error: (state) => state.error,
+      media: (state) => state.data,
+      error: (state) => state.error
     }),
     first_page() {
-      return this.comma_delimiter(this.videos.current_page)
+      return this.comma_delimiter(this.media.current_page)
     },
     last_page() {
-      return this.comma_delimiter(this.videos.last_page)
+      return this.comma_delimiter(this.media.last_page)
     }
   },
   mounted() {
-    this.callAPI();
+    this.callAPI()
   },
   methods: {
-    ...mapActions('api', [
-      'api'
-    ]),
+    ...mapActions('api', ['api']),
     sortBy() {
       return null
     },
@@ -122,12 +117,12 @@ export default {
       return this.api({
         url: '/api/media',
         params: { ...this.$route.params, ...this.$route.query }
-      });
+      })
     }
   },
   watch: {
     $route(to, from) {
-      this.callAPI();
+      this.callAPI()
     }
   }
 }
