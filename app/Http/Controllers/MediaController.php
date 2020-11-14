@@ -11,13 +11,6 @@ use Illuminate\Support\Collection;
 
 class MediaController extends Controller
 {
-    private $limit;
-
-    public function __construct(Request $request)
-    {
-        // Set default limit
-        $this->limit = $this->page_limit($request);
-    }
 
     /**
      * Default Elastic Search document listing
@@ -27,7 +20,7 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         $data = Media::matchAllSearch()
-            ->size($this->limit)
+            ->size($this->page_limit($request))
             ->execute();
 
         return $this->prepare_docs($request, $data);
@@ -182,16 +175,16 @@ class MediaController extends Controller
      * Prepare Elastic Search documents with paginate
      * @param Request $request
      * @param $matches
-     * @return LengthAwarePaginator|null
+     * @return LengthAwarePaginator
      */
     public function prepare_docs(Request $request, $matches) {
         if($matches instanceof SearchResult) {
-            $docs = $matches->documents();
+            $data = $matches->documents();
             $res = [];
-            foreach ($docs as $media) {
-                $res[] = array_merge(['id' => (int) $media->getId()], $media->getContent());
+            foreach ($data as $row) {
+                $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
             }
-            return new LengthAwarePaginator($res, $matches->total(), $this->limit, $request->input('page') ?? 1);
+            return new LengthAwarePaginator($res, $matches->total(), $this->page_limit($request), $request->input('page') ?? 1);
         }
         return null;
     }
