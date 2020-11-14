@@ -40,11 +40,7 @@
         </div>
         <div class="d-flex align-items-center mb-md-3 mb-lg-5">
           <button
-            @click="
-              {
-                like(), (data.likes += 1)
-              }
-            "
+            @click="like()"
             type="button"
             class="btn btn-primary"
             :class="{ disabled: voted }"
@@ -52,7 +48,7 @@
             <ion-icon name="thumbs-up"></ion-icon>
           </button>
           <div class="video-rating ml-3" v-if="data.likes">
-            {{ data.likes }} Likes / {{ dislikes }} Dislikes
+            {{ likes }} Likes / {{ dislikes }} Dislikes
             <div class="video-rating-bar mt-1">
               <div
                 class="video-rating-likes"
@@ -61,11 +57,7 @@
             </div>
           </div>
           <button
-            @click="
-              {
-                dislike(), (data.dislikes += 1)
-              }
-            "
+            @click="dislike()"
             type="button"
             class="btn btn-primary ml-3"
             :class="{ disabled: voted }"
@@ -203,6 +195,7 @@ export default {
         .post('/api/media/' + this.data.id + '/like')
         .then((response) => {
           if (response.data.success) {
+            this.likes++
             this.storeVote(String(this.data.id))
           }
         })
@@ -212,7 +205,8 @@ export default {
         .post('/api/media/' + this.data.id + '/dislike')
         .then((response) => {
           if (response.data.success) {
-            this.storeVote(String(his.data.id))
+            this.dislikes--
+            this.storeVote(String(this.data.id))
           }
         })
     },
@@ -238,18 +232,18 @@ export default {
       }
     },
     watched() {
-      let watched = []
-      const id = String(this.$route.params.id)
-      if (localStorage.getItem('watched_ids') !== undefined) {
-        watched = JSON.parse(localStorage.getItem('watched_ids'))
-      }
-      if (!watched.includes(id)) {
-        watched.push(id)
-        if (watched.length > 20) {
-          watched.shift()
-        }
-        localStorage.setItem('watched_ids', JSON.stringify(watched))
-      }
+      // let watched = []
+      // const id = String(this.$route.params.id)
+      // if (localStorage.getItem('watched_ids') !== undefined) {
+      //   watched = JSON.parse(localStorage.getItem('watched_ids'))
+      // }
+      // if (!watched.includes(id)) {
+      //   watched.push(id)
+      //   if (watched.length > 20) {
+      //     watched.shift()
+      //   }
+      //   localStorage.setItem('watched_ids', JSON.stringify(watched))
+      // }
     }
   },
   props: ['categories'],

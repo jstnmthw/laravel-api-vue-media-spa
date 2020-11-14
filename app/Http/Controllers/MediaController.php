@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Media;
+use ElasticScoutDriverPlus\SearchResult;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use\Illuminate\Pagination\LengthAwarePaginator;
-
-use App\Media;
+use Illuminate\Support\Collection;
 
 class MediaController extends Controller
 {
@@ -20,13 +20,12 @@ class MediaController extends Controller
     }
 
     /**
-     * API Resource for Media Model
+     * Default Elastic Search document listing
      * @param Request $request
      * @return LengthAwarePaginator
      */
     public function index(Request $request)
     {
-        // Default documents listing
         $matches = Media::matchAllSearch()->size($this->limit)->execute();
         $docs = $matches->documents();
         $res = [];
@@ -115,28 +114,34 @@ class MediaController extends Controller
 //    }
 
     /**
-     * Get Media model by id via ElasticSearch
+     * Elastic Search document by ID
      * @param $id
-     * @return Model|void
+     * @return Collection|void
      */
     public function get($id) {
-        $data = Media::search('*')->where('_id', $id)->first();
+        $data = Media::idsSearch()
+            ->values([$id])
+            ->execute()
+            ->documents()
+            ->first()
+            ->getContent();
         return $data ? $data : abort(404);
     }
 
     /**
-     * Return top models by week
-     * @return LengthAwarePaginator
+     * Return top documents by week
+     * @param Request $request
+     * @return LengthAwarePaginator|null
      */
-    public function best()
+    public function best(Request $request)
     {
-        return Media::search('*')
-            ->where(
-                'created_at',
-                '>=',
-                date('Y-m-d', time() - 7 * 24 * 60 * 60),
-            )
-            ->paginate(50);
+        $data = Media::rangeSearch()
+                ->field('created_at')
+                ->size(5)
+                ->gt(now()->subWeek())
+                ->execute();
+
+        return $this->prepare_docs($request, $data);
     }
 
     /**
@@ -172,5 +177,23 @@ class MediaController extends Controller
      */
     public function page_limit($request) {
         return ($request->has('limit') && $request->input('limit') < 50) ? (int) $request->input('limit') : 50;
+    }
+
+    /**
+     * Prepare Elastic Search documents with paginate
+     * @param Request $request
+     * @param $matches
+     * @return LengthAwarePaginator|null
+     */
+    public function prepare_docs(Request $request, $matches) {
+        if($matches instanceof SearchResult) {
+            $docs = $matches->documents();
+            $res = [];
+            foreach ($docs as $media) {
+                $res[] = array_merge(['id' => (int) $media->getId()], $media->getContent());
+            }
+            return new LengthAwarePaginator($res, $matches->total(), $this->limit, $request->input('page') ?? 1);
+        }
+        return null;
     }
 }

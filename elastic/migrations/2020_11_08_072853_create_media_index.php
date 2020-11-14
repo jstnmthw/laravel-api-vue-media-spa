@@ -25,8 +25,8 @@ final class CreateMediaIndex implements MigrationInterface
             $mapping->float('views');
             $mapping->float('likes');
             $mapping->float('dislikes');
-            $mapping->date('created_at');
-            $mapping->date('updated_at');
+            $mapping->dateRange('created_at');
+            $mapping->dateRange('updated_at');
 
             // Settings
             $settings->analysis([

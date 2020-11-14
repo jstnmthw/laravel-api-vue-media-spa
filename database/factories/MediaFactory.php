@@ -34,6 +34,8 @@ class MediaFactory extends Factory
             'views' => $this->faker->numberBetween($min = 500, $max = 1000000),
             'likes' => $this->faker->numberBetween($min = 500, $max = 1000000),
             'dislikes' => $this->faker->numberBetween($min = 500, $max = 1000000),
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-2 weeks', $endDate = 'now', $timezone = null),
+            'updated_at' => $this->faker->dateTimeBetween($startDate = '-2 weeks', $endDate = 'now', $timezone = null),
         ];
     }
 }
