@@ -235,7 +235,6 @@ export default {
     watched() {
       let watched = []
       const id = String(this.$route.params.id)
-      console.log(localStorage.getItem('watched_ids'))
       if (localStorage.getItem('watched_ids')) {
         watched = JSON.parse(localStorage.getItem('watched_ids'))
       }

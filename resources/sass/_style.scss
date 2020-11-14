@@ -13,6 +13,9 @@ a, .btn-link {
     color: $white;
   }
 }
+iframe {
+  border: none;
+}
 #app {
   display: flex;
   min-height: 100vh;

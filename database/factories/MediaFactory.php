@@ -37,7 +37,7 @@ class MediaFactory extends Factory
         ];
 
         return [
-            'embed' => $this->faker->youtubeShortUri(),
+            'embed' => $this->faker->youtubeEmbedUri(),
             'thumbnail' => 'https://picsum.photos/205/155/?image='.$this->faker->randomDigit,
             'album' => 'https://picsum.photos/205/155/?image='.$this->faker->randomDigit.';'.'https://picsum.photos/205/155/?image='.$this->faker->randomDigit.';'.'https://picsum.photos/205/155/?image='.$this->faker->randomDigit,
             'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
