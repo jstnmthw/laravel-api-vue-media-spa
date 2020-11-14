@@ -3048,16 +3048,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3120,11 +3110,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 $('#video').attr('src', ''); // Make the call
 
                 _context.next = 5;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/media', {
-                  params: {
-                    id: _this.$route.params.id
-                  }
-                }).then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/media/' + _this.$route.params.id).then(function (response) {
                   _this.$Progress.finish();
 
                   _this.data = response.data;
@@ -3166,7 +3152,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (response) {
                   _this2.related = response.data.data;
                   _this2.related_loaded = true;
-                })["catch"](function (error) {
+                })["catch"](function () {
                   _this2.related_loaded = false;
                   console.log('There was an error fetching the data.');
                 });
@@ -3190,6 +3176,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/media/' + _this3.data.id + '/like').then(function (response) {
                   if (response.data.success) {
+                    _this3.likes++;
+
                     _this3.storeVote(String(_this3.data.id));
                   }
                 });
@@ -3213,7 +3201,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/media/' + _this4.data.id + '/dislike').then(function (response) {
                   if (response.data.success) {
-                    _this4.storeVote(String(his.data.id));
+                    _this4.dislikes--;
+
+                    _this4.storeVote(String(_this4.data.id));
                   }
                 });
 
@@ -3250,23 +3240,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.voted = true;
       }
     },
-    watched: function watched() {
-      var watched = [];
-      var id = String(this.$route.params.id);
-
-      if (localStorage.getItem('watched_ids') !== undefined) {
-        watched = JSON.parse(localStorage.getItem('watched_ids'));
-      }
-
-      if (!watched.includes(id)) {
-        watched.push(id);
-
-        if (watched.length > 20) {
-          watched.shift();
-        }
-
-        localStorage.setItem('watched_ids', JSON.stringify(watched));
-      }
+    watched: function watched() {// let watched = []
+      // const id = String(this.$route.params.id)
+      // if (localStorage.getItem('watched_ids') !== undefined) {
+      //   watched = JSON.parse(localStorage.getItem('watched_ids'))
+      // }
+      // if (!watched.includes(id)) {
+      //   watched.push(id)
+      //   if (watched.length > 20) {
+      //     watched.shift()
+      //   }
+      //   localStorage.setItem('watched_ids', JSON.stringify(watched))
+      // }
     }
   },
   props: ['categories'],
@@ -7853,7 +7838,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.banner-placeholder {\r\n  width: 739px;\r\n  height: 90px;\n}\r\n", ""]);
+exports.push([module.i, "\n.banner-placeholder {\n  width: 739px;\n  height: 90px;\n}\n", ""]);
 
 // exports
 
@@ -24638,9 +24623,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    {
-                      _vm.like(), (_vm.data.likes += 1)
-                    }
+                    return _vm.like()
                   }
                 }
               },
@@ -24652,7 +24635,7 @@ var render = function() {
               ? _c("div", { staticClass: "video-rating ml-3" }, [
                   _vm._v(
                     "\n          " +
-                      _vm._s(_vm.data.likes) +
+                      _vm._s(_vm.likes) +
                       " Likes / " +
                       _vm._s(_vm.dislikes) +
                       " Dislikes\n          "
@@ -24674,9 +24657,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    {
-                      _vm.dislike(), (_vm.data.dislikes += 1)
-                    }
+                    return _vm.dislike()
                   }
                 }
               },
@@ -24743,11 +24724,9 @@ var staticRenderFns = [
       _c("iframe", {
         attrs: {
           id: "video",
-          allowfullscreen: "true",
-          frameborder: "0",
+          allowfullscreen: "",
           height: "100%",
-          width: "100%",
-          scrolling: "no"
+          width: "100%"
         }
       })
     ])
@@ -42821,8 +42800,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/justin/Projects/media/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/justin/Projects/media/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

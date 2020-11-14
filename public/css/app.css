@@ -15205,7 +15205,6 @@ a:hover,
 
 .video-listing .video .video-poster img {
   border-radius: 0;
-  filter: blur(35px);
 }
 
 .video-listing .video .video-poster .carousel {
@@ -15326,7 +15325,6 @@ a:hover,
 }
 
 .all-categories a {
-  filter: blur(2px);
   color: #cacaf1;
 }
 
