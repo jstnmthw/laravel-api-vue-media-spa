@@ -122,7 +122,9 @@ class MediaController extends Controller
             ->execute()
             ->documents();
 
-        return $data->isNotEmpty() ? $data->first()->getContent() : abort(404);
+        return $data->isNotEmpty()
+            ? $data->first()->getContent()
+            : abort(404);
     }
 
     /**
