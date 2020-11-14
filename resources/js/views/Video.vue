@@ -19,10 +19,9 @@
           <ul class="list-inline">
             <li
               class="list-inline-item"
-              v-for="label in data.categories"
-              :key="label.index"
+              v-for="(category, index) in categories"
             >
-              <video-labels :label="label"></video-labels>
+              <video-labels :label="category"></video-labels>
             </li>
           </ul>
         </div>
@@ -111,16 +110,17 @@ export default {
       related: [],
       loaded: false,
       related_loaded: false,
-      voted: false
+      voted: false,
+      categories: false
     }
   },
   mounted() {
-    this.getVideo()
+    this.getMedia()
     this.voteStatus()
     this.watched()
   },
   computed: {
-    rating: function () {
+    rating() {
       if (this.data.likes >= 1) {
         return Math.trunc(
           (this.data.likes / (this.data.likes + this.data.dislikes)) * 100
@@ -129,16 +129,16 @@ export default {
         return 0
       }
     },
-    views: function () {
+    views() {
       return this.formatNumber(this.data.views)
     },
-    likes: function () {
+    likes() {
       return this.formatNumber(this.data.likes)
     },
-    dislikes: function () {
+    dislikes() {
       return this.formatNumber(this.data.dislikes)
     },
-    voteClass: function () {
+    voteClass() {
       return this.voted
     }
   },
@@ -146,7 +146,7 @@ export default {
     formatNumber(num) {
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
-    async getVideo() {
+    async getMedia() {
       this.$Progress.start()
       this.loaded = true
 
@@ -159,6 +159,7 @@ export default {
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
+          this.categories = this.data.categories.split(';')
           this.loaded = true
 
           $('#video')[0].contentWindow.location.replace(this.data.embed)
@@ -232,27 +233,27 @@ export default {
       }
     },
     watched() {
-      // let watched = []
-      // const id = String(this.$route.params.id)
-      // if (localStorage.getItem('watched_ids') !== undefined) {
-      //   watched = JSON.parse(localStorage.getItem('watched_ids'))
-      // }
-      // if (!watched.includes(id)) {
-      //   watched.push(id)
-      //   if (watched.length > 20) {
-      //     watched.shift()
-      //   }
-      //   localStorage.setItem('watched_ids', JSON.stringify(watched))
-      // }
+      let watched = []
+      const id = String(this.$route.params.id)
+      console.log(localStorage.getItem('watched_ids'))
+      if (localStorage.getItem('watched_ids')) {
+        watched = JSON.parse(localStorage.getItem('watched_ids'))
+      }
+      if (!watched.includes(id)) {
+        watched.push(id)
+        if (watched.length > 20) {
+          watched.shift()
+        }
+        localStorage.setItem('watched_ids', JSON.stringify(watched))
+      }
     }
   },
-  props: ['categories'],
   watch: {
     $route(to, from) {
       this.data = []
       this.related = []
       this.voted = false
-      this.getVideo()
+      this.getMedia()
       this.watched()
     }
   }

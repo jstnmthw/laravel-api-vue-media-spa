@@ -24,6 +24,7 @@ class Media extends Model
             'thumbnail',
             'album',
             'categories',
+            'embed',
             'views',
             'likes',
             'dislikes',
