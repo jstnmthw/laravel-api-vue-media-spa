@@ -17,8 +17,7 @@ class MediaController extends Controller
      * @param Request $request
      * @return LengthAwarePaginator
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $data = Media::matchAllSearch()
             ->size($this->pageLimit($request))
             ->execute();
@@ -140,15 +139,12 @@ class MediaController extends Controller
      * @param Request $request
      * @return LengthAwarePaginator|null
      */
-    public function best(Request $request)
-    {
+    public function best(Request $request) {
         $data = Media::rangeSearch()
                 ->field('created_at')
                 ->size(5)
                 ->gt(now()->subWeek())
                 ->execute();
-
-        dd($data);
 
         return $this->prepareDocs($request, $data);
     }
@@ -158,8 +154,7 @@ class MediaController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function like($id)
-    {
+    public function like($id) {
         if (Media::query()->where('id', $id)->increment('likes')) {
             return response()->json(['success' => true], 200);
         }
@@ -171,8 +166,7 @@ class MediaController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function dislike($id)
-    {
+    public function dislike($id) {
         if (Media::query()->where('id', $id)->increment('dislikes')) {
             return response()->json(['success' => 1], 200);
         }
