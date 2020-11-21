@@ -20,10 +20,10 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         $data = Media::matchAllSearch()
-            ->size($this->page_limit($request))
+            ->size($this->pageLimit($request))
             ->execute();
 
-        return $this->prepare_docs($request, $data);
+        return $this->prepareDocs($request, $data);
     }
 
 //    public function index(Request $request)
@@ -148,7 +148,7 @@ class MediaController extends Controller
                 ->gt(now()->subWeek())
                 ->execute();
 
-        return $this->prepare_docs($request, $data);
+        return $this->prepareDocs($request, $data);
     }
 
     /**
@@ -182,24 +182,24 @@ class MediaController extends Controller
      * @param $request
      * @return int
      */
-    public function page_limit($request) {
+    public function pageLimit($request) {
         return ($request->has('limit') && $request->input('limit') < 50) ? (int) $request->input('limit') : 50;
     }
 
     /**
-     * Prepare Elastic Search documents with paginate
+     * Prepare Elastic Search documents with pagination
      * @param Request $request
      * @param $matches
      * @return LengthAwarePaginator
      */
-    public function prepare_docs(Request $request, $matches) {
+    public function prepareDocs(Request $request, $matches) {
         if($matches instanceof SearchResult) {
             $data = $matches->documents();
             $res = [];
             foreach ($data as $row) {
                 $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
             }
-            return new LengthAwarePaginator($res, $matches->total(), $this->page_limit($request), $request->input('page') ?? 1);
+            return new LengthAwarePaginator($res, $matches->total(), $this->pageLimit($request), $request->input('page') ?? 1);
         }
         return null;
     }
