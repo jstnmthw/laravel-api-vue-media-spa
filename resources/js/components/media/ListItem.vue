@@ -40,6 +40,8 @@
 
 <script>
 import { slug } from '@/helpers/strings.js'
+import { comma_delimiter } from '@/helpers/numbers'
+
 export default {
   props: ['media'],
   computed: {
@@ -47,9 +49,7 @@ export default {
       return this.media.album.split(';')
     },
     views() {
-      return this.media.views
-        .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+      return comma_delimiter(this.media.views)
     },
     rating() {
       if (this.media.likes >= 1) {

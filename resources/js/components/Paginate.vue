@@ -136,7 +136,8 @@ export default {
           query: Object.assign({}, this.$route.query, { page: page })
         })
       }
-    }
+    },
+    comma_delimiter
   }
 }
 </script>
