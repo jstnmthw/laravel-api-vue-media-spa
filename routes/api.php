@@ -41,7 +41,8 @@ Route::prefix('media')->group(function() {
     Route::post('{id}/like', 'MediaController@like');
     Route::post('{id}/dislike', 'MediaController@dislike');
     Route::get('best', 'MediaController@best');
-    Route::get('{id}', 'MediaController@get');
+//    Route::get('{id}', 'MediaController@get');
+    Route::get('/{slug}', 'MediaController@getByTitle');
     Route::get('/', 'MediaController@index');
 });
 Route::apiResource('categories', 'CategoryController');
