@@ -74,6 +74,7 @@ import Sidebar from '@/components/layout/Sidebar'
 import TopAdBanner from '@/components/TopAdBanner'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
 import MediaList from '@/components/media/List'
+import { comma_delimiter } from '@/helpers/numbers'
 
 // State
 import { mapActions, mapGetters, mapState } from 'vuex'
@@ -99,10 +100,10 @@ export default {
       error: (state) => state.error
     }),
     first_page() {
-      return this.comma_delimiter(this.media.current_page)
+      return comma_delimiter(this.media.current_page)
     },
     last_page() {
-      return this.comma_delimiter(this.media.last_page)
+      return comma_delimiter(this.media.last_page)
     }
   },
   mounted() {

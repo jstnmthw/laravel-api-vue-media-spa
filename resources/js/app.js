@@ -52,9 +52,6 @@ Vue.config.ignoredElements = ['ion-icon']
 // Register Instances
 Vue.use(VueProgressBar, vpbSettings)
 
-// Register Global Mixin
-Vue.mixin(Helpers)
-
 // Initiate instance
 const app = new Vue({
   el: '#app',

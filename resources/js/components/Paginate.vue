@@ -10,7 +10,7 @@
             v-on:click.prevent="changePage(pagination.current_page - 1)"
           >
             <span aria-hidden="true">
-              <ion-icon style="top: 2px;" name="chevron-back-outline"></ion-icon>
+              <ion-icon style="top: 2px" name="chevron-back-outline"></ion-icon>
             </span>
             Prev
           </a>
@@ -106,6 +106,8 @@
 </template>
 
 <script>
+import { comma_delimiter } from '@/helpers/numbers'
+
 export default {
   props: ['loading', 'pagination'],
   computed: {
@@ -134,9 +136,6 @@ export default {
           query: Object.assign({}, this.$route.query, { page: page })
         })
       }
-    },
-    comma_delimiter(int) {
-      return int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
   }
 }
