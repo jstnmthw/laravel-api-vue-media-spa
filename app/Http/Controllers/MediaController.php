@@ -106,17 +106,17 @@ class MediaController extends Controller
 
     /**
      * Elastic Search document by title
+     * @param Request $request
      * @param $slug
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getByTitle($slug) {
-        $title = str_replace($slug,'-',' ');
+    public function getByTitle(Request $request, $slug) {
+        $title = str_replace('-', ' ', $slug);
         $data = Media::boolSearch()
             ->must('match', ['title' => $title])
-            ->execute()
-            ->documents();
+            ->execute();
 
-        return $data;
+        return $this->prepareDocs($request, $data);
     }
 
     /**
@@ -147,6 +147,8 @@ class MediaController extends Controller
                 ->size(5)
                 ->gt(now()->subWeek())
                 ->execute();
+
+        dd($data);
 
         return $this->prepareDocs($request, $data);
     }
@@ -189,18 +191,16 @@ class MediaController extends Controller
     /**
      * Prepare Elastic Search documents with pagination
      * @param Request $request
-     * @param $matches
+     * @param SearchResult $documents
      * @return LengthAwarePaginator
      */
-    public function prepareDocs(Request $request, $matches) {
-        if($matches instanceof SearchResult) {
-            $data = $matches->documents();
-            $res = [];
-            foreach ($data as $row) {
-                $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
-            }
-            return new LengthAwarePaginator($res, $matches->total(), $this->pageLimit($request), $request->input('page') ?? 1);
+    public function prepareDocs(Request $request, SearchResult $documents) {
+        $data = $documents->documents();
+        $res = [];
+        foreach ($data as $row) {
+            $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
         }
-        return null;
+        return new LengthAwarePaginator($res, $documents->total(), $this->pageLimit($request), $request->input('page') ?? 1);
     }
+
 }

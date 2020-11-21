@@ -1,4 +1,4 @@
-// Laravel's bootstrap
+// Laravel bootstrap
 require('./bootstrap')
 
 // Libraries
@@ -11,9 +11,6 @@ import VueProgressBar from 'vue-progressbar'
 // Global components
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-
-// Mixins
-import Helpers from '@/mixins/Helpers.js'
 
 // Register global components
 Vue.component('Navbar', Navbar)
@@ -66,12 +63,10 @@ const app = new Vue({
   data: {},
   mounted() {
     store.dispatch('getCategories')
-  },
-  methods: {}
+  }
 })
 
 // Before creation callback
 router.beforeEach((to, from, next) => {
-  store.dispatch('requestToken/CANCEL_PENDING_REQUESTS')
-  next()
+  store.dispatch('requestToken/CANCEL_PENDING_REQUESTS').then(() => next())
 })

@@ -31,11 +31,29 @@ final class CreateMediaIndex implements MigrationInterface
             // Settings
             $settings->analysis([
                 'properties' => [
+                    'normalizer' => [
+                        'title_normalizer' => [
+                            'type' => ['custom'],
+                            'filter' => ['lowercase'],
+                        ]
+                    ],
+                    'title'=> [
+                        'type'=> 'text',
+                        'fields'=> [
+                            'normalize'=> [
+                                'type'=> 'keyword',
+                                'normalizer'=> 'title_normalizer'
+                            ],
+                            'keyword' => [
+                                'type'=> 'keyword'
+                            ]
+                        ]
+                    ],
                     'categories' => [
                         'type' => 'text',
                         'fields' => [
                             'raw' => [
-                                'type' => 'keyword',
+                                'type' => 'keyword'
                             ],
                         ],
                     ],

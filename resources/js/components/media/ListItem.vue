@@ -1,7 +1,7 @@
 <template>
   <div class="media">
     <div class="media-data">
-      <router-link class="media-poster" :to="'/medias/' + media.id">
+      <router-link class="media-poster" :to="'/media/' + url">
         <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
         <div
           class="carousel"
@@ -22,15 +22,13 @@
       </router-link>
       <div class="media-info px-0">
         <h5 class="media-title mt-2 mb-1">
-          <router-link :to="'/medias/' + media.id">{{
-            media.title
-          }}</router-link>
+          <router-link :to="'/media/' + url">{{ media.title }}</router-link>
         </h5>
         <span class="pr-2 position-relative text-sage">
           <ion-icon name="eye" style="top: 3px"></ion-icon>
           {{ views }}
         </span>
-        <span :class="rating > 50 ? 'liked' : 'disliked'">
+        <span :class="rating > 40 ? 'liked' : 'disliked'">
           <ion-icon name="thumbs-up"></ion-icon>
           <ion-icon name="thumbs-down"></ion-icon>
           {{ rating }}%
@@ -41,18 +39,19 @@
 </template>
 
 <script>
+import { slug } from '@/helpers/strings.js'
 export default {
   props: ['media'],
   computed: {
-    album: function () {
+    album() {
       return this.media.album.split(';')
     },
-    views: function () {
+    views() {
       return this.media.views
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     },
-    rating: function () {
+    rating() {
       if (this.media.likes >= 1) {
         return Math.trunc(
           (this.media.likes / (this.media.likes + this.media.dislikes)) * 100
@@ -61,9 +60,12 @@ export default {
         return 0
       }
     },
-    duration: function () {
+    duration() {
       // TODO: This only formats duration under an hour.
       return new Date(this.media.duration * 1000).toISOString().substr(14, 5)
+    },
+    url() {
+      return slug(this.media.title)
     }
   },
   data() {
@@ -77,7 +79,7 @@ export default {
   },
   methods: {
     // Debounce hover
-    debounce: function (event, clear = false) {
+    debounce(event, clear = false) {
       if (clear) {
         clearTimeout(this.debounceTimer)
         this.carousel(event, false)
@@ -93,7 +95,7 @@ export default {
     },
 
     // Image Carousel
-    carousel: function (event, start = true) {
+    carousel(event, start = true) {
       let images = event.target.children
       let srcs = this.srcToArray(images)
       if (start) {
