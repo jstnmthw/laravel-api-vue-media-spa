@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use ElasticScoutDriverPlus\Builders\SearchRequestBuilder;
-use ElasticScoutDriverPlus\SearchResult;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use\Illuminate\Pagination\LengthAwarePaginator;
@@ -127,11 +125,9 @@ class MediaController extends Controller
     public function best(Request $request) {
         $data = Media::rangeSearch()
                 ->field('created_at')
-                ->gt(now()->subWeek())
-                ->size($this->pageLimit($request))
-                ->execute();
+                ->gt(now()->subWeek());
 
-        return $this->prepareDocs($request, $data);
+        return $this->prepareDocs($data, $request->input('perPage'));
     }
 
     /**
@@ -182,15 +178,6 @@ class MediaController extends Controller
             return response()->json(['success' => 1], 200);
         }
         return response()->json(['success' => false], 404);
-    }
-
-    /**
-     * Set default page limit
-     * @param $request
-     * @return int
-     */
-    public function pageLimit($request) {
-        return ($request->has('limit') && $request->input('limit') < 50) ? (int) $request->input('limit') : 50;
     }
 
     /**
