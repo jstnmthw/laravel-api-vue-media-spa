@@ -65,6 +65,7 @@ class MediaControllerTest extends TestCase
      */
     public function test_api_get_model_by_title() : void
     {
+        sleep(1);
         $title = Str::slug(Media::query()->first()->title);
         $response = $this->get('/api/media/'.$title);
         $response->assertStatus(200);
