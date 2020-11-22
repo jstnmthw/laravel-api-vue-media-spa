@@ -195,9 +195,7 @@ class MediaController extends Controller
 
     /**
      * Prepare only elasticsearch documents with pagination.
-     *
-     * Note: The current driver pulls models from MySQL based on ES findings.
-     *       This pulls only documents straight from ES. No MySQL.
+     * Note: Pulling documents straight from elasticsearch means no added MySQL query.
      *
      * @param SearchRequestBuilder $documents
      * @param int $perPage
@@ -225,14 +223,13 @@ class MediaController extends Controller
             );
         }
 
-        // Add ID to results
-        $res = [];
+        $dataArr = [];
         foreach ($data->documents() as $row) {
-            $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
+            $dataArr[] = $row->getContent();
         }
 
         return new LengthAwarePaginator(
-            $res,
+            $dataArr,
             $data->total(),
             $perPage,
             $page,

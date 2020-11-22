@@ -22,6 +22,7 @@ class Media extends Model
     public function toSearchableArray()
     {
         return $this->only([
+            'id',
             'embed',
             'thumbnail',
             'album',
