@@ -108,13 +108,12 @@ class MediaController extends Controller
      */
     public function title(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
-        $data = Media::boolSearch()
+        return Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
             ->execute()
             ->documents()
-            ->first();
-
-        return array_merge(['id' => (int) $data->getId()], $data->getContent());
+            ->first()
+            ->getContent();
     }
 
     /**
@@ -149,11 +148,9 @@ class MediaController extends Controller
                     'min_term_freq' => 1,
                     'max_query_terms' => 12
                 ]
-            ])
-            ->size($this->pageLimit($request))
-            ->execute();
+            ]);
 
-        return $this->prepareDocs($request, $data);
+        return $this->prepareDocs($data, 12);
     }
 
     /**
