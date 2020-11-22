@@ -20,18 +20,17 @@ class Media extends Model
     public function toSearchableArray()
     {
         return $this->only([
-            'title',
+            'embed',
             'thumbnail',
             'album',
+            'title',
             'categories',
-            'embed',
+            'author',
+            'duration',
             'views',
             'likes',
             'dislikes',
-            'duration',
-            'author',
             'created_at',
-            'updated_at',
         ]);
     }
 }

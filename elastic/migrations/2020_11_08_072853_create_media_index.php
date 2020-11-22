@@ -14,51 +14,67 @@ final class CreateMediaIndex implements MigrationInterface
     public function up(): void
     {
         Index::create('media', function (Mapping $mapping, Settings $settings) {
-            // Mapping
-            $mapping->text('thumbnail');
+            // Mappings
             $mapping->text('embed');
+            $mapping->text('thumbnail');
             $mapping->text('album');
-            $mapping->text('title');
-            $mapping->keyword('categories');
+            $mapping->text('title', [
+                'fields' => [
+                    'alphanumeric' => [
+                        'type' => 'text',
+                        'analyzer' => 'alphanumericStringAnalyzer'
+                    ],
+                    'raw' => [
+                        'type' => 'keyword'
+                    ],
+//                    'normalize' => [
+//                        'type' => 'keyword',
+//                        'normalizer' => 'title_normalizer',
+//                        'analyzer' => 'alphanumericStringAnalyzer'
+//                    ],
+//                    'keyword' => [
+//                        'type' => 'keyword'
+//                    ]
+                ]
+            ]);
+            $mapping->text('categories');
             $mapping->text('author');
             $mapping->float('duration');
             $mapping->float('views');
             $mapping->float('likes');
             $mapping->float('dislikes');
-            $mapping->dateRange('created_at');
-            $mapping->dateRange('updated_at');
+            $mapping->date('created_at');
 
-            // Settings
+            // Analysis
             $settings->analysis([
-                'properties' => [
-                    'normalizer' => [
-                        'title_normalizer' => [
-                            'type' => ['custom'],
-                            'filter' => ['lowercase'],
-                        ]
-                    ],
-                    'title'=> [
-                        'type'=> 'text',
-                        'fields'=> [
-                            'normalize'=> [
-                                'type'=> 'keyword',
-                                'normalizer'=> 'title_normalizer'
-                            ],
-                            'keyword' => [
-                                'type'=> 'keyword'
-                            ]
-                        ]
-                    ],
-                    'categories' => [
-                        'type' => 'text',
-                        'fields' => [
-                            'raw' => [
-                                'type' => 'keyword'
-                            ],
+//                'normalizer' => [
+//                    'title_normalizer' => [
+//                        'type' => 'custom',
+//                        'filter' => [
+//                            'lowercase',
+//                            'asciifolding'
+//                        ]
+//                    ]
+//                ],
+                'analyzer' => [
+                    'alphanumericStringAnalyzer' => [
+                        'filter' => 'lowercase',
+                        'char_filter' => [
+                            'specialCharactersFilter'
                         ],
-                    ],
+                        'type' => 'custom',
+                        'tokenizer' => 'standard'
+                    ]
+                ],
+                'char_filter' => [
+                    'specialCharactersFilter'=> [
+                        'pattern' => '[^A-Za-z0-9]',
+                        'type' => 'pattern_replace',
+                        'replacement' => ''
+                    ]
                 ],
             ]);
+
         });
     }
 

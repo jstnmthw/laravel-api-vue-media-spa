@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Media;
+use ElasticScoutDriverPlus\CustomSearch;
 use ElasticScoutDriverPlus\SearchResult;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -107,15 +108,16 @@ class MediaController extends Controller
      * Elastic Search document by title
      * @param Request $request
      * @param $slug
-     * @return LengthAwarePaginator
+     * @return CustomSearch
      */
     public function getByTitle(Request $request, $slug) {
         $title = str_replace('-', ' ', $slug);
-        $data = Media::boolSearch()
-            ->must('match', ['title' => $title])
-            ->execute();
-
-        return $this->prepareDocs($request, $data);
+        return Media::boolSearch()
+            ->must('match', ['title.alphanumeric' => $title])
+            ->execute()
+            ->documents()
+            ->first()
+            ->getContent();
     }
 
     /**
