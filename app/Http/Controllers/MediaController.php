@@ -136,6 +136,11 @@ class MediaController extends Controller
         return $this->prepareDocs($request, $data);
     }
 
+    /**
+     * Get related documents by Id
+     * @param Request $request
+     * @return LengthAwarePaginator
+     */
     public function related(Request $request) {
         $data = Media::rawSearch()
             ->query([
