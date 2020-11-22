@@ -110,7 +110,7 @@ class MediaController extends Controller
      * @param string $slug
      * @return JsonResponse|void
      */
-    public function getByTitle(Request $request, string $slug) {
+    public function title(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
         $data = Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
@@ -127,7 +127,7 @@ class MediaController extends Controller
      * @param $id
      * @return JsonResponse|void
      */
-    public function getById($id) {
+    public function id($id) {
         $data = Media::idsSearch()
             ->values([$id])
             ->execute()
