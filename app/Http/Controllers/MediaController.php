@@ -107,10 +107,10 @@ class MediaController extends Controller
     /**
      * Elastic Search document by title
      * @param Request $request
-     * @param $slug
+     * @param string $slug
      * @return CustomSearch
      */
-    public function getByTitle(Request $request, $slug) {
+    public function getByTitle(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
         return Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
@@ -125,7 +125,7 @@ class MediaController extends Controller
      * @param $id
      * @return Collection|void
      */
-    public function get($id) {
+    public function getById($id) {
         $data = Media::idsSearch()
             ->values([$id])
             ->execute()
