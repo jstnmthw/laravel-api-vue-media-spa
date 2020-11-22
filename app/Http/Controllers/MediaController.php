@@ -137,7 +137,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Get related documents by Id
+     * Return related documents by Id
      * @param Request $request
      * @return LengthAwarePaginator
      */
