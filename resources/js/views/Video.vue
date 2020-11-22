@@ -152,7 +152,7 @@ export default {
 
       // Make the call
       await axios
-        .get('/api/media/' + this.$route.params.id)
+        .get('/api/media/' + this.$route.params.slug)
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data

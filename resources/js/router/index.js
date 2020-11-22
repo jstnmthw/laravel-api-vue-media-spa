@@ -29,6 +29,11 @@ export default new VueRouter({
       name: 'video'
     },
     {
+      path: '/media/:slug',
+      component: Video,
+      name: 'media'
+    },
+    {
       path: '/search',
       component: Master,
       name: 'search'

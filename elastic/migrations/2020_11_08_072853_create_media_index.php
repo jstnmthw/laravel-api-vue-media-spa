@@ -26,15 +26,7 @@ final class CreateMediaIndex implements MigrationInterface
                     ],
                     'raw' => [
                         'type' => 'keyword'
-                    ],
-//                    'normalize' => [
-//                        'type' => 'keyword',
-//                        'normalizer' => 'title_normalizer',
-//                        'analyzer' => 'alphanumericStringAnalyzer'
-//                    ],
-//                    'keyword' => [
-//                        'type' => 'keyword'
-//                    ]
+                    ]
                 ]
             ]);
             $mapping->text('categories');
@@ -47,15 +39,6 @@ final class CreateMediaIndex implements MigrationInterface
 
             // Analysis
             $settings->analysis([
-//                'normalizer' => [
-//                    'title_normalizer' => [
-//                        'type' => 'custom',
-//                        'filter' => [
-//                            'lowercase',
-//                            'asciifolding'
-//                        ]
-//                    ]
-//                ],
                 'analyzer' => [
                     'alphanumericStringAnalyzer' => [
                         'filter' => 'lowercase',
