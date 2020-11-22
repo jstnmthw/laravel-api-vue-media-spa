@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Media;
-use ElasticScoutDriverPlus\CustomSearch;
+use ElasticScoutDriverPlus\Builders\SearchRequestBuilder;
 use ElasticScoutDriverPlus\SearchResult;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use\Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use RuntimeException;
 
 class MediaController extends Controller
 {
@@ -19,11 +21,7 @@ class MediaController extends Controller
      * @return LengthAwarePaginator
      */
     public function index(Request $request) {
-        $data = Media::matchAllSearch()
-            ->size($this->pageLimit($request))
-            ->execute();
-
-        return $this->prepareDocs($request, $data);
+        return $this->prepareDocs(Media::matchAllSearch());
     }
 
 //    public function index(Request $request)
@@ -196,18 +194,53 @@ class MediaController extends Controller
     }
 
     /**
-     * Prepare Elastic Search documents with pagination
-     * @param Request $request
-     * @param SearchResult $documents
+     * Prepare only elasticsearch documents with pagination.
+     *
+     * Note: The current driver pulls models from MySQL based on ES findings.
+     *       This pulls only documents straight from ES. No MySQL.
+     *
+     * @param SearchRequestBuilder $documents
+     * @param int $perPage
+     * @param string $pageName
+     * @param int|null $page
      * @return LengthAwarePaginator
      */
-    public function prepareDocs(Request $request, SearchResult $documents) {
-        $data = $documents->documents();
+    public function prepareDocs(
+        SearchRequestBuilder $documents,
+        int $perPage = Media::DEFAULT_PAGE_SIZE,
+        string $pageName = 'page',
+        int $page = null
+    ) {
+        $page = $page ?? Paginator::resolveCurrentPage($pageName);
+
+        $data = $documents
+            ->from(($page - 1) * $perPage)
+            ->size($perPage)
+            ->execute();
+
+        if (is_null($data->total())) {
+            throw new RuntimeException(
+                'Search result does not contain the total hits number. ' .
+                'Please, make sure that total hits are tracked.'
+            );
+        }
+
+        // Add ID to results
         $res = [];
-        foreach ($data as $row) {
+        foreach ($data->documents() as $row) {
             $res[] = array_merge(['id' => (int) $row->getId()], $row->getContent());
         }
-        return new LengthAwarePaginator($res, $documents->total(), $this->pageLimit($request), $request->input('page') ?? 1);
+
+        return new LengthAwarePaginator(
+            $res,
+            $data->total(),
+            $perPage,
+            $page,
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]
+        );
     }
 
 }

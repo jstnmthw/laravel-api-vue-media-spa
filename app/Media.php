@@ -12,6 +12,8 @@ class Media extends Model
 {
     use SoftDeletes, Searchable, CustomSearch, HasFactory;
 
+    const DEFAULT_PAGE_SIZE = 50;
+
     /**
      * Get the index data array for the model.
      *
