@@ -105,25 +105,27 @@ class MediaController extends Controller
 //    }
 
     /**
-     * Elastic Search document by title
+     * Return document by title
      * @param Request $request
      * @param string $slug
-     * @return array
+     * @return JsonResponse|void
      */
     public function getByTitle(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
-        return Media::boolSearch()
+        $data = Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
             ->execute()
-            ->documents()
-            ->first()
-            ->getContent();
+            ->documents();
+
+        return $data->isNotEmpty()
+            ? $data->first()->getContent()
+            : abort(404);
     }
 
     /**
-     * Elastic Search document by ID
+     * Return document by id
      * @param $id
-     * @return Collection|void
+     * @return JsonResponse|void
      */
     public function getById($id) {
         $data = Media::idsSearch()
@@ -137,7 +139,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Return top documents by week
+     * Return weekly top documents
      * @param Request $request
      * @return LengthAwarePaginator|null
      */
@@ -152,7 +154,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Increment likes column on
+     * Increment likes column
      * @param $id
      * @return JsonResponse
      */
