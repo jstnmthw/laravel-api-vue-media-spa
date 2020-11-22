@@ -2,8 +2,11 @@
 
 namespace Tests\Unit;
 
+use App\Media;
 use Database\Seeders\MediaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class MediaControllerTest extends TestCase
@@ -11,7 +14,6 @@ class MediaControllerTest extends TestCase
     use RefreshDatabase;
 
     private $esJsonStructure = [
-        "id",
         "embed",
         "thumbnail",
         "album",
@@ -23,7 +25,6 @@ class MediaControllerTest extends TestCase
         "likes",
         "dislikes",
         "created_at",
-        "updated_at",
     ];
     private $paginateJsonStructure = [
         'current_page',
@@ -44,6 +45,7 @@ class MediaControllerTest extends TestCase
     public function setUp() : void
     {
         parent::setUp();
+//        Artisan::call('elastic:migrate:refresh');
         $this->seed(MediaSeeder::class);
     }
 
@@ -62,9 +64,10 @@ class MediaControllerTest extends TestCase
      * Test MediaController's get by id for return json or 404 return.
      * @return void
      */
-    public function test_api_get_model_by_id() : void
+    public function test_api_get_model_by_title() : void
     {
-        $response = $this->get('/api/media/1');
+        $title = Str::slug(Media::query()->first()->title);
+        $response = $this->get('/api/media/'.$title);
         $response->assertStatus(200);
         $response->assertJsonStructure($this->esJsonStructure);
     }

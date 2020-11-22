@@ -108,7 +108,7 @@ class MediaController extends Controller
      * Elastic Search document by title
      * @param Request $request
      * @param string $slug
-     * @return CustomSearch
+     * @return array
      */
     public function getByTitle(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
@@ -144,8 +144,8 @@ class MediaController extends Controller
     public function best(Request $request) {
         $data = Media::rangeSearch()
                 ->field('created_at')
-                ->size(5)
                 ->gt(now()->subWeek())
+                ->size(5)
                 ->execute();
 
         return $this->prepareDocs($request, $data);
