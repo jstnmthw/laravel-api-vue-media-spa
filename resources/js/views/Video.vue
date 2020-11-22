@@ -80,7 +80,7 @@
       <div class="col-12">
         <h4 class="font-weight-bold mb-3">Related Videos</h4>
         <video-list
-          :videos="related"
+          :media="related"
           :loaded="related_loaded"
           :cards="12"
           :cols="6"
@@ -152,7 +152,7 @@ export default {
 
       // Make the call
       await axios
-        .get('/api/media/' + this.$route.params.slug)
+        .post('/api/media/' + this.$route.params.slug)
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
@@ -172,12 +172,9 @@ export default {
     async getRelated(limit) {
       this.related_loaded = false
       await axios
-        .get('/api/media', {
-          params: {
-            q: this.data.title.replace(/\W/g, '+'),
-            limit: limit,
-            exclude: this.data.id
-          }
+        .post('/api/media/related', {
+          id: this.data.id,
+          limit: limit
         })
         .then((response) => {
           this.related = response.data.data
