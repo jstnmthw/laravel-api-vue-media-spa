@@ -61,7 +61,7 @@ class MediaControllerTest extends TestCase
     }
 
     /**
-     * Test MediaController's get by id for return json or 404 return.
+     * Test MediaController's by title.
      * @return void
      */
     public function test_api_get_model_by_title() : void
@@ -74,7 +74,7 @@ class MediaControllerTest extends TestCase
     }
 
     /**
-     * Test MediaController's get best models.
+     * Test MediaController's api best documents.
      */
     public function test_api_get_model_best() : void
     {
@@ -110,6 +110,9 @@ class MediaControllerTest extends TestCase
         $response2->assertStatus(404);
     }
 
+    /**
+     * Test MediaController's api related documents.
+     */
     public function test_api_get_related_models() : void
     {
         $response = $this->post('/api/media/related', ['id' => 1]);
