@@ -45,7 +45,6 @@ class MediaControllerTest extends TestCase
     public function setUp() : void
     {
         parent::setUp();
-//        Artisan::call('elastic:migrate:refresh');
         $this->seed(MediaSeeder::class);
     }
 
