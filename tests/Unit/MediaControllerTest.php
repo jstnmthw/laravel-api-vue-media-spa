@@ -14,6 +14,7 @@ class MediaControllerTest extends TestCase
     use RefreshDatabase;
 
     private $esJsonStructure = [
+        "id",
         "embed",
         "thumbnail",
         "album",
@@ -77,6 +78,7 @@ class MediaControllerTest extends TestCase
      */
     public function test_api_get_model_best() : void
     {
+        sleep(1);
         $response = $this->get('/api/media/best');
         $response->assertStatus(200);
         $response->assertJsonStructure($this->paginateJsonStructure);
@@ -106,5 +108,12 @@ class MediaControllerTest extends TestCase
         $response->assertJson(['success' => true]);
         $response2 = $this->post('/api/media/-1/like');
         $response2->assertStatus(404);
+    }
+
+    public function test_api_get_related_models() : void
+    {
+        $response = $this->post('/api/media/related', ['id' => 1]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure($this->paginateJsonStructure);
     }
 }

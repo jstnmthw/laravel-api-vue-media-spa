@@ -38,10 +38,12 @@ Route::post('/login', function (Request $request) {
     }
 });
 Route::prefix('media')->group(function() {
-    Route::post('{id}/like', 'MediaController@like');
-    Route::post('{id}/dislike', 'MediaController@dislike');
+    Route::get('category/{slug}', 'MediaController@category');
+    Route::post('related', 'MediaController@related');
     Route::get('best', 'MediaController@best');
     Route::get('{slug}', 'MediaController@title');
     Route::get('/', 'MediaController@index');
+    Route::post('{id}/dislike', 'MediaController@dislike');
+    Route::post('{id}/like', 'MediaController@like');
 });
 Route::apiResource('categories', 'CategoryController');

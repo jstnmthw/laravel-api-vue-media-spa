@@ -108,34 +108,17 @@ class MediaController extends Controller
      * Return document by title
      * @param Request $request
      * @param string $slug
-     * @return JsonResponse|void
+     * @return array
      */
     public function title(Request $request, string $slug) {
         $title = str_replace('-', ' ', $slug);
         $data = Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
             ->execute()
-            ->documents();
+            ->documents()
+            ->first();
 
-        return $data->isNotEmpty()
-            ? $data->first()->getContent()
-            : abort(404);
-    }
-
-    /**
-     * Return document by id
-     * @param $id
-     * @return JsonResponse|void
-     */
-    public function id($id) {
-        $data = Media::idsSearch()
-            ->values([$id])
-            ->execute()
-            ->documents();
-
-        return $data->isNotEmpty()
-            ? $data->first()->getContent()
-            : abort(404);
+        return array_merge(['id' => (int) $data->getId()], $data->getContent());
     }
 
     /**
@@ -147,8 +130,29 @@ class MediaController extends Controller
         $data = Media::rangeSearch()
                 ->field('created_at')
                 ->gt(now()->subWeek())
-                ->size(5)
+                ->size($this->pageLimit($request))
                 ->execute();
+
+        return $this->prepareDocs($request, $data);
+    }
+
+    public function related(Request $request) {
+        $data = Media::rawSearch()
+            ->query([
+                'more_like_this' => [
+                    'fields' => [
+                        'title',
+                        'categories'
+                    ],
+                    'like' => [
+                        '_id' => $request->input('id')
+                    ],
+                    'min_term_freq' => 1,
+                    'max_query_terms' => 12
+                ]
+            ])
+            ->size($this->pageLimit($request))
+            ->execute();
 
         return $this->prepareDocs($request, $data);
     }
