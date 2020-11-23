@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use\Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Str;
 use RuntimeException;
 
 class MediaController extends Controller
@@ -151,6 +152,14 @@ class MediaController extends Controller
             ]);
 
         return $this->prepareDocs($data, 12);
+    }
+
+    public function category($slug) {
+        $category = Str::title($slug);
+        $data = Media::boolSearch()
+            ->should('match', ['categories' => $category]);
+
+        return $this->prepareDocs($data);
     }
 
     /**

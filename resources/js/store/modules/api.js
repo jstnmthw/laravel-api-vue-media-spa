@@ -38,7 +38,7 @@ const actions = {
     commit('SET_LOADING', 1)
     await axios
       .get(payload.url, {
-        params: payload.params
+        params: payload.query
       })
       .then((res) => {
         if (res.data.error) {

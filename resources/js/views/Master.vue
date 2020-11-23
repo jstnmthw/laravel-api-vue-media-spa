@@ -116,8 +116,8 @@ export default {
     },
     callAPI() {
       return this.api({
-        url: '/api/media',
-        params: { ...this.$route.params, ...this.$route.query }
+        url: '/api/media' + this.$route.path,
+        query: this.$route.query
       })
     }
   },

@@ -152,7 +152,7 @@ export default {
 
       // Make the call
       await axios
-        .post('/api/media/' + this.$route.params.slug)
+        .get('/api/media/' + this.$route.params.slug)
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
@@ -172,9 +172,11 @@ export default {
     async getRelated(limit) {
       this.related_loaded = false
       await axios
-        .post('/api/media/related', {
-          id: this.data.id,
-          limit: limit
+        .get('/api/media/related', {
+          params: {
+            id: this.data.id,
+            limit: limit
+          }
         })
         .then((response) => {
           this.related = response.data.data
