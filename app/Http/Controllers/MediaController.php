@@ -154,6 +154,11 @@ class MediaController extends Controller
         return $this->prepareDocs($data, 12);
     }
 
+    /**
+     * Get documents by category
+     * @param $slug
+     * @return LengthAwarePaginator
+     */
     public function category($slug) {
         $category = Str::title($slug);
         $data = Media::boolSearch()
