@@ -6,7 +6,7 @@ use App\Media;
 use ElasticScoutDriverPlus\Builders\SearchRequestBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use\Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
 use RuntimeException;
