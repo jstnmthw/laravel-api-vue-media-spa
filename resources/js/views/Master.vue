@@ -4,9 +4,9 @@
       <sidebar></sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
-        <div v-if="error.status" class="error">
+        <div v-if="error.status && !loading" class="error">
           <h4 class="text-center mt-lg-3">
-            An error has occurred, please try again later.
+            {{ error.msg }}
           </h4>
         </div>
         <div v-else>
@@ -122,7 +122,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.callAPI()
     }
   }

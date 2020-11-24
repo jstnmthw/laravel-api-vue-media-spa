@@ -16,98 +16,33 @@ class MediaController extends Controller
 
     /**
      * Default Elastic Search document listing
-     * @param Request $request
      * @return LengthAwarePaginator
      */
-    public function index(Request $request) {
+    public function index() {
         return $this->prepareDocs(Media::matchAllSearch());
     }
 
-//    public function index(Request $request)
-//    {
-//
-//        // Sorting
-//        $sort = 'most_views';
-//        if ($request->has('sort_by')) {
-//            switch ($request->input('sort_by')) {
-//                case 'most_views':
-//                    $sort = 'views';
-//                    break;
-//                case 'duration':
-//                    $sort = 'duration';
-//                    break;
-//                case 'most_recent':
-//                    $sort = 'created_at';
-//                    break;
-//            }
-//        }
-//
-//        // Model by ID
-//        if ($request->has('id')) {
-//            $data = Media::query()->where('id', $request->input('id'))->firstOrFail();
-//
-//            // TODO: Transform data at insert.
-//            preg_match(config('regex.domain'), $data->embed, $url);
-//            $data->embed = $url[0];
-//
-//            // Explode Categories
-//            $data->categories = explode(';', $data->categories);
-//
-//            return $data;
-//        }
-//
-//        // Collection of models
-//        if ($request->has('collection')) {
-//            // TODO: Make sure array is not over 50 in order to limit query.
-//            $collection = explode(',', $request->input('collection'));
-//            return Media::query()->whereIn('id', $collection)->get();
-//        }
-//
-//        // Category model listing
-//        if ($request->has('category')) {
-//            return Media::search($request->input('category'))
-//                ->rule(CategoryRule::class)
-//                ->orderBy('views', 'DESC')
-//                ->paginate($this->limit);
-//        }
-//
-//        // Search model listing
-//        if ($request->has('q') && !empty($request->input('q'))) {
-//            $data = Media::search($request->input('q'))->rule(QueryRule::class);
-//            $data->whereNotMatch('categories', config('const.excluded_cats'));
-//
-//            if ($request->has('exclude')) {
-//                $data->whereNotIn('id', [$request->input('exclude')]);
-//            }
-//
-//            if ($request->has('sort_by')) {
-//                $data->orderBy($sort, 'DESC');
-//            }
-//
-//            return $data->paginate($this->limit);
-//        }
-//
-//        // Most Views
-//        if ($request->has('most_viewed')) {
-//            return Media::search('*')
-//                ->orderBy('views', 'desc')
-//                ->paginate($this->limit);
-//        }
-//
-//        // Default model listing
-//        return Media::search('*')
-//            ->whereNotMatch('categories', config('const.excluded_cats'))
-//            ->orderBy('views', 'desc')
-//            ->paginate($this->limit);
-//    }
+    /**
+     * Full text search for documents
+     * @param Request $request
+     * @return LengthAwarePaginator|void
+     */
+    public function search(Request $request) {
+        //TODO: Exclude set categories from search.
+        $query = $request->has('q')
+            ? Str::lower($request->input('q'))
+            : abort(404);
+        $data = Media::boolSearch()->should('match', ['title' => $query]);
+
+        return $this->prepareDocs($data);
+    }
 
     /**
      * Return document by title
-     * @param Request $request
      * @param string $slug
      * @return array
      */
-    public function title(Request $request, string $slug) {
+    public function title(string $slug) {
         $title = str_replace('-', ' ', $slug);
         return Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
@@ -199,7 +134,7 @@ class MediaController extends Controller
      * @param int $perPage
      * @param string $pageName
      * @param int|null $page
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator|void
      */
     public function prepareDocs(
         SearchRequestBuilder $documents,
@@ -219,6 +154,10 @@ class MediaController extends Controller
                 'Search result does not contain the total hits number. ' .
                 'Please, make sure that total hits are tracked.'
             );
+        }
+
+        if ($data->total() === 0) {
+            abort(404);
         }
 
         $dataArr = [];
