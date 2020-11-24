@@ -4,35 +4,35 @@
       <ul class="list-unstyled pl-4">
         <li>
           <router-link :to="'/my/subscriptions'">
-            <ion-icon class="text-lilac" name="mail-outline"></ion-icon>
-            Subscriptions
+            <ion-icon class="text-lilac" name="mail-outline"></ion-icon
+            >Subscriptions
             <span class="counter counter-subscriptions"></span>
           </router-link>
         </li>
         <li>
           <router-link :to="'/my/watch-history'">
-            <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon>
-            Watch History
+            <ion-icon class="text-lilac" name="sync-circle-outline"></ion-icon
+            >Watch History
           </router-link>
         </li>
-        <li class="line"><hr style="background: #fff; opacity: 0.1;"></li>
+        <li class="line"><hr style="background: #fff; opacity: 0.1" /></li>
         <li>
           <router-link :to="'/best'">
-            <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>
-            Best Videos
+            <ion-icon class="text-lilac" name="trophy-outline"></ion-icon>Best
+            Videos
           </router-link>
         </li>
         <li>
           <router-link :to="'/most-viewed'">
-            <ion-icon class="text-lilac" name="eye-outline"></ion-icon>
-            Most Viewed
+            <ion-icon class="text-lilac" name="eye-outline"></ion-icon>Most
+            Viewed
           </router-link>
         </li>
         <li>
-<!--          <router-link :to="'/most-commented/weekly'">-->
-<!--            <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most-->
-<!--            Commented-->
-<!--          </router-link>-->
+          <!--          <router-link :to="'/most-commented/weekly'">-->
+          <!--            <ion-icon class="text-lilac" name="chatbox-outline"></ion-icon>Most-->
+          <!--            Commented-->
+          <!--          </router-link>-->
         </li>
         <li>
           <router-link :to="'/recommended'">
@@ -86,9 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'categories'
-    ]),
+    ...mapGetters(['categories'])
   },
   methods: {
     search_category() {
