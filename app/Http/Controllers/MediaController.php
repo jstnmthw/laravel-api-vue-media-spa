@@ -62,7 +62,7 @@ class MediaController extends Controller
                 ->field('created_at')
                 ->gt(now()->subWeek());
 
-        return $this->prepareDocs($data, $request->input('perPage'));
+        return $this->prepareDocs($data);
     }
 
     /**
