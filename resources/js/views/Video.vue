@@ -73,7 +73,7 @@
         </div>
       </main>
       <aside class="col-sm-12 col-md-3">
-        <div class="sidead-placeholder"></div>
+        <div class="side-ad-placeholder"></div>
       </aside>
     </div>
     <div class="row">
@@ -238,7 +238,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.data = []
       this.related = []
       this.voted = false

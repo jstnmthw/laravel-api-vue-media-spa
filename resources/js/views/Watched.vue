@@ -5,23 +5,29 @@
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
         <page-header
-          v-if="loaded"
+          v-if="!loading"
           :title="'Recently Viewed'"
           icon="sync-circle"
           class="mb-3"
         ></page-header>
-        <video-list
-          v-if="loaded"
+        <media-list
+          v-if="!loading"
           class="mb-5"
-          :videos="videos"
+          :media="media.data"
           :cards="20"
           :cols="5"
-        ></video-list>
+        ></media-list>
+        <paginate
+          class="mb-5"
+          :pagination="media"
+          :loading="!loading"
+          @paginate="callAPI()"
+        ></paginate>
         <skeleton-video-card
           class="video-listing mb-5"
           :cards="50"
           :cols="5"
-          v-if="!loaded"
+          v-if="loading"
         ></skeleton-video-card>
       </main>
     </div>
@@ -29,46 +35,47 @@
 </template>
 
 <script>
-import axios from 'axios'
 import TopAdBanner from '@/components/TopAdBanner'
 import PageHeader from '@/components/PageHeader'
+import Paginate from '@/components/Paginate'
 import Sidebar from '@/components/layout/Sidebar'
-import VideoList from '@/components/media/List'
+import MediaList from '@/components/media/List'
 import SkeletonVideoCard from '@/components/skeleton/VideoCard'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
+  props: ['categories'],
+  components: {
+    TopAdBanner,
+    PageHeader,
+    Paginate,
+    Sidebar,
+    MediaList,
+    SkeletonVideoCard
+  },
   data() {
     return {
-      loaded: false,
-      videos: false,
       watchedVideos: localStorage.getItem('watched_ids')
         ? JSON.parse(localStorage.getItem('watched_ids'))
         : false
     }
   },
+  computed: {
+    ...mapGetters('api', ['loading']),
+    ...mapState('api', {
+      media: (state) => state.data,
+      error: (state) => state.error
+    })
+  },
   mounted() {
-    this.getCollection()
+    this.callAPI()
   },
-  components: {
-    TopAdBanner: TopAdBanner,
-    PageHeader: PageHeader,
-    Sidebar: Sidebar,
-    VideoList: VideoList,
-    SkeletonVideoCard: SkeletonVideoCard
-  },
-  props: ['categories'],
   methods: {
-    async getCollection() {
-      await axios
-        .get('/api/videos', {
-          params: {
-            collection: this.watchedVideos.join()
-          }
-        })
-        .then((res) => {
-          this.videos = res.data
-          this.loaded = true
-        })
+    ...mapActions('api', ['api']),
+    async callAPI() {
+      return this.api({
+        url: '/api/media/collect?ids=' + this.watchedVideos
+      })
     }
   }
 }

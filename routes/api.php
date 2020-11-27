@@ -42,6 +42,7 @@ Route::prefix('media')->group(function() {
     Route::get('related', 'MediaController@related');
     Route::get('best', 'MediaController@best');
     Route::get('search', 'MediaController@search');
+    Route::get('collect', 'MediaController@collect');
     Route::get('{slug}', 'MediaController@title');
     Route::get('/', 'MediaController@index');
     Route::post('{id}/dislike', 'MediaController@dislike');

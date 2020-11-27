@@ -54,6 +54,19 @@ class MediaController extends Controller
     }
 
     /**
+     * Get documents by multiple ids
+     * @param Request $request
+     * @return LengthAwarePaginator|void
+     */
+    public function collect(Request $request) {
+        $ids = explode(',',$request->input('ids')) ?? abort(404);
+        $data = Media::idsSearch()
+            ->values($ids);
+
+        return $this->prepareDocs($data);
+    }
+
+    /**
      * Return weekly top documents
      * @param Request $request
      * @return LengthAwarePaginator|null
