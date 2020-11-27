@@ -95,6 +95,7 @@
 import axios from 'axios'
 import VideoList from '@/components/media/List'
 import VideoLabels from '@/components/media/Labels'
+import { comma_delimiter } from '@/helpers/numbers'
 
 export default {
   components: {
@@ -114,7 +115,6 @@ export default {
   mounted() {
     this.getMedia()
     this.voteStatus()
-    this.watched()
   },
   computed: {
     rating() {
@@ -127,22 +127,19 @@ export default {
       }
     },
     views() {
-      return this.formatNumber(this.data.views)
+      return comma_delimiter(this.data.views)
     },
     likes() {
-      return this.formatNumber(this.data.likes)
+      return comma_delimiter(this.data.likes)
     },
     dislikes() {
-      return this.formatNumber(this.data.dislikes)
+      return comma_delimiter(this.data.dislikes)
     },
     voteClass() {
       return this.voted
     }
   },
   methods: {
-    formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-    },
     async getMedia() {
       this.$Progress.start()
       this.loaded = true
@@ -158,9 +155,7 @@ export default {
           this.data = response.data
           this.categories = this.data.categories.split(';')
           this.loaded = true
-
-          $('#video')[0].contentWindow.location.replace(this.data.embed)
-
+          this.watched(this.data.id)
           this.getRelated(12)
         })
         .catch((error) => {
@@ -228,9 +223,8 @@ export default {
         this.voted = true
       }
     },
-    watched() {
+    watched(id) {
       let watched = []
-      const id = String(this.$route.params.id)
       if (localStorage.getItem('watched_ids')) {
         watched = JSON.parse(localStorage.getItem('watched_ids'))
       }
@@ -249,7 +243,6 @@ export default {
       this.related = []
       this.voted = false
       this.getMedia()
-      this.watched()
     }
   }
 }
