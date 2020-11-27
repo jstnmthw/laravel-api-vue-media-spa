@@ -40,16 +40,17 @@ class MediaController extends Controller
     /**
      * Return document by title
      * @param string $slug
-     * @return array
+     * @return array|void
      */
     public function title(string $slug) {
         $title = str_replace('-', ' ', $slug);
-        return Media::boolSearch()
+        $data = Media::boolSearch()
             ->must('match', ['title.alphanumeric' => $title])
-            ->execute()
-            ->documents()
-            ->first()
-            ->getContent();
+            ->execute();
+
+        return $data->total()
+            ? $data->documents()->first()->getContent()
+            : abort(404);
     }
 
     /**
