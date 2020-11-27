@@ -29,11 +29,13 @@ const mutations = {
   },
   SET_ERROR(state, payload) {
     state.error.status = payload.status ?? false
-    if (state.error.response.status === 500) {
-      state.error.msg = 'An error has occurred, please try again later.'
-    }
-    if (state.error.response.status === 404) {
-      state.error.msg = 'Sorry, no results found.'
+    if (payload.error) {
+      if (payload.error.response.status === 500) {
+        state.error.msg = 'An error has occurred, please try again later.'
+      }
+      if (payload.error.response.status === 404) {
+        state.error.msg = 'Sorry, no results found.'
+      }
     }
   }
 }
@@ -56,7 +58,7 @@ const actions = {
       })
       .catch((error) => {
         commit('SET_LOADING', 0)
-        commit('SET_ERROR', { error: error })
+        commit('SET_ERROR', { error: error, status: true })
       })
   }
 }
