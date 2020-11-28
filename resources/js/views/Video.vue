@@ -187,7 +187,7 @@ export default {
         .post('/api/media/' + this.data.id + '/like')
         .then((response) => {
           if (response.data.success) {
-            this.likes++
+            this.data.likes++
             this.storeVote(String(this.data.id))
           }
         })
@@ -197,7 +197,7 @@ export default {
         .post('/api/media/' + this.data.id + '/dislike')
         .then((response) => {
           if (response.data.success) {
-            this.dislikes--
+            this.data.dislikes--
             this.storeVote(String(this.data.id))
           }
         })
