@@ -44,6 +44,15 @@ import { comma_delimiter } from '@/helpers/numbers'
 
 export default {
   props: ['media'],
+  data() {
+    return {
+      next: 1,
+      current: 0,
+      interval: 1000,
+      debounceTimer: 0,
+      timer: 0
+    }
+  },
   computed: {
     album() {
       return this.media.album.split(';')
@@ -68,15 +77,6 @@ export default {
       return slug(this.media.title)
     }
   },
-  data() {
-    return {
-      next: 1,
-      current: 0,
-      interval: 1000,
-      debounceTimer: 0,
-      timer: 0
-    }
-  },
   methods: {
     // Debounce hover
     debounce(event, clear = false) {
@@ -87,7 +87,7 @@ export default {
       } else {
         $(event.target)
           .parent()
-          .append($('<img>', { src: '/imgs/loader.svg', class: 'loader-icon' }))
+          .append($('<img alt="" src="/imgs/loader.svg" class="loader-icon">'))
         this.debounceTimer = setTimeout(() => {
           this.carousel(event)
         }, 1000)
