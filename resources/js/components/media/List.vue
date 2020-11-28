@@ -1,12 +1,7 @@
 <template>
-  <div class="media-listing">
-    <div class="row video-list no-gutters" :class="'row-cols-' + cols">
-      <div
-        class="col px-2 mb-md-3 position-relative"
-        v-for="(item, index) in media"
-      >
-        <media-item :media="item"></media-item>
-      </div>
+  <div class="media-listing row no-gutters row-cols-1 row-cols-md-5">
+    <div class="media px-2 mb-4 mb-md-3" v-for="item in media">
+      <media-item :media="item"></media-item>
     </div>
   </div>
 </template>

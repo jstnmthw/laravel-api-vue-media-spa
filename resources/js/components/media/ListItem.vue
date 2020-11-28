@@ -1,45 +1,43 @@
 <template>
-  <div class="media">
-    <div class="media-data">
-      <router-link class="media-poster" :to="'/media/' + url">
-        <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
-        <div
-          class="carousel"
-          @mouseenter="debounce($event)"
-          @mouseleave="debounce($event, true)"
-        >
-          <img
-            src=""
-            alt=""
-            :key="image.index"
-            :data-src="image"
-            v-for="image in album"
-          />
-        </div>
-        <div class="duration">
-          {{ duration }}
-        </div>
-      </router-link>
-      <div class="media-info px-0">
-        <h5 class="media-title mt-2 mb-1">
-          <router-link :to="'/media/' + url">{{ media.title }}</router-link>
-        </h5>
-        <span class="pr-2 position-relative text-sage">
-          <ion-icon name="eye" style="top: 3px"></ion-icon>
-          {{ views }}
-        </span>
-        <span :class="rating > 40 ? 'liked' : 'disliked'">
-          <ion-icon name="thumbs-up"></ion-icon>
-          <ion-icon name="thumbs-down"></ion-icon>
-          {{ rating }}%
-        </span>
+  <div class="media-data">
+    <router-link class="media-poster" :to="'/media/' + url">
+      <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
+      <div
+        class="carousel"
+        @mouseenter="debounce($event)"
+        @mouseleave="debounce($event, true)"
+      >
+        <img
+          src=""
+          alt=""
+          :key="image.index"
+          :data-src="image"
+          v-for="image in album"
+        />
       </div>
+      <div class="duration">
+        {{ duration }}
+      </div>
+    </router-link>
+    <div class="media-info px-0">
+      <h5 class="media-title mt-2 mb-2 mb-md-1">
+        <router-link :to="'/media/' + url">{{ media.title }}</router-link>
+      </h5>
+      <span class="pr-2 position-relative text-sage">
+        <ion-icon name="eye" style="top: 3px"></ion-icon>
+        {{ views }}
+      </span>
+      <span :class="rating > 40 ? 'liked' : 'disliked'">
+        <ion-icon name="thumbs-up"></ion-icon>
+        <ion-icon name="thumbs-down"></ion-icon>
+        {{ rating }}%
+      </span>
     </div>
   </div>
 </template>
 
 <script>
-import { slug } from '@/helpers/strings.js'
+import { slug } from '@/helpers/strings'
 import { comma_delimiter } from '@/helpers/numbers'
 
 export default {

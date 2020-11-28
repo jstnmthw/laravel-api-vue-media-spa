@@ -9,7 +9,7 @@
             {{ error.msg }}
           </h4>
         </div>
-        <div v-else>
+        <template v-else>
           <div class="d-flex mb-3" v-if="loading">
             <div class="d-flex flex-grow-1 flex-column mr-5">
               <div class="skeleton-header w-25 mb-2"></div>
@@ -22,15 +22,19 @@
             </div>
           </div>
           <div v-else>
-            <div class="d-flex mb-3">
-              <div class="d-flex flex-grow-1 flex-column mr-5">
+            <div class="d-block d-md-flex mb-3">
+              <div
+                class="d-flex flex-grow-1 justify-content-between flex-row flex-md-column mb-3 mb-md-0 mr-mb-5"
+              >
                 <page-header :title="'Videos'" icon="flame"></page-header>
                 <div class="text-sage">
                   Showing: {{ first_page }} of {{ last_page }}
                 </div>
               </div>
-              <div class="d-flex align-items-center sort-by">
-                <label for="sort_by" class="text-sage mb-0 mr-2"
+              <div class="d-flex align-items-center sort-by mb-4 mb-md-0">
+                <label
+                  for="sort_by"
+                  class="text-sage mb-0 mr-2 d-none d-md-block"
                   >Sort By:
                 </label>
                 <select
@@ -60,7 +64,7 @@
               @paginate="callAPI()"
             ></paginate>
           </div>
-        </div>
+        </template>
       </main>
     </div>
   </div>

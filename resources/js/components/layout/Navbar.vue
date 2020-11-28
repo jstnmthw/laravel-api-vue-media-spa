@@ -1,14 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4">
+  <nav
+    class="navbar navbar-dark navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
+  >
     <router-link to="/" class="logo">
-        <h1 class="mb-0">🍑</h1>
+      <h1 class="mb-0">🍑</h1>
     </router-link>
     <button
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
-      data-target="#mainNavbar"
-      aria-controls="mainNavbar"
+      data-target="#mainSidebar"
+      aria-controls="mainSidebar"
       aria-expanded="false"
       aria-label="Toggle Nav"
     >
@@ -16,17 +18,17 @@
     </button>
     <search-input></search-input>
     <ul class="navbar-nav">
-      <li v-if="!auth" class="nav-item">
+      <li v-if="!auth" class="nav-item d-none">
         <button @click="login" class="btn btn-link">
           <ion-icon
             name="person"
-            style="position: relative; top: 2px;"
+            style="position: relative; top: 2px"
             class="mr-1"
           ></ion-icon
           >Login
         </button>
       </li>
-      <li v-if="!auth" class="nav-item">
+      <li v-if="!auth" class="nav-item d-none">
         <a class="nav-link text-white" href="javascript: void(0);">Register</a>
       </li>
       <li v-if="auth" class="nav-item dropdown">
@@ -45,7 +47,9 @@
           class="dropdown-menu dropdown-menu-right"
           aria-labelledby="navbarDropdown"
         >
-          <button @click="logout" class="btn btn-link text-purple">Logout</button>
+          <button @click="logout" class="btn btn-link text-purple">
+            Logout
+          </button>
         </div>
       </li>
     </ul>
@@ -75,7 +79,7 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.state.user.name ? this.$store.state.user.name : 'Guest';
+      return this.$store.state.user.name ? this.$store.state.user.name : 'Guest'
     }
   },
   methods: {
