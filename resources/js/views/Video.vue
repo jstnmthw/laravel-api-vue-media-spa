@@ -157,6 +157,9 @@ export default {
           this.loaded = true
           this.watched(this.data.id)
           this.getRelated(12)
+          document
+            .querySelector('#video')
+            .contentWindow.location.replace(this.data.embed)
         })
         .catch((error) => {
           console.log(error)
