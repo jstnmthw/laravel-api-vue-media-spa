@@ -81,7 +81,7 @@ export default {
       if (clear) {
         clearTimeout(this.debounceTimer)
         this.carousel(event, false)
-        // $('.loader-icon').remove()
+        $('.loader-icon').remove()
       } else {
         $(event.target)
           .parent()
@@ -103,7 +103,7 @@ export default {
         this.preloadImages(srcs, () => {
           for (let i = 0; i < images.length; i++) {
             images[i].setAttribute('src', srcs[i])
-            // $('.loader-icon').remove()
+            $('.loader-icon').remove()
           }
         })
       } else {
