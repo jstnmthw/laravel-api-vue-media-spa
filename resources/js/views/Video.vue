@@ -1,6 +1,8 @@
 <template>
   <div class="container bg-purple">
-    <div class="d-flex align-items-center mb-1">
+    <div
+      class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-1"
+    >
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
         <ion-icon name="eye" style="position: relative; top: 3px"></ion-icon>
@@ -25,8 +27,8 @@
       </div>
     </div>
     <div class="row">
-      <main class="col-sm-12 col-md-9">
-        <div class="video-frame mb-3">
+      <main class="col-sm-12 col-md-9 px-0 px-md-3 mb-3 mb-md-0">
+        <div class="media-frame">
           <iframe
             id="video"
             allowfullscreen
@@ -34,18 +36,21 @@
             width="100%"
           ></iframe>
         </div>
-        <div class="d-flex align-items-center mb-md-3 mb-lg-5">
+        <div class="media-actions d-flex mb-md-2 mb-lg-5 mt-md-3">
           <button
             @click="like()"
             type="button"
-            class="btn btn-primary"
+            class="btn btn-primary flex-fill flex-md-grow-0"
             :class="{ disabled: voted }"
           >
             <ion-icon name="thumbs-up"></ion-icon>
           </button>
-          <div class="video-rating ml-3" v-if="data.likes">
+          <div
+            class="media-rating mx-3 d-none d-lg-block flex-grow-1 flex-md-grow-0"
+            v-if="data.likes"
+          >
             {{ likes }} Likes / {{ dislikes }} Dislikes
-            <div class="video-rating-bar mt-1">
+            <div class="media-rating-bar mt-1">
               <div
                 class="video-rating-likes"
                 :style="{ width: rating + '%' }"
@@ -55,28 +60,28 @@
           <button
             @click="dislike()"
             type="button"
-            class="btn btn-primary ml-3"
+            class="btn btn-primary flex-fill flex-md-grow-0"
             :class="{ disabled: voted }"
           >
             <ion-icon name="thumbs-down"></ion-icon>
           </button>
-          <button class="btn btn-primary ml-2">
-            <ion-icon
-              name="heart"
-              style="position: relative; top: 3px"
-            ></ion-icon>
+          <button
+            class="btn btn-primary ml-md-2 mr-md-2 flex-fill flex-md-grow-0"
+          >
+            <ion-icon name="heart"></ion-icon>
             Favorite
           </button>
-          <button class="btn btn-primary ml-auto">
+          <button class="btn btn-primary flex-fill flex-md-grow-0">
             <ion-icon name="flag"></ion-icon>
+            Flag
           </button>
         </div>
       </main>
-      <aside class="col-sm-12 col-md-3">
+      <aside class="col-sm-12 col-md-3 mb-3 mb-md-0">
         <div class="side-ad-placeholder"></div>
       </aside>
     </div>
-    <div class="row">
+    <div class="row related-content">
       <div class="col-12">
         <h4 class="font-weight-bold mb-3">Related Videos</h4>
         <video-list
