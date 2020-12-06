@@ -46,7 +46,7 @@
             <ion-icon name="thumbs-up"></ion-icon>
           </button>
           <div
-            class="media-rating mx-3 d-none d-lg-block flex-grow-1 flex-md-grow-0"
+            class="media-rating mx-3 d-none d-md-block flex-grow-1 flex-md-grow-0"
             v-if="data.likes"
           >
             {{ likes }} Likes / {{ dislikes }} Dislikes

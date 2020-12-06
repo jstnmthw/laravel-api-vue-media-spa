@@ -466,16 +466,28 @@ iframe {
   .related-content {
     .media-listing {
       .media {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+      }
+    }
+  }
+  .side-ad-placeholder {
+    height: 400px;
+  }
+}
+@include media-breakpoint-up(lg) {
+  .side-ad-placeholder {
+    height: 500px;
+  }
+  .related-content {
+    .media-listing {
+      .media {
         flex: 0 0 16.666% !important;
         max-width: 16.666% !important;
       }
     }
   }
-  .side-ad-placeholder {
-    height: 500px;
-  }
 }
-@include media-breakpoint-up(lg) { }
 @include media-breakpoint-up(xl) { }
 
 @include media-breakpoint-down(md) {
