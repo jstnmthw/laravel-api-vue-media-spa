@@ -1,12 +1,13 @@
 <template>
   <nav
-    class="navbar navbar-dark navbar-expand-md bg-purple container flex justify-content-between align-items-center pb-4"
+    class="navbar navbar-dark navbar-expand-lg bg-purple container flex justify-content-between align-items-center pb-4"
   >
     <router-link to="/" class="logo">
       <h1 class="mb-0">🍑</h1>
     </router-link>
+    <search-input></search-input>
     <button
-      class="navbar-toggler"
+      class="navbar-toggler order-2 order-lg-3"
       type="button"
       data-toggle="collapse"
       data-target="#mainSidebar"
@@ -16,7 +17,6 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <search-input></search-input>
     <ul class="navbar-nav">
       <li v-if="!auth" class="nav-item d-none">
         <button @click="login" class="btn btn-link">

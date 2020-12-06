@@ -22,6 +22,16 @@ body {
   }
 }
 
+// Animations
+@keyframes shine-effect {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 // General CSS
 a, .btn-link {
   color: $white;
@@ -147,7 +157,7 @@ iframe {
   width: 60px;
   margin: -7px auto 0 auto;
   position: absolute;
-  top: 50%;
+  top: 50% !important;
   right: 0;
   bottom: 0;
   left: 0;
@@ -207,12 +217,15 @@ iframe {
         white-space: nowrap;
     }
 }
+.hydrated {
+  vertical-align: inherit;
+}
 
 // Skeleton Cards
 .skeleton-card-video {
   width: 100%;
   .skeleton-card-image {
-    min-height: 155px;
+    padding-bottom: 75%;
     background: $lavender;
     @include shineBg;
   }
@@ -276,15 +289,6 @@ iframe {
 .skeleton-card-likes, .skeleton-card-views {
 }
 
-@keyframes shine-effect {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 // Placeholders
 .side-ad-placeholder {
   background: $indigo;
@@ -299,7 +303,6 @@ iframe {
     font-size: 14px;
     font-weight: bold;
   }
-
   .media {
     position: relative;
     .media-data {
@@ -311,7 +314,11 @@ iframe {
       position: relative;
       background: $lavender;
       overflow: hidden;
+      padding-bottom: 75%;
       img {
+        position: absolute;
+        top: 0;
+        left: 0;
         border-radius: 0;
       }
       .carousel {
@@ -444,13 +451,8 @@ iframe {
   padding: 3rem 0;
 }
 
-.hydrated {
-  vertical-align: inherit;
-}
-
 // Breakpoints
-@include media-breakpoint-up(sm) {
-}
+@include media-breakpoint-up(sm) {}
 @include media-breakpoint-up(md) {
   .media-actions {
     .btn {
@@ -474,6 +476,12 @@ iframe {
   .side-ad-placeholder {
     height: 400px;
   }
+  .skeleton-row {
+    .col {
+      flex: 0 0 33.333% !important;
+      max-width: 33.333% !important;
+    }
+  }
 }
 @include media-breakpoint-up(lg) {
   .side-ad-placeholder {
@@ -488,7 +496,14 @@ iframe {
     }
   }
 }
-@include media-breakpoint-up(xl) { }
+@include media-breakpoint-up(xl) {
+  .skeleton-row {
+    .col {
+      flex: 0 0 20% !important;
+      max-width: 20% !important;
+    }
+  }
+}
 
 @include media-breakpoint-down(md) {
   .container-xxs,

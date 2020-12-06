@@ -2,7 +2,7 @@
   <div class="content container bg-purple">
     <div class="row">
       <sidebar></sidebar>
-      <main class="col-md-10">
+      <main class="col-12 col-lg-9 col-xl-10">
         <top-ad-banner></top-ad-banner>
         <div v-if="error.status && !loading" class="error">
           <h4 class="text-center mt-lg-3">
@@ -11,27 +11,27 @@
         </div>
         <template v-else>
           <div class="d-flex mb-3" v-if="loading">
-            <div class="d-flex flex-grow-1 flex-column mr-5">
-              <div class="skeleton-header w-25 mb-2"></div>
-              <div class="skeleton-text w-25 mb-4"></div>
+            <div class="d-flex flex-grow-1 flex-column mr-0 mr-lg-5">
+              <div class="skeleton-header w-50 mb-2"></div>
+              <div class="skeleton-text w-50 mb-4"></div>
               <skeleton-video-card
                 class="mb-5 media-listing"
                 :cards="50"
-                :cols="5"
+                :cols="2"
               ></skeleton-video-card>
             </div>
           </div>
           <div v-else>
-            <div class="d-block d-md-flex mb-3">
+            <div class="d-block d-md-flex mb-3 mb-md-3">
               <div
                 class="d-flex flex-grow-1 justify-content-between flex-row flex-md-column mb-3 mb-md-0 mr-mb-5"
               >
                 <page-header :title="'Videos'" icon="flame"></page-header>
-                <div class="text-sage">
+                <div class="d-none d-md-block text-sage">
                   Showing: {{ first_page }} of {{ last_page }}
                 </div>
               </div>
-              <div class="d-flex align-items-center sort-by mb-4 mb-md-0">
+              <div class="d-flex align-items-center sort-by mb-0 mb-md-0">
                 <label
                   for="sort_by"
                   class="text-sage mb-0 mr-2 d-none d-md-block"

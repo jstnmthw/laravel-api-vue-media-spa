@@ -1,5 +1,8 @@
 <template>
-  <form v-on:submit.prevent="onSubmit()" class="main-search my-2 mx-auto">
+  <form
+    v-on:submit.prevent="onSubmit()"
+    class="main-search order-3 order-md-2 my-2 mx-auto"
+  >
     <div class="input-group input-group-lg">
       <input
         type="text"
@@ -24,17 +27,18 @@
 export default {
   data() {
     return {
-      search_query: this.$route.query.q ? this.$route.query.q : '',
+      search_query: this.$route.query.q ? this.$route.query.q : ''
     }
   },
   methods: {
     onSubmit() {
-      const current_query = this.$route.query.q;
-      console.log(current_query + '!==' + this.search_query);
-      if (current_query !== this.search_query)this.$router.push({
-        path: '/search',
-        query: { q: this.search_query }
-      })
+      const current_query = this.$route.query.q
+      console.log(current_query + '!==' + this.search_query)
+      if (current_query !== this.search_query)
+        this.$router.push({
+          path: '/search',
+          query: { q: this.search_query }
+        })
     }
   }
 }

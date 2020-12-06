@@ -15,7 +15,10 @@
             Prev
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page > 3">
+        <li
+          class="page-item d-none d-md-block"
+          v-if="pagination.current_page > 3"
+        >
           <a
             class="page-link"
             href="javascript:void(0)"
@@ -25,7 +28,10 @@
             1
           </a>
         </li>
-        <li class="page-item" v-if="pagination.current_page > 3">
+        <li
+          class="page-item d-none d-md-block"
+          v-if="pagination.current_page > 3"
+        >
           <a
             class="page-link page-hellip"
             href="javascript:void(0)"
@@ -37,7 +43,7 @@
         </li>
         <li
           v-for="page in pagesNumber"
-          class="page-item"
+          class="page-item d-none d-md-block"
           :class="{ active: page === pagination.current_page }"
           :key="page.index"
         >
@@ -50,7 +56,7 @@
           </a>
         </li>
         <li
-          class="page-item"
+          class="page-item d-none d-md-block"
           v-if="
             pagination.current_page < pagination.last_page &&
             pagination.last_page >= 5
@@ -66,7 +72,7 @@
           </a>
         </li>
         <li
-          class="page-item"
+          class="page-item d-none d-md-block"
           v-if="
             pagination.current_page < pagination.last_page &&
             pagination.last_page >= 5

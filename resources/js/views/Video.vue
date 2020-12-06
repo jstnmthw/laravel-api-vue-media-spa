@@ -3,6 +3,7 @@
     <div
       class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-1"
     >
+      <sidebar></sidebar>
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
         <ion-icon name="eye" style="position: relative; top: 3px"></ion-icon>
@@ -100,12 +101,14 @@
 import axios from 'axios'
 import VideoList from '@/components/media/List'
 import VideoLabels from '@/components/media/Labels'
+import Sidebar from '@/components/layout/Sidebar'
 import { comma_delimiter } from '@/helpers/numbers'
 
 export default {
   components: {
-    VideoList: VideoList,
-    VideoLabels: VideoLabels
+    VideoList,
+    VideoLabels,
+    Sidebar
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <aside
     id="mainSidebar"
-    class="main-sidebar d-md-block collapse col-sm-12 col-md-3 col-lg-2"
+    class="main-sidebar d-lg-block collapse col-sm-12 col-md-3 col-lg-2"
   >
     <div class="main-categories">
       <ul class="list-unstyled pl-4">
