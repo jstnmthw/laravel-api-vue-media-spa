@@ -86,6 +86,32 @@ class MediaController extends Controller
     }
 
     /**
+     * Return most likes docs
+     * @return LengthAwarePaginator|null
+     */
+    public function mostLikes(): ?LengthAwarePaginator
+    {
+        $data = Media::rawSearch()
+                ->query(['match_all' => new \stdClass()])
+                ->sort('likes', 'desc');
+
+        return $this->prepareDocs($data);
+    }
+
+    /**
+     * Return most viewed docs
+     * @return LengthAwarePaginator|null
+     */
+    public function mostViewed(): ?LengthAwarePaginator
+    {
+        $data = Media::rawSearch()
+                ->query(['match_all' => new \stdClass()])
+                ->sort('views', 'desc');
+
+        return $this->prepareDocs($data);
+    }
+
+    /**
      * Return related documents by Id
      * @param Request $request
      * @return LengthAwarePaginator

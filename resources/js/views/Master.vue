@@ -32,16 +32,14 @@
                 </div>
               </div>
               <div class="d-flex align-items-center sort-by mb-0 mb-md-0">
-                <label
-                  for="sort_by"
-                  class="text-sage mb-0 mr-2 d-none d-md-block"
+                <label for="sort_by" class="text-sage mb-0 mr-2 d-none"
                   >Sort By:
                 </label>
                 <select
                   id="sort_by"
                   v-model="sort"
                   name="sort_by"
-                  class="custom-select"
+                  class="custom-select d-none"
                   @change="sortBy()"
                 >
                   <option selected value="most_views">Most Views</option>
