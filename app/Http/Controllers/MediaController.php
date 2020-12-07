@@ -58,7 +58,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Get documents by multiple ids
+     * Return documents by multiple ids
      * TODO: Should return by same order given
      * @param Request $request
      * @return LengthAwarePaginator
@@ -133,7 +133,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Get documents by category
+     * Return documents by category
      * @param $slug
      * @return LengthAwarePaginator
      */
