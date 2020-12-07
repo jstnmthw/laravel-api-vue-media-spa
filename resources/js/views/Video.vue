@@ -1,6 +1,6 @@
 <template>
   <div class="container media-page bg-purple">
-    <sidebar></sidebar>
+    <sidebar :classes="'collapse'"></sidebar>
     <div
       class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-1"
     >
