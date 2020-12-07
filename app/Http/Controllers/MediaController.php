@@ -10,6 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
 use RuntimeException;
+use stdClass;
 
 class MediaController extends Controller
 {
@@ -72,14 +73,23 @@ class MediaController extends Controller
     }
 
     /**
-     * Return weekly top documents
+     * Return documents based on percent of likes to dislikes
      * @return LengthAwarePaginator
      */
     public function best(): ?LengthAwarePaginator
     {
-        $data = Media::rangeSearch()
-                ->field('created_at')
-                ->gt(now()->subWeek());
+        $data = Media::rawSearch()
+                ->query(['match_all' => new stdClass()])
+                ->sortRaw([
+                    "_script" => [
+                        "type" => "number",
+                        "script" => [
+                            "lang" => "painless",
+                            "source" => "doc['likes'].value / doc['dislikes'].value"
+                        ],
+                        "order" => "desc"
+                    ]
+                ]);
 
         return $this->prepareDocs($data);
     }
@@ -91,7 +101,7 @@ class MediaController extends Controller
     public function mostViewed(): ?LengthAwarePaginator
     {
         $data = Media::rawSearch()
-                ->query(['match_all' => new \stdClass()])
+                ->query(['match_all' => new stdClass()])
                 ->sort('views', 'desc');
 
         return $this->prepareDocs($data);
@@ -144,7 +154,7 @@ class MediaController extends Controller
     public function like($id): JsonResponse
     {
         if (Media::query()->where('id', $id)->increment('likes')) {
-            return response()->json(['success' => true], 200);
+            return response()->json(['success' => true]);
         }
         return response()->json(['success' => false], 404);
     }
@@ -157,7 +167,7 @@ class MediaController extends Controller
     public function dislike($id): JsonResponse
     {
         if (Media::query()->where('id', $id)->increment('dislikes')) {
-            return response()->json(['success' => 1], 200);
+            return response()->json(['success' => 1]);
         }
         return response()->json(['success' => false], 404);
     }
