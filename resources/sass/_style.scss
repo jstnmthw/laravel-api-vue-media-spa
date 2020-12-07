@@ -295,7 +295,7 @@ iframe {
   height: 75px;
 }
 
-// VideoList component
+//  Media List component
 .media-listing {
   margin-left: -8px;
   margin-right: -8px;
@@ -375,6 +375,13 @@ iframe {
         }
       }
     }
+  }
+}
+
+// Media Page
+.media-page {
+  .main-sidebar {
+    display: none !important;
   }
 }
 

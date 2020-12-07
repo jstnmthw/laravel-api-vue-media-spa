@@ -1,9 +1,9 @@
 <template>
-  <div class="container bg-purple">
+  <div class="container media-page bg-purple">
+    <sidebar></sidebar>
     <div
       class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-1"
     >
-      <sidebar></sidebar>
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
         <ion-icon name="eye" style="position: relative; top: 3px"></ion-icon>
