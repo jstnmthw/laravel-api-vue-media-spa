@@ -73,10 +73,9 @@ class MediaController extends Controller
 
     /**
      * Return weekly top documents
-     * @param Request $request
-     * @return LengthAwarePaginator|null
+     * @return LengthAwarePaginator
      */
-    public function best(Request $request): ?LengthAwarePaginator
+    public function best(): ?LengthAwarePaginator
     {
         $data = Media::rangeSearch()
                 ->field('created_at')
@@ -86,21 +85,8 @@ class MediaController extends Controller
     }
 
     /**
-     * Return most likes docs
-     * @return LengthAwarePaginator|null
-     */
-    public function mostLikes(): ?LengthAwarePaginator
-    {
-        $data = Media::rawSearch()
-                ->query(['match_all' => new \stdClass()])
-                ->sort('likes', 'desc');
-
-        return $this->prepareDocs($data);
-    }
-
-    /**
      * Return most viewed docs
-     * @return LengthAwarePaginator|null
+     * @return LengthAwarePaginator
      */
     public function mostViewed(): ?LengthAwarePaginator
     {
