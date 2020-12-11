@@ -19,7 +19,7 @@ class Media extends Model
      *
      * @return array
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return $this->only([
             'id',

@@ -37,17 +37,20 @@ Route::post('/login', function (Request $request) {
         return Response::make('Failed', 401);
     }
 });
-Route::prefix('media')->group(function() {
-    Route::get('categories/{slug}', 'MediaController@category');
-    Route::get('related', 'MediaController@related');
-    Route::get('best', 'MediaController@best');
-    Route::get('search', 'MediaController@search');
-    Route::get('collect', 'MediaController@collect');
-    Route::get('most-viewed', 'MediaController@mostViewed');
-    Route::get('recommended', 'MediaController@mostLikes');
-    Route::get('{slug}', 'MediaController@title');
-    Route::get('/', 'MediaController@index');
-    Route::post('{id}/dislike', 'MediaController@dislike');
-    Route::post('{id}/like', 'MediaController@like');
+
+Route::group(['middleware' => ['throttle:60,1']], function () {
+    Route::prefix('media')->group(function () {
+        Route::get('categories/{slug}', 'MediaController@category');
+        Route::get('related', 'MediaController@related');
+        Route::get('best', 'MediaController@best');
+        Route::get('search', 'MediaController@search');
+        Route::get('collect', 'MediaController@collect');
+        Route::get('most-viewed', 'MediaController@mostViewed');
+        Route::get('recommended', 'MediaController@mostLikes');
+        Route::get('{slug}', 'MediaController@title');
+        Route::get('/', 'MediaController@index');
+        Route::post('{id}/dislike', 'MediaController@dislike');
+        Route::post('{id}/like', 'MediaController@like');
+    });
+    Route::apiResource('categories', 'CategoryController');
 });
-Route::apiResource('categories', 'CategoryController');

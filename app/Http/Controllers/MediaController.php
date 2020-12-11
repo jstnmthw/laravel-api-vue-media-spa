@@ -78,18 +78,19 @@ class MediaController extends Controller
      */
     public function best(): ?LengthAwarePaginator
     {
-        $data = Media::rawSearch()
-                ->query(['match_all' => new stdClass()])
-                ->sortRaw([
-                    "_script" => [
-                        "type" => "number",
-                        "script" => [
-                            "lang" => "painless",
-                            "source" => "doc['likes'].value / doc['dislikes'].value"
-                        ],
-                        "order" => "desc"
-                    ]
-                ]);
+        $data = Media::rawSearch()->query([
+            'function_score' => [
+                "query" => [
+                    "match_all" => new stdClass()
+                ],
+                'field_value_factor' => [
+                    'field' => 'likes',
+                    'factor' => 1.2,
+                    'modifier' => 'sqrt',
+                    'missing' => 1
+                ],
+            ],
+        ]);
 
         return $this->prepareDocs($data);
     }
