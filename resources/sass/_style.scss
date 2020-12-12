@@ -299,7 +299,12 @@ iframe {
   display: block;
   width: 100%;
   max-width: 728px;
-  height: 90px;
+  a, img {
+    vertical-align: middle;
+    display: block;
+    max-width: 100%;
+    width: 100%;
+  }
 }
 //  Media List component
 .media-listing {
