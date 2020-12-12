@@ -1,7 +1,7 @@
 <template>
   <aside
     id="mainSidebar"
-    class="main-sidebar col-sm-12 col-md-3 col-lg-2"
+    class="main-sidebar collapse col-sm-12 col-lg-3 col-xl-2"
     :class="classes"
   >
     <div class="main-categories">

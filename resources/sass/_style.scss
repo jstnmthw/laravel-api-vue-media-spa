@@ -294,7 +294,13 @@ iframe {
   background: $indigo;
   height: 75px;
 }
-
+.top-banner-placeholder {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: 75px;
+}
 //  Media List component
 .media-listing {
   margin-left: -8px;

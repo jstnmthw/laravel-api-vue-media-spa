@@ -1,7 +1,7 @@
 <template>
   <div class="content container bg-purple">
     <div class="row">
-      <sidebar></sidebar>
+      <sidebar classes="d-lg-block"></sidebar>
       <main class="col-12 col-lg-9 col-xl-10">
         <top-ad-banner></top-ad-banner>
         <div v-if="error.status && !loading" class="error">
@@ -24,7 +24,7 @@
           <div v-else>
             <div class="d-block d-md-flex mb-3 mb-md-3">
               <div
-                class="d-flex flex-grow-1 justify-content-between flex-row flex-md-column mb-3 mb-md-0 mr-mb-5"
+                class="d-flex flex-grow-1 justify-content-between flex-row flex-md-column"
               >
                 <page-header :title="'Videos'" icon="flame"></page-header>
                 <div class="d-none d-md-block text-sage">
