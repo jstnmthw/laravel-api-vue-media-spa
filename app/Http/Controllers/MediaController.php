@@ -104,8 +104,8 @@ class MediaController extends Controller
     {
         $data = Media::rawSearch()->query([
             'function_score' => [
-                "query" => [
-                    "match_all" => new stdClass()
+                'query' => [
+                    'match_all' => new stdClass()
                 ],
                 'field_value_factor' => [
                     'field' => 'likes',
