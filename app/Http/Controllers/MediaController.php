@@ -41,9 +41,9 @@ class MediaController extends Controller
             'function_score' => [
                 'query' => [
                     'bool' => [
-                        'should' => [
+                        'must' => [
                             'match' => [
-                                'title' => $query
+                                'title' => $query,
                             ]
                         ],
                         'should' => [
