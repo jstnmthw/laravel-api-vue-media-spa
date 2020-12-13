@@ -24,9 +24,9 @@ class MediaController extends Controller
         $data = Media::boolSearch()
             ->mustNot('match', [
                 'categories' => config('const.excluded_cats')
-            ])
-            ->execute();
-        return $this->prepareDocs(Media::matchAllSearch());
+            ]);
+
+        return $this->prepareDocs($data);
     }
 
     /**
