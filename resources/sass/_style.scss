@@ -374,13 +374,13 @@ iframe {
         }
       }
       .liked {
-        color: $green;
+        color: $peach;
         [name='thumbs-down'] {
           display: none;
         }
       }
       .disliked {
-        color: $red;
+        color: $sage;
         [name='thumbs-up'] {
           display: none;
         }

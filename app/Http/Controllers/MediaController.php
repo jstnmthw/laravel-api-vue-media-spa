@@ -154,8 +154,19 @@ class MediaController extends Controller
     public function category($slug): LengthAwarePaginator
     {
         $category = Str::title($slug);
-        $data = Media::boolSearch()
-            ->should('match', ['categories' => $category]);
+        $data = Media::rawSearch()->query([
+            'function_score' => [
+                "query" => [
+                        "match" => ['categories' => $category]
+                ],
+                'field_value_factor' => [
+                    'field' => 'likes',
+                    'factor' => 1.2,
+                    'modifier' => 'sqrt',
+                    'missing' => 1
+                ],
+            ],
+        ]);
 
         return $this->prepareDocs($data);
     }

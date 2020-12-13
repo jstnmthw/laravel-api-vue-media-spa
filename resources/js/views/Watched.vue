@@ -1,7 +1,7 @@
 <template>
   <div class="content container bg-purple">
     <div class="row">
-      <sidebar :categories="categories"></sidebar>
+      <sidebar classes="d-lg-block"></sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
         <page-header

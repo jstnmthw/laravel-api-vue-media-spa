@@ -16,6 +16,7 @@ $lilac: #cacaf1;
 $blue: #3490dc;
 $pink: #d980fa;
 $red: #e3342f;
+$peach: #ffaf81;
 $orange: #f6993f;
 $yellow: #ffc107;
 $green: #38c172;
@@ -24,6 +25,7 @@ $cyan: #6cb2eb;
 
 // Map custom colors
 $theme-colors: (
+  'peach': $peach,
   'lilac': $lilac,
   'sage': $sage,
   'indigo': $indigo,
