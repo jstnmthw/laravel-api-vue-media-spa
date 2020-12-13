@@ -33,15 +33,12 @@ export default {
   methods: {
     onSubmit() {
       const current_query = this.$route.query.q
-      console.log(current_query + '!==' + this.search_query)
       if (current_query !== this.search_query)
         this.$router.push({
           path: '/search',
-          query: { q: this.search_query }
+          query: { q: encodeURI(this.search_query) }
         })
     }
   }
 }
 </script>
-
-<style></style>

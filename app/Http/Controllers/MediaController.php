@@ -37,6 +37,31 @@ class MediaController extends Controller
             : abort(404);
         $data = Media::boolSearch()->should('match', ['title' => $query]);
 
+        $data = Media::rawSearch()->query([
+            'function_score' => [
+                'query' => [
+                    'bool' => [
+                        'should' => [
+                            'match' => [
+                                'title' => $query
+                            ]
+                        ],
+                        'should' => [
+                            'match' => [
+                                'categories' => $query
+                            ]
+                        ],
+                    ],
+                ],
+                'field_value_factor' => [
+                    'field' => 'likes',
+                    'factor' => 1.2,
+                    'modifier' => 'sqrt',
+                    'missing' => 1
+                ],
+            ],
+        ]);
+
         return $this->prepareDocs($data);
     }
 
@@ -157,7 +182,7 @@ class MediaController extends Controller
         $data = Media::rawSearch()->query([
             'function_score' => [
                 "query" => [
-                        "match" => ['categories' => $category]
+                    "match" => ['categories' => $category]
                 ],
                 'field_value_factor' => [
                     'field' => 'likes',
