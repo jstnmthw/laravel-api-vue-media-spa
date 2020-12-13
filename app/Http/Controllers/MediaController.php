@@ -35,7 +35,6 @@ class MediaController extends Controller
         $query = $request->has('q')
             ? Str::lower($request->input('q'))
             : abort(404);
-        $data = Media::boolSearch()->should('match', ['title' => $query]);
 
         $data = Media::rawSearch()->query([
             'function_score' => [
