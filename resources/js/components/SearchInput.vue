@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      search_query: this.$route.query.q ? this.$route.query.q : ''
+      search_query: this.$route.query.q ? decodeURI(this.$route.query.q) : ''
     }
   },
   methods: {
