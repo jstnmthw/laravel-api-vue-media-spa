@@ -21,10 +21,28 @@ class MediaController extends Controller
      */
     public function index(): LengthAwarePaginator
     {
-        $data = Media::boolSearch()
-            ->mustNot('match', [
-                'categories' => config('const.excluded_cats')
-            ]);
+        $data = Media::rawSearch()->query([
+            'function_score' => [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                          'match_all' => new stdClass()
+                        ],
+                        'must_not' => [
+                            'match' => [
+                                'categories' => config('const.excluded_cats')
+                            ]
+                        ],
+                    ],
+                ],
+                'field_value_factor' => [
+                    'field' => 'views',
+                    'factor' => 1.2,
+                    'modifier' => 'sqrt',
+                    'missing' => 1
+                ],
+            ],
+        ]);
 
         return $this->prepareDocs($data);
     }
