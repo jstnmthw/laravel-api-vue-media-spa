@@ -21,6 +21,11 @@ class MediaController extends Controller
      */
     public function index(): LengthAwarePaginator
     {
+        $data = Media::boolSearch()
+            ->mustNot('match', [
+                'categories' => config('const.excluded_cats')
+            ])
+            ->execute();
         return $this->prepareDocs(Media::matchAllSearch());
     }
 
@@ -33,7 +38,7 @@ class MediaController extends Controller
     {
         //TODO: Exclude set categories from search.
         $query = $request->has('q')
-            ? Str::lower($request->input('q'))
+            ? Str::lower(urldecode($request->input('q')))
             : abort(404);
 
         $data = Media::rawSearch()->query([
@@ -43,6 +48,11 @@ class MediaController extends Controller
                         'must' => [
                             'match' => [
                                 'title' => $query,
+                            ]
+                        ],
+                        'must_not' => [
+                            'match' => [
+                                'categories' => config('const.excluded_cats')
                             ]
                         ],
                         'should' => [

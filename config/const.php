@@ -10,5 +10,5 @@ return [
     |
     */
     // Media categories exempt from main listings
-    'excluded_cats' => env('EXCLUDED_CATEGORIES', 'null'),
+    'excluded_cats' => env('EXCLUDED_CATEGORIES', ''),
 ];
