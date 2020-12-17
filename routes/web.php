@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Spatie\Sitemap\Sitemap;
+use App\Media;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::get('/sitemap', function() {
+
+});
 
 Route::get('/{vue_capture?}', function () {
     return view('master');
