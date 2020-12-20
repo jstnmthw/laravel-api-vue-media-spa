@@ -57,7 +57,8 @@ class GenerateSitemap extends Command
                 $bar->advance();
             }
             is_dir(public_path('sitemap')) ?: mkdir(public_path('sitemap'));
-            $sitemap->writeToFile(public_path("sitemap/sitemap-{$i}.xml"));
+            $file = fopen(public_path("sitemap/sitemap-{$i}.xml"), 'w');
+            fwrite($file, $sitemap->render());
             $i++;
             $bar->finish();
             $this->newLine();
