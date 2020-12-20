@@ -8,6 +8,8 @@ use App\Media;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\SitemapIndex;
+use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateSitemap extends Command
 {
@@ -16,7 +18,7 @@ class GenerateSitemap extends Command
      *
      * @var string
      */
-    protected $signature = 'make:sitemap';
+    protected $signature = 'make:sitemap {chunkSize=500}';
 
     /**
      * The console command description.
@@ -40,37 +42,35 @@ class GenerateSitemap extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
-        $sitemap = Sitemap::create();
-        $bar = $this->output->createProgressBar(Media::count());
-        $bar->start();
-        $this->newLine();
-        $this->comment('Generating App\Media entries...');
-        DB::table('media')->orderBy('id')->chunk(500, function ($media) use ($sitemap, $bar) {
+        $i = 0;
+        $chunk = $this->argument('chunkSize');
+        DB::table('media')->orderBy('id')->chunk($chunk, function ($media) use (&$i) {
+            $this->comment("Creating sitemap-{$i}.xml...");
+            $bar = $this->output->createProgressBar($media->count());
+            $bar->start();
+            $sitemap = Sitemap::create();
             foreach ($media as $row) {
                 $slug = Str::slug(strtolower($row->title));
                 $sitemap->add(url("/media/{$slug}"));
+                $bar->advance();
             }
-            $bar->advance();
+            is_dir(public_path('sitemap')) ?: mkdir(public_path('sitemap'));
+            $sitemap->writeToFile(public_path("sitemap/sitemap-{$i}.xml"));
+            $i++;
+            $bar->finish();
+            $this->newLine();
         });
-        $bar->finish();
+        $this->info('Done.');
         $this->newLine();
-        $this->info('Finished.');
-        $this->comment('Generating App\Categories entries...');
-        $bar = $this->output->createProgressBar(Category::count());
-        $bar->start();
-        DB::table('categories')->orderBy('id')->chunk(500, function ($categories) use ($sitemap, $bar) {
-            foreach ($categories as $row) {
-                $slug = Str::slug(strtolower($row->name));
-                $sitemap->add(url("/categories/{$slug}"));
-            }
-            $bar->advance();
-        });
-        $sitemap->writeToFile(public_path('sitemap.xml'));
-        $bar->finish();
-        $this->newLine();
-        $this->info('Sitemap is complete!');
+        $this->comment('Creating sitemap index...');
+        $siteIndex = SitemapIndex::create();
+        for ($x = 0; $x < $i; $x++) {
+            $siteIndex->add(public_path("sitemap/sitemap-{$x}.xml"));
+        }
+        $siteIndex->writeToFile(public_path('sitemap.xml'));
+        $this->info('Done.');
         return 1;
     }
 }
