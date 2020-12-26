@@ -46,10 +46,8 @@ class SitemapCreateIndex extends Command
 
         $siteIndex = SitemapIndex::create();
 
-        $x = 0;
         foreach ($fi as $file) {
             $siteIndex->add('sitemap/' . $file->getFilename());
-            $x++;
         }
 
         $siteIndex->writeToFile(public_path('sitemap.xml'));
