@@ -27,7 +27,7 @@ class SitemapCreateIndex extends Command
      *
      * @var string
      */
-    protected $description = 'Create a new sitemap from database';
+    protected $description = 'Create a sitemap index';
 
     /**
      * Create a new command instance.
