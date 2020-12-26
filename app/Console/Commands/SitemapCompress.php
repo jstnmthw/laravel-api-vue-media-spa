@@ -4,10 +4,7 @@ namespace App\Console\Commands;
 
 use FilesystemIterator;
 use Illuminate\Console\Command;
-use App\Media;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Spatie\Sitemap\Sitemap;
 
 class SitemapCompress extends Command
 {
