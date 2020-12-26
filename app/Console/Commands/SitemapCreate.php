@@ -113,12 +113,6 @@ class SitemapCreate extends Command
         // Console output
         $this->info('Done.');
 
-        // Console newline
-        $this->newLine();
-
-        // Console bar
-        $this->comment('Creating sitemap index...');
-
         // Successfully run
         return 1;
     }

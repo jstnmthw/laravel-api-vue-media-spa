@@ -39,16 +39,20 @@ class SitemapCreateIndex extends Command
      */
     public function handle(): int
     {
+        $this->comment('Creating sitemap index...');
         $path = public_path('sitemap');
 
         $fi = new FilesystemIterator($path);
-        $i = iterator_count($fi);
 
         $siteIndex = SitemapIndex::create();
-        for ($x = 0; $x < $i; $x++) {
-            $siteIndex->add($path . "sitemap-{$x}.xml");
+
+        $x = 0;
+        foreach ($fi as $file) {
+            $siteIndex->add('sitemap/' . $file->getFilename());
+            $x++;
         }
-        $siteIndex->writeToFile($path .'sitemap.xml');
+
+        $siteIndex->writeToFile(public_path('sitemap.xml'));
 
         $this->info('Done.');
 

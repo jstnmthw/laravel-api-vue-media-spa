@@ -23,7 +23,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "predis/predis": "^1.1",
-        "spatie/laravel-sitemap": "^5.8"
+        "spatie/laravel-sitemap": "^5.8",
+        "ext-zlib": "*"
     },
     "require-dev": {
         "aalaap/faker-youtube": "^1.2",
