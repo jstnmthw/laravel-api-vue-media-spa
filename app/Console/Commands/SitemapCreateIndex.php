@@ -2,16 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Category;
 use FilesystemIterator;
 use Illuminate\Console\Command;
-use App\Media;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
-use stdClass;
-use Symfony\Component\Console\Input\InputArgument;
 
 class SitemapCreateIndex extends Command
 {
