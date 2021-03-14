@@ -1,6 +1,6 @@
 <template>
   <div class="media-data">
-    <router-link class="media-poster" :to="'/media/' + url">
+    <router-link class="media-poster" :to="'/videos/' + url">
       <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
       <div
         class="carousel"
@@ -21,7 +21,7 @@
     </router-link>
     <div class="media-info px-0">
       <h5 class="media-title mt-2 mb-2 mb-md-1">
-        <router-link :to="'/media/' + url">{{ media.title }}</router-link>
+        <router-link :to="'/videos/' + url">{{ media.title }}</router-link>
       </h5>
       <span class="pr-2 position-relative text-sage">
         <ion-icon name="eye" style="top: 3px"></ion-icon>
@@ -72,7 +72,7 @@ export default {
       return new Date(this.media.duration * 1000).toISOString().substr(14, 5)
     },
     url() {
-      return slug(this.media.title)
+      return slug(this.media.title + ' ' + this.media.unique_key)
     }
   },
   methods: {

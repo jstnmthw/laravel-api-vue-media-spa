@@ -24,12 +24,7 @@ export default new VueRouter({
       name: 'categories'
     },
     {
-      path: '/videos/:id',
-      component: Video,
-      name: 'video'
-    },
-    {
-      path: '/media/:slug',
+      path: '/videos/:slug',
       component: Video,
       name: 'media'
     },

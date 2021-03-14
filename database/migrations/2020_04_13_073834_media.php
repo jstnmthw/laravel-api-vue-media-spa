@@ -15,8 +15,8 @@ class Media extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
+            $table->text('unique_key');
             $table->text('url');
-            $table->text('external_key');
             $table->text('thumbnail');
             $table->text('album');
             $table->text('title');

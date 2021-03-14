@@ -24,7 +24,7 @@ class Media extends Model
         return $this->only([
             'id',
             'url',
-            'external_key',
+            'unique_key',
             'thumbnail',
             'album',
             'title',

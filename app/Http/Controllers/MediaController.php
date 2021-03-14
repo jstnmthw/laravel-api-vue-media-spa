@@ -93,15 +93,15 @@ class MediaController extends Controller
     }
 
     /**
-     * Return document by title
-     * @param string $slug
-     * @return array|void
+     * Return document by key
+     * @param string $key
+     * @return array
      */
-    public function title(string $slug): array
+    public function getByKey(string $key): array
     {
-        $title = str_replace('-', ' ', $slug);
-        $data = Media::boolSearch()
-            ->must('match', ['title.alphanumeric' => $title])
+        $data = Media::matchSearch()
+            ->field('unique_key')
+            ->query($key)
             ->execute();
 
         return $data->total()

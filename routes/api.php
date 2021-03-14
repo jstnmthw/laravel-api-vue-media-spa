@@ -47,7 +47,8 @@ Route::group(['middleware' => ['throttle:60,1']], function () {
         Route::get('collect', 'MediaController@collect');
         Route::get('most-viewed', 'MediaController@mostViewed');
         Route::get('recommended', 'MediaController@mostLikes');
-        Route::get('{slug}', 'MediaController@title');
+//        Route::get('{slug}', 'MediaController@title');
+        Route::get('{key}', 'MediaController@getByKey');
         Route::get('/', 'MediaController@index');
         Route::post('{id}/dislike', 'MediaController@dislike');
         Route::post('{id}/like', 'MediaController@like');

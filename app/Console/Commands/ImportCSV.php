@@ -43,12 +43,13 @@ class ImportCSV extends Command
         $query =
             'LOAD DATA INFILE "/tmp/SQL/'.$this->argument('filename').'" IGNORE
             INTO TABLE media
+            CHARACTER SET utf8mb4
             FIELDS TERMINATED BY "|" ESCAPED BY ""
             LINES TERMINATED BY "\n"
             (@url, thumbnail, album, title, @tags, categories, @author, duration, views, @likes, @dislikes, @dummy, @dummy)
             SET author = IF(@author = "", NULL, @author),
                 url = SUBSTRING(@url,14,45),
-                external_key = SUBSTRING(@url,44,15),
+                unique_key = SUBSTRING(@url,44,15),
                 likes = IF(@likes = "", 0, @likes),
                 dislikes = IF(@dislikes = "", 0, @dislikes),
                 created_at = CURRENT_TIMESTAMP,

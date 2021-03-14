@@ -155,9 +155,12 @@ export default {
       // Clear iframe src
       $('#video').attr('src', '')
 
+      let key = this.$route.params.slug
+      key = key.substring(key.length - 15, key.length)
+
       // Make the call
       await axios
-        .get('/api/media/' + this.$route.params.slug)
+        .get('/api/media/' + key)
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
