@@ -15,7 +15,8 @@ final class CreateMediaIndex implements MigrationInterface
     {
         Index::create('media', function (Mapping $mapping, Settings $settings) {
             // Mappings
-            $mapping->text('embed');
+            $mapping->text('url');
+            $mapping->text('external_key');
             $mapping->text('thumbnail');
             $mapping->text('album');
             $mapping->text('title', [

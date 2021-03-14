@@ -13,11 +13,10 @@ class Media extends Migration
      */
     public function up()
     {
-
         Schema::create('media', function (Blueprint $table) {
-
             $table->id();
-            $table->text('embed');
+            $table->text('url');
+            $table->text('external_key');
             $table->text('thumbnail');
             $table->text('album');
             $table->text('title');
@@ -29,9 +28,7 @@ class Media extends Migration
             $table->integer('dislikes');
             $table->softDeletes();
             $table->timestamps();
-
         });
-        
     }
 
     /**

@@ -23,7 +23,8 @@ class Media extends Model
     {
         return $this->only([
             'id',
-            'embed',
+            'url',
+            'external_key',
             'thumbnail',
             'album',
             'title',
