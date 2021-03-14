@@ -1,8 +1,8 @@
 <template>
-  <div class="container media-page bg-purple">
+  <div class="container media-page bg-purple pt-sm-2 pt-md-4">
     <sidebar :classes="'collapse'"></sidebar>
     <div
-      class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-1"
+      class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-sm-3 mb-md-1"
     >
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
@@ -167,7 +167,7 @@ export default {
           this.getRelated(12)
           document
             .querySelector('#video')
-            .contentWindow.location.replace(this.data.embed)
+            .contentWindow.location.replace(this.data.url)
         })
         .catch((error) => {
           console.log(error)

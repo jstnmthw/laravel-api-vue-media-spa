@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-dark navbar-expand-lg bg-purple container flex justify-content-between align-items-center pb-0 pb-lg-4"
+    class="navbar navbar-dark navbar-expand-lg bg-purple container flex justify-content-between align-items-center pb-0"
   >
     <router-link to="/" class="logo">
       <h1 class="mb-0">🍑</h1>

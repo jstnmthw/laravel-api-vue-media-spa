@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/categories/' + slug" class="btn btn-sm btn-category">
+  <router-link :to="'/categories/' + slug" class="btn btn-sm btn-category mb-1">
     {{ label }}
   </router-link>
 </template>
