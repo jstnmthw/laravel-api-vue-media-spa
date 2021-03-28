@@ -9,8 +9,8 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '*': 'http://localhost'
-    },
-    clientLogLevel: 'none'
+      host: '0.0.0.0', // host machine ip
+      port: 8080
+    }
   }
 }

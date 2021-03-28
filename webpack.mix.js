@@ -1,5 +1,4 @@
 const mix = require('laravel-mix')
-const config = require('./webpack.config')
 
 /*
  |--------------------------------------------------------------------------
@@ -13,6 +12,11 @@ const config = require('./webpack.config')
  */
 
 mix
-  .webpackConfig(config)
   .js('resources/js/app.js', 'public/js')
+  .vue()
   .sass('resources/sass/app.scss', 'public/css')
+  .webpackConfig(require('./webpack.config'))
+
+if (mix.inProduction()) {
+  mix.version()
+}
