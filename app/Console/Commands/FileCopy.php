@@ -2,24 +2,26 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
-class SitemapReset extends Command
+class FileCopy extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sitemap:reset';
+    protected $signature = 'file:copy
+                            { file : File location },
+                            { output : File output location }';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deletes your sitemap folder.';
+    protected $description = 'Copy file into another location';
 
     /**
      * Create a new command instance.
@@ -35,20 +37,16 @@ class SitemapReset extends Command
      * Execute the console command.
      *
      * @return int
+     * @throws Exception
      */
     public function handle(): int
     {
-        // Sitemap directory
-        $directory = public_path('sitemap');
-
-        // Confirmation text
-        $q = 'This will delete all your sitemaps inside the folder. Do you wish to continue?';
-
-        if ($this->confirm($q)) {
-            Storage::deleteDirectory($directory);
+        $fp = $this->argument('file');
+        $output = $this->argument('output');
+        $exec = exec('cp -f '.$fp.' ' .$output . '&& echo Done.');
+        if(!$exec) {
+            throw new Exception('Failed copying file to directory.');
         }
-
-        // Successfully run
         return 0;
     }
 }

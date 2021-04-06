@@ -116,6 +116,6 @@ class SitemapCompress extends Command
         $this->info("Done.");
 
         // Successfully run
-        return 1;
+        return 0;
     }
 }

@@ -2,24 +2,24 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
-class SitemapReset extends Command
+class FileUnzip extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sitemap:reset';
+    protected $signature = 'file:unzip {file}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Deletes your sitemap folder.';
+    protected $description = 'Unzip a zip file.';
 
     /**
      * Create a new command instance.
@@ -35,20 +35,16 @@ class SitemapReset extends Command
      * Execute the console command.
      *
      * @return int
+     * @throws Exception
      */
     public function handle(): int
     {
-        // Sitemap directory
-        $directory = public_path('sitemap');
-
-        // Confirmation text
-        $q = 'This will delete all your sitemaps inside the folder. Do you wish to continue?';
-
-        if ($this->confirm($q)) {
-            Storage::deleteDirectory($directory);
+        $fp = $this->argument('file');
+        $path = storage_path('app');
+        $exec = exec('unzip -o '.$fp. ' -d '.$path.' && echo Done.');
+        if(!$exec) {
+            throw new Exception('Failed unzipping file.');
         }
-
-        // Successfully run
         return 0;
     }
 }

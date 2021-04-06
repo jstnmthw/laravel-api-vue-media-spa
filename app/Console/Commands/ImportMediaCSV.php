@@ -5,22 +5,23 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class ImportCSV extends Command
+class ImportMediaCSV extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'csv:import
-                            { filename : CSV filename ex: media.csv }';
+    protected $signature = 'media:csv:import
+                            { table : Name of table }
+                            { file : CSV file ex: media.csv }';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import a specifically structured CSV file into media table.';
+    protected $description = 'Import a specifically structured CSV file into media table';
 
     /**
      * Create a new command instance.
@@ -37,12 +38,12 @@ class ImportCSV extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->comment('Starting CSV import to MySQL...');
         $query =
-            'LOAD DATA INFILE "/tmp/SQL/'.$this->argument('filename').'" IGNORE
-            INTO TABLE media
+            'LOAD DATA INFILE "/tmp/SQL/'.$this->argument('file').'" IGNORE
+            INTO TABLE '. $this->argument('table') .'
             CHARACTER SET utf8mb4
             FIELDS TERMINATED BY "|" ESCAPED BY ""
             LINES TERMINATED BY "\n"
@@ -58,6 +59,6 @@ class ImportCSV extends Command
         DB::connection()->getpdo()->exec($query);
 
         $this->info('Done.');
-        return true;
+        return 0;
     }
 }

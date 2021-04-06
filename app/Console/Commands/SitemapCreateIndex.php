@@ -54,6 +54,6 @@ class SitemapCreateIndex extends Command
 
         $this->info('Done.');
 
-        return 1;
+        return 0;
     }
 }

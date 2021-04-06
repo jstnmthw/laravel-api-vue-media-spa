@@ -15,6 +15,25 @@ class Media extends Model
     const DEFAULT_PAGE_SIZE = 50;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'url',
+        'unique_key',
+        'thumbnail',
+        'album',
+        'title',
+        'categories',
+        'author',
+        'duration',
+        'views',
+        'likes',
+        'dislikes',
+    ];
+
+    /**
      * Get the index data array for the model.
      *
      * @return array
