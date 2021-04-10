@@ -48,7 +48,7 @@ class SitemapInsert extends Command
     public function handle(): int
     {
         // Sitemap path default: sitemap/
-        $path = public_path('sitemap/');
+        $path = public_path('sitemap');
 
         // Create dir to store sitemap files
         if (!is_dir($path)) {
@@ -72,9 +72,6 @@ class SitemapInsert extends Command
 
             foreach ($data as $page) {
 
-                // If current data is over the amount of max entries
-                // Push the remaining amount of entries into file then
-                // create a new file and push the rest.
                 $file = public_path("sitemap/sitemap-{$i}.xml");
                 $entries = (($this->getLines($file) - 3) / 6);
                 $maxEntries = 10;
@@ -98,8 +95,6 @@ class SitemapInsert extends Command
 
                 } else {
 
-                    // TODO: Code only adding one entry per file, the iterator $i needs to be refactored to some how loop the new file name.
-                    // TODO: Meaning the iterator ($i) needs to increase after this else statement, refactor another iterator for the filename since it's in use.
                     $this->info('Creating new file..');
                     $i++;
                     MySitemap::create()
