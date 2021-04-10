@@ -81,10 +81,10 @@ class SitemapCreate extends Command
             foreach ($media as $row) {
 
                 // Slug the url
-                $slug = Str::slug(strtolower($row->title));
+                $slug = Str::slug(strtolower($row->title)) .'-'. $row->unique_key;
 
                 // Add url
-                $sitemap->add(url("/media/{$slug}"));
+                $sitemap->add(url("/videos/{$slug}"));
 
                 // Advance console bar
                 $bar->advance();

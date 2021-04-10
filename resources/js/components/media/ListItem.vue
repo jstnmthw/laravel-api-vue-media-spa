@@ -72,7 +72,7 @@ export default {
       return new Date(this.media.duration * 1000).toISOString().substr(14, 5)
     },
     url() {
-      return slug(this.media.title + ' ' + this.media.unique_key)
+      return encodeURI(this.media.slug)
     }
   },
   methods: {

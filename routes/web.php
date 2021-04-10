@@ -23,6 +23,13 @@ Route::get('/sitemap', function() {
 
 });
 
+Route::get('/test', function() {
+
+    echo Sitemap::create()
+        ->add(url('/videos/test'))
+        ->renderTags();
+});
+
 Route::get('/{vue_capture?}', function () {
     return view('master');
 })->where('vue_capture', '[\/\w\.-]*');

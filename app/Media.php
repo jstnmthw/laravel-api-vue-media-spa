@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
+/**
+ * @property mixed $unique_key Unique key for from external source
+ * @property string $title Title of media source
+ * @property string $slug Encoded slug for url
+ */
+
 class Media extends Model
 {
     use SoftDeletes, Searchable, CustomSearch, HasFactory;
@@ -34,6 +40,13 @@ class Media extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['slug'];
+
+    /**
      * Get the index data array for the model.
      *
      * @return array
@@ -47,6 +60,7 @@ class Media extends Model
             'thumbnail',
             'album',
             'title',
+            'slug',
             'categories',
             'author',
             'duration',
@@ -55,5 +69,16 @@ class Media extends Model
             'dislikes',
             'created_at',
         ]);
+    }
+
+    /**
+     * Get the models url
+     *
+     * @return string
+     */
+    public function getSlugAttribute(): string
+    {
+        $title = preg_replace('/\s/', '-', trim(preg_replace('/[!*\'();:@&=+$,\/?%#[]]*/', '', strtolower($this->title))));
+        return $title . '-' . $this->unique_key;
     }
 }
