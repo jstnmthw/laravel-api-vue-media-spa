@@ -81,6 +81,7 @@ class MediaAddNew extends Command
         ]);
 
         MediaNew::query()->chunkById(100, function($chunk) {
+            $newIds = [];
             foreach ($chunk as $row) {
                 if (!Media::query()->where('unique_key', $row->unique_key)->exists()) {
                     $clone = $row->toArray();
@@ -90,10 +91,12 @@ class MediaAddNew extends Command
                     );
                     $clone['created_at'] = now();
                     $clone['updated_at'] = now();
-                    Media::query()->create($clone);
+                    $newIds[] = Media::query()->create($clone)->id;
                 }
             }
-            return false;
+            Artisan::call('sitemap:insert', [
+                '--ids' => implode(',', $newIds)
+            ]);
         });
 
         Log::info('Successfully ran media:add-new');

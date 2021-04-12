@@ -12,6 +12,7 @@ use Laravel\Scout\Searchable;
  * @property mixed $unique_key Unique key for from external source
  * @property string $title Title of media source
  * @property string $slug Encoded slug for url
+ * @property int $id Primary key auto increment
  */
 
 class Media extends Model

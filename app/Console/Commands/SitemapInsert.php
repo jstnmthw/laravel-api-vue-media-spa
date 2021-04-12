@@ -74,7 +74,7 @@ class SitemapInsert extends Command
 
                 $file = public_path("sitemap/sitemap-{$i}.xml");
                 $entries = (($this->getLines($file) - 3) / 6);
-                $maxEntries = 10;
+                $maxEntries = 50000;
 
                 if ($entries < $maxEntries) {
 
@@ -93,7 +93,8 @@ class SitemapInsert extends Command
                     $contents .= $sitemap;
                     file_put_contents($file, $contents);
 
-                } else {
+                }
+                else {
 
                     $this->info('Creating new file..');
                     $i++;
