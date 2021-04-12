@@ -16,4 +16,5 @@ return [
     'media_csv_url' => env('MEDIA_FILE_URL', ''),
     'media_new_fn' => env('MEDIA_NEW_FILE_NAME', ''),
     'media_new_unzipped' => env('MEDIA_NEW_FILE_UNZIPPED', ''),
+    'media_cdn_url' => env('MEDIA_CDN_URL', ''),
 ];

@@ -11,8 +11,11 @@
     <!-- Title-->
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Preload -->
+    <link rel="preload" href="//fonts.gstatic.com">
+    <link rel="preload" href="{{config('const.media_cdn_url')}}">
+
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <!-- Favico -->
