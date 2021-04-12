@@ -31,14 +31,13 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:60,1']], function () {
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
     if (Auth::attempt($credentials)) {
-        // Authentication passed...
-        return Response::make('Success', 201);
+        return Response::make('Successfully Authenticated', 201);
     } else {
-        return Response::make('Failed', 401);
+        return Response::make('Failed Authenticating', 401);
     }
 });
 
-Route::group(['middleware' => ['throttle:60,1']], function () {
+Route::group(['middleware' => ['throttle:30,1']], function () {
     Route::prefix('media')->group(function () {
         Route::get('categories/{slug}', 'MediaController@category');
         Route::get('related', 'MediaController@related');
@@ -47,7 +46,6 @@ Route::group(['middleware' => ['throttle:60,1']], function () {
         Route::get('collect', 'MediaController@collect');
         Route::get('most-viewed', 'MediaController@mostViewed');
         Route::get('recommended', 'MediaController@mostLikes');
-//        Route::get('{slug}', 'MediaController@title');
         Route::get('{key}', 'MediaController@getByKey');
         Route::get('/', 'MediaController@index');
         Route::post('{id}/dislike', 'MediaController@dislike');

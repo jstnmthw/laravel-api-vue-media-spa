@@ -87,7 +87,7 @@ export default {
       await axios.get('/sanctum/csrf-cookie').then((res) => {
         axios
           .post('/api/login', {
-            email: 'web@jstn.ly',
+            email: 'email@example.com',
             password: 'password'
           })
           .then((res) => {
