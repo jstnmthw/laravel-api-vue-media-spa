@@ -20,12 +20,19 @@
     <ul class="navbar-nav">
       <li v-if="!auth" class="nav-item d-none">
         <button @click="login" class="btn btn-link">
-          <ion-icon
-            name="person"
-            style="position: relative; top: 2px"
-            class="mr-1"
-          ></ion-icon
-          >Login
+          <svg
+            class="icon"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Login
         </button>
       </li>
       <li v-if="!auth" class="nav-item d-none">

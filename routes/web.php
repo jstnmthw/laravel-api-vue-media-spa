@@ -31,5 +31,6 @@ Route::get('/test', function() {
 });
 
 Route::get('/{vue_capture?}', function () {
+    app('debugbar')->disable();
     return view('master');
 })->where('vue_capture', '[\/\w\.-]*');

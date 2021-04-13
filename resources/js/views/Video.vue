@@ -6,13 +6,30 @@
     >
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
       <div v-if="data.views" class="text-muted">
-        <ion-icon name="eye" style="position: relative; top: 3px"></ion-icon>
+        <svg
+          class="icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+          <path
+            fill-rule="evenodd"
+            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
         {{ views }}
-        <ion-icon
-          name="thumbs-up"
-          style="position: relative; top: 2px"
-          class="ml-2"
-        ></ion-icon>
+        <svg
+          class="ml-2 icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"
+          ></path>
+        </svg>
         {{ rating }}%
       </div>
     </div>
@@ -44,7 +61,17 @@
             class="btn btn-primary flex-fill flex-md-grow-0"
             :class="{ disabled: voted }"
           >
-            <ion-icon name="thumbs-up"></ion-icon>
+            <svg
+              class="icon"
+              name="thumbs-up"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"
+              ></path>
+            </svg>
           </button>
           <div
             class="media-rating mx-3 d-none d-md-block flex-grow-1 flex-md-grow-0"
@@ -64,16 +91,48 @@
             class="btn btn-primary flex-fill flex-md-grow-0"
             :class="{ disabled: voted }"
           >
-            <ion-icon name="thumbs-down"></ion-icon>
+            <svg
+              class="icon"
+              name="thumbs-down"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z"
+              ></path>
+            </svg>
           </button>
           <button
             class="btn btn-primary ml-md-2 mr-md-2 flex-fill flex-md-grow-0"
           >
-            <ion-icon name="heart"></ion-icon>
+            <svg
+              class="icon"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
             Favorite
           </button>
           <button class="btn btn-primary flex-fill flex-md-grow-0">
-            <ion-icon name="flag"></ion-icon>
+            <svg
+              class="icon"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
             Flag
           </button>
         </div>
