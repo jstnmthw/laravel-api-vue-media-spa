@@ -212,7 +212,7 @@ export default {
       this.loaded = true
 
       // Clear iframe src
-      $('#video').attr('src', '')
+      document.getElementById('video').setAttribute('src', '')
 
       let key = this.$route.params.slug
       key = key.substring(key.length - 15, key.length)
