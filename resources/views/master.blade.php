@@ -12,8 +12,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Preload -->
-    <link rel="preload" href="//fonts.gstatic.com">
-    <link rel="preload" href="{{config('const.media_cdn_url')}}">
+    <link rel="dns" href="//fonts.gstatic.com">
+    <link rel="dns" href="{{config('const.media_cdn_url')}}">
 
     <!-- Favico -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

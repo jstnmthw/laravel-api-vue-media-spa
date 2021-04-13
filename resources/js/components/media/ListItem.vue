@@ -18,6 +18,12 @@
       <div class="duration">
         {{ duration }}
       </div>
+      <img
+        v-show="loading"
+        alt="Loading"
+        src="/imgs/loader.svg"
+        class="loader-icon"
+      />
     </router-link>
     <div class="media-info px-0">
       <h5 class="media-title mt-2 mb-2 mb-md-1">
@@ -69,7 +75,6 @@
 </template>
 
 <script>
-import { slug } from '@/helpers/strings'
 import { comma_delimiter } from '@/helpers/numbers'
 
 export default {
@@ -80,7 +85,8 @@ export default {
       current: 0,
       interval: 1000,
       debounceTimer: 0,
-      timer: 0
+      timer: 0,
+      loading: false
     }
   },
   computed: {
@@ -113,11 +119,9 @@ export default {
       if (clear) {
         clearTimeout(this.debounceTimer)
         this.carousel(event, false)
-        $('.loader-icon').remove()
+        this.loading = false
       } else {
-        $(event.target)
-          .parent()
-          .append($('<img alt="" src="/imgs/loader.svg" class="loader-icon">'))
+        this.loading = true
         this.debounceTimer = setTimeout(() => {
           this.carousel(event)
         }, 1000)
@@ -133,9 +137,9 @@ export default {
           this.nextImage(images)
         }, this.interval)
         this.preloadImages(srcs, () => {
+          this.loading = false
           for (let i = 0; i < images.length; i++) {
             images[i].setAttribute('src', srcs[i])
-            $('.loader-icon').remove()
           }
         })
       } else {
@@ -148,7 +152,7 @@ export default {
       for (let i = 0; i < images.length; i++) {
         images[i].classList.remove('active')
       }
-      $(images).eq(this.next).addClass('active')
+      images[this.next].classList.add('active')
       this.next = (this.next + 1) % images.length
     },
 
