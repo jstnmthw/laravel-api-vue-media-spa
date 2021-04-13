@@ -37,7 +37,7 @@ Route::post('/login', function (Request $request) {
     }
 });
 
-Route::group(['middleware' => ['throttle:30,1']], function () {
+Route::group(['middleware' => ['throttle:60,1']], function () {
     Route::prefix('media')->group(function () {
         Route::get('categories/{slug}', 'MediaController@category');
         Route::get('related', 'MediaController@related');

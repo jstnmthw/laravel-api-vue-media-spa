@@ -1,7 +1,7 @@
 <template>
   <div class="media-data">
     <router-link class="media-poster" :to="'/videos/' + url">
-      <img :src="media.thumbnail" class="card-img-top" :alt="media.title" />
+      <img v-lazy="media.thumbnail" class="card-img-top" :alt="media.title" />
       <div
         class="carousel"
         @mouseenter="debounce($event)"

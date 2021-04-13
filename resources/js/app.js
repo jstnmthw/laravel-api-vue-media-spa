@@ -7,6 +7,7 @@ import Vue from 'vue'
 import router from '@/router'
 import store from '@/store'
 import VueProgressBar from 'vue-progressbar'
+import VueLazyload from 'vue-lazyload'
 
 // Global components
 import Navbar from '@/components/layout/Navbar'
@@ -46,11 +47,9 @@ const vpbSettings = {
   height: '2px'
 }
 
-// Ignore Ion's Font Icons custom elements
-Vue.config.ignoredElements = ['ion-icon']
-
 // Register Instances
 Vue.use(VueProgressBar, vpbSettings)
+Vue.use(VueLazyload)
 
 // Initiate instance
 const app = new Vue({
