@@ -10,6 +10,7 @@ return [
     |
     */
     // Media categories exempt from main listings
+    'site_description' => env('SITE_DESCRIPTION', ''),
     'excluded_cats' => env('MEDIA_EXCLUDED_CATEGORIES', ''),
     'media_seed' => env('MEDIA_SEED', 10),
     'media_deleted_csv_url' => env('MEDIA_DELETED_FILE_URL', ''),

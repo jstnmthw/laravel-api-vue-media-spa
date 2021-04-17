@@ -164,6 +164,12 @@ import Sidebar from '@/components/layout/Sidebar'
 import { comma_delimiter } from '@/helpers/numbers'
 
 export default {
+  metaInfo() {
+    return {
+      title: this.data.title,
+      meta: [{ name: 'description', content: this.data.title }]
+    }
+  },
   components: {
     VideoList,
     VideoLabels,

@@ -36,20 +36,19 @@
         </button>
       </li>
       <li v-if="!auth" class="nav-item d-none">
-        <a class="nav-link text-white" href="javascript: void(0);">Register</a>
+        <button class="nav-link text-white">Register</button>
       </li>
       <li v-if="auth" class="nav-item dropdown">
-        <a
+        <button
           id="navbarDropdown"
           class="nav-link dropdown-toggle"
-          href="#"
           role="button"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
           {{ name }} <span class="caret"></span>
-        </a>
+        </button>
         <div
           class="dropdown-menu dropdown-menu-right"
           aria-labelledby="navbarDropdown"

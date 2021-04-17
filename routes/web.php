@@ -32,5 +32,7 @@ Route::get('/test', function() {
 
 Route::get('/{vue_capture?}', function () {
     app('debugbar')->disable();
-    return view('master');
+    $criticalCss = @file_get_contents(public_path('css/critical.min.css'));
+    $data['criticalCss'] = $criticalCss ?: null;
+    return view('master', $data);
 })->where('vue_capture', '[\/\w\.-]*');

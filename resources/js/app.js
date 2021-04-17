@@ -6,6 +6,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import router from '@/router'
 import store from '@/store'
+import VueMeta from 'vue-meta'
 import VueProgressBar from 'vue-progressbar'
 import VueLazyload from 'vue-lazyload'
 
@@ -48,6 +49,7 @@ const vpbSettings = {
 }
 
 // Register Instances
+Vue.use(VueMeta)
 Vue.use(VueProgressBar, vpbSettings)
 Vue.use(VueLazyload)
 

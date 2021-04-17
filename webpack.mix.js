@@ -1,4 +1,6 @@
 const mix = require('laravel-mix')
+require('laravel-mix-criticalcss')
+require('laravel-mix-purgecss')
 
 /*
  |--------------------------------------------------------------------------
@@ -12,10 +14,26 @@ const mix = require('laravel-mix')
  */
 
 mix
+  .webpackConfig(require('./webpack.config'))
   .js('resources/js/app.js', 'public/js')
   .vue()
   .sass('resources/sass/app.scss', 'public/css')
-  .webpackConfig(require('./webpack.config'))
+  .criticalCss({
+    enabled: mix.inProduction(),
+    paths: {
+      base: 'http://localhost',
+      templates: './public/css/',
+      suffix: '.min'
+    },
+    urls: [{ url: '/', template: 'critical' }],
+    options: {
+      minify: true,
+      penthouse: {
+        blockJSRequests: false
+      }
+    }
+  })
+  .purgeCss()
 
 if (mix.inProduction()) {
   mix.version()
