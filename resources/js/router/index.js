@@ -6,6 +6,7 @@ import Master from '@/views/Master'
 import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Video from '@/views/Video'
+import Homepage from '@/views/Homepage'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      component: Master,
+      component: Homepage,
       name: 'home'
     },
     {

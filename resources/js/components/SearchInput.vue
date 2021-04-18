@@ -17,6 +17,8 @@
         <button type="submit" class="btn" id="search-label">
           <span class="sr-only">Search</span
           ><svg
+            width="16px"
+            height="16px"
             class="icon"
             fill="currentColor"
             viewBox="0 0 20 20"

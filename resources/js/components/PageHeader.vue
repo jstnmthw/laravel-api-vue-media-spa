@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4 class="font-weight-bold mb-0">
-      {{ title }}
+      <slot>Page header</slot>
     </h4>
   </div>
 </template>
@@ -12,12 +12,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-h4 {
-  text-transform: capitalize;
-}
-ion-icon {
-  top: 3px;
-  position: relative;
-}
-</style>
+<style lang="scss"></style>

@@ -21,6 +21,8 @@
       <li v-if="!auth" class="nav-item d-none">
         <button @click="login" class="btn btn-link">
           <svg
+            width="20px"
+            height="20px"
             class="icon"
             fill="currentColor"
             viewBox="0 0 20 20"
