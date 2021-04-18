@@ -2,11 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // Pages
-import Master from '@/views/Master'
 import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Video from '@/views/Video'
 import Homepage from '@/views/Homepage'
+import Categories from '@/views/Categories.vue'
+import Search from '@/views/Search.vue'
+import Best from '@/views/Best.vue'
+import MostViewed from '@/views/MostViewed.vue'
+import Recommended from '@/views/Recommended.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +25,7 @@ export default new VueRouter({
     },
     {
       path: '/categories/:category',
-      component: Master,
+      component: Categories,
       name: 'categories'
     },
     {
@@ -31,7 +35,7 @@ export default new VueRouter({
     },
     {
       path: '/search',
-      component: Master,
+      component: Search,
       name: 'search'
     },
     {
@@ -41,13 +45,18 @@ export default new VueRouter({
     },
     {
       path: '/best',
-      component: Master,
+      component: Best,
       name: 'best'
     },
     {
-      path: '/:most_viewed',
-      component: Master,
+      path: '/most-viewed',
+      component: MostViewed,
       name: 'most-viewed'
+    },
+    {
+      path: '/recommended',
+      component: Recommended,
+      name: 'recommended'
     },
     {
       path: '*',

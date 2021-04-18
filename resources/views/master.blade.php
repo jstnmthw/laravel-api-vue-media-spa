@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- <meta name="RATING" content="RTA-5042-1996-1400-1577-RTA" /> --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -36,11 +35,11 @@
         <main-footer></main-footer>
     </div>
 
-    <!-- Defer non critical styles -->
+    <!-- Defer non critical CSS -->
     <link rel="preload" href="{{ mix('css/app.css') }}" as="style" onload="this.onload=null; this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ mix('css/app.css') }}"></noscript>
 
-    <!-- Scripts -->
+    <!-- Javascript -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>
