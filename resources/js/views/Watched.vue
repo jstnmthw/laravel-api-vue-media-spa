@@ -4,12 +4,9 @@
       <sidebar classes="d-lg-block"></sidebar>
       <main class="col-md-10">
         <top-ad-banner></top-ad-banner>
-        <page-header
-          v-if="!loading"
-          :title="'Recently Viewed'"
-          icon="sync-circle"
-          class="mb-3"
-        ></page-header>
+        <page-header v-if="!loading" icon="sync-circle" class="mb-3"
+          >✨ Recently Viewed</page-header
+        >
         <media-list
           v-if="!loading"
           class="mb-5"
