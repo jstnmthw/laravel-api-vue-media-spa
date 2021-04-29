@@ -10,3 +10,7 @@ export const slug = (string = '') => {
 
   return string
 }
+
+export const urlSlug = (string = '') => {
+  return string.replace('/[^\\\\p{L} 0-9]/m', '').toLowerCase()
+}

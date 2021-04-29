@@ -79,7 +79,8 @@ class Media extends Model
      */
     public function getSlugAttribute(): string
     {
-        $title = preg_replace('/\s/', '-', trim(preg_replace('/[!*\'();:@&=+$,\/?%#[]]*/', '', strtolower($this->title))));
+//        $title = preg_replace('/\s/', '-', trim(preg_replace('/[!*\'();:@&=+$,\/?%#[]]*/', '', strtolower($this->title))));
+        $title = preg_replace('/\s/','-', trim(preg_replace('/[^\\p{L} 0-9]/um', '', strtolower($this->title))));
         return $title . '-' . $this->unique_key;
     }
 }
