@@ -177,7 +177,10 @@ export default {
   },
   data() {
     return {
-      data: [],
+      data: {
+        likes: 0,
+        dislikes: 0
+      },
       related: [],
       loaded: false,
       related_loaded: false,

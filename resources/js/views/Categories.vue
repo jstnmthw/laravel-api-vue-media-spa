@@ -11,6 +11,11 @@ import Master from '@/components/layout/Master.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Category',
+  metaInfo() {
+    return {
+      title: this.category
+    }
+  },
   components: {
     Master,
     MasterLayout,

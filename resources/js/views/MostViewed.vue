@@ -10,6 +10,9 @@ import PageHeader from '@/components/PageHeader.vue'
 import Master from '@/components/layout/Master.vue'
 export default {
   name: 'Most Viewed',
+  metaInfo: {
+    title: 'Most Views Title'
+  },
   components: {
     Master,
     MasterLayout,

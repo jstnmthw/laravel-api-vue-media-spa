@@ -6,11 +6,11 @@ import Watched from '@/views/Watched'
 import NotFound from '@/views/NotFound'
 import Video from '@/views/Video'
 import Homepage from '@/views/Homepage'
-import Categories from '@/views/Categories.vue'
-import Search from '@/views/Search.vue'
-import Best from '@/views/Best.vue'
-import MostViewed from '@/views/MostViewed.vue'
-import Recommended from '@/views/Recommended.vue'
+import Categories from '@/views/Categories'
+import Search from '@/views/Search'
+import Best from '@/views/Best'
+import MostViewed from '@/views/MostViewed'
+import Recommended from '@/views/Recommended'
 
 Vue.use(VueRouter)
 

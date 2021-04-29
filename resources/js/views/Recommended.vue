@@ -9,7 +9,7 @@ import MasterLayout from '@/components/layout/Master.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import Master from '@/components/layout/Master.vue'
 export default {
-  name: 'Homepage',
+  name: 'Recommended',
   components: {
     Master,
     MasterLayout,

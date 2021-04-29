@@ -10,6 +10,9 @@ import PageHeader from '@/components/PageHeader.vue'
 import Master from '@/components/layout/Master.vue'
 export default {
   name: 'Homepage',
+  metaInfo: {
+    title: 'Homepage Title'
+  },
   components: {
     Master,
     MasterLayout,

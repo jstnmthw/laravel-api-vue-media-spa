@@ -4,8 +4,8 @@ require('./bootstrap')
 // Libraries
 import axios from 'axios'
 import Vue from 'vue'
-import router from '@/router'
-import store from '@/store'
+import router from './router'
+import store from './store'
 import VueMeta from 'vue-meta'
 import VueProgressBar from 'vue-progressbar'
 import VueLazyload from 'vue-lazyload'
@@ -43,7 +43,7 @@ axios.interceptors.request.use(
 
 // Vue Progressbar
 const vpbSettings = {
-  color: 'rgba(217, 128, 250,1.0)',
+  color: '#ffaf81',
   failedColor: 'red',
   height: '2px'
 }
@@ -59,9 +59,12 @@ const app = new Vue({
   router,
   store,
   data: {},
+  metaInfo: {
+    title: 'App',
+    titleTemplate: '%s - Media'
+  },
   mounted() {
     store.dispatch('getCategories')
-
     this.$Progress.finish()
   },
   created() {

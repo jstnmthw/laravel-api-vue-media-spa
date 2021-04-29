@@ -50,6 +50,9 @@ export default {
     MediaList,
     SkeletonVideoCard
   },
+  metaInfo: {
+    title: 'Watched Videos Title'
+  },
   data() {
     return {
       watchedVideos: localStorage.getItem('watched_ids')

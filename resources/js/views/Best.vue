@@ -9,7 +9,11 @@ import MasterLayout from '@/components/layout/Master.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import Master from '@/components/layout/Master.vue'
 export default {
-  name: 'Recommended',
+  name: 'Best',
+  metaInfo: {
+    title: 'Best Videos Title',
+    titleTemplate: '%s | My Awesome Webapp'
+  },
   components: {
     Master,
     MasterLayout,
