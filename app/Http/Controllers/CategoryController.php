@@ -14,7 +14,7 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      * @return string
      */
-    public function index()
+    public function index(): string
     {
         return response()->json(Category::query()->select('name')->get());
     }

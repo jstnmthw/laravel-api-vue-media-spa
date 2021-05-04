@@ -100,9 +100,9 @@ class Media extends Model
      * Categories accessor
      *
      * @param $value
-     * @return false|string[]
+     * @return array
      */
-    public function getCategoriesAttribute($value)
+    public function getCategoriesAttribute($value): array
     {
         $categories = explode(';', $value);
         return array_map(function($v) {
@@ -115,9 +115,10 @@ class Media extends Model
 
     /**
      * @param String $string
-     * @return array|string|string[]|null
+     * @return string
      */
-    private function cleanUrl(String $string) {
+    private function cleanUrl(String $string): string
+    {
         return preg_replace('/\s/','-', trim(preg_replace('/[^\\p{L} 0-9]/um', '', strtolower($string))));
     }
 }
