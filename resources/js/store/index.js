@@ -32,7 +32,6 @@ export default new Vuex.Store({
   actions: {
     async getCategories({ commit }) {
       await axios.get('/api/categories').then((response) => {
-        console.log(response.data)
         commit('ADD_CATEGORIES', response.data)
       })
     }
