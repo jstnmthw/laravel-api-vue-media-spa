@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Str;
 use App\Category;
 
 class CategoryController extends Controller
@@ -17,7 +14,6 @@ class CategoryController extends Controller
      */
     public function index(): JsonResponse
     {
-        app('debugbar')->disable();
         $data = Category::query()
             ->select(['name'])
             ->get()
