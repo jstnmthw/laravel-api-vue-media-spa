@@ -19,17 +19,6 @@ use App\Media;
 
 Auth::routes();
 
-Route::get('/sitemap', function() {
-
-});
-
-Route::get('/test', function() {
-
-    echo Sitemap::create()
-        ->add(url('/videos/test'))
-        ->renderTags();
-});
-
 Route::get('/{vue_capture?}', function () {
     app('debugbar')->disable();
     $criticalCss = @file_get_contents(public_path('css/critical.min.css'));

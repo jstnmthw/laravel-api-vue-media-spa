@@ -26,7 +26,7 @@ class MediaController extends Controller
                 'bool' => [
                     'must_not' => [
                         'match' => [
-                            'categories' => config('const.excluded_cats')
+                            'categories.name' => config('const.excluded_cats')
                         ]
                     ],
                     'must' => [

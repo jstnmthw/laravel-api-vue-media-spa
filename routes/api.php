@@ -51,5 +51,5 @@ Route::group(['middleware' => ['throttle:60,1']], function () {
         Route::post('{id}/dislike', 'MediaController@dislike');
         Route::post('{id}/like', 'MediaController@like');
     });
-    Route::apiResource('categories', 'CategoryController');
+    Route::get('categories', 'CategoryController@index');
 });
