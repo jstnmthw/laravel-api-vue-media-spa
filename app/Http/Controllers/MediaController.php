@@ -206,7 +206,7 @@ class MediaController extends Controller
         $data = Media::rawSearch()->query([
             'function_score' => [
                 "query" => [
-                    "match" => ['categories' => $category]
+                    "match" => ['categories.name' => $category]
                 ],
                 'field_value_factor' => [
                     'field' => 'likes',

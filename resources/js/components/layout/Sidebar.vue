@@ -145,7 +145,7 @@
       </div>
       <ul id="search-list" class="list-unstyled pl-4" v-if="categories">
         <li v-for="category in categories" :key="category.id">
-          <router-link :to="'/categories/' + category.slug">
+          <router-link :to="'/categories/' + category.url">
             {{ category.name }}
           </router-link>
         </li>

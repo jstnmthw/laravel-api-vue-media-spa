@@ -31,7 +31,7 @@ final class CreateMediaIndex implements MigrationInterface
                 ]
             ]);
             $mapping->text('slug');
-            $mapping->text('categories');
+            $mapping->object('categories');
             $mapping->text('author');
             $mapping->float('duration');
             $mapping->float('views');

@@ -1,18 +1,14 @@
 <template>
-  <router-link :to="'/categories/' + slug" class="btn btn-sm btn-category mb-1">
-    {{ label }}
+  <router-link
+    :to="'/categories/' + category.url"
+    class="btn btn-sm btn-category mb-1"
+  >
+    {{ category.name }}
   </router-link>
 </template>
 
 <script>
 export default {
-  props: ['label'],
-  computed: {
-    slug: function () {
-      return this.label.replaceAll(' ', '-').toLocaleLowerCase()
-    }
-  }
+  props: ['category']
 }
 </script>
-
-<style></style>

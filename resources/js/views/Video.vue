@@ -38,7 +38,7 @@
         <div class="label-wrap">
           <ul class="list-inline">
             <li class="list-inline-item" v-for="category in categories">
-              <video-labels :label="category"></video-labels>
+              <video-labels :category="category"></video-labels>
             </li>
           </ul>
         </div>
@@ -232,7 +232,7 @@ export default {
         .then((response) => {
           this.$Progress.finish()
           this.data = response.data
-          this.categories = this.data.categories.split(';')
+          this.categories = this.data.categories
           this.loaded = true
           this.watched(this.data.id)
           this.getRelated(12)

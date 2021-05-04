@@ -11,8 +11,9 @@ use Laravel\Scout\Searchable;
 /**
  * @property mixed $unique_key Unique key for from external source
  * @property string $title Title of media source
- * @property string $slug Encoded slug for url
+ * @property string $slug (Accessor) Encoded slug for url
  * @property int $id Primary key auto increment
+ * @property string categories Media's categories
  */
 
 class Media extends Model
@@ -45,7 +46,9 @@ class Media extends Model
      *
      * @var array
      */
-    protected $appends = ['slug'];
+    protected $appends = [
+        'slug',
+    ];
 
     /**
      * Get the index data array for the model.
@@ -73,14 +76,48 @@ class Media extends Model
     }
 
     /**
-     * Get the models url
+     * Slug accessor
      *
      * @return string
      */
     public function getSlugAttribute(): string
     {
-//        $title = preg_replace('/\s/', '-', trim(preg_replace('/[!*\'();:@&=+$,\/?%#[]]*/', '', strtolower($this->title))));
-        $title = preg_replace('/\s/','-', trim(preg_replace('/[^\\p{L} 0-9]/um', '', strtolower($this->title))));
-        return $title . '-' . $this->unique_key;
+        return $this->cleanUrl($this->title). '-' . $this->unique_key;
+    }
+
+    /**
+     * Trim title accessor
+     *
+     * @param $value
+     * @return string
+     */
+    public function getTitleAttribute($value): string
+    {
+        return trim($value);
+    }
+
+    /**
+     * Categories accessor
+     *
+     * @param $value
+     * @return false|string[]
+     */
+    public function getCategoriesAttribute($value)
+    {
+        $categories = explode(';', $value);
+        return array_map(function($v) {
+            return array(
+                'name' => $v,
+                'url' => $this->cleanUrl($v)
+            );
+        }, $categories);
+    }
+
+    /**
+     * @param String $string
+     * @return array|string|string[]|null
+     */
+    private function cleanUrl(String $string) {
+        return preg_replace('/\s/','-', trim(preg_replace('/[^\\p{L} 0-9]/um', '', strtolower($string))));
     }
 }
