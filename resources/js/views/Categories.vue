@@ -25,7 +25,7 @@ export default {
     ...mapGetters(['categories']),
     category() {
       let cat = this.categories.find(
-        (x) => x.slug === this.$route.params.category
+        (x) => x.url === this.$route.params.category
       )
 
       return cat ? cat.name : ''

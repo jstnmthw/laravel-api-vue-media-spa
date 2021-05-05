@@ -31,6 +31,7 @@ final class CreateMediaIndex implements MigrationInterface
                 ]
             ]);
             $mapping->text('slug');
+            $mapping->text('author');
             $mapping->object('categories', [
                 'properties' => [
                     'name' => [
@@ -39,7 +40,6 @@ final class CreateMediaIndex implements MigrationInterface
                     ]
                 ]
             ]);
-            $mapping->text('author');
             $mapping->float('duration');
             $mapping->float('views');
             $mapping->float('likes');
@@ -60,13 +60,12 @@ final class CreateMediaIndex implements MigrationInterface
                 ],
                 'char_filter' => [
                     'specialCharactersFilter'=> [
-                        'pattern' => '[^A-Za-z0-9]',
+                        'pattern' => '/[^\\p{L} 0-9]/um',
                         'type' => 'pattern_replace',
                         'replacement' => ''
                     ]
                 ],
             ]);
-
         });
     }
 
