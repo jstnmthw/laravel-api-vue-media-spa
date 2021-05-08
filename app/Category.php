@@ -14,6 +14,11 @@ class Category extends Model
       'url'
     ];
 
+    public function getNameAttribute($value): string
+    {
+        return trim($value);
+    }
+
     /**
      * Category Url
      *

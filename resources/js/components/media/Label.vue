@@ -1,14 +1,14 @@
 <template>
   <router-link
-    :to="'/categories/' + category.url"
+    :to="'/categories/' + data.url"
     class="btn btn-sm btn-category mb-1"
   >
-    {{ category.name }}
+    {{ data.name }}
   </router-link>
 </template>
 
 <script>
 export default {
-  props: ['category']
+  props: ['data']
 }
 </script>

@@ -38,7 +38,7 @@
         <div class="label-wrap">
           <ul class="list-inline">
             <li class="list-inline-item" v-for="category in categories">
-              <video-labels :category="category"></video-labels>
+              <category-label :data="category"></category-label>
             </li>
           </ul>
         </div>
@@ -159,7 +159,7 @@
 <script>
 import axios from 'axios'
 import VideoList from '@/components/media/List'
-import VideoLabels from '@/components/media/Labels'
+import CategoryLabel from '@/components/media/Label'
 import Sidebar from '@/components/layout/Sidebar'
 import { comma_delimiter } from '@/helpers/numbers'
 
@@ -172,7 +172,7 @@ export default {
   },
   components: {
     VideoList,
-    VideoLabels,
+    CategoryLabel,
     Sidebar
   },
   data() {
