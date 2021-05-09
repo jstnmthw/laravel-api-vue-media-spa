@@ -117,9 +117,14 @@ class Media extends Model
      * Cleans string and adds hyphens
      * @param String $string
      * @return string
+     * @noinspection PhpUnnecessaryLocalVariableInspection
      */
     private function cleanUrl(String $string): string
     {
-        return preg_replace('/\s/','-', trim(preg_replace('/[^\\p{L} 0-9]/um', '', strtolower($string))));
+        $string = trim($string);
+        $string = strtolower($string);
+        $string = preg_replace('/[\/\s]/','-', $string); // replace spaces and forward slashes with hyphen
+        $string = preg_replace('/[^\\p{L} 0-9\\-]/um', '', $string); // replace any special characters excluding i18n characters and hyphen
+        return $string;
     }
 }
