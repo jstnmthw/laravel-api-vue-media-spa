@@ -114,7 +114,7 @@ class Media extends Model
     }
 
     /**
-     * Cleans string and adds hyphens
+     * Cleans i18n string and adds hyphens
      * @param String $string
      * @return string
      * @noinspection PhpUnnecessaryLocalVariableInspection
