@@ -43,7 +43,7 @@ class FileCut extends Command
     public function handle(): int
     {
         $fp = $this->argument('file');
-        $lines = $this->option('lines');
+        $lines = $this->option('lines') ?? 1000;
         $output = $this->argument('output');
         if (file_exists($output)) {
             unlink($output);
