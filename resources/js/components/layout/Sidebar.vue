@@ -164,20 +164,22 @@ export default {
   },
   methods: {
     search_category() {
-      const search = [this.search]
-      $('#search-list li').each(function (i) {
-        const haystack = search[0].toUpperCase()
-        const needle = this.innerText.toUpperCase()
+      const search = this.search
+      document.querySelectorAll('#search-list li').forEach(function (value) {
+        const haystack = search.toLowerCase()
+        const needle = value.innerText.toLowerCase()
         if (needle.indexOf(haystack) > -1) {
-          $(this).show()
+          value.style.display = 'block'
         } else {
-          $(this).hide()
+          value.style.display = 'none'
         }
       }, search)
     },
     clear_search() {
       this.search = null
-      $('#search-list li').show()
+      document.querySelectorAll('#search-list li').forEach((el) => {
+        el.style.display = 'block'
+      })
     }
   }
 }
