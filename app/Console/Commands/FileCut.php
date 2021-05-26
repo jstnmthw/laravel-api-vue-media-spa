@@ -43,13 +43,15 @@ class FileCut extends Command
     public function handle(): int
     {
         $fp = $this->argument('file');
-        $lines = $this->option('lines') ?? 1000;
+        $lines = $this->option('lines') ?? 1;
         $output = $this->argument('output');
         if (file_exists($output)) {
             unlink($output);
         }
-        $exec = exec('tail '.$fp.' -n '.$lines.' >> '.$output . '&& echo Done.');
-        if(!$exec) {
+        $response = null;
+        $return = null;
+        exec('tail -n' . $lines . $fp . ' > ' . $output, $response, $return);
+        if ($return !== 0) {
             throw new Exception('Failed executing tail command.');
         }
         return 0;
