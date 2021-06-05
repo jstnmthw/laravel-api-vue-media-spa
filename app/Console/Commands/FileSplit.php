@@ -14,6 +14,7 @@ class FileSplit extends Command
      */
     protected $signature = 'file:split
                             { file : Filename },
+                            { output : Output directory },
                             { --lines=500 : Split file by number of lines }';
 
     /**
@@ -43,18 +44,21 @@ class FileSplit extends Command
     {
         $file = $this->getFileInfo($this->argument('file'));
         $lines = $this->option('lines');
+        $output = $this->argument('output');
 
-        if (file_exists($file['split_path'])) {
-            rmdir($file['split_path']);
+        if (file_exists($output)) {
+            rmdir($output);
         }
-        mkdir($file['split_path']);
+        mkdir($output);
 
         $response = null;
         $return = null;
-        exec('split -dl '.$lines.' --additional-suffix=.'.$file['ext'] . ' ' . $file['file'] . ' ' . $file['out'], $response, $return);
+//        dd('split -dl '.$lines.' --additional-suffix=.'.$file['ext'] . ' ' . $file['file'] . ' ' . $output . $file['name'] . '.' .$file['ext']);
+        exec('split -dl '.$lines.' --additional-suffix=.'.$file['ext'] . ' ' . $file['file'] . ' ' . $output . $file['name'] . '.' .$file['ext'], $response, $return);
+//        exec('split -dl '.$lines.' --additional-suffix=.'.$file['ext'] . ' ' . $file['file'] . ' ' . $output, $response, $return);
 
         if ($return !== 0) {
-            throw new Exception('Failed executing tail command.');
+            throw new Exception('Failed executing split command.');
         }
         return 0;
     }
