@@ -42,7 +42,7 @@ class ImportMediaCSV extends Command
     {
         $this->comment('Starting CSV import to MySQL...');
         $query =
-            'LOAD DATA INFILE "/tmp/SQL/'.$this->argument('file').'" IGNORE
+            'LOAD DATA INFILE "'.$this->argument('file').'" IGNORE
             INTO TABLE '. $this->argument('table') .'
             CHARACTER SET utf8mb4
             FIELDS TERMINATED BY "|" ESCAPED BY ""

@@ -87,18 +87,18 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.state.user.name ? this.$store.state.user.name : 'Guest'
+      return this.$store.state.user.name ?? 'Guest'
     }
   },
   methods: {
     async login() {
-      await axios.get('/sanctum/csrf-cookie').then((res) => {
+      await axios.get('/sanctum/csrf-cookie').then(() => {
         axios
           .post('/api/login', {
             email: 'email@example.com',
             password: 'password'
           })
-          .then((res) => {
+          .then(() => {
             axios.get('/api/user').then((res) => {
               localStorage.setItem('Authenticated', 'true')
               this.auth = true

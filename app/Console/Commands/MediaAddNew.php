@@ -77,7 +77,7 @@ class MediaAddNew extends Command
 
         Artisan::call('media:csv:import', [
             'table' => 'media_new',
-            'file' => $fn_cut,
+            'file' => '/tmp/SQL/'.$fn_cut,
         ]);
 
         MediaNew::query()->chunkById(100, function($chunk) {

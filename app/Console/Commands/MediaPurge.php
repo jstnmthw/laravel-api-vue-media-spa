@@ -74,8 +74,6 @@ class MediaPurge extends Command
             'file' => $fn,
         ]);
 
-        $this->info($this->convert(memory_get_usage(true)));
-
         $countDeleted = 0;
         MediaDeleted::query()->chunkById(25000, function($chunk) use (&$countDeleted) {
             $ids = $chunk->pluck('unique_key');

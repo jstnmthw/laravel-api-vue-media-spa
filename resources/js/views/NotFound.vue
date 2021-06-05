@@ -4,9 +4,9 @@
       <h1 class="mt-lg-5">404 Not Found!</h1>
       <p>
         Looks like you stumbled upon a missing page.
-        <router-link to="/" style="text-decoration: underline"
-          >Click here</router-link
-        >
+        <router-link to="/" style="text-decoration: underline">
+          Click here
+        </router-link>
         to redirect to the home page.
       </p>
     </div>
@@ -17,9 +17,8 @@
 export default {
   name: 'NotFound',
   metaInfo: {
-    title: '404 Not Found'
+    title: '404 Not Found',
+    meta: [{ name: 'robots', content: 'noindex' }]
   }
 }
 </script>
-
-<style></style>
