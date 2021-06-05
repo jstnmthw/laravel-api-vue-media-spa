@@ -5,7 +5,7 @@
       class="d-flex flex-column flex-md-row align-items-start align-items-md-center mb-sm-3 mb-md-1"
     >
       <h3 class="mr-3 mb-1 font-weight-bold">{{ data.title }}</h3>
-      <div v-if="data.views" class="text-muted">
+      <div v-if="data.views" class="text-muted mb-2 mb-md-0">
         <svg
           class="icon"
           fill="currentColor"
