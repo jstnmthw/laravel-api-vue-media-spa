@@ -7,6 +7,7 @@
     </router-link>
     <search-input></search-input>
     <button
+      @click="setSidebarOpen(!sidebarOpen)"
       class="navbar-toggler order-2 order-lg-3"
       type="button"
       data-toggle="collapse"
@@ -68,6 +69,8 @@
 import store from '@/store'
 import axios from 'axios'
 import SearchInput from '@/components/SearchInput'
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
@@ -86,11 +89,13 @@ export default {
     searchInput: SearchInput
   },
   computed: {
+    ...mapGetters(['sidebarOpen']),
     name() {
       return this.$store.state.user.name ?? 'Guest'
     }
   },
   methods: {
+    ...mapActions(['setSidebarOpen']),
     async login() {
       await axios.get('/sanctum/csrf-cookie').then(() => {
         axios

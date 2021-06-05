@@ -85,5 +85,6 @@ const app = new Vue({
 
 // Before creation callback
 router.beforeEach((to, from, next) => {
+  store.dispatch('setSidebarOpen', false).then(() => next())
   store.dispatch('requestToken/CANCEL_PENDING_REQUESTS').then(() => next())
 })

@@ -1,7 +1,8 @@
 <template>
   <aside
+    v-show="sidebarOpen"
     id="mainSidebar"
-    class="main-sidebar collapse col-sm-12 col-lg-3 col-xl-2"
+    class="main-sidebar col-sm-12 col-lg-3 col-xl-2"
     :class="classes"
   >
     <div class="main-categories">
@@ -160,7 +161,7 @@ export default {
   },
   props: ['classes'],
   computed: {
-    ...mapGetters(['categories'])
+    ...mapGetters(['categories', 'sidebarOpen'])
   },
   methods: {
     search_category() {
