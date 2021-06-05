@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     SET_SIDEBAR(state, payload) {
       state.sidebarOpen = payload
-    },
+    }
   },
   actions: {
     setSidebarOpen({ commit }, payload) {
