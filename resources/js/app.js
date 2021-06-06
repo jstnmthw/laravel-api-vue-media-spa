@@ -64,7 +64,9 @@ const app = new Vue({
     titleTemplate: '%s - Media'
   },
   mounted() {
-    store.dispatch('getCategories')
+    store.dispatch('getCategories').catch((e) => {
+      console.log(e)
+    })
     this.$Progress.finish()
   },
   created() {
@@ -77,7 +79,7 @@ const app = new Vue({
       this.$Progress.start()
       next()
     })
-    this.$router.afterEach((to, from) => {
+    this.$router.afterEach(() => {
       this.$Progress.finish()
     })
   }
