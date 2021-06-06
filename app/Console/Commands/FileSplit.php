@@ -49,7 +49,7 @@ class FileSplit extends Command
         if (file_exists($output)) {
             rmdir($output);
         }
-        mkdir($output);
+        mkdir($output, 0644, true);
 
         $response = null;
         $return = null;
