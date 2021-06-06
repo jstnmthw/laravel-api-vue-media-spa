@@ -13,12 +13,12 @@ final class CreateMediaIndex implements MigrationInterface
      */
     public function up(): void
     {
+        Index::drop('media');
         Index::create('media', function (Mapping $mapping, Settings $settings) {
             // Mappings
             $mapping->text('unique_key');
             $mapping->text('url');
             $mapping->text('thumbnail');
-            $mapping->text('album');
             $mapping->text('title', [
                 'fields' => [
                     'alphanumeric' => [
@@ -32,11 +32,27 @@ final class CreateMediaIndex implements MigrationInterface
             ]);
             $mapping->text('slug');
             $mapping->text('author');
+            $mapping->text('album');
             $mapping->object('categories', [
                 'properties' => [
                     'name' => [
                         'type' => 'text',
-                        'analyzer' => 'alphanumericStringAnalyzer'
+                        'analyzer' => 'alphanumericStringAnalyzer',
+                        'fields' => [
+                            'keyword' => [
+                                'type' => 'keyword',
+                                'ignore_above' => 256
+                            ]
+                        ]
+                    ],
+                    'url' => [
+                        'type' => 'text',
+                        'fields' => [
+                            'keyword' => [
+                                'type' => 'keyword',
+                                'ignore_above' => 256
+                            ]
+                        ]
                     ]
                 ]
             ]);
