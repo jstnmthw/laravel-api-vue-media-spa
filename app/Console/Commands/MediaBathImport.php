@@ -6,6 +6,7 @@ use Doctrine\Foo\Bar;
 use FilesystemIterator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class MediaBathImport extends Command
 {
@@ -45,6 +46,7 @@ class MediaBathImport extends Command
         $fi = new FilesystemIterator($path);
         $fc = iterator_count($fi);
         $this->comment('Importing ' .$fc. ' CSV files into Media database...');
+        Log::info('Importing ' .$fc. ' CSV files into Media database...');
         $bar = $this->output->createProgressBar($fc);
         $bar->start();
         foreach ($fi as $file) {
@@ -53,6 +55,7 @@ class MediaBathImport extends Command
                 'file' => $file->getPathname(),
             ]);
             $bar->advance();
+            Log::info('Imported ' . $file->getPathname());
         }
         $bar->finish();
         $this->newLine();

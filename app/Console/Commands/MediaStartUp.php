@@ -46,35 +46,35 @@ class MediaStartUp extends Command
         $fp_csv = storage_path('app/' . $csv);
 
         /* Download */
-//        Log::info('Downloading file.');
-//        Artisan::call('file:download', [
-//            'url' => config('const.media_csv_url'),
-//            'filename' => $fn,
-//        ]);
-//        Log::info('Finished downloading file.');
+        Log::info('Downloading file.');
+        Artisan::call('file:download', [
+            'url' => config('const.media_csv_url'),
+            'filename' => $fn,
+        ]);
+        Log::info('Finished downloading file.');
 
         /* Unzip */
-//        Log::info('Unzipping file.');
-//        Artisan::call('file:unzip', [
-//            'file' => $fp
-//        ]);
-//        Log::info('Finished unzipping file.');
+        Log::info('Unzipping file.');
+        Artisan::call('file:unzip', [
+            'file' => $fp
+        ]);
+        Log::info('Finished unzipping file.');
 
         /* Split */
-//        Log::info('Splitting file.');
-//        Artisan::call('file:split', [
-//            'file' => $fp_csv,
-//            'output' => '/tmp/SQL/media/',
-//            '--lines' => 500000
-//        ]);
-//        Log::info('Slitting file.');
+        Log::info('Splitting file.');
+        Artisan::call('file:split', [
+            'file' => $fp_csv,
+            'output' => '/tmp/SQL/media/',
+            '--lines' => 500000
+        ]);
+        Log::info('Slitting file.');
 
         /* Import  */
-        Log::info('Importing files.');
+        Log::info('Importing CSV to MySQL.');
         Artisan::call('media:csv:batch-import', [
             '--path' => '/tmp/SQL/media/',
         ]);
-        Log::info('Finished importing files.');
+        Log::info('Finished importing CSV.');
 
         Log::info('Importing to Elastic.');
         Artisan::call('scout:import App\\Media');
