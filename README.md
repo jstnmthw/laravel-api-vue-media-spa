@@ -55,3 +55,9 @@ Dev
 Production
 
 `npm run prod`
+
+### Import Troubleshooting
+
+The mysql user which executes the commands for importing CSV *must* have FILE privileges. eg:
+
+`GRANT FILE *.* TO 'user'@'localhost'`
