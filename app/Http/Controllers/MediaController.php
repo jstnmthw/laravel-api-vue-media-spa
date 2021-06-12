@@ -51,10 +51,10 @@ class MediaController extends Controller
      */
     public function search(Request $request): LengthAwarePaginator
     {
-        //TODO: Exclude set categories from search.
+        //TODO: Exclude grouped categories from search.
         $query = $request->has('q')
             ? Str::lower(urldecode($request->input('q')))
-            : abort(404);
+            : '';
 
         $data = Media::rawSearch()->query([
             'function_score' => [
@@ -101,9 +101,11 @@ class MediaController extends Controller
             ->query($key)
             ->execute();
 
-        return $data->total()
-            ? $data->documents()->first()->getContent()
-            : abort(404);
+        if(!$data->total()) {
+            abort(404);
+        }
+
+        return $data->documents()->first()->getContent();
     }
 
     /**
