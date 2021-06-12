@@ -72,7 +72,7 @@ class MediaStartUp extends Command
         /* Import  */
         Log::info('Importing CSV to MySQL.');
         Artisan::call('media:csv:batch-import', [
-            '--path' => '/tmp/SQL/media/',
+            'path' => '/tmp/SQL/media/',
         ]);
         Log::info('Finished importing CSV.');
 
