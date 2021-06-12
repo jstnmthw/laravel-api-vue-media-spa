@@ -40,6 +40,9 @@
     <noscript><link rel="stylesheet" href="{{ mix('css/app.css') }}"></noscript>
 
     <!-- Javascript -->
+    <script>
+        window.embedUrl = "{{ config('const.media_embed_url') }}";
+    </script>
     <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>

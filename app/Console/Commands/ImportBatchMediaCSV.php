@@ -16,7 +16,7 @@ class ImportBatchMediaCSV extends Command
      * @var string
      */
     protected $signature = 'media:csv:batch-import
-                            { --path= : Directory where files are located }';
+                            { path : Directory where files are located }';
 
     /**
      * The console command description.
@@ -42,7 +42,7 @@ class ImportBatchMediaCSV extends Command
      */
     public function handle(): int
     {
-        $path = $this->option('path');
+        $path = $this->argument('path');
         $fi = new FilesystemIterator($path);
         $fc = iterator_count($fi);
         $this->comment('Importing ' .$fc. ' CSV files into Media database...');

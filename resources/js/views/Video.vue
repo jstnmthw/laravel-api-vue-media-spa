@@ -223,8 +223,7 @@ export default {
       // Clear iframe src
       document.getElementById('video').setAttribute('src', '')
 
-      let key = this.$route.params.slug
-      key = key.substring(key.length - 15, key.length)
+      let key = this.$route.params.slug.split('-').pop()
 
       // Make the call
       await axios
@@ -238,7 +237,9 @@ export default {
           this.getRelated(12)
           document
             .querySelector('#video')
-            .contentWindow.location.replace(this.data.url)
+            .contentWindow.location.replace(
+              window.embedUrl + this.data.unique_key
+            )
         })
         .catch((error) => {
           console.log(error)

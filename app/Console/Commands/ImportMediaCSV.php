@@ -40,6 +40,7 @@ class ImportMediaCSV extends Command
      */
     public function handle(): int
     {
+        $pattern = '(.*\/embed\/)([a-zA-Z0-9]*)(.)*';
         $this->comment('Starting CSV import to MySQL...');
         $query =
             'LOAD DATA INFILE "'.$this->argument('file').'" IGNORE
@@ -49,8 +50,7 @@ class ImportMediaCSV extends Command
             LINES TERMINATED BY "\n"
             (@url, thumbnail, album, title, @tags, categories, @author, duration, views, @likes, @dislikes, @dummy, @dummy)
             SET author = IF(@author = "", NULL, @author),
-                url = SUBSTRING(@url,14,45),
-                unique_key = SUBSTRING(@url,44,15),
+                unique_key = REGEXP_REPLACE(@url,"'.$pattern.'", "$2"),
                 likes = IF(@likes = "", 0, @likes),
                 dislikes = IF(@dislikes = "", 0, @dislikes),
                 created_at = CURRENT_TIMESTAMP,

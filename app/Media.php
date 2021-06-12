@@ -28,7 +28,6 @@ class Media extends Model
      * @var array
      */
     protected $fillable = [
-        'url',
         'unique_key',
         'thumbnail',
         'album',
@@ -59,7 +58,6 @@ class Media extends Model
     {
         return $this->only([
             'id',
-            'url',
             'unique_key',
             'thumbnail',
             'album',
