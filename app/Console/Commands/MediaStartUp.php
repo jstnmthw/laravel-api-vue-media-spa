@@ -77,7 +77,7 @@ class MediaStartUp extends Command
         Log::info('Finished importing CSV.');
 
         Log::info('Importing to Elastic.');
-        Artisan::call('scout:import App\\Media');
+        Artisan::call('scout:import "App\Media"');
         Log::info('Finished importing to Elastic.');
 
         return 0;
