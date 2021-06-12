@@ -52,9 +52,7 @@ class MediaController extends Controller
     public function search(Request $request): LengthAwarePaginator
     {
         //TODO: Exclude grouped categories from search.
-        $query = $request->has('q')
-            ? Str::lower(urldecode($request->input('q')))
-            : '';
+        $query = Str::lower(urldecode($request->input('q', '')));
 
         $data = Media::rawSearch()->query([
             'function_score' => [
