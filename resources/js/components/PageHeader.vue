@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h4 class="font-weight-bold mb-0 text-capitalize">
+    <h2 class="font-weight-bold mb-0 text-capitalize">
       <slot>Page header</slot>
-    </h4>
+    </h2>
   </div>
 </template>
 
@@ -11,3 +11,9 @@ export default {
   props: ['title', 'icon']
 }
 </script>
+
+<style lang="scss" scoped>
+h2 {
+  font-size: 24px;
+}
+</style>
