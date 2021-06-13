@@ -26,9 +26,9 @@
       />
     </router-link>
     <div class="media-info px-0">
-      <h5 class="media-title mt-2 mb-2 mb-md-1">
+      <h3 class="media-title mt-2 mb-2 mb-md-1">
         <router-link :to="'/videos/' + url">{{ media.title }}</router-link>
-      </h5>
+      </h3>
       <span class="pr-2 position-relative text-sage">
         <svg
           class="icon"

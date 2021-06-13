@@ -380,6 +380,8 @@ iframe {
       min-height: 58px;
       .media-title {
         word-break: break-word;
+        font-size: 14px;
+        font-weight: bold;
         a {
           color: $lilac;
           &:hover {
