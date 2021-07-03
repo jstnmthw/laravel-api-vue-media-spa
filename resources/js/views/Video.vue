@@ -167,11 +167,11 @@ export default {
   metaInfo() {
     return {
       title: this.data.title,
-      meta: [
-        { name: 'description', content: this.data.title },
+      meta: [{ name: 'description', content: this.data.title }],
+      link: [
         {
-          name: 'canonical',
-          content: window.location.origin + this.$route.fullPath
+          rel: 'canonical',
+          href: window.location.origin + this.$route.fullPath
         }
       ]
     }
