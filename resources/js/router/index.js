@@ -1,17 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// Pages
-import Watched from '@/views/Watched'
-import NotFound from '@/views/NotFound'
-import Video from '@/views/Video'
-import Homepage from '@/views/Homepage'
-import Categories from '@/views/Categories'
-import Search from '@/views/Search'
-import Best from '@/views/Best'
-import MostViewed from '@/views/MostViewed'
-import Recommended from '@/views/Recommended'
-
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -20,47 +9,83 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      component: Homepage,
+      component: () =>
+        import(
+          /* webpackChunkName: "homepage.vue" */
+          '@/views/Homepage.vue'
+        ),
       name: 'home'
     },
     {
       path: '/categories/:category',
-      component: Categories,
+      component: () =>
+        import(
+          /* webpackChunkName: "category.vue" */
+          '@/views/Categories.vue'
+        ),
       name: 'categories'
     },
     {
       path: '/videos/:slug',
-      component: Video,
+      component: () =>
+        import(
+          /* webpackChunkName: "video.vue" */
+          '@/views/Video.vue'
+        ),
       name: 'media'
     },
     {
       path: '/search',
-      component: Search,
+      component: () =>
+        import(
+          /* webpackChunkName: "search.vue" */
+          '@/views/Search.vue'
+        ),
       name: 'search'
     },
     {
       path: '/my/watch-history',
-      component: Watched,
+      component: () =>
+        import(
+          /* webpackChunkName: "watch-history.vue" */
+          '@/views/Watched.vue'
+        ),
       name: 'watched'
     },
     {
       path: '/best',
-      component: Best,
+      component: () =>
+        import(
+          /* webpackChunkName: "best.vue" */
+          '@/views/Best.vue'
+        ),
       name: 'best'
     },
     {
       path: '/most-viewed',
-      component: MostViewed,
+      component: () =>
+        import(
+          /* webpackChunkName: "most-viewed.vue" */
+          '@/views/MostViewed.vue'
+        ),
       name: 'most-viewed'
     },
     {
       path: '/recommended',
-      component: Recommended,
+      component: () =>
+        import(
+          /* webpackChunkName: "recommended.vue" */
+          '@/views/Recommended.vue'
+        ),
       name: 'recommended'
     },
     {
       path: '*',
-      component: NotFound,
+      component: () =>
+        import(
+          /* webpackChunkName: "404.vue" */
+          '@/views/NotFound.vue'
+        ),
       name: '404'
     }
   ],
