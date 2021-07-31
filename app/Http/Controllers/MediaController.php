@@ -32,8 +32,8 @@ class MediaController extends Controller
                     'must' => [
                         'range' => [
                             'views' => [
-                                'gte' => 1000,
-                                'boost' => 2.0
+                              'gte' => 40000,
+                              'lte' => 50000
                             ]
                         ]
                     ]
@@ -60,7 +60,7 @@ class MediaController extends Controller
                     'bool' => [
                         'must' => [
                             'match' => [
-                                'title' => $query,
+                                'title' => $query
                             ]
                         ],
                         'must_not' => [
@@ -202,11 +202,10 @@ class MediaController extends Controller
      */
     public function category($slug): LengthAwarePaginator
     {
-        $category = Str::title($slug);
         $data = Media::rawSearch()->query([
             'function_score' => [
                 'query' => [
-                    'match' => ['categories.name' => $category]
+                    'match' => ['categories.name' => $slug]
                 ],
                 'field_value_factor' => [
                     'field' => 'likes',
@@ -216,6 +215,47 @@ class MediaController extends Controller
                 ],
             ],
         ]);
+
+//{
+//    "query": {
+//        "function_score": {
+//            "query": {
+//                "multi_match": {
+//                    "query": "behind-the-scenes",
+//                    "fields": [
+//                        "categories.url.keyword",
+//                        "title.alphanumeric"
+//                    ]
+//                }
+//            },
+//            "field_value_factor": {
+//                "field": "likes",
+//                "factor": 1.2,
+//                "modifier": "sqrt",
+//                "missing": 1
+//            }
+//        }
+//    }
+//}
+
+//        $data = Media::rawSearch()->query([
+//            'function_score' => [
+//                'query' => [
+//                    'match' => [
+//                        'query' => $slug,
+//                        'fields' => [
+//                            'categories.url.keyword',
+//                        ]
+//                    ]
+//                ],
+//                'field_value_factor' => [
+//                    'field' => [
+//                        'likes',
+//                        'title.alphanumeric'
+//                    ],
+//                ]
+//            ]
+//        ]);
 
         return $this->prepareDocs($data);
     }
@@ -268,6 +308,7 @@ class MediaController extends Controller
         $data = $documents
             ->from(($page - 1) * $perPage)
             ->size($perPage)
+            ->trackTotalHits(true)
             ->execute();
 
         if (is_null($data->total())) {
